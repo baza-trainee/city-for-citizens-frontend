@@ -10,7 +10,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <section className='relative z-10 flex justify-center gap-5 mt-[44px] mb-[29px]'>
+        <section className='relative z-10 flex justify-center gap-5 mt-11 mb-[29px]'>
           <ChooseCity />
         </section>
         <Map />
