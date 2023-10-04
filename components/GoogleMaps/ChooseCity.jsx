@@ -72,7 +72,7 @@ function ChooseCity() {
             <div onClick={e => toggleCheck(city, e.target)} data-city={city} className='flex w-6 h-6 
             rounded border border-gray/50 justify-center'>
             { selectedCities.includes(city) && <Image
-              src="/done.svg"
+              src="icons/doneLight.svg"
               alt="done"
               width={16}
               height={16}
