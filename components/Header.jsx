@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
   return (
@@ -10,6 +11,7 @@ const Header = () => {
         </Link>
         <div className="flex">
           <ThemeSwitcher />
+          <LanguageSwitcher />
         </div>
       </div>
     </header>
