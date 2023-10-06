@@ -5,6 +5,8 @@ import { DayPicker } from "react-day-picker";
 import { useState } from "react";
 import { uk } from "date-fns/locale";
 
+const activeDates = ["2023-10-10", "2023-10-15", "2023-10-20"];
+
 // const eng = {
 //   label: "",
 //   InputText: "",
@@ -14,6 +16,8 @@ const ukr = {
   label: "Оберіть час",
   InputText: "Час",
 };
+
+const isDateActive = (date) => activeDates.includes(format(date, "yyyy-MM-dd"));
 
 const DatePicker = () => {
   const [selectedDay, setSelectedDay] = useState();
@@ -111,7 +115,10 @@ const DatePicker = () => {
               day: "text-[12px] select-none",
               day_selected: "text-primary/100",
               day_outside: "text-gray/20 pointer-events-none",
+
+              day_disabled: "text-gray/20 pointer-events-none",
             }}
+            disabled={(date) => !isDateActive(date)}
             selected={selectedDay}
             onSelect={handleDateChange}
           />
