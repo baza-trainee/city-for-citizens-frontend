@@ -76,23 +76,8 @@ const DatePicker = () => {
               }`}
               width="24"
               height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
             >
-              <g clipPath="url(#clip0_255_3197)">
-                <path
-                  d="M18.5 9L12.5 15L6.5 9"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_255_3197">
-                  <rect width="24" height="24" />
-                </clipPath>
-              </defs>
+              <use href="icons/sprite.svg#icon-select-toggle"></use>
             </svg>
           </div>
         </div>
