@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import Hero from "@/components/Hero";
 import ChooseCity from "@/components/GoogleMaps/ChooseCity";
 import DatePicker from "@/components/GoogleMaps/DatePicker";
