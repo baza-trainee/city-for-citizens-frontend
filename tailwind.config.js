@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,7 +22,14 @@ module.exports = {
     borderRadius: {
       DEFAULT: "8px",
     },
-    extend: {},
+    extend: {
+      textColor: {
+        active: "blue", // Ваш колір для активного стану
+      },
+      borderColor: {
+        active: "blue",
+      },
+    },
     screens: {
       mobile: "320px",
       tablet: "768px",
