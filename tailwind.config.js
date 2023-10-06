@@ -18,6 +18,9 @@ module.exports = {
       "gray/5": "#F6F6F6",
       "gray/0": "#FCFCFC",
     },
+    borderRadius: {
+      DEFAULT: "8px",
+    },
     extend: {},
     screens: {
       mobile: "320px",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
   return (
@@ -7,7 +8,9 @@ const Header = () => {
         <Link className="mr-[33px] text-xl" href={"/"}>
           Місто для містян
         </Link>
-        <div className="flex"></div>
+        <div className="flex">
+          <ThemeSwitcher />
+        </div>
       </div>
     </header>
   );
