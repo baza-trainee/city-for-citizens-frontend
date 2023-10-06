@@ -2,27 +2,12 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="pt-[35px] pb-[35px]">
-      <div className="container flex justify-center ">
-        <Link className="mr-[54px]" href={"/"}>
+    <header className="py-[35px] bg-gray/5 dark:bg-gray/100 dark:text-gray/5 text-gray-100 text-sm leading-6">
+      <div className="container flex justify-center items-baseline ">
+        <Link className="mr-[33px] text-xl" href={"/"}>
           Місто для містян
         </Link>
-        <div className="flex gap-[24px]">
-          <label>
-            Тема
-            <select name="theme">
-              <option value="light">Світла</option>
-              <option value="dark">Темна</option>
-            </select>
-          </label>
-          <label>
-            Мова
-            <select name="lang">
-              <option value="uk">Укр</option>
-              <option value="en">Англ</option>
-            </select>
-          </label>
-        </div>
+        <div className="flex"></div>
       </div>
     </header>
   );
