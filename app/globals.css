@@ -2,20 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-scroll::-webkit-scrollbar { 
-  width: 5px; 
-} 
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+}
 
-.custom-scroll::-webkit-scrollbar-track { 
-  background: #f1f1f1; 
+.custom-scroll::-webkit-scrollbar-track {
   margin-bottom: 8px;
-} 
+  background: #f1f1f1;
+}
 
-.custom-scroll::-webkit-scrollbar-thumb { 
-  background: #858E97; 
-  border-radius: 5px; 
-} 
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #858e97;
+}
 
-.custom-scroll::-webkit-scrollbar-thumb:hover { 
-  background: #485058; 
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #485058;
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Mak';
+    src: url('/fonts/MAK.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'NewMexika';
+    src: url('/fonts/NewMexika.ttf') format('truetype');
+  }
 }
