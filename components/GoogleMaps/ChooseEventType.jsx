@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { typeEvents } from "./temporaryTypesOfEvents";
+import { useEffect, useState } from 'react';
+import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
 
 // const eng = {
 //   label: "",
@@ -9,37 +9,41 @@ import { typeEvents } from "./temporaryTypesOfEvents";
 // };
 
 const ukr = {
-  label: "Оберіть тип події",
-  InputText: "Подія",
-  textIsEmpty: "Тут порожньо...",
+  label: 'Оберіть тип події',
+  InputText: 'Подія',
+  textIsEmpty: 'Тут порожньо...',
 };
 
-const ChooseEventType = () => {
+const ChooseEventType = ({ setEventType }) => {
   const [eventTypes, setEventTypes] = useState(typeEvents);
   const [hasFocus, setHasFocus] = useState(false);
   const [selectedEventTypes, setSelectedEventTypes] = useState([]);
   const [isListVisible, setIsListVisible] = useState(false);
 
+  useEffect(() => {
+    setEventType(selectedEventTypes);
+  }, [selectedEventTypes, setEventType]);
+
   const setColorToggleIcon =
     selectedEventTypes.length !== 0
       ? isListVisible
-        ? "stroke-gray/100"
-        : "stroke-gray/50"
+        ? 'stroke-gray/100'
+        : 'stroke-gray/50'
       : isListVisible
-      ? "stroke-gray/100"
-      : "stroke-gray/30";
+      ? 'stroke-gray/100'
+      : 'stroke-gray/30';
 
   const selectedEvents =
     selectedEventTypes.length !== 0 ? (
       <span
         className={`whitespace-nowrap ${
-          isListVisible ? "text-gray/100" : "text-gray/50"
+          isListVisible ? 'text-gray/100' : 'text-gray/50'
         }`}
       >
-        {selectedEventTypes.join(", ")}
+        {selectedEventTypes.join(', ')}
       </span>
     ) : (
-      <span className={`${isListVisible ? "text-gray/100" : "text-gray/30"}`}>
+      <span className={`${isListVisible ? 'text-gray/100' : 'text-gray/30'}`}>
         {ukr.InputText}
       </span>
     );
@@ -74,18 +78,17 @@ const ChooseEventType = () => {
     setIsListVisible(true);
   };
 
-  const handleChangeEvent = (e) => {
+  const handleChangeEvent = e => {
     const eventName = e.target.name;
 
     setHasFocus(true);
-    setSelectedEventTypes((prev) => {
+    setSelectedEventTypes(prev => {
       if (prev.includes(eventName)) {
-        return prev.filter((type) => type !== eventName);
+        return prev.filter(type => type !== eventName);
       } else {
         return [...prev, eventName];
       }
     });
-    console.log(selectedEventTypes);
   };
 
   return (
@@ -107,8 +110,8 @@ const ChooseEventType = () => {
             className={`transition-all flex gap-[5px] p-[10px] rounded-[8px] border-[1px] w-[164px] h-[44px]
             ${
               isListVisible
-                ? "rounded-bl-none rounded-br-none border-gray/80"
-                : "border-gray/20"
+                ? 'rounded-bl-none rounded-br-none border-gray/80'
+                : 'border-gray/20'
             }`}
           >
             <p className="select-none leading-[1.5] -tracking-[0.176px] truncate max-w-[113px] text-[16px]">
@@ -116,7 +119,7 @@ const ChooseEventType = () => {
             </p>
             <svg
               className={`transition-all  ${setColorToggleIcon} ${
-                isListVisible && "-rotate-180 "
+                isListVisible && '-rotate-180 '
               }`}
               width="24"
               height="24"
@@ -127,7 +130,7 @@ const ChooseEventType = () => {
 
           <ul
             className={`border-[1px] rounded-bl-[8px] rounded-br-[8px] border-t-0 bg-gray/5 border-gray/80  transition-all w-full absolute z-10 ${
-              isListVisible ? "opacity-100 visible" : "opacity-0 invisible"
+              isListVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
             }`}
           >
             {eventTypes.length === 0 ? (
@@ -135,7 +138,7 @@ const ChooseEventType = () => {
                 {ukr.textIsEmpty}
               </p>
             ) : (
-              eventTypes.map((event) => (
+              eventTypes.map(event => (
                 <li
                   className="last:border-none p-[10px] border-b-gray/50 border-b-[1px]"
                   key={event}
@@ -154,8 +157,8 @@ const ChooseEventType = () => {
                       <svg
                         className={`stroke-gray/50 transition-all ${
                           selectedEventTypes.includes(event)
-                            ? "opacity-100"
-                            : "opacity-0"
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         }`}
                         width={16}
                         height={16}
