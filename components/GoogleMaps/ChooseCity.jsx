@@ -1,14 +1,26 @@
 'use client'
-import { useState } from 'react';
-import { cityArr } from './temporaryCities'; 
+import { useState, useEffect } from 'react';
+import { cityArr } from './temporaryData/temporaryCities'; 
 import Image from 'next/image';
+import { cityCoordArr } from './temporaryData/temporaryCities_coordinate';
+ 
 
-function ChooseCity() {
+function ChooseCity({setCities}) {
   const [inputValue, setInputValue] = useState('');
+  const [isListVisible, setIsListVisible] = useState(false);
   const [filteredCities, setFilteredCities] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
-  const [isListVisible, setIsListVisible] = useState(false);
 
+
+
+  useEffect(()=>{
+    const citiesData = cityCoordArr.filter(cityObj => {
+      const cityName = Object.keys(cityObj)[0];
+      return selectedCities.includes(cityName);
+    });
+    setCities(citiesData || [])
+    
+  }, [selectedCities, setCities])
 
   function handleInputChange(event) {
     const value = event.target.value.toLowerCase();
@@ -24,6 +36,7 @@ function ChooseCity() {
   } else{
     setSelectedCities((prev) => [...prev, city ])  
   }
+
  }
 
  function handleFocus() {
