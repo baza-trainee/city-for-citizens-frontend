@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTheme } from "next-themes";
 import ThemeSwitcher from "./ThemeSwitcher";
 import LanguageSwitcher from "./LanguageSwitcher";
-import ArrowIcon from "../ArrowIcon";
+import IconSelectArrow from "../IconSelectArrow";
 
 const DropdownSwitcher = ({ content, options }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -18,8 +18,10 @@ const DropdownSwitcher = ({ content, options }) => {
       className="dropdown-block relative w-[89px] px-4 pb-1"
       onClick={toggleDropdown}
     >
-      <span className="title-switcher relative cursor-pointer">{content}</span>
-      <ArrowIcon
+      <span className="title-switcher relative cursor-pointer leading-normal">
+        {content}
+      </span>
+      <IconSelectArrow
         width="20"
         height="20"
         color={resolvedTheme === "dark" ? "gray/5" : "gray/100"}
@@ -28,7 +30,7 @@ const DropdownSwitcher = ({ content, options }) => {
         }`}
       />
       <div
-        className={`dropdown w-full absolute top-7 left-0 flex flex-col items-center gap-[10px] border rounded border-solid border-gray p-4 transition-opacity duration-300 
+        className={`dropdown w-full absolute top-7 left-0 flex flex-col items-center gap-[10px] border rounded-lg border-solid border-gray p-4 transition-opacity duration-300 
          ${isDropdownVisible ? "visible opacity-100" : "invisible opacity-0"} `}
       >
         {options}

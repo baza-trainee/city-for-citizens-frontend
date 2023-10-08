@@ -19,15 +19,12 @@ module.exports = {
       "gray/5": "#F6F6F6",
       "gray/0": "#FCFCFC",
     },
-    borderRadius: {
-      DEFAULT: "8px",
-    },
     extend: {
       textColor: {
-        active: "blue", // Ваш колір для активного стану
+        active: "#0D3BDD",
       },
       borderColor: {
-        active: "blue",
+        active: "#0D3BDD",
       },
     },
     screens: {

@@ -16,10 +16,9 @@ const ThemeSwitcher = () => {
       <button
         id="dark-mode"
         type="button"
-        className={`w-max h-5 ${
+        className={`w-max h-5 leading-normal ${
           theme === "dark" ? "border-b border-active text-active" : ""
         }`}
-        // className="text-center h-5"
         onClick={toggleDarkMode}
       >
         Темна
@@ -27,7 +26,7 @@ const ThemeSwitcher = () => {
       <button
         id="light-mode"
         type="button"
-        className={`h-5 w-max ${
+        className={`h-5 w-max leading-normal ${
           theme === "light" ? "border-b border-active text-active" : ""
         }`}
         onClick={toggleDarkMode}

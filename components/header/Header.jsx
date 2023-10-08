@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className="py-[35px] text-sm leading-6">
       <div className="container flex justify-center items-baseline ">
-        <Link className="mr-[33px] text-xl" href={"/"}>
+        <Link className="mr-[33px] text-xl leading-normal" href={"/"}>
           Місто для містян
         </Link>
         <div className="flex">
