@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import { useState } from 'react';
 import { uk } from 'date-fns/locale';
+import IconSelectArrow from '../IconSelectArrow';
 
 const activeDates = [
   '2023-10-10',
@@ -112,15 +113,13 @@ const DatePicker = () => {
             <p className="text-[16px] leading-[1.5] -tracking-[0.176px]">
               {selectedDateInputText}
             </p>
-            <svg
+            <IconSelectArrow
               className={`transition-all  ${setColorToggleIcon} ${
-                isDateVisible && '-rotate-180 '
+                isDateVisible && '-rotate-180'
               }`}
               width="24"
               height="24"
-            >
-              <use href="icons/sprite.svg#icon-select-toggle"></use>
-            </svg>
+            />
           </div>
 
           <div
