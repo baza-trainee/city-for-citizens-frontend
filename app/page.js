@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import Hero from "@/components/Hero";
 import FilteredMap from "@/components/GoogleMaps/FilteredMap";
 import Footer from "@/components/Footer";

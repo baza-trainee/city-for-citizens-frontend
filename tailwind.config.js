@@ -1,15 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],       
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     colors: {
       "primary/100": "#0D3BDD",
       "primary/80": "#6589E3",
-      "gray/100": "#272429",
+      "gray/100": "#121923",
       "gray/80": "#202529",
       "gray/50": "#485058",
       "gray/30": "#858E97",
@@ -17,9 +18,15 @@ module.exports = {
       "gray/10": "#DFE5EC",
       "gray/5": "#F6F6F6",
       "gray/0": "#FCFCFC",
-      "dark-blue": "#121923",
     },
-    extend: {},
+    extend: {
+      textColor: {
+        active: "#0D3BDD",
+      },
+      borderColor: {
+        active: "#0D3BDD",
+      },
+    },
     screens: {
       mobile: "320px",
       tablet: "768px",
@@ -34,4 +41,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
