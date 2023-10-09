@@ -7,20 +7,33 @@
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
   margin-bottom: 8px;
+
+  background: #f1f1f1;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: #858e97;
   border-radius: 5px;
+  background: #858e97;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #485058;
 }
 
+@layer base {
+  @font-face {
+    font-family: 'Mak';
+    src: url('/fonts/MAK.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'NewMexika';
+    src: url('/fonts/NewMexika.ttf') format('truetype');
+  }
+}
+
 .active {
-  color: primary/100;
   border-bottom: 1px solid primary/100;
+  color: primary/100;
 }
