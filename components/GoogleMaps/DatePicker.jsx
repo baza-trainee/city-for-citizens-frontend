@@ -29,10 +29,6 @@ const ukr = {
 
 const isDateActive = date => activeDates.includes(format(date, 'yyyy-MM-dd'));
 
-/**
-
- */
-
 const DatePicker = () => {
   const [hasFocus, setHasFocus] = useState(false);
   const [selectedDay, setSelectedDay] = useState();
@@ -90,12 +86,7 @@ const DatePicker = () => {
     }
     setIsDateVisible(false);
   };
-  //className={`transition-all flex gap-[5px] p-[10px] rounded-[8px] border-[1px] w-[164px] h-[44px]
-  // ${
-  //   isListVisible
-  //     ? 'rounded-bl-none rounded-br-none border-gray/80'
-  //     : 'border-gray/20'
-  // }`}
+
   return (
     <>
       <div className="relative">
@@ -150,7 +141,6 @@ const DatePicker = () => {
                 day: 'text-[12px] select-none',
                 day_selected: 'text-primary/100',
                 day_outside: 'text-gray/20 pointer-events-none',
-
                 day_disabled: 'text-gray/20 pointer-events-none',
               }}
               disabled={date => !isDateActive(date)}
