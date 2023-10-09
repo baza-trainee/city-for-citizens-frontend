@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore ."
   },
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
@@ -21,7 +22,9 @@
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "eslint-config-prettier": "^9.0.0",
     "postcss": "latest",
+    "prettier": "^3.0.3",
     "tailwindcss": "latest"
   }
 }

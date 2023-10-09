@@ -12,6 +12,10 @@
   background: #f1f1f1;
 }
 
+.dark .custom-scroll::-webkit-scrollbar-track {
+  background: #121923;
+}
+
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: #858e97;
