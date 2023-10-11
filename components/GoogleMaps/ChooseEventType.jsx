@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
+import IconSelectArrow from '../icons/IconSelectArrow';
+import IconCheckbox from '../icons/IconCheckbox';
 
 // const eng = {
 //   label: "",
@@ -125,15 +127,13 @@ const ChooseEventType = ({ setEventType }) => {
             <p className="select-none leading-[1.5] -tracking-[0.176px] truncate max-w-[113px] text-[16px]">
               {selectedEvents}
             </p>
-            <svg
+            <IconSelectArrow
               className={`transition-all  ${setColorSelectArrowIcon} ${
                 isListVisible && '-rotate-180 '
               }`}
               width="24"
               height="24"
-            >
-              <use href="icons/sprite.svg#icon-select-toggle"></use>
-            </svg>
+            />
           </div>
 
           <ul
@@ -162,7 +162,7 @@ const ChooseEventType = ({ setEventType }) => {
                       type="checkbox"
                     />
                     <div className="rounded-[4px] border-[1px] border-gray/50 dark:border-gray/10 flex justify-center items-center w-[24px] h-[24px]">
-                      <svg
+                      <IconCheckbox
                         className={`stroke-gray/50 dark:stroke-gray/10 transition-all ${
                           selectedEventTypes.includes(event)
                             ? 'opacity-100'
@@ -170,9 +170,7 @@ const ChooseEventType = ({ setEventType }) => {
                         }`}
                         width={16}
                         height={16}
-                      >
-                        <use href="icons/sprite.svg#icon-checkbox"></use>
-                      </svg>
+                      />
                     </div>
                   </label>
                 </li>
