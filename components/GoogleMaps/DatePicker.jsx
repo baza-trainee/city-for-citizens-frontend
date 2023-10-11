@@ -36,22 +36,34 @@ const DatePicker = () => {
   const [isDateVisible, setIsDateVisible] = useState(false);
 
   const selectedDateInputText = selectedDay ? (
-    <span className={`${isDateVisible ? 'text-gray/100 ' : 'text-gray/50'}`}>
+    <span
+      className={`${
+        isDateVisible
+          ? 'text-gray/100 dark:text-gray/5'
+          : 'text-gray/50 dark:text-gray/10'
+      }`}
+    >
       {format(selectedDay, 'dd/MM/yy')}
     </span>
   ) : (
-    <span className={`${isDateVisible ? 'text-gray/100' : 'text-gray/30'}`}>
+    <span
+      className={`${
+        isDateVisible
+          ? 'text-gray/100 dark:text-gray/5'
+          : 'text-gray/30 dark:text-gray/20'
+      }`}
+    >
       {ukr.InputText}
     </span>
   );
 
-  const setColorToggleIcon = selectedDay
+  const setColorSelectArrowIcon = selectedDay
     ? isDateVisible
-      ? 'stroke-gray/100'
-      : 'stroke-gray/50'
+      ? 'stroke-gray/100 dark:stroke-gray/5'
+      : 'stroke-gray/50 dark:stroke-gray/10'
     : isDateVisible
-    ? 'stroke-gray/100'
-    : 'stroke-gray/30';
+    ? 'stroke-gray/100 dark:stroke-gray/5'
+    : 'stroke-gray/30 dark:stroke-gray/20';
 
   const handleDateChange = date => {
     setSelectedDay(date);
@@ -91,7 +103,7 @@ const DatePicker = () => {
   return (
     <>
       <div className="relative">
-        <p className="text-gray/100 text-[14px] leading-[1.5] -tracking-[0.154px] mb-[8px]">
+        <p className="text-gray/100 dark:text-gray/5 text-[14px] leading-[1.5] -tracking-[0.154px] mb-[8px]">
           {ukr.label}
         </p>
         <div
@@ -106,7 +118,7 @@ const DatePicker = () => {
             className={`transition-all flex gap-[5px] p-[10px] rounded-[8px] border-black border-[1px]   w-[164px] h-[44px]
               ${
                 isDateVisible
-                  ? 'rounded-bl-none rounded-br-none border-gray/80'
+                  ? 'rounded-bl-none rounded-br-none border-gray/80 dark:border-gray/5'
                   : 'border-gray/20'
               } `}
           >
@@ -114,7 +126,7 @@ const DatePicker = () => {
               {selectedDateInputText}
             </p>
             <IconSelectArrow
-              className={`transition-all  ${setColorToggleIcon} ${
+              className={`transition-all  ${setColorSelectArrowIcon} ${
                 isDateVisible && '-rotate-180'
               }`}
               width="24"
@@ -123,24 +135,30 @@ const DatePicker = () => {
           </div>
 
           <div
-            className={`p-[10px] border-[1px] rounded-bl-[8px] rounded-br-[8px] border-t-0 bg-gray/5 border-gray/100  transition-all w-full absolute z-10 ${
-              isDateVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
-            }`}
+            className={`p-[10px] border-[1px] rounded-bl-[8px] rounded-br-[8px] border-t-0 bg-gray/5 
+            dark:bg-gray/100 dark:border-gray/5
+             border-gray/100  transition-all w-full absolute z-10 ${
+               isDateVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
+             }`}
           >
             <DayPicker
               locale={uk}
               mode="single"
               showOutsideDays
               classNames={{
-                root: 'text-gray/80 w-full',
+                root: 'text-gray/80 dark:text-gray/5 w-full',
                 caption: 'hidden',
                 table: 'w-full',
                 head_cell: 'text-[12px] font-normal select-none capitalize',
-                cell: 'p-0 text-center hover:text-primary/100',
+                cell: 'p-0 text-center  ',
+                button:
+                  'block w-full h-[20px] hover:text-primary/100 hover:dark:text-primary/80',
                 day: 'text-[12px] select-none',
-                day_selected: 'text-primary/100',
-                day_outside: 'text-gray/20 pointer-events-none',
-                day_disabled: 'text-gray/20 pointer-events-none',
+                day_selected: 'text-primary/100 dark:text-primary/80',
+                day_outside:
+                  'text-gray/20 dark:text-gray/50 pointer-events-none',
+                day_disabled:
+                  'text-gray/20 dark:text-gray/50 pointer-events-none',
               }}
               disabled={date => !isDateActive(date)}
               selected={selectedDay}
