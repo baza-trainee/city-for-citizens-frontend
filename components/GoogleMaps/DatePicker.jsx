@@ -4,10 +4,9 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import { useState } from 'react';
 import { uk } from 'date-fns/locale';
-import IconSelectArrow from '../IconSelectArrow';
+import IconSelectArrow from '../icons/IconSelectArrow';
 import FilterInputWrapper from './FilterInputWrapper';
-import IconReset from '../IconReset';
-
+import IconReset from '../icons/IconReset';
 const activeDates = [
   '2023-10-10',
   '2023-10-15',
