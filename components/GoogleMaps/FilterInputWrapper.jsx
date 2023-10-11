@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 const FilterInputWrapper = ({
@@ -13,10 +15,11 @@ const FilterInputWrapper = ({
   const [hasFocus, setHasFocus] = useState(false);
 
   useEffect(() => {
-    setHasFocus(inputText ? true : false);
+    console.log('inputText:', inputText);
   }, [inputText]);
 
   const handleInputClick = () => {
+    console.log('hasFocus:', hasFocus);
     if (hasFocus) {
       setIsVisible(false);
       setHasFocus(false);
@@ -50,23 +53,35 @@ const FilterInputWrapper = ({
     setIsVisible(false);
   };
 
+  const selectedInputText = inputText ? (
+    <span
+      className={`${
+        isVisible
+          ? 'text-gray/100 dark:text-gray/5'
+          : 'text-gray/50 dark:text-gray/10'
+      }`}
+    >
+      {inputText}
+    </span>
+  ) : (
+    <span
+      className={`${
+        isVisible
+          ? 'text-gray/100 dark:text-gray/5'
+          : 'text-gray/30 dark:text-gray/20'
+      }`}
+    >
+      {inputTextDefault}
+    </span>
+  );
+
   const setColor = inputText
     ? isVisible
-      ? 'gray/100'
-      : 'gray/50'
+      ? 'stroke-gray/100 dark:stroke-gray/5'
+      : 'stroke-gray/50 dark:stroke-gray/10'
     : isVisible
-    ? 'gray/100'
-    : 'gray/30';
-
-  const setColorDark = inputText
-    ? isVisible
-      ? 'gray/5'
-      : 'gray/10'
-    : isVisible
-    ? 'gray/5'
-    : 'gray/20';
-
-  const setClassNameIcon = `cursor-pointer transition-all  stroke-${setColor} dark:stroke-${setColorDark}`;
+    ? 'stroke-gray/100 dark:stroke-gray/5'
+    : 'stroke-gray/30 dark:stroke-gray/20';
 
   return (
     <div className="relative">
@@ -89,20 +104,22 @@ const FilterInputWrapper = ({
           }`}
         >
           <p
-            className={`select-none leading-[1.5] -tracking-[0.176px] truncate max-w-[113px] text-[16px] whitespace-nowrap text-${setColor} dark:text-${setColorDark}`}
+            className={`select-none leading-[1.5] -tracking-[0.176px] truncate max-w-[113px] text-[16px] whitespace-nowrap `}
           >
-            {inputTextDefault || inputText}
+            {selectedInputText}
           </p>
           {IconSelect && (
             <IconSelect
-              className={`${setClassNameIcon} ${isVisible && '-rotate-180'}`}
+              className={`cursor-pointer transition-all ${setColor} ${
+                isVisible ? '-rotate-180' : ''
+              }`}
             />
           )}
 
           {IconReset && inputText && (
             <IconReset
               onClick={handleResetButton}
-              className={`${setClassNameIcon} ml-auto hover:-rotate-180`}
+              className={`cursor-pointer transition-all ${setColor} ml-auto hover:-rotate-180`}
             />
           )}
         </div>

@@ -39,15 +39,17 @@ export const DatePicker = () => {
   const isDateActive = date => activeDates.includes(format(date, 'yyyy-MM-dd'));
 
   const handleDateChange = date => {
-    console.log('date:', date);
     setSelectedDay(date);
   };
+
+  const inputText = selectedDay ? format(selectedDay, 'dd/MM/yy') : '';
+
   return (
     <>
       <FilterInputWrapper
         label={ukr.label}
         inputTextDefault={selectedDay ? '' : ukr.InputText}
-        inputText={selectedDay ? format(selectedDay, 'dd/MM/yy') : ''}
+        inputText={inputText}
         iconSelect={IconSelectArrow}
         iconReset={IconReset}
         handleResetButton={handleResetButton}

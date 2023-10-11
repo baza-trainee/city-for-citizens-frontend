@@ -54,7 +54,7 @@ const ChooseEventType = ({ setEventType }) => {
                 className="last:border-none p-[10px]   border-b-gray/50 dark:border-gray/10 border-b-[1px]"
                 key={event}
               >
-                <label className="flex justify-between">
+                <label className="cursor-pointer flex justify-between">
                   <span className="select-none text-gray/50 dark:text-gray/10  leading-[1.5] -tracking-[0.176px] text-[16px]">
                     {event}
                   </span>
