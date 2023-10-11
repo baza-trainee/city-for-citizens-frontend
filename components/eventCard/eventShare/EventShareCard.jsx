@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import Rectangle from '../../../public/icons/Rectangle.svg';
-import iconCopy from '../../../public/icons/iconCopy.svg';
+import IconCopy from '@/components/UI/buttons/IconCopy';
+import IconTriangle from '@/components/UI/IconTriangle';
 
 const EventShareComp = () => {
   return (
@@ -12,15 +11,10 @@ const EventShareComp = () => {
       >
         https://harmonyfest/en/events
       </Link>
-
       <div className="cursor-pointer">
-        <Image src={iconCopy} alt="Copy icon" />
+        <IconCopy className="stroke-primary/100 dark:stroke-gray/5" />
       </div>
-      <Image
-        src={Rectangle}
-        alt="Rectangle"
-        className="absolute top-[-9px] right-[40px]"
-      />
+      <IconTriangle className="absolute top-[-9px] right-[40px] w-[18px] h-[9px] stroke-gray/100 dark:stroke-gray/5" />
     </div>
   );
 };
