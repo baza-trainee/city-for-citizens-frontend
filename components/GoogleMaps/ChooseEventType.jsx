@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
-import IconSelectArrow from '../IconSelectArrow';
-import IconCheckbox from '../IconCheckbox';
+import IconSelectArrow from '../icons/IconSelectArrow';
+import IconCheckbox from '../icons/IconCheckbox';
 
 // const eng = {
 //   label: "",

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import ThemeSwitcher from './ThemeSwitcher';
 import LanguageSwitcher from './LanguageSwitcher';
-import IconSelectArrow from '../IconSelectArrow';
+import IconSelectArrow from '../icons/IconSelectArrow';
 
 const DropdownSwitcher = ({ content, options }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);

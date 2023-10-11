@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import { useState } from 'react';
 import { uk } from 'date-fns/locale';
-import IconSelectArrow from '../IconSelectArrow';
+import IconSelectArrow from '../icons/IconSelectArrow';
 
 const activeDates = [
   '2023-10-10',
