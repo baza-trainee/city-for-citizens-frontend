@@ -5,16 +5,39 @@ import ChooseCity from './ChooseCity';
 import DatePicker from './DatePicker';
 import ChooseEventType from './ChooseEventType';
 import Map from './Map';
+import { cityArr } from './temporaryData/temporaryCities';
+
+//TODO: change server Url
+//const serverUrl = 'http://localhost:4000/filters';
+const serverUrl =
+  'https://7l55nnhl-4000.euw.devtunnels.ms/api/filters?locale=uk_UA';
 
 function FilteredMap() {
   const [chooseCities, setChooseCities] = useState([]);
   const [chooseDate, setChooseDate] = useState([]);
   const [chooseEventType, setChooseEventType] = useState([]);
+  const [serverData, setServerData] = useState({});
 
+  useEffect(() => {
+    fetch(`${serverUrl}`)
+      .then(res => res.json())
+      .then(data => {
+        //TODO: delete mock Data: cityArr
+        setServerData(data || cityArr);
+      });
+  }, []);
   return (
     <>
       <section className="relative z-10 flex justify-center gap-5 mt-11 mb-[29px]">
-        <ChooseCity setCities={setChooseCities} />
+        {console.log('serverData in return', serverData)}
+        <ChooseCity
+          setCities={setChooseCities}
+          serverCity={
+            serverData.eventCities && serverData.eventCities.length > 0
+              ? serverData.eventCities
+              : []
+          }
+        />
         <DatePicker />
         <ChooseEventType setEventType={setChooseEventType} />
       </section>
