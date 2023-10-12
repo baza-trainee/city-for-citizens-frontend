@@ -22,8 +22,7 @@ function FilteredMap() {
     fetch(`${serverUrl}`)
       .then(res => res.json())
       .then(data => {
-        //TODO: delete mock Data: cityArr
-        setServerData(data || cityArr);
+        setServerData(data);
       });
   }, []);
   return (
@@ -32,10 +31,11 @@ function FilteredMap() {
         {console.log('serverData in return', serverData)}
         <ChooseCity
           setCities={setChooseCities}
+          //TODO: delete mock Data: cityArr
           serverCity={
             serverData.eventCities && serverData.eventCities.length > 0
               ? serverData.eventCities
-              : []
+              : cityArr
           }
         />
         <DatePicker />
