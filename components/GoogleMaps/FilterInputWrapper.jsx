@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const FilterInputWrapper = ({
   label,
   inputTextDefault,
-  inputText,
+  inputTextFirst,
+  inputTextSecond,
   children,
   iconSelect: IconSelect,
   iconReset: IconReset,
@@ -14,12 +15,9 @@ const FilterInputWrapper = ({
   const [isVisible, setIsVisible] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
 
-  useEffect(() => {
-    console.log('inputText:', inputText);
-  }, [inputText]);
+  const selectedInputText = [inputTextDefault, inputTextFirst, inputTextSecond];
 
   const handleInputClick = () => {
-    console.log('hasFocus:', hasFocus);
     if (hasFocus) {
       setIsVisible(false);
       setHasFocus(false);
@@ -33,13 +31,13 @@ const FilterInputWrapper = ({
     setHasFocus(true);
   };
 
+  const handleFocus = () => {
+    setIsVisible(true);
+  };
+
   const handleLostFocus = () => {
     setIsVisible(false);
     setHasFocus(false);
-  };
-
-  const handleFocus = () => {
-    setIsVisible(true);
   };
 
   const handleMouseHover = () => {
@@ -53,35 +51,26 @@ const FilterInputWrapper = ({
     setIsVisible(false);
   };
 
-  const selectedInputText = inputText ? (
-    <span
-      className={`${
-        isVisible
-          ? 'text-gray/100 dark:text-gray/5'
-          : 'text-gray/50 dark:text-gray/10'
-      }`}
-    >
-      {inputText}
-    </span>
-  ) : (
-    <span
-      className={`${
-        isVisible
-          ? 'text-gray/100 dark:text-gray/5'
-          : 'text-gray/30 dark:text-gray/20'
-      }`}
-    >
-      {inputTextDefault}
-    </span>
-  );
+  const setTextColor = inputTextDefault
+    ? isVisible
+      ? 'text-gray/100 dark:text-gray/5'
+      : 'text-gray/30 dark:text-gray/20'
+    : isVisible
+    ? 'text-gray/100 dark:text-gray/5'
+    : 'text-gray/50 dark:text-gray/10';
 
-  const setColor = inputText
+  const setIconColor = inputTextDefault
     ? isVisible
       ? 'stroke-gray/100 dark:stroke-gray/5'
-      : 'stroke-gray/50 dark:stroke-gray/10'
+      : 'stroke-gray/30 dark:stroke-gray/20'
     : isVisible
     ? 'stroke-gray/100 dark:stroke-gray/5'
-    : 'stroke-gray/30 dark:stroke-gray/20';
+    : 'stroke-gray/50 dark:stroke-gray/10';
+
+  const commonStyles = {
+    text: `max-w-[346px] select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[232px] desktop:max-w-[113px]`,
+    icon: `cursor-pointer transition-all ${setIconColor} `,
+  };
 
   return (
     <div className="relative">
@@ -97,35 +86,43 @@ const FilterInputWrapper = ({
       >
         <div
           onClick={handleInputClick}
-          className={`flex h-[44px] w-[164px] gap-[5px] rounded-[8px] border-[1px] p-[10px] transition-all ${
+          className={`flex h-[44px] gap-[10px] rounded-[8px] border-[1px] p-[10px] transition-all tablet:w-[264px] ${
             isVisible
               ? 'rounded-bl-none rounded-br-none border-gray/80 dark:border-gray/5'
               : 'border-gray/20'
           }`}
         >
-          <p
-            className={`select-none leading-[1.5] -tracking-[0.176px] truncate max-w-[113px] text-[16px] whitespace-nowrap `}
-          >
-            {selectedInputText}
-          </p>
-          {IconSelect && (
-            <IconSelect
-              className={`cursor-pointer transition-all ${setColor} ${
-                isVisible ? '-rotate-180' : ''
-              }`}
-            />
+          {selectedInputText.map(
+            (inputText, index) =>
+              inputText && (
+                <div
+                  className="flex justify-between gap-[5px] tablet:justify-normal"
+                  key={inputText + index}
+                >
+                  <p className={commonStyles.text}>{inputText}</p>
+                  <IconSelect
+                    width={24}
+                    height={24}
+                    className={`${commonStyles.icon} ${
+                      isVisible ? '-rotate-180' : ''
+                    }`}
+                  />
+                </div>
+              )
           )}
 
-          {IconReset && inputText && (
+          {IconReset && inputTextFirst && (
             <IconReset
+              width={24}
+              height={24}
               onClick={handleResetButton}
-              className={`cursor-pointer transition-all ${setColor} ml-auto hover:-rotate-180`}
+              className={`${commonStyles.icon} ml-auto hover:-rotate-180`}
             />
           )}
         </div>
         <div
           onClick={handleContentClick}
-          className={`absolute z-10 w-full rounded-bl-[8px] rounded-br-[8px] border-[1px] border-t-0 border-gray/100 bg-gray/5  transition-all dark:border-gray/5 dark:bg-gray/100 ${
+          className={`absolute z-10 w-full rounded-bl-[8px] rounded-br-[8px] border-[1px] border-t-0 border-gray/100 bg-gray/0 transition-all  dark:border-gray/5 dark:bg-gray/100 tablet:bg-gray/5 ${
             isVisible ? 'visible opacity-100' : 'invisible opacity-0'
           }`}
         >

@@ -12,11 +12,12 @@ import FilterInputWrapper from './FilterInputWrapper';
 
 const ukr = {
   label: 'Оберіть тип події',
-  InputText: 'Подія',
+  inputText: 'Подія',
   textIsEmpty: 'Тут порожньо...',
 };
 const ChooseEventType = ({ setEventType }) => {
   const [selectedEventTypes, setSelectedEventTypes] = useState([]);
+
   useEffect(() => {
     setEventType(selectedEventTypes);
   }, [selectedEventTypes, setEventType]);
@@ -33,29 +34,30 @@ const ChooseEventType = ({ setEventType }) => {
     });
   };
 
+  const selectedTypesIsEmpty = selectedEventTypes.length !== 0;
   return (
     <div>
       <FilterInputWrapper
         label={ukr.label}
-        inputTextDefault={selectedEventTypes.length !== 0 ? '' : ukr.InputText}
-        inputText={
-          selectedEventTypes.length !== 0 ? selectedEventTypes.join(', ') : ''
+        inputTextDefault={selectedTypesIsEmpty ? '' : ukr.inputText}
+        inputTextFirst={
+          selectedTypesIsEmpty ? selectedEventTypes.join(', ') : ''
         }
         iconSelect={IconSelectArrow}
       >
-        <ul className="">
+        <ul className="custom-scroll max-h-[300px] overflow-y-auto">
           {typeEvents.length === 0 ? (
-            <p className="p-[10px] text-gray/50 dark:text-gray/10 leading-[1.5] -tracking-[0.176px] text-[16px]">
+            <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
               {ukr.textIsEmpty}
             </p>
           ) : (
             typeEvents.map(event => (
               <li
-                className="last:border-none p-[10px]   border-b-gray/50 dark:border-gray/10 border-b-[1px]"
+                className="border-b-[1px] border-b-gray/50   p-[10px] last:border-none dark:border-gray/10"
                 key={event}
               >
-                <label className="cursor-pointer flex justify-between">
-                  <span className="select-none text-gray/50 dark:text-gray/10  leading-[1.5] -tracking-[0.176px] text-[16px]">
+                <label className="flex cursor-pointer justify-between">
+                  <span className="select-none text-[16px] leading-[1.5] -tracking-[0.176px]  text-gray/50 dark:text-gray/10 desktop:w-[112px]">
                     {event}
                   </span>
                   <input
@@ -64,9 +66,9 @@ const ChooseEventType = ({ setEventType }) => {
                     onChange={handleChangeEvent}
                     type="checkbox"
                   />
-                  <div className="rounded-[4px] border-[1px] border-gray/50 dark:border-gray/10 flex justify-center items-center w-[24px] h-[24px]">
+                  <div className="flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border-[1px] border-gray/50 dark:border-gray/10">
                     <IconCheckbox
-                      className={`stroke-gray/50 dark:stroke-gray/10 transition-all ${
+                      className={`stroke-gray/50 transition-all dark:stroke-gray/10 ${
                         selectedEventTypes.includes(event)
                           ? 'opacity-100'
                           : 'opacity-0'
