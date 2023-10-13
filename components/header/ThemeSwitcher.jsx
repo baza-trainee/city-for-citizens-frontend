@@ -16,8 +16,8 @@ const ThemeSwitcher = () => {
       <button
         id="dark-mode"
         type="button"
-        className={`w-max h-5 leading-normal ${
-          theme === 'dark' ? 'border-b border-active text-active' : ''
+        className={`w-full p-2.5 tablet:h-5 border-t border-gray/80 leading-normal max-tablet:text-left tablet:w-max ${
+          theme === 'dark' ? 'border-b border-active tablet:text-active' : ''
         }`}
         onClick={toggleDarkMode}
       >
@@ -26,8 +26,10 @@ const ThemeSwitcher = () => {
       <button
         id="light-mode"
         type="button"
-        className={`h-5 w-max leading-normal ${
-          theme === 'light' ? 'border-b border-active text-active' : ''
+        className={`w-full p-2.5 tablet:h-5 leading-normal border-t border-gray/80 max-tablet:text-left tablet:w-max ${
+          theme === 'light'
+            ? 'tablet:border-b border-active tablet:text-active'
+            : ''
         }`}
         onClick={toggleDarkMode}
       >

@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-[35px] relative text-sm leading-6 bg-gray/5 text-gray/20 tablet:text-gray/100 dark:bg-gray/100 dark:text-gray/5 max-tablet:py-1.5">
+    <header className="py-[35px] relative text-sm leading-6 bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5 max-tablet:py-1.5">
       <div className="container flex justify-center gap-[50px] items-baseline max-tablet:justify-end max-tablet:max-w-full">
         <Link
           className="hidden tablet:inline-block text-xl leading-normal"

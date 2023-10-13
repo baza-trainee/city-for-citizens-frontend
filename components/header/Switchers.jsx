@@ -37,27 +37,42 @@ const DropdownSwitcher = ({ content, options }) => {
 
   return (
     <div
-      className="dropdown-block flex justify-between flex-wrap text-base p-2.5 first:mb-4
-       border border-gray/10 rounded-lg relative tablet:w-[89px] tablet:px-4 tablet:pb-1"
+      className={`dropdown-block  text-base first:mb-4
+       border  rounded-lg relative tablet:w-[89px] tablet:px-4 tablet:pb-1
+       ${
+         isDropdownVisible
+           ? 'border-gray/80 text-gray/80'
+           : 'border-gray/10 text-gray/20'
+       }`}
       onClick={toggleDropdown}
     >
-      <span className="title-switcher relative cursor-pointer leading-normal">
-        {content}
-      </span>
-      <IconSelectArrow
-        width={screenSize === 'mobile' ? '20px' : '24px'}
-        height={screenSize === 'mobile' ? '20px' : '24px'}
-        className={`inline-block ml-1 transition-transform duration-300 
+      <div className="flex justify-between p-2.5">
+        <span className="title-switcher relative cursor-pointer leading-normal">
+          {content}
+        </span>
+        <IconSelectArrow
+          width={screenSize === 'mobile' ? '20px' : '24px'}
+          height={screenSize === 'mobile' ? '20px' : '24px'}
+          className={`inline-block ml-1 transition-transform duration-300 
         ${
           resolvedTheme === 'dark'
             ? 'stroke-gray/5'
-            : 'stroke-gray/20 tablet:stroke-gray/100'
+            : `${
+                isDropdownVisible ? 'stroke-gray/80' : 'stroke-gray/20'
+              } tablet:stroke-gray/100`
         }
         ${isDropdownVisible ? 'transform rotate-180' : ''}`}
-      />
+        />
+      </div>
+
       <div
-        className={`dropdown w-full  top-7 left-0 flex flex-col items-center gap-[10px] tablet:rounded-lg border-solid border-gray p-4 transition-opacity duration-300 
-         ${isDropdownVisible ? 'visible opacity-100' : 'invisible opacity-0'} `}
+        className={`dropdown w-full  top-7 left-0 flex flex-col items-start
+         tablet:items-center tablet:gap-[10px] tablet:rounded-lg border-solid border-gray tablet:p-4 transition-opacity duration-300 
+         ${
+           isDropdownVisible
+             ? 'visible opacity-100 h-[88px]'
+             : 'invisible opacity-0 h-0'
+         } `}
       >
         {options}
       </div>
