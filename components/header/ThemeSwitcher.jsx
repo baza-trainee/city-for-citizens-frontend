@@ -1,14 +1,14 @@
-"use client";
-import { useTheme } from "next-themes";
+'use client';
+import { useTheme } from 'next-themes';
 
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
-  const toggleDarkMode = (e) => {
-    if (e.target.id === "dark-mode") {
-      setTheme("dark");
+  const toggleDarkMode = e => {
+    if (e.target.id === 'dark-mode') {
+      setTheme('dark');
     } else {
-      setTheme("light");
+      setTheme('light');
     }
   };
   return (
@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
         id="dark-mode"
         type="button"
         className={`w-max h-5 leading-normal ${
-          theme === "dark" ? "border-b border-active text-active" : ""
+          theme === 'dark' ? 'border-b border-active text-active' : ''
         }`}
         onClick={toggleDarkMode}
       >
@@ -27,7 +27,7 @@ const ThemeSwitcher = () => {
         id="light-mode"
         type="button"
         className={`h-5 w-max leading-normal ${
-          theme === "light" ? "border-b border-active text-active" : ""
+          theme === 'light' ? 'border-b border-active text-active' : ''
         }`}
         onClick={toggleDarkMode}
       >
