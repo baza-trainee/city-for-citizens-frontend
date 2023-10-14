@@ -3,14 +3,12 @@
 import { useState } from 'react';
 
 const FilterInputWrapper = ({
-  label,
+  inputLabel,
+  children,
   inputTextDefault,
   inputTextFirst,
   inputTextSecond,
-  children,
   iconSelect: IconSelect,
-  iconReset: IconReset,
-  handleResetButton,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
@@ -27,10 +25,6 @@ const FilterInputWrapper = ({
     }
   };
 
-  const handleContentClick = () => {
-    setHasFocus(true);
-  };
-
   const handleFocus = () => {
     setIsVisible(true);
   };
@@ -38,17 +32,6 @@ const FilterInputWrapper = ({
   const handleLostFocus = () => {
     setIsVisible(false);
     setHasFocus(false);
-  };
-
-  const handleMouseHover = () => {
-    setIsVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (hasFocus) {
-      return;
-    }
-    setIsVisible(false);
   };
 
   const setTextColor = inputTextDefault
@@ -68,25 +51,19 @@ const FilterInputWrapper = ({
     : 'stroke-gray/50 dark:stroke-gray/10';
 
   const commonStyles = {
-    text: `max-w-[346px] select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[232px] desktop:max-w-[113px]`,
-    icon: `cursor-pointer transition-all ${setIconColor} `,
+    text: `max-w-[87%] mobile:max-w-[346px] select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[212px] desktop:max-w-[112px]`,
+    icon: `w-[24px] h-[24px] cursor-pointer transition-all ${setIconColor} `,
   };
 
   return (
     <div className="relative">
       <p className="mb-[8px] text-[14px] leading-[1.5] -tracking-[0.154px] text-gray/100 dark:text-gray/5">
-        {label}
+        {inputLabel}
       </p>
-      <div
-        tabIndex="0"
-        onFocus={handleFocus}
-        onBlur={handleLostFocus}
-        onMouseEnter={handleMouseHover}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div tabIndex="0" onFocus={handleFocus} onBlur={handleLostFocus}>
         <div
           onClick={handleInputClick}
-          className={`flex h-[44px] gap-[10px] rounded-[8px] border-[1px] p-[10px] transition-all tablet:w-[264px] ${
+          className={`flex h-[44px] gap-[50px] rounded-[8px] border-[1px] p-[10px] transition-all tablet:gap-[20px] desktop:gap-[30px] ${
             isVisible
               ? 'rounded-bl-none rounded-br-none border-gray/80 dark:border-gray/5'
               : 'border-gray/20'
@@ -96,7 +73,7 @@ const FilterInputWrapper = ({
             (inputText, index) =>
               inputText && (
                 <div
-                  className="flex justify-between gap-[5px] tablet:justify-normal"
+                  className="flex w-full justify-between"
                   key={inputText + index}
                 >
                   <p className={commonStyles.text}>{inputText}</p>
@@ -110,18 +87,8 @@ const FilterInputWrapper = ({
                 </div>
               )
           )}
-
-          {IconReset && inputTextFirst && (
-            <IconReset
-              width={24}
-              height={24}
-              onClick={handleResetButton}
-              className={`${commonStyles.icon} ml-auto hover:-rotate-180`}
-            />
-          )}
         </div>
         <div
-          onClick={handleContentClick}
           className={`absolute z-10 w-full rounded-bl-[8px] rounded-br-[8px] border-[1px] border-t-0 border-gray/100 bg-gray/0 transition-all  dark:border-gray/5 dark:bg-gray/100 tablet:bg-gray/5 ${
             isVisible ? 'visible opacity-100' : 'invisible opacity-0'
           }`}

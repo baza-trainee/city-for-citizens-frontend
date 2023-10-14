@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
+
 import IconSelectArrow from '../icons/IconSelectArrow';
 import IconCheckbox from '../icons/IconCheckbox';
+
 import FilterInputWrapper from './FilterInputWrapper';
+import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
+
 // const eng = {
 //   label: "",
 //   InputText: "",
@@ -36,9 +39,9 @@ const ChooseEventType = ({ setEventType }) => {
 
   const selectedTypesIsEmpty = selectedEventTypes.length !== 0;
   return (
-    <div>
+    <div className="tablet:w-[264px] desktop:w-[164px]">
       <FilterInputWrapper
-        label={ukr.label}
+        inputLabel={ukr.label}
         inputTextDefault={selectedTypesIsEmpty ? '' : ukr.inputText}
         inputTextFirst={
           selectedTypesIsEmpty ? selectedEventTypes.join(', ') : ''
