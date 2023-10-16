@@ -1,0 +1,14 @@
+{
+  "Hero": {
+    "title": "Hello world!",
+    "subtitle": "Open. Feel. Relax."
+  },
+  "Switchers": {
+    "titleTheme": "Theme",
+    "titleLang": "Lang"
+  },
+  "ThemeSwitcher": {
+    "switcherDark": "Dark",
+    "switcherLight": "Light"
+  }
+}
