@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 import ChooseCity from './ChooseCity';
-import DatePicker from './DatePicker';
+import DatePicker from './DatePicker/DatePicker';
 import ChooseEventType from './ChooseEventType';
 import Map from './Map';
 import { cityArr } from './temporaryData/temporaryCities';
@@ -127,7 +127,8 @@ function FilteredMap() {
   }, [chooseCities, chooseDate, chooseEventType]);
   return (
     <>
-      <section className="relative z-10 mb-[29px] mt-11 flex justify-center gap-5">
+      <section className="container relative z-10 mb-[29px] mt-11 flex flex-col justify-center gap-5 tablet:flex-row">
+        {console.log('serverData in return', serverData)}
         <ChooseCity
           setCities={setChooseCities}
           //TODO: delete mock Data: cityArr
@@ -138,8 +139,9 @@ function FilteredMap() {
           }
         />
         <DatePicker
-        //available event dates from server:
-        //serverDates={serverData.eventDates}
+          //available event dates from server:
+          //serverDates={serverData.eventDates}
+          setDate={setChooseDate}
         />
         <ChooseEventType
           setEventType={setChooseEventType}
