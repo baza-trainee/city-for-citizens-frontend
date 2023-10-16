@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { cityCoordArr } from './temporaryData/temporaryCities_coordinate';
 
 const ukr = {
   label: 'Оберіть місто',
@@ -14,11 +13,7 @@ function ChooseCity({ serverCity, setCities }) {
   const [selectedCities, setSelectedCities] = useState([]);
 
   useEffect(() => {
-    const citiesData = cityCoordArr.filter(cityObj => {
-      const cityName = Object.keys(cityObj)[0];
-      return selectedCities.includes(cityName);
-    });
-    setCities(citiesData || []);
+    setCities(selectedCities || []);
   }, [selectedCities, setCities]);
 
   function handleInputChange(event) {
@@ -42,7 +37,6 @@ function ChooseCity({ serverCity, setCities }) {
 
   function handleFocus() {
     if (!inputValue) {
-      console.log('serverCity', serverCity);
       setFilteredCities(serverCity);
       setIsListVisible(true);
     }
@@ -60,8 +54,8 @@ function ChooseCity({ serverCity, setCities }) {
 
   return (
     <>
-      <div onMouseLeave={handleMouseLive} className="flex flex-col w-[164px]">
-        <label htmlFor="city" className="block mb-2">
+      <div onMouseLeave={handleMouseLive} className="flex w-[164px] flex-col">
+        <label htmlFor="city" className="mb-2 block">
           {ukr.label}
         </label>
         <input
@@ -74,8 +68,8 @@ function ChooseCity({ serverCity, setCities }) {
           onMouseOver={handleMouseOver}
           onFocus={handleFocus}
           autoComplete="off"
-          className={`relative z-10 pl-2 h-11 rounded-[8px] focus:outline-none border border-gray/20
-        placeholder-gray/30 dark:placeholder-gray/20 placeholder:w-[130px] text-ellipsis text-gray/80 bg-gray/5 dark:bg-gray/100
+          className={`relative z-10 h-11 text-ellipsis rounded-[8px] border border-gray/20 bg-gray/5
+        pl-2 text-gray/80 placeholder-gray/30 placeholder:w-[130px] focus:outline-none dark:bg-gray/100 dark:placeholder-gray/20
         ${
           isListVisible
             ? 'rounded-none rounded-t-lg border-gray/50 dark:border-gray/10 dark:text-gray/10'
@@ -85,24 +79,24 @@ function ChooseCity({ serverCity, setCities }) {
 
         {isListVisible && (
           <ul
-            className="custom-scroll absolute top-[75px] w-[164px] max-h-[300px] overflow-y-auto
-       bg-gray/5 border rounded-b-lg border-gray/50  dark:bg-gray/100 dark:border-gray/10 dark:text-gray/10 dark:dark-scroll"
+            className="custom-scroll dark:dark-scroll absolute top-[75px] max-h-[300px] w-[164px]
+       overflow-y-auto rounded-b-lg border border-gray/50  bg-gray/5 dark:border-gray/10 dark:bg-gray/100 dark:text-gray/10"
           >
             {filteredCities.map(city => (
               <li
                 key={city}
-                className="flex py-0 px-2 list-none justify-between h-11 items-center border-b
-          border-gray/50 dark:border-gray/10 last:border-b-0"
+                className="flex h-11 list-none items-center justify-between border-b border-gray/50 px-2
+          py-0 last:border-b-0 dark:border-gray/10"
               >
                 {city}
                 <div
                   onClick={e => toggleCheck(city, e.target)}
                   data-city={city}
-                  className="flex w-6 h-6 
-            rounded border border-gray/50 dark:border-gray/10 justify-center items-center"
+                  className="flex h-6 w-6 
+            items-center justify-center rounded border border-gray/50 dark:border-gray/10"
                 >
                   <svg
-                    className={`stroke-gray/50 dark:stroke-gray/20 transition-all ${
+                    className={`stroke-gray/50 transition-all dark:stroke-gray/20 ${
                       selectedCities.includes(city)
                         ? 'opacity-100'
                         : 'opacity-0'
