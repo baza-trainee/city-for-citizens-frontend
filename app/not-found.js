@@ -1,4 +1,6 @@
+import Link from "next/link";
 import PrimaryButton from "@/components/UI/buttons/PrimaryButton";
+import ToMain from "@/components/UI/buttons/ToMain";
 
 export default function Custom404() {
   return (
@@ -12,7 +14,7 @@ export default function Custom404() {
         повернутися назад до цивілізації
       </h2>
       <div className="flex items-center justify-center">
-      <PrimaryButton message={"Повернутися назад"}/>
+     <ToMain message={"Повернутися назад"}/>
       </div>
       </div>
     </div>
