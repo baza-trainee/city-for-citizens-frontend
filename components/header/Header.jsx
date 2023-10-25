@@ -1,10 +1,10 @@
 'use client';
-import Link from 'next/link';
-import Switchers from './Switchers';
 import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
-import IconClose from '../IconClose';
-import IconBurger from '../IconBurger';
+import Switchers from './Switchers';
+import IconClose from '../icons/IconClose';
+import IconBurger from '../icons/IconBurger';
+import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,15 +16,16 @@ const Header = () => {
 
   return (
     <header
-      className="pt-1.5 pb-1.5 landscape:pt-[22px]  landscape:pb-0 relative text-sm leading-6
+      className="pt-1.5 pb-1.5 landscape:pt-[22px]  landscape:pb-0 desktop:pt-[35px] desktop:pb-[35px]
+      landscape:desktop:pt-[35px] landscape:desktop:pb-[35px] relative text-sm leading-6
      bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5"
     >
       <div
-        className="container flex desctop:justify-center gap-[50px] items-baseline 
-      justify-end max-w-full"
+        className="container flex desctop:justify-center gap-[50px]
+      justify-end max-w-full desktop:justify-center"
       >
         <Link
-          className="hidden desctop:inline-block text-xl leading-normal"
+          className="hidden desktop:inline-block text-xl leading-normal"
           href="/"
         >
           Місто для містян
@@ -44,7 +45,7 @@ const Header = () => {
         </div>
         <button
           type="button"
-          className="inline-block desctop:hidden w-[32px] h-[32px] z-30"
+          className="inline-block desktop:hidden w-[32px] h-[32px] z-30"
           onClick={toggleMenu}
         >
           {isMenuOpen ? (
@@ -56,47 +57,13 @@ const Header = () => {
               }`}
             />
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+            <IconBurger
               width="32"
               height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <g clip-path="url(#clip0_781_3499)">
-                <path
-                  d="M30.6992 24.0337L9.36587 24.0337"
-                  stroke="#121923"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M30.6992 16.0337L9.36587 16.0337"
-                  stroke="#121923"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M30.6992 8.03369L9.36587 8.03369"
-                  stroke="#121923"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_781_3499">
-                  <rect
-                    width="32"
-                    height="32"
-                    fill="white"
-                    transform="translate(32 32) rotate(-180)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
+              className={`${
+                resolvedTheme === 'dark' ? 'stroke-gray/5' : 'stroke-gray/100'
+              }`}
+            />
           )}
         </button>
       </div>

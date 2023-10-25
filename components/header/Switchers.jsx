@@ -1,40 +1,59 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import ThemeSwitcher from './ThemeSwitcher';
 import LanguageSwitcher from './LanguageSwitcher';
 import IconSelectArrow from '../icons/IconSelectArrow';
+import IconCheckbox from '../icons/IconCheckbox';
 
-const buttonStyle = `w-full flex justify-between p-2.5 desctop:h-5 border-t
-  border-gray/80 dark:border-gray/10 text-gray/50 dark:text-gray/20 leading-normal ${
-    theme === 'dark' ? 'desctop:border-b border-active text-active' : ''
-  }`;
-
-const iconCheckBoxStyle = `stroke-gray/50 dark:stroke-gray/20 transition-all ${
-  theme === 'dark' ? 'opacity-100' : 'opacity-0'
-}`;
+const buttonStyle =
+  'w-full desktop:w-auto flex justify-between p-2.5 desktop:p-0 desktop:justify-center desktop:h-5 max-desktop:border-t border-gray/80 max-desktop:dark:border-gray/10 max-desktop:text-gray/50 max-desktop:dark:text-gray/20 leading-normal';
+const iconCheckBoxStyle = `stroke-gray/50 dark:stroke-gray/20 transition-all`;
 
 const DropdownSwitcher = ({ content, options }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const { resolvedTheme } = useTheme();
-  const [screenSize, setScreenSize] = useState('tablet'); // Default to tablet size
+  const [fontSize, setFontSize] = useState('24px');
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth <= parseInt(tailwindScreens.mobile)) {
-        setScreenSize('mobile');
-      } else if (screenWidth <= parseInt(tailwindScreens.tablet)) {
-        setScreenSize('tablet');
+    // Function to update font size based on window width
+    const updateFontSize = () => {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth >= 1440) {
+        setFontSize('20px');
       } else {
-        setScreenSize('desktop');
+        setFontSize('24px');
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', updateFontSize);
+
+    updateFontSize();
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateFontSize);
+    };
+  }, []);
+
+  useEffect(() => {
+    // ...
+
+    // Event listener to close the dropdown when clicking outside
+    const closeDropdownOnOutsideClick = event => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    // Add the event listener
+    document.addEventListener('click', closeDropdownOnOutsideClick);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      // Remove the event listener on component unmount
+      document.removeEventListener('click', closeDropdownOnOutsideClick);
     };
   }, []);
 
@@ -44,30 +63,36 @@ const DropdownSwitcher = ({ content, options }) => {
 
   return (
     <div
-      className={`dropdown-block  text-base max-tablet:first:mb-4 bg-gray/5 dark:bg-gray/5
-       border  rounded-lg relative tablet:w-[35%] landscape:w-[35%] desktop:w-[89px] desktop:px-4 desktop:pb-1
+      ref={dropdownRef}
+      className={`dropdown-block  relative rounded-lg border bg-gray/5 
+      desktop:border-none desktop:text-gray/100 desktop:dark:text-gray/5
+       text-base  dark:bg-gray/5 desktop:dark:bg-gray/100 max-tablet:first:mb-4 
+       tablet:w-[33%] desktop:w-[89px] desktop:px-4 desktop:pb-1 landscape:w-[33%] 
+       landscape:desktop:w-[89px] h-max
        ${
          isDropdownVisible
-           ? 'border-gray/80 text-gray/80 dark:border-gray-10'
+           ? 'dark:border-gray-10 border-gray/80 text-gray/80'
            : 'border-gray/10 text-gray/20'
        }`}
       onClick={toggleDropdown}
     >
       <div
-        className={`flex  p-2.5   ${
+        className={`flex  p-2.5 desktop:p-0  ${
           isDropdownVisible ? '' : 'justify-between'
         }`}
       >
         <span
-          className={`title-switcher relative cursor-pointer leading-normal 
-        ${isDropdownVisible ? 'dark:text-gray/30' : ''}`}
+          className={`title-switcher relative cursor-pointer leading-normal desktoptext:left
+        ${
+          isDropdownVisible ? 'dark:text-gray/30 desktop:dark:text-gray/5' : ''
+        }`}
         >
           {content}
         </span>
         <IconSelectArrow
-          width={screenSize < 'desctop' ? '24px' : '20px'}
-          height={screenSize < 'desctop' ? '24px' : '20px'}
-          className={`inline-block ml-1 transition-transform duration-300 
+          width={fontSize}
+          height={fontSize}
+          className={`ml-1 inline-block transition-transform duration-300 
         ${
           resolvedTheme === 'dark'
             ? 'stroke-gray/20 desktop:stroke-gray/5'
@@ -75,18 +100,20 @@ const DropdownSwitcher = ({ content, options }) => {
                 isDropdownVisible ? 'stroke-gray/80' : 'stroke-gray/20'
               } desktop:stroke-gray/100`
         }
-        ${isDropdownVisible ? 'transform rotate-180' : ''}`}
+        ${isDropdownVisible ? 'rotate-180 transform' : ''}`}
         />
       </div>
 
       <div
-        className={`dropdown w-full  top-7 left-0 flex flex-col items-start
-         desktop:items-center desktop:gap-[10px] desktop:rounded-lg 
-         border-solid border-gray desktop:p-4 transition-opacity duration-300 
+        className={`dropdown  left-0 top-9 flex w-full flex-col
+         items-start transition-opacity 
+         duration-300 desktop:absolute desktop:border 
+         desktop:border-gray/100 desktop:dark:border-gray/5 desktop:items-center 
+         desktop:gap-[10px] desktop:rounded-lg desktop:p-4 
          ${
            isDropdownVisible
-             ? 'visible opacity-100 h-[88px]'
-             : 'invisible opacity-0 h-0'
+             ? 'visible h-[88px] opacity-100'
+             : 'invisible h-0 opacity-0'
          } `}
       >
         {options}
@@ -98,11 +125,24 @@ const DropdownSwitcher = ({ content, options }) => {
 const Switchers = () => {
   return (
     <div
-      className="max-tablet:flex-col tablet:flex justify-center gap-4
-     landscape:flex px-4 mt-[170px] landscape:mt-[190px]"
+      className="mt-[170px] justify-center gap-4 px-4
+     max-tablet:flex-col landscape:max-tablet:flex-row tablet:flex tablet:mt-[190px] landscape:mt-[190px] landscape:flex desktop:mt-0 landscape:desktop:mt-0"
     >
-      <DropdownSwitcher content="Тема" options={<ThemeSwitcher />} />
-      <DropdownSwitcher content="Мова" options={<LanguageSwitcher />} />
+      <DropdownSwitcher
+        content="Тема"
+        options={
+          <ThemeSwitcher
+            buttonStyle={buttonStyle}
+            icon={<IconCheckbox className={`${iconCheckBoxStyle}`} />}
+          />
+        }
+      />
+      <DropdownSwitcher
+        content="Мова"
+        options={
+          <LanguageSwitcher buttonStyle={buttonStyle} icon={IconCheckbox} />
+        }
+      />
     </div>
   );
 };
