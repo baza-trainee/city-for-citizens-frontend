@@ -85,7 +85,7 @@ function ChooseCity({ serverCity, setCities }) {
 
         {isListVisible && (
           <ul
-            className="custom-scroll absolute top-[75px] w-[164px] max-h-[300px] overflow-y-auto
+            className="custom-scroll z-10 absolute top-[75px] w-[164px] max-h-[300px] overflow-y-auto
        bg-gray/5 border rounded-b-lg border-gray/50  dark:bg-gray/100 dark:border-gray/10 dark:text-gray/10 dark:dark-scroll"
           >
             {filteredCities.map(city => (

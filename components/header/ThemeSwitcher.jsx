@@ -1,5 +1,6 @@
 'use client';
 import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 
 const ThemeSwitcher = ({ buttonStyle, icon }) => {
   const { theme, setTheme } = useTheme();
@@ -30,7 +31,7 @@ const ThemeSwitcher = ({ buttonStyle, icon }) => {
           onClick={toggleDarkMode}
         >
           {themeItem.name}
-          <div className="rounded-[4px] border-[1px] border-gray/50 dark:border-gray/20 flex justify-center items-center w-[24px] h-[24px] desktop:hidden">
+          <div className="flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border-[1px] border-gray/50 dark:border-gray/20 desktop:hidden">
             {theme === themeItem.value ? icon : null}
           </div>
         </button>

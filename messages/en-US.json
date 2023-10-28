@@ -1,0 +1,14 @@
+{
+  "Hero": {
+    "title": "City for locals",
+    "subtitle": "Discover. Feel. Relax."
+  },
+  "Switchers": {
+    "titleTheme": "Theme",
+    "titleLang": "Lang"
+  },
+  "ThemeSwitcher": {
+    "switcherDark": "Dark",
+    "switcherLight": "Light"
+  }
+}
