@@ -3,10 +3,11 @@ import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 
 const ThemeSwitcher = ({ buttonStyle, icon }) => {
+  const t = useTranslations('ThemeSwitcher');
   const { theme, setTheme } = useTheme();
   const themes = [
-    { name: 'Темна', value: 'dark', id: 'dark-mode' },
-    { name: 'Світла', value: 'light', id: 'light-mode' },
+    { name: t('switcherDark'), value: 'dark', id: 'dark-mode' },
+    { name: t('switcherLight'), value: 'light', id: 'light-mode' },
   ];
 
   const toggleDarkMode = e => {

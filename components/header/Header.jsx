@@ -16,36 +16,36 @@ const Header = () => {
 
   return (
     <header
-      className="pt-1.5 pb-1.5 landscape:pt-[22px]  landscape:pb-0 desktop:pt-[35px] desktop:pb-[35px]
-      landscape:desktop:pt-[35px] landscape:desktop:pb-[35px] relative text-sm leading-6
-     bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5"
+      className="relative bg-gray/5 pb-1.5  pt-1.5 text-sm leading-6
+      text-gray/100 dark:bg-gray/100 dark:text-gray/5 desktop:pb-[35px] desktop:pt-[35px]
+     landscape:pb-0 landscape:pt-[22px] landscape:desktop:pb-[35px] landscape:desktop:pt-[35px]"
     >
       <div
-        className="container flex desctop:justify-center gap-[50px]
-      justify-end max-w-full desktop:justify-center"
+        className="container flex max-w-full justify-end gap-[50px] 
+      desktop:items-baseline desktop:justify-center"
       >
         <Link
-          className="hidden desktop:inline-block text-xl leading-normal"
+          className="hidden text-xl leading-normal desktop:inline-block"
           href="/"
         >
           Місто для містян
         </Link>
 
         <div
-          className={`fixed top-0 left-0 right-0 bottom-0 w-screen bg-gray/5 dark:bg-gray/100 z-20
-            desktop:static 
-           transition-all duration-300 desktop:flex  desktop:w-auto desktop:opacity-100 
-           desktop:translate-y-0 ${
+          className={`fixed bottom-0 left-0 right-0 top-0 z-20 w-screen bg-gray/5 transition-all
+            duration-300 
+           dark:bg-gray/100 desktop:static desktop:flex  desktop:w-auto desktop:translate-y-0 
+           desktop:opacity-100 ${
              isMenuOpen
-               ? 'opacity-100 translate-y-0'
-               : 'opacity-0 translate-y-full'
+               ? 'translate-y-0 opacity-100'
+               : 'translate-y-full opacity-0'
            }`}
         >
           <Switchers />
         </div>
         <button
           type="button"
-          className="inline-block desktop:hidden w-[32px] h-[32px] z-30"
+          className="z-30 inline-block h-[32px] w-[32px] desktop:hidden"
           onClick={toggleMenu}
         >
           {isMenuOpen ? (

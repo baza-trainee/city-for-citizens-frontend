@@ -40,8 +40,6 @@ const DropdownSwitcher = ({ content, options }) => {
   }, []);
 
   useEffect(() => {
-    // ...
-
     // Event listener to close the dropdown when clicking outside
     const closeDropdownOnOutsideClick = event => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -65,11 +63,11 @@ const DropdownSwitcher = ({ content, options }) => {
   return (
     <div
       ref={dropdownRef}
-      className={`dropdown-block  relative rounded-lg border bg-gray/5 
-      desktop:border-none desktop:text-gray/100 desktop:dark:text-gray/5
-       text-base  dark:bg-gray/5 desktop:dark:bg-gray/100 max-tablet:first:mb-4 
-       tablet:w-[33%] desktop:w-[89px] desktop:px-4 desktop:pb-1 landscape:w-[33%] 
-       landscape:desktop:w-[89px] h-max
+      className={`dropdown-block  relative h-max rounded-lg border 
+      bg-gray/5 text-base dark:bg-gray/5
+       max-tablet:first:mb-4  tablet:w-[33%] desktop:w-[89px] desktop:border-none 
+        desktop:pb-1 desktop:text-gray/100 desktop:dark:bg-gray/100 desktop:dark:text-gray/5 
+       landscape:w-[33%] landscape:desktop:w-[89px]
        ${
          isDropdownVisible
            ? 'dark:border-gray-10 border-gray/80 text-gray/80'
@@ -77,26 +75,13 @@ const DropdownSwitcher = ({ content, options }) => {
        }`}
       onClick={toggleDropdown}
     >
-      <span className="title-switcher relative cursor-pointer leading-normal">
-        {content}
-      </span>
-      <IconSelectArrow
-        width="20"
-        height="20"
-        className={`ml-1 inline-block transition-transform duration-300 
-        ${resolvedTheme === 'dark' ? 'stroke-gray/5' : 'stroke-gray/100'}
-        ${isDropdownVisible ? 'rotate-180 transform' : ''}`}
-      />
       <div
-        className={`dropdown border-gray absolute left-0 top-7 flex w-full flex-col items-center gap-[10px] rounded-lg border border-solid p-4 transition-opacity duration-300 
-         ${isDropdownVisible ? 'visible opacity-100' : 'invisible opacity-0'} `}
-      <div
-        className={`flex  p-2.5 desktop:p-0  ${
+        className={`flex items-center gap-[4px] p-2.5 desktop:justify-center desktop:p-0 ${
           isDropdownVisible ? '' : 'justify-between'
         }`}
       >
         <span
-          className={`title-switcher relative cursor-pointer leading-normal desktoptext:left
+          className={`title-switcher desktoptext:left relative cursor-pointer leading-normal
         ${
           isDropdownVisible ? 'dark:text-gray/30 desktop:dark:text-gray/5' : ''
         }`}
@@ -121,9 +106,9 @@ const DropdownSwitcher = ({ content, options }) => {
       <div
         className={`dropdown  left-0 top-9 flex w-full flex-col
          items-start transition-opacity 
-         duration-300 desktop:absolute desktop:border 
-         desktop:border-gray/100 desktop:dark:border-gray/5 desktop:items-center 
-         desktop:gap-[10px] desktop:rounded-lg desktop:p-4 
+         duration-300 desktop:absolute desktop:items-center 
+         desktop:gap-[10px] desktop:rounded-lg desktop:border 
+         desktop:border-gray/100 desktop:p-4 desktop:dark:border-gray/5 
          ${
            isDropdownVisible
              ? 'visible h-[88px] opacity-100'
@@ -142,10 +127,10 @@ const Switchers = () => {
   return (
     <div
       className="mt-[170px] justify-center gap-4 px-4
-     max-tablet:flex-col landscape:max-tablet:flex-row tablet:flex tablet:mt-[190px] landscape:mt-[190px] landscape:flex desktop:mt-0 landscape:desktop:mt-0"
+     max-tablet:flex-col tablet:mt-[190px] tablet:flex desktop:mt-0 landscape:mt-[190px] landscape:flex landscape:max-tablet:flex-row landscape:desktop:mt-0"
     >
       <DropdownSwitcher
-        content="Тема"
+        content={t('titleTheme')}
         options={
           <ThemeSwitcher
             buttonStyle={buttonStyle}
@@ -154,9 +139,12 @@ const Switchers = () => {
         }
       />
       <DropdownSwitcher
-        content="Мова"
+        content={t('titleLang')}
         options={
-          <LanguageSwitcher buttonStyle={buttonStyle} icon={IconCheckbox} />
+          <LanguageSwitcher
+            buttonStyle={buttonStyle}
+            icon={<IconCheckbox className={`${iconCheckBoxStyle}`} />}
+          />
         }
       />
     </div>
