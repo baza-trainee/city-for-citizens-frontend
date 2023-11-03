@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const PrimaryButton = ({ message }) => {
+const PrimaryButton = ({ message, link }) => {
   return (
     <Link
       href={'#'}
