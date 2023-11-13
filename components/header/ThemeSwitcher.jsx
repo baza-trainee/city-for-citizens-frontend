@@ -2,39 +2,41 @@
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 
-const ThemeSwitcher = () => {
-  const { theme, setTheme } = useTheme();
+const ThemeSwitcher = ({ buttonStyle, icon }) => {
   const t = useTranslations('ThemeSwitcher');
+  const { theme, setTheme } = useTheme();
+  const themes = [
+    { name: t('switcherDark'), value: 'dark', id: 'dark-mode' },
+    { name: t('switcherLight'), value: 'light', id: 'light-mode' },
+  ];
 
   const toggleDarkMode = e => {
-    if (e.target.id === 'dark-mode') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
+    const selectedTheme = themes.find(item => item.id === e.currentTarget.id);
+    if (selectedTheme) {
+      setTheme(selectedTheme.value);
     }
   };
+
   return (
     <>
-      <button
-        id="dark-mode"
-        type="button"
-        className={`h-5 w-max leading-normal  ${
-          theme === 'dark' ? 'border-b border-active text-active' : ''
-        }`}
-        onClick={toggleDarkMode}
-      >
-        {t('switcherDark')}
-      </button>
-      <button
-        id="light-mode"
-        type="button"
-        className={`h-5 w-max leading-normal ${
-          theme === 'light' ? 'border-b border-active text-active' : ''
-        }`}
-        onClick={toggleDarkMode}
-      >
-        {t('switcherLight')}
-      </button>
+      {themes.map(themeItem => (
+        <button
+          type="button"
+          key={themeItem.id}
+          id={themeItem.id}
+          className={`${buttonStyle} ${
+            theme === themeItem.value
+              ? 'desktop:border-b desktop:border-active desktop:text-active'
+              : ''
+          }`}
+          onClick={toggleDarkMode}
+        >
+          {themeItem.name}
+          <div className="flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border-[1px] border-gray/50 dark:border-gray/20 desktop:hidden">
+            {theme === themeItem.value ? icon : null}
+          </div>
+        </button>
+      ))}
     </>
   );
 };
