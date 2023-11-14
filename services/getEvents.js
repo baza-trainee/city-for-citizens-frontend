@@ -1,10 +1,15 @@
 import { BASE_URL } from '@/helpers/constants';
 
 export const getEvents = async ({ searchParams, locale }) => {
-  const response = await fetch(
-    `${BASE_URL}/events?locale=${locale}&${searchParams}`
-  );
-  if (!response.ok) throw new Error('Server Error');
+  try {
+    const response = await fetch(
+      `${BASE_URL}/events?locale=${locale}&${searchParams}`
+    );
+    if (!response.ok) throw new Error('Server Error');
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    console.log("error:", error)
+  
+  }
 };

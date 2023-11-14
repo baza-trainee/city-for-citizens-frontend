@@ -42,9 +42,9 @@ function FilteredMap() {
   return (
     <>
       <section className="container relative z-10 mb-[29px] mt-11 flex flex-col justify-center gap-5 tablet:flex-row">
-        <ChooseCity filtersEventCities={filters.eventCities || []} />
-        <DatePicker filtersEventDates={filters.eventDates || []} />
-        <ChooseEventType filtersEventTypes={filters.eventTypes || []} />
+        <ChooseCity filtersEventCities={filters?.eventCities || []} />
+        <DatePicker filtersEventDates={filters?.eventDates || []} />
+        <ChooseEventType filtersEventTypes={filters?.eventTypes || []} />
       </section>
 
       <Map filteredEvents={filteredEvents} />
