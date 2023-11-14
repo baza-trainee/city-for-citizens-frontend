@@ -2,9 +2,10 @@ import Providers from '@/components/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import './globals.css';
+import { LOCALE } from '@/helpers/constants';
 
 export function generateStaticParams() {
-  return [{ locale: 'en-US' }, { locale: 'uk-UA' }];
+  return [{ locale: LOCALE.en }, { locale: LOCALE.uk }];
 }
 
 export const metadata = {

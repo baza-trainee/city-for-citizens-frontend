@@ -81,7 +81,7 @@ const DropdownSwitcher = ({ content, options }) => {
         }`}
       >
         <span
-          className={`title-switcher desktoptext:left relative cursor-pointer leading-normal
+          className={`title-switcher desktop:text:left relative cursor-pointer leading-normal
         ${
           isDropdownVisible ? 'dark:text-gray/30 desktop:dark:text-gray/5' : ''
         }`}

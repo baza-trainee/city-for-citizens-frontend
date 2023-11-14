@@ -1,4 +1,5 @@
 'use client';
+import { useQueryParam } from '@/hooks';
 import { useState, useEffect } from 'react';
 
 const ukr = {
@@ -6,21 +7,17 @@ const ukr = {
   placeholder: 'Місто',
 };
 
-function ChooseCity({ serverCity, setCities }) {
+function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
   const [filteredCities, setFilteredCities] = useState([]);
-  const [selectedCities, setSelectedCities] = useState([]);
-
-  useEffect(() => {
-    setCities(selectedCities || []);
-  }, [selectedCities, setCities]);
+  const [selectedCities, setSelectedCities] = useQueryParam('city');
 
   function handleInputChange(event) {
     const value = event.target.value.toLowerCase();
     setInputValue(value);
 
-    const filtered = serverCity.filter(city =>
+    const filtered = filtersEventCities.filter(city =>
       city.toLowerCase().startsWith(value)
     );
     setFilteredCities(filtered || []);
@@ -37,7 +34,7 @@ function ChooseCity({ serverCity, setCities }) {
 
   function handleFocus() {
     if (!inputValue) {
-      setFilteredCities(serverCity);
+      setFilteredCities(filtersEventCities);
       setIsListVisible(true);
     }
   }

@@ -11,19 +11,12 @@ import { customStylesDatePicker } from './customStylesDatePicker';
 import { customComponents } from './customComponents';
 import { useQueryParam } from '@/hooks';
 
-import { activeDates } from '../temporaryData/temporaryActiveDate';
-
-// const eng = {
-//   label: "",
-//   InputText: "",
-// };
-
 const ukr = {
   label: 'Оберіть час',
   inputText: 'Час',
 };
 
-export const DatePicker = () => {
+export const DatePicker = ({ filtersEventDates }) => {
   const [range, setRange] = useState({});
   const [inputText, setInputText] = useState([]);
   const [dateToFilter, setDateToFilter] = useQueryParam('date');
@@ -58,7 +51,7 @@ export const DatePicker = () => {
         setDateToFilter([from]);
         setInputText([from]);
       } else {
-        const dateRange = generateDateRange(from, to, activeDates);
+        const dateRange = generateDateRange(from, to, filtersEventDates);
 
         const dateForFilter = dateRange;
         setDateToFilter(dateForFilter);
@@ -66,9 +59,10 @@ export const DatePicker = () => {
         setInputText([from, to]);
       }
     }
-  }, [range, setDateToFilter]);
+  }, [filtersEventDates, range, setDateToFilter]);
 
-  const isDateActive = date => activeDates.includes(formatDate(date));
+  const isDateActive = (date, activeDates = []) =>
+    activeDates.includes(formatDate(date));
 
   return (
     <div className="tablet:w-[264px] desktop:w-[305px]">
@@ -85,7 +79,7 @@ export const DatePicker = () => {
           mode="range"
           max={21}
           showOutsideDays
-          disabled={date => !isDateActive(date)}
+          disabled={date => !isDateActive(date, filtersEventDates)}
           selected={range}
           onSelect={setRange}
           classNames={customStylesDatePicker}
