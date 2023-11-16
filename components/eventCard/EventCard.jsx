@@ -1,82 +1,115 @@
-import TagList from '../UI/TagList';
-import CloseButton from '../UI/buttons/IconClose';
-import Image from 'next/image';
-import MockImage from '../../public/mockEventCardImage.png';
-import ShareIcon from '../UI/IconShare';
-import IconMarkerPlace from '../UI/IconPlace';
+import { useRef, useState } from 'react';
 import IconCalendar from '../UI/IconCalendar';
 import IconClock from '../UI/IconClock';
+import IconMarkerPlace from '../UI/IconPlace';
+import ShareIcon from '../UI/IconShare';
+import CloseButton from '../UI/buttons/IconClose';
 import PrimaryButton from '../UI/buttons/PrimaryButton';
-import SecondaryButton from '../UI/buttons/SecondaryButton';
+import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
+import { formatDateSeparatorDot, formatDateToTime } from '@/helpers/formatDate';
+import Image from 'next/image';
+import eventImg from '../../public/event-img.jpg';
 
-const mockTagsData = [
-  { id: 1, message: 'Music' },
-  { id: 2, message: 'Pet-friendly' },
-  { id: 3, message: 'Nature' },
-];
+const EventCard = ({ setActiveMarker, event }) => {
+  const {
+    eventAddress,
+    eventTitle,
+    eventUrl,
+    eventTypes,
+    eventImage,
+    description,
+    dateTime,
+  } = event;
 
-const EventCard = () => {
+  const [showEventLink, setShowEventLink] = useState(false);
+
+  const eventShareCompRef = useRef(null);
+
   return (
-    <div className="max-w-[434px] px-5 py-6 border border-solid border-gray/100 rounded-lg dark:bg-gray/80 dark:border-gray/5">
-      <div className="flex justify-end">
-        <div className="w-8 h-8 cursor-pointer flex justify-center items-center">
-          <CloseButton className="stroke-gray/100 dark:stroke-gray/5" />
-        </div>
-      </div>
-      <div className="mt-3">
-        {mockTagsData.map(tag => {
-          return <TagList key={tag.id} tagMassage={tag.message} />;
+    <div className="relative w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 px-5 py-6 dark:border-gray/5 dark:bg-gray/80 mobile:w-[398px]">
+      <CloseButton
+        onClick={() => setActiveMarker(null)}
+        className="absolute right-[20px] top-[20px] h-[28px] w-[28px] cursor-pointer"
+      />
+      <div className="mb-[12px] mt-[38px] flex flex-wrap gap-[8px]">
+        {eventTypes.map(({ eventType, id }) => {
+          return <TagItem key={id} tagMassage={eventType} />;
         })}
       </div>
-      <div className="h-[108px] mt-3">
-        <Image
-          alt="Current event image"
-          src={MockImage}
-          className="h-full border rounded dark:border-gray/80"
-        />
-      </div>
-      <div className="flex items-center mt-4">
-        <h3 className="text-[24px] leading-9 font-light dark:text-gray/5 font-heading mr-2">
-          Harmony Festival
+      {eventImage ? null : (
+        //* після того як буде відомо домен у 'next.config -> domains []' треба додати домен відповідно
+        // (<div className="mb-[20px]  bg-primary/80">
+        //   <Image
+        //     width={240}
+        //     height={105}
+        //     alt={eventTitle}
+        //     src={eventImage}
+        //     className=" h-[108px] w-[240px] rounded-[4px] border object-cover dark:border-gray/80 mobile:w-[358px]"
+        //   />
+        // </div>)
+        <div className="mb-[20px]">
+          <Image
+            width={240}
+            height={105}
+            alt={eventTitle}
+            src={eventImg}
+            className=" h-[108px] w-[240px] rounded-[4px] border object-cover dark:border-gray/80 mobile:w-[358px]"
+          />
+        </div>
+      )}
+      <div className="relative flex items-start">
+        <h3 className="mr-2 font-heading text-[24px] font-light leading-[1.5] -tracking-[0.264px] dark:text-gray/5">
+          {eventTitle}
         </h3>
 
-        <div className="cursor-pointer">
-          <ShareIcon className="stroke-primary/100 dark:stroke-gray/5" />
+        <div ref={eventShareCompRef} className="relative cursor-pointer">
+          <div onClick={() => setShowEventLink(p => !p)}>
+            <ShareIcon className="stroke-primary/100 dark:stroke-gray/5" />
+          </div>
+          {showEventLink ? (
+            <EventShareComp
+              eventShareCompRef={eventShareCompRef}
+              setShowEventLink={setShowEventLink}
+              eventUrl={eventUrl}
+            />
+          ) : null}
         </div>
       </div>
-      <p>
-        Join us at the Harmony Festival! Immerse yourself in the soothing
-        melodies of live bands, explore captivating art installations, and
-        connect with nature&apos;s beauty.
+      <p className="mb-[16px] max-h-[288px] overflow-auto text-[16px] leading-[1.5] -tracking-[0.176px]">
+        {description}
       </p>
-      <div className="flex mt-4">
-        <div>
-          <IconMarkerPlace className="stroke-gray/100 dark:stroke-gray/5" />
-        </div>
-        <p className="text-[14px] leading-[150%] ml-1 dark:text-gray/5">
-          Riverside Park, Tranquil Meadows 144
+
+      <div className="mb-[6px] flex items-center gap-[4px]">
+        <IconMarkerPlace className="stroke-gray/100 dark:stroke-gray/5" />
+        <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+          {eventAddress.street}
         </p>
       </div>
-      <div className="flex mt-2">
-        <div className="flex mr-4">
+
+      <div className="mb-[32px] flex gap-[16px]">
+        <div className="flex items-center gap-[4px]">
           <IconCalendar className="stroke-gray/100 dark:stroke-gray/5" />
-          <p className="text-[14px] leading-[150%] ml-1 dark:text-gray/5">
-            26.09.23
+          <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+            {formatDateSeparatorDot(dateTime)}
           </p>
         </div>
-        <div className="flex">
+
+        <div className="flex items-center gap-[4px]">
           <IconClock className="stroke-gray/100 dark:stroke-gray/5" />
-          <p className="text-[14px] leading-[150%] ml-1 dark:text-gray/5">
-            6 PM
+          <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+            {formatDateToTime(dateTime)}
           </p>
         </div>
       </div>
-      <div className="mt-8">
-        <PrimaryButton message={'See cite of the event'} />
-        <div className="mt-4">
+
+      <div>
+        <a target="_blank" rel="noreferrer noopener" href={eventUrl}>
+          <PrimaryButton message={'See cite of the event'} />
+        </a>
+        {/* <div className="mt-4">
           <SecondaryButton message={'Add to calledar'} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

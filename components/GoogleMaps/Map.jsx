@@ -1,6 +1,8 @@
 'use client';
 
-import { GoogleMap, MarkerF, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { useState } from 'react';
+import EventList from './MarkerList';
 
 const containerStyle = {
   width: '100%',
@@ -18,20 +20,23 @@ const Map = ({ filteredEvents }) => {
     googleMapsApiKey: '',
   });
 
-  return isLoaded ? (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={6.5}>
-      {filteredEvents.map(event => {
-        const { idIdentifier, eventAddress } = event;
-        const [lat, lng] = eventAddress.coordinates.split(',');
+  const [activeMarker, setActiveMarker] = useState(null);
 
-        return (
-          <MarkerF
-            key={idIdentifier}
-            position={{ lat: Number(lat), lng: Number(lng) }}
-          />
-        );
-      })}
-    </GoogleMap>
+  return isLoaded ? (
+    <div className="custom-info-window">
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={6.5}
+        onClick={() => setActiveMarker(null)}
+      >
+        <EventList
+          activeMarker={activeMarker}
+          setActiveMarker={setActiveMarker}
+          filteredEvents={filteredEvents}
+        />
+      </GoogleMap>
+    </div>
   ) : (
     <></>
   );

@@ -1,0 +1,19 @@
+.custom-info-window .gm-style-iw-d {
+  overflow: visible !important;
+}
+
+.custom-info-window .gm-style .gm-style-iw-c {
+  padding: 0;
+  background-color: transparent;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+/* button close */
+.custom-info-window .gm-ui-hover-effect {
+  display: none !important;
+}
+
+.custom-info-window .gm-style-iw-tc {
+  display: none !important;
+}
