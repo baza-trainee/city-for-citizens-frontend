@@ -6,7 +6,7 @@ import { uk, en } from 'date-fns/locale';
 
 import IconSelectArrow from '../../icons/IconSelectArrow';
 import FilterInputWrapper from '../FilterInputWrapper';
-import { formatDate, generateDateRange } from '@/helpers';
+import { formatDateSeparatorDash, generateDateRange } from '@/helpers';
 import { customStylesDatePicker } from './customStylesDatePicker';
 import { customComponents } from './customComponents';
 import { useQueryParam } from '@/hooks';
@@ -44,8 +44,8 @@ export const DatePicker = ({ filtersEventDates }) => {
 
   useEffect(() => {
     if (range?.from) {
-      const from = formatDate(range.from);
-      const to = range.to ? formatDate(range.to) : null;
+      const from = formatDateSeparatorDash(range.from);
+      const to = range.to ? formatDateSeparatorDash(range.to) : null;
 
       if (!to) {
         setDateToFilter([from]);
@@ -62,7 +62,7 @@ export const DatePicker = ({ filtersEventDates }) => {
   }, [filtersEventDates, range, setDateToFilter]);
 
   const isDateActive = (date, activeDates = []) =>
-    activeDates.includes(formatDate(date));
+    activeDates.includes(formatDateSeparatorDash(date));
 
   return (
     <div className="tablet:w-[264px] desktop:w-[305px]">

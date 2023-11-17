@@ -1,4 +1,4 @@
-import { formatDate } from './formatDate';
+import { formatDateSeparatorDash } from './formatDate';
 
 export const generateDateRange = (start, end, activeDates) => {
   const dateRange = [];
@@ -6,7 +6,7 @@ export const generateDateRange = (start, end, activeDates) => {
   const lastDate = new Date(end);
 
   while (currentDate <= lastDate) {
-    const date = formatDate(currentDate);
+    const date = formatDateSeparatorDash(currentDate);
     if (!activeDates) {
       dateRange.push(date);
     } else if (activeDates.includes(date)) {

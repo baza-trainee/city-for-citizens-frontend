@@ -1,7 +1,7 @@
 'use client';
 
 import Providers from '@/components/Providers';
-import Error from '../app/[locale]/not-found';
+import Error from './[locale]/not-found';
 
 export default function NotFound() {
   return (
