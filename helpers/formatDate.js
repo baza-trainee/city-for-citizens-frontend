@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
 
-export const formatDate = date => format(date, 'yyyy-MM-dd');
+const formatDateSeparatorDash = date => format(new Date(date), 'yyyy-MM-dd');
 
-export const formatDateSeparatorDot = date =>
-  format(new Date(date), 'dd.MM.yyyy');
+const formatDateSeparatorDot = date => format(new Date(date), 'dd.MM.yyyy');
 
-export const formatDateToTime = date => format(new Date(date), 'KK:mm');
+const formatDateToTime = date => format(new Date(date), 'KK:mm');
+
+export { formatDateSeparatorDash, formatDateSeparatorDot, formatDateToTime };
