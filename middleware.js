@@ -1,16 +1,14 @@
 import createMiddleware from 'next-intl/middleware';
+
+import { locales, pathnames } from './navigation';
 import { LOCALE } from './helpers/constants';
 
 export default createMiddleware({
-  // A list of all locales that are supported
-  locales: [LOCALE.en, LOCALE.uk],
-
-  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
-  defaultLocale: LOCALE.uk,
+  defaultLocale: LOCALE.uk.forIntl,
+  locales,
+  pathnames,
 });
 
 export const config = {
-  // Skip all paths that should not be internationalized. This example skips
-  // certain folders and all pathnames with a dot (e.g. favicon.ico)
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  matcher: ['/', '/(uk|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
 };

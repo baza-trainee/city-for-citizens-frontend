@@ -1,13 +1,14 @@
 'use client';
-import { useState, useEffect } from 'react';
-
-import ChooseCity from './ChooseCity';
-import DatePicker from './DatePicker/DatePicker';
-import ChooseEventType from './ChooseEventType';
-import Map from './Map';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
+
 import { getEvents, getFilters } from '@/services';
+import { useSearchParams } from 'next/navigation';
+import ChooseCity from './ChooseCity';
+import ChooseEventType from './ChooseEventType';
+import DatePicker from './DatePicker/DatePicker';
+import Map from './Map';
+import { LOCALE } from '@/helpers/constants';
 
 function FilteredMap() {
   const [filters, setFilters] = useState({});
@@ -15,19 +16,23 @@ function FilteredMap() {
   const searchParams = useSearchParams();
   const locale = useLocale();
 
+  const currentLocale =
+    locale === LOCALE.uk.forIntl ? LOCALE.uk.forRequest : LOCALE.en.forRequest;
+
   useEffect(() => {
     const getAllFilters = async () => {
-      const filters = await getFilters({ locale });
+      const filters = await getFilters({ locale: currentLocale });
       setFilters(filters);
     };
+
     getAllFilters();
-  }, [locale]);
+  }, [currentLocale]);
 
   useEffect(() => {
     const getEventsByFilter = async () => {
       const events = await getEvents({
         searchParams: searchParams.toString(),
-        locale,
+        locale: currentLocale,
       });
       setFilteredEvents(events);
     };
@@ -37,7 +42,7 @@ function FilteredMap() {
     } else {
       setFilteredEvents([]);
     }
-  }, [locale, searchParams]);
+  }, [currentLocale, searchParams]);
 
   return (
     <>

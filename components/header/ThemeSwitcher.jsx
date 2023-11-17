@@ -1,10 +1,11 @@
-'use client';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 
 const ThemeSwitcher = ({ buttonStyle, icon }) => {
-  const t = useTranslations('ThemeSwitcher');
+  const t = useTranslations('Header.ThemeSwitcher');
+
   const { theme, setTheme } = useTheme();
+
   const themes = [
     { name: t('switcherDark'), value: 'dark', id: 'dark-mode' },
     { name: t('switcherLight'), value: 'light', id: 'light-mode' },

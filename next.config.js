@@ -1,8 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const withNextIntl = require('next-intl/plugin')();
+
+const config = {
   images: {
-    domains: [],
+    domains: ['185-237-14-12.cloud-xip.com'],
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(config);

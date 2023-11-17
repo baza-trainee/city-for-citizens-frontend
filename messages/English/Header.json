@@ -1,0 +1,13 @@
+{
+  "Header": {
+    "Logotype": "City for Locals",
+    "Switchers": {
+      "titleTheme": "Theme",
+      "titleLang": "Lang"
+    },
+    "ThemeSwitcher": {
+      "switcherDark": "Dark",
+      "switcherLight": "Light"
+    }
+  }
+}

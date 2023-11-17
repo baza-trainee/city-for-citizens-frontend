@@ -1,20 +1,34 @@
 'use client';
-import Link from 'next-intl/link';
+
 import { useLocale } from 'next-intl';
-import { LOCALE } from '@/helpers/constants';
+import { usePathname, useRouter } from '@/navigation';
+import { useTransition } from 'react';
 
 const LanguageSwitcher = ({ buttonStyle, icon }) => {
   const locale = useLocale();
 
   const langs = [
-    { name: 'Укр', value: LOCALE.uk },
-    { name: 'Eng', value: LOCALE.en },
+    { name: 'Укр', value: 'uk' },
+    { name: 'Eng', value: 'en' },
   ];
+
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+
+  function onSelectChange(value) {
+    const nextLocale = value;
+    startTransition(() => {
+      router.replace(pathname, { locale: nextLocale });
+    });
+  }
+
   return (
     <>
       {langs.map(langItem => (
-        <Link
-          href="/"
+        <div
+          disabled={isPending}
+          onClick={() => onSelectChange(langItem.value)}
           locale={langItem.value}
           key={langItem.value}
           className={`${buttonStyle} ${
@@ -31,7 +45,7 @@ const LanguageSwitcher = ({ buttonStyle, icon }) => {
           >
             {locale === langItem.value ? icon : null}
           </div>
-        </Link>
+        </div>
       ))}
     </>
   );

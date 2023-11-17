@@ -4,16 +4,13 @@ import IconSelectArrow from '../icons/IconSelectArrow';
 import IconCheckbox from '../icons/IconCheckbox';
 import FilterInputWrapper from './FilterInputWrapper';
 import { useQueryParam } from '@/hooks';
-
-const ukr = {
-  label: 'Оберіть тип події',
-  inputText: 'Подія',
-  textIsEmpty: 'Тут порожньо...',
-};
+import { useTranslations } from 'next-intl';
 
 const ChooseEventType = ({ filtersEventTypes }) => {
   const [selectedEventTypes, setSelectedEventTypes] =
     useQueryParam('eventType');
+
+  const t = useTranslations('Filters.ChooseEventType');
 
   const handleChangeEvent = e => {
     const eventName = e.target.name;
@@ -31,8 +28,8 @@ const ChooseEventType = ({ filtersEventTypes }) => {
   return (
     <div className="tablet:w-[264px] desktop:w-[164px]">
       <FilterInputWrapper
-        inputLabel={ukr.label}
-        inputTextDefault={selectedTypesIsEmpty ? '' : ukr.inputText}
+        inputLabel={t('label')}
+        inputTextDefault={selectedTypesIsEmpty ? '' : t('defaultValue')}
         inputTextFirst={
           selectedTypesIsEmpty ? selectedEventTypes.join(', ') : ''
         }
@@ -41,7 +38,7 @@ const ChooseEventType = ({ filtersEventTypes }) => {
         <ul className="custom-scroll max-h-[300px] overflow-y-auto">
           {filtersEventTypes.length === 0 ? (
             <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
-              {ukr.textIsEmpty}
+              {t('textIsEmpty')}
             </p>
           ) : (
             filtersEventTypes.map(event => {

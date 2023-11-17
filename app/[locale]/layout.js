@@ -1,33 +1,39 @@
-import Providers from '@/components/Providers';
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { locales } from '@/navigation';
+
+import Providers from '@/components/Providers';
+
 import './globals.css';
-import { LOCALE } from '@/helpers/constants';
 
 export function generateStaticParams() {
-  return [{ locale: LOCALE.en }, { locale: LOCALE.uk }];
+  return locales.map(locale => ({ locale }));
 }
 
-export const metadata = {
-  title: 'Мiсто для мiстян',
-  description: 'Мiсто для мiстян',
-};
+export async function generateMetadata({ params: { locale } }) {
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-export default async function RootLayout({ children, params: { locale } }) {
-  let messages;
-  try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch (error) {
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
+export default function LocaleLayout({ children, params: { locale } }) {
+  if (!locales.includes(locale)) {
     notFound();
   }
+
+  unstable_setRequestLocale(locale);
+
+  const messages = useMessages();
 
   return (
     <html lang={locale}>
       <body className="bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
-            <main>{children}</main>
-          </Providers>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>

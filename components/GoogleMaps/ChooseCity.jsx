@@ -1,17 +1,15 @@
 'use client';
 import { useQueryParam } from '@/hooks';
-import { useState, useEffect } from 'react';
-
-const ukr = {
-  label: 'Оберіть місто',
-  placeholder: 'Місто',
-};
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
   const [filteredCities, setFilteredCities] = useState([]);
   const [selectedCities, setSelectedCities] = useQueryParam('city');
+
+  const t = useTranslations('Filters.ChooseCity');
 
   function handleInputChange(event) {
     const value = event.target.value.toLowerCase();
@@ -53,13 +51,13 @@ function ChooseCity({ filtersEventCities }) {
     <>
       <div onMouseLeave={handleMouseLive} className="flex w-[164px] flex-col">
         <label htmlFor="city" className="mb-2 block">
-          {ukr.label}
+          {t('label')}
         </label>
         <input
           id="city"
           type="text"
           name="city"
-          placeholder={selectedCities.join(', ') || ukr.placeholder}
+          placeholder={selectedCities.join(', ') || t('defaultValue')}
           value={inputValue}
           onChange={handleInputChange}
           onMouseOver={handleMouseOver}
