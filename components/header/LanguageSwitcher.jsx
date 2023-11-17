@@ -1,13 +1,14 @@
 'use client';
 import Link from 'next-intl/link';
 import { useLocale } from 'next-intl';
+import { LOCALE } from '@/helpers/constants';
 
 const LanguageSwitcher = ({ buttonStyle, icon }) => {
   const locale = useLocale();
-  console.log(locale);
+
   const langs = [
-    { name: 'Укр', value: 'uk-UA' },
-    { name: 'Eng', value: 'en-US' },
+    { name: 'Укр', value: LOCALE.uk },
+    { name: 'Eng', value: LOCALE.en },
   ];
   return (
     <>

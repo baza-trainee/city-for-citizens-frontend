@@ -5,20 +5,13 @@ import IconCheckbox from '../icons/IconCheckbox';
 import FilterInputWrapper from './FilterInputWrapper';
 import { useQueryParam } from '@/hooks';
 
-import { typeEvents } from './temporaryData/temporaryTypesOfEvents';
-
-// const eng = {
-//   label: "",
-//   InputText: "",
-// };
-
 const ukr = {
   label: 'Оберіть тип події',
   inputText: 'Подія',
   textIsEmpty: 'Тут порожньо...',
 };
 
-const ChooseEventType = ({}) => {
+const ChooseEventType = ({ filtersEventTypes }) => {
   const [selectedEventTypes, setSelectedEventTypes] =
     useQueryParam('eventType');
 
@@ -46,12 +39,12 @@ const ChooseEventType = ({}) => {
         iconSelect={IconSelectArrow}
       >
         <ul className="custom-scroll max-h-[300px] overflow-y-auto">
-          {typeEvents.length === 0 ? (
+          {filtersEventTypes.length === 0 ? (
             <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
               {ukr.textIsEmpty}
             </p>
           ) : (
-            typeEvents.map(event => {
+            filtersEventTypes.map(event => {
               return (
                 <li
                   className="border-b-[1px] border-b-gray/50   p-[10px] last:border-none dark:border-gray/10"
