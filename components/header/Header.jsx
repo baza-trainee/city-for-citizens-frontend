@@ -4,7 +4,6 @@ import { useTheme } from 'next-themes';
 import Switchers from './Switchers';
 import IconClose from '../icons/IconClose';
 import IconBurger from '../icons/IconBurger';
-import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,12 +23,12 @@ const Header = () => {
         className="container flex max-w-full justify-end gap-[50px] 
       desktop:items-baseline desktop:justify-center"
       >
-        <Link
+        <a
           className="hidden text-xl leading-normal desktop:inline-block"
           href="/"
         >
           Місто для містян
-        </Link>
+        </a>
 
         <div
           className={`fixed bottom-0 left-0 right-0 top-0 z-20 w-screen bg-gray/5 transition-all
