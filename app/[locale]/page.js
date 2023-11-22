@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation';
-import { unstable_setRequestLocale } from 'next-intl/server';
 import { locales } from '@/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import Footer from '@/components/Footer';
 import FilteredMap from '@/components/GoogleMaps/FilteredMap';

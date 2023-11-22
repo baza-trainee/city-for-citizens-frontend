@@ -1,7 +1,7 @@
 'use client';
 
 import Providers from '@/components/Providers';
-import Error from './[locale]/not-found';
+import Error from 'next/error';
 import { LOCALE } from '@/helpers/constants';
 
 export default function NotFound() {
@@ -9,7 +9,7 @@ export default function NotFound() {
     <html lang={LOCALE.uk.forIntl}>
       <body>
         <Providers>
-          <Error />
+          <Error statusCode={404} />
         </Providers>
       </body>
     </html>
