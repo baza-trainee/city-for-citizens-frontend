@@ -1,5 +1,6 @@
+import { LOCALE } from '@/helpers/constants';
 import { redirect } from 'next/navigation';
 
 export default function RootPage() {
-  redirect('/');
+  redirect(`/${LOCALE.uk.forIntl}`);
 }

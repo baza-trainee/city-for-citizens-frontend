@@ -1,0 +1,18 @@
+{
+  "Filters": {
+    "ChooseCity": {
+      "label": "Choose a city",
+      "defaultValue": "City",
+      "textIsEmpty": "There is nothing here..."
+    },
+    "DatePicker": {
+      "label": "Choose date: from - to",
+      "defaultValue": "Time"
+    },
+    "ChooseEventType": {
+      "label": "Choose type of event",
+      "defaultValue": "Event",
+      "textIsEmpty": "There is nothing here..."
+    }
+  }
+}

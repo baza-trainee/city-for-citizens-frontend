@@ -1,0 +1,13 @@
+{
+  "Header": {
+    "Logotype": "City for Locals",
+    "Switchers": {
+      "titleTheme": "Тема",
+      "titleLang": "Мова"
+    },
+    "ThemeSwitcher": {
+      "switcherLight": "Світла",
+      "switcherDark": "Темна"
+    }
+  }
+}

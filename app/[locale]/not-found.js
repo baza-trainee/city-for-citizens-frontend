@@ -1,21 +1,22 @@
-import Link from "next/link";
-import PrimaryButton from "@/components/UI/buttons/PrimaryButton";
-import ToMain from "@/components/UI/buttons/ToMain";
-
-export default function Custom404() {
+import ToMain from '@/components/UI/buttons/ToMain';
+import { Link } from '@/navigation';
+import { useTranslations } from 'next-intl';
+export default function NotFoundPage() {
+  const t = useTranslations('ErrorPage');
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="flex h-screen items-center justify-center">
       <div className="container">
-      <h1 className="font-heading text-[48px] text-center mb-[12px] font-light -tracking-[0.528px] leading-[1.2]">
-        Помилка 404 :(</h1>
-      <h2 className="text-[24px] text-center mb-[32px]  -tracking-[0.264px] leading-[1.5]">
-        Здається, ви потрапили на цю сторінку помилково. Сторінку, яку ви
-        шукали, віднесло в гори. Будь ласка, скористайтесь навігацією, щоб
-        повернутися назад до цивілізації
-      </h2>
-      <div className="flex items-center justify-center">
-     <ToMain message={"Повернутися назад"}/>
-      </div>
+        <h2 className="mb-[12px] text-center font-heading text-[48px] font-light leading-[1.2] -tracking-[0.528px]">
+          {t('title')}
+        </h2>
+        <p className="mb-[32px] text-center text-[24px]  leading-[1.5] -tracking-[0.264px]">
+          {t('text')}
+        </p>
+        <div className="flex items-center justify-center">
+          <Link href="/">
+            <ToMain message={t('buttonName')} />
+          </Link>
+        </div>
       </div>
     </div>
   );

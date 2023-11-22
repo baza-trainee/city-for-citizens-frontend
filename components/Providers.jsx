@@ -1,6 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import { ThemeProvider } from "next-themes";
+'use client';
+import { useState, useEffect } from 'react';
+import { ThemeProvider } from 'next-themes';
 
 const Providers = ({ children }) => {
   const [mounted, setMounted] = useState(false);
@@ -13,7 +13,7 @@ const Providers = ({ children }) => {
     return <>{children}</>;
   }
   return (
-    <ThemeProvider enableSystem={true} attribute="class">
+    <ThemeProvider enableSystem={false} attribute="class">
       {children}
     </ThemeProvider>
   );

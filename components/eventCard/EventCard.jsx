@@ -9,7 +9,6 @@ import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
 import { formatDateSeparatorDot, formatDateToTime } from '@/helpers/formatDate';
 import Image from 'next/image';
-import eventImg from '../../public/event-img.jpg';
 
 const EventCard = ({ setActiveMarker, event }) => {
   const {
@@ -37,27 +36,17 @@ const EventCard = ({ setActiveMarker, event }) => {
           return <TagItem key={id} tagMassage={eventType} />;
         })}
       </div>
-      {eventImage ? null : (
-        //* після того як буде відомо домен у 'next.config -> domains []' треба додати домен відповідно
-        // (<div className="mb-[20px]  bg-primary/80">
-        //   <Image
-        //     width={240}
-        //     height={105}
-        //     alt={eventTitle}
-        //     src={eventImage}
-        //     className=" h-[108px] w-[240px] rounded-[4px] border object-cover dark:border-gray/80 mobile:w-[358px]"
-        //   />
-        // </div>)
+      {eventImage ? (
         <div className="mb-[20px]">
           <Image
             width={240}
             height={105}
             alt={eventTitle}
-            src={eventImg}
+            src={eventImage}
             className=" h-[108px] w-[240px] rounded-[4px] border object-cover dark:border-gray/80 mobile:w-[358px]"
           />
         </div>
-      )}
+      ) : null}
       <div className="relative flex items-start">
         <h3 className="mr-2 font-heading text-[24px] font-light leading-[1.5] -tracking-[0.264px] dark:text-gray/5">
           {eventTitle}

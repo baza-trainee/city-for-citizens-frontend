@@ -10,16 +10,14 @@ import { formatDateSeparatorDash, generateDateRange } from '@/helpers';
 import { customStylesDatePicker } from './customStylesDatePicker';
 import { customComponents } from './customComponents';
 import { useQueryParam } from '@/hooks';
-
-const ukr = {
-  label: 'Оберіть час',
-  inputText: 'Час',
-};
+import { useTranslations } from 'next-intl';
 
 export const DatePicker = ({ filtersEventDates }) => {
   const [range, setRange] = useState({});
   const [inputText, setInputText] = useState([]);
   const [dateToFilter, setDateToFilter] = useQueryParam('date');
+
+  const t = useTranslations('Filters.DatePicker');
 
   useEffect(() => {
     if (dateToFilter.length === 0) {
@@ -67,8 +65,8 @@ export const DatePicker = ({ filtersEventDates }) => {
   return (
     <div className="tablet:w-[264px] desktop:w-[305px]">
       <FilterInputWrapper
-        inputLabel={ukr.label}
-        inputTextDefault={inputText.length !== 0 ? '' : ukr.inputText}
+        inputLabel={t('label')}
+        inputTextDefault={inputText.length !== 0 ? '' : t('defaultValue')}
         inputTextFirst={inputText[0]}
         inputTextSecond={inputText[1]}
         iconSelect={IconSelectArrow}

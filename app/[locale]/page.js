@@ -1,9 +1,18 @@
-import Header from "@/components/header/Header";
-import Hero from "@/components/Hero";
-import FilteredMap from "@/components/GoogleMaps/FilteredMap";
-import Footer from "@/components/Footer";
+import { notFound } from 'next/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { locales } from '@/navigation';
 
-export default function Home() {
+import Footer from '@/components/Footer';
+import FilteredMap from '@/components/GoogleMaps/FilteredMap';
+import Hero from '@/components/Hero';
+import Header from '@/components/header/Header';
+
+export default function IndexPage({ params: { locale } }) {
+  const isValidLocale = locales.some(cur => cur === locale);
+  if (!isValidLocale) notFound();
+
+  unstable_setRequestLocale(locale);
+
   return (
     <>
       <Header />
