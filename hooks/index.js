@@ -1,3 +1,5 @@
+import { useCurrentLocale } from './useCurrentLocale';
 import { useQueryParam } from './useQueryParam';
 
-export { useQueryParam };
+export { useQueryParam ,useCurrentLocale };
+

@@ -2,13 +2,15 @@
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 
-import { getEvents, getFilters } from '@/services';
 import { useSearchParams } from 'next/navigation';
 import ChooseCity from './ChooseCity';
 import ChooseEventType from './ChooseEventType';
 import DatePicker from './DatePicker/DatePicker';
 import Map from './Map';
 import { LOCALE } from '@/helpers/constants';
+
+import { getEventsBySearchParams } from '@/services/eventAPI';
+import { getFilters } from '@/services/getFilters';
 
 function FilteredMap() {
   const [filters, setFilters] = useState({});
@@ -30,7 +32,7 @@ function FilteredMap() {
 
   useEffect(() => {
     const getEventsByFilter = async () => {
-      const events = await getEvents({
+      const events = await getEventsBySearchParams({
         searchParams: searchParams.toString(),
         locale: currentLocale,
       });

@@ -1,10 +1,13 @@
 import { createLocalizedPathnamesNavigation } from 'next-intl/navigation';
-import { LOCALE } from './helpers/constants';
+import { LOCALE, NAVIGATION } from './helpers/constants';
 
 export const locales = [LOCALE.en.forIntl, LOCALE.uk.forIntl];
 
 export const pathnames = {
-  '/': '/',
+  [NAVIGATION.home]: NAVIGATION.home,
+  [NAVIGATION.admin]: NAVIGATION.admin,
+  [NAVIGATION.login]: NAVIGATION.login,
+  [NAVIGATION.register]: NAVIGATION.register,
 };
 
 export const { Link, redirect, usePathname, useRouter } =
