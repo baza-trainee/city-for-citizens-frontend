@@ -1,11 +1,6 @@
-import AddEventForm from '@/components/Admin/AddEventForm';
-import PageLayout from '@/components/PageLayout';
+import AddEvent from '@/components/Admin/AddEvent';
 
-const AdminPage = () => {
-  return (
-    <PageLayout>
-      <AddEventForm />
-    </PageLayout>
-  );
+const AdminPage = async () => {
+  return <AddEvent />;
 };
 export default AdminPage;

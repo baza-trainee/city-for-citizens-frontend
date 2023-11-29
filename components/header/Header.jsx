@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import Switchers from './Switchers';
 import IconClose from '../icons/IconClose';
 import IconBurger from '../icons/IconBurger';
+import AdminMenu from '../Admin/AdminMenu';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,6 +42,7 @@ const Header = () => {
            }`}
         >
           <Switchers />
+          <AdminMenu />
         </div>
         <button
           type="button"

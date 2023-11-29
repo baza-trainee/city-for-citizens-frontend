@@ -5,32 +5,41 @@ const fetchData = async ({
   method,
   params = null,
   eventData = null,
-  image = null,
+  imageFormData = null,
+  imageString = null,
+  eventId = null,
 }) => {
   const token = localStorage.getItem('accessToken');
 
   const options = {
     method,
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
   };
 
   let searchParams = '';
 
-  if (params) {
-    searchParams = '?' + new URLSearchParams(params);
+  if (eventId) {
+    searchParams = '/' + eventId;
   }
 
-  if (image) {
-    options.headers = {
-      Authorization: 'Bearer ' + token,
-    };
+  if (params) {
+    searchParams = '?' + params;
+  }
+
+  if (imageFormData) {
+    options.body = imageFormData;
+  }
+
+  if (imageString) {
+    options.body = JSON.stringify(imageString);
+    options.headers['Content-Type'] = 'application/json;charset=utf-8';
   }
 
   if (eventData) {
     options.body = JSON.stringify(eventData);
-    options.headers = {
-      'Content-Type': 'application/json;charset=utf-8',
-      Authorization: 'Bearer ' + token,
-    };
+    options.headers['Content-Type'] = 'application/json;charset=utf-8';
   }
 
   try {
@@ -55,17 +64,29 @@ const getAllEvents = async () => {
   return fetchData({ url: '/events', method: 'GET' });
 };
 
-const createEvent = async eventData => {
-  return fetchData({ url: '/events', method: 'POST', eventData });
+const createEvent = async formData => {
+  return fetchData({ url: '/events', method: 'POST', eventData: formData });
 };
 
 const updateEvent = () => {};
 
-const createEventImage = image => {
-  console.log('image:', image);
-  return fetchData({ url: '/image', method: 'POST', image });
+const deleteEvent = async eventId => {
+  return fetchData({ url: '/events', method: 'DELETE', eventId });
 };
 
-const deleteEventImage = () => {};
+const createEventImage = async imageFormData => {
+  return fetchData({ url: '/image', method: 'POST', imageFormData });
+};
 
-export { getEventsBySearchParams, getAllEvents, createEvent, createEventImage };
+const deleteEventImage = imageString => {
+  return fetchData({ url: '/image', method: 'DELETE', imageString });
+};
+
+export {
+  getEventsBySearchParams,
+  getAllEvents,
+  createEvent,
+  createEventImage,
+  deleteEvent,
+  deleteEventImage,
+};

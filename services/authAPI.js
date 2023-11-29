@@ -1,6 +1,6 @@
 import { BASE_URL } from '@/helpers/constants';
 
-const fetchData = async (url, method, credential = null) => {
+const fetchData = async ({ url, method, credential = null }) => {
   const options = {
     method,
     credentials: 'include',
@@ -28,19 +28,19 @@ const fetchData = async (url, method, credential = null) => {
 };
 
 export const refresh = async () => {
-  return fetchData('/refresh', 'POST');
+  return fetchData({ url: '/refresh', method: 'POST' });
 };
 
 export const register = async credential => {
-  return fetchData('/registration', 'POST', credential);
+  return fetchData({ url: '/registration', method: 'POST', credential });
 };
 
 export const login = async credential => {
-  return fetchData('/login', 'POST', credential);
+  return fetchData({ url: '/login', method: 'POST', credential });
 };
 
 export const logout = async () => {
-  return fetchData('/logout', 'POST');
+  return fetchData({ url: '/logout', method: 'POST' });
 };
 
 // export const activation = async () => {
