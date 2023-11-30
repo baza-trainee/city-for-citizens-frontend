@@ -39,18 +39,30 @@ const EventList = () => {
   };
 
   return (
-    <ul>
-      {eventList.map(event => (
-        <li key={event.id + event.idIdentifier}>
-          <p>--------------</p>
-          <p>{event.eventTitle}</p>
-          <Link href={`/admin/events/${event.id}`}>Update</Link>
-          <button onClick={() => handleDeleteEvent(event.id)}>Delete</button>
-
-          <p>-------------</p>
-        </li>
-      ))}
-    </ul>
+    <div className="container flex">
+      <ul className="mx-auto flex flex-col gap-[5px]">
+        {eventList.map(event => (
+          <li
+            className="rounded-[15px] bg-gray/10 p-[15px]"
+            key={event.id + event.idIdentifier}
+          >
+            <p className="mb-[10px]">{event.eventTitle}</p>
+            <Link
+              className="mx-auto my-0 inline-block rounded-[10px] bg-primary/80 px-[40px] py-[5px]"
+              href={`/admin/events/${event.id}`}
+            >
+              Update
+            </Link>
+            <button
+              className="mx-auto my-0 rounded-[10px] bg-[red] px-[40px] py-[5px]"
+              onClick={() => handleDeleteEvent(event.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 export default privateRoute({
