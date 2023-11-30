@@ -11,118 +11,156 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
 
   const formInputs = [
     {
-      label: 'Event Name',
-      name: 'eventTitle',
-      type: 'text',
+      label: 'Назва Події / Event name',
       isDouble: true,
+      attributes: {
+        required: true,
+        name: 'eventTitle',
+        type: 'text',
+      },
     },
     {
-      label: 'Description',
-      name: 'description',
-      type: 'textarea',
+      label: 'Опис / Description',
       isDouble: true,
+      attributes: {
+        required: true,
+        placeholder: 'Enter your message here...',
+        type: 'textarea',
+        name: 'description',
+        rows: '5',
+      },
     },
     {
-      label: 'Notes',
-      name: 'notes',
-      type: 'textarea',
+      label: 'Примітки / Notes',
       isDouble: true,
+      attributes: {
+        required: true,
+        placeholder: 'Enter your message here...',
+        type: 'textarea',
+        name: 'notes',
+        rows: '5',
+      },
     },
     {
-      label: 'Event Type',
-      name: 'eventType',
-      type: 'text',
+      label: 'Тип події / Event type',
       isDouble: true,
+      attributes: {
+        required: true,
+        name: 'eventType',
+        type: 'text',
+      },
     },
     {
-      label: 'Event Image',
-      name: 'eventImage',
-      type: 'file',
+      label: 'Зображення події / Event image',
       isDouble: true,
+      attributes: {
+        required: true,
+        name: 'eventImage',
+        type: 'file',
+        accept: 'image/*',
+      },
     },
     {
-      label: 'Місто',
+      label: 'Місто / City',
       name: 'city',
-      type: 'text',
       isDouble: true,
+      attributes: {
+        required: true,
+
+        type: 'text',
+      },
     },
     {
-      label: 'Вулиця',
-      name: 'street',
-      type: 'text',
+      label: 'Вулиця / Street',
+
       isDouble: true,
+      attributes: {
+        required: true,
+        name: 'street',
+        type: 'text',
+      },
     },
     {
-      label: 'Координати',
-      name: 'coordinates',
-      type: 'text',
+      label: 'Координати / Coordinates',
+
       isDouble: false,
+      attributes: {
+        required: true,
+        name: 'coordinates',
+        type: 'text',
+      },
     },
     {
-      label: 'Event Url',
-      name: 'eventUrl',
-      type: 'text',
+      label: 'URL-адреса події/ Event Url',
+
       isDouble: false,
+      attributes: {
+        required: true,
+        name: 'eventUrl',
+        type: 'text',
+      },
     },
     {
-      label: 'Date',
-      name: 'date',
-      type: 'date',
+      label: 'Дата / Date',
+
       isDouble: false,
+      attributes: {
+        required: true,
+        name: 'date',
+        type: 'date',
+      },
     },
     {
-      label: 'Time',
-      name: 'time',
-      type: 'time',
+      label: 'Час / Time',
+
       isDouble: false,
+      attributes: {
+        required: true,
+        name: 'time',
+        type: 'time',
+      },
     },
   ];
 
   return (
     <>
+      <div className="mb-[30px] flex justify-center gap-[70px] text-[26px]">
+        <p>Деталі події українською</p>
+        <p>Деталі події англійською</p>
+      </div>
       <form className="mx-auto mb-[30px] flex w-[650px] flex-wrap  gap-[15px] gap-x-[50px]">
-        {formInputs.map(({ label, name, type, isDouble }) => {
-          if (type === 'file') {
+        {formInputs.map(({ label, isDouble, attributes }) => {
+          if (attributes.type === 'file') {
             return (
-              <label className="" key={label + name}>
-                <span>{label}</span>
+              <label key={label + attributes.name}>
+                <span className="mb-[10px] block text-center text-[20px]">
+                  {label}
+                </span>
                 <div className="flex gap-[50px]">
-                  <input
-                    name={name}
-                    onChange={handleImageChangeUk}
-                    type={type}
-                    accept="image/*"
-                  />
-                  <input
-                    name={name}
-                    onChange={handleImageChangeEn}
-                    type={type}
-                    accept="image/*"
-                  />
+                  <input {...attributes} onChange={handleImageChangeUk} />
+                  <input {...attributes} onChange={handleImageChangeEn} />
                 </div>
               </label>
             );
           }
-          if (type === 'textarea') {
+          if (attributes.type === 'textarea') {
             return (
-              <label className="" key={label + name}>
-                <span>{label}</span>
+              <label key={label + attributes.name}>
+                <span className="mb-[10px] block text-center text-[20px]">
+                  {label}
+                </span>
                 <div className="flex gap-[50px]">
                   <textarea
+                    {...attributes}
                     className="w-[300px]"
-                    name={name}
-                    rows="5"
                     onChange={handleImageChangeUk}
-                    value={formDataUk[name]}
-                    placeholder="Enter your message here..."
+                    value={formDataUk[attributes.name]}
                   ></textarea>
                   <textarea
+                    {...attributes}
                     className="w-[300px]"
-                    name={name}
-                    rows="5"
                     onChange={handleImageChangeEn}
-                    value={formDataEn[name]}
-                    placeholder="Enter your message here..."
+                    value={formDataEn[attributes.name]}
                   ></textarea>
                 </div>
               </label>
@@ -130,22 +168,22 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
           }
           if (isDouble) {
             return (
-              <label className="" key={label + name}>
-                <span>{label}</span>
+              <label className="" key={label + attributes.name}>
+                <span className="mb-[10px] block text-center text-[20px]">
+                  {label}
+                </span>
                 <div className="flex gap-[50px]">
                   <input
+                    {...attributes}
                     className="w-[300px]"
-                    name={name}
-                    value={formDataUk[name]}
+                    value={formDataUk[attributes.name]}
                     onChange={handleChangeUk}
-                    type={type}
                   />
                   <input
+                    {...attributes}
                     className="w-[300px]"
-                    name={name}
-                    value={formDataEn[name]}
+                    value={formDataEn[attributes.name]}
                     onChange={handleChangeEn}
-                    type={type}
                   />
                 </div>
               </label>
@@ -153,17 +191,18 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
           }
           if (!isDouble) {
             return (
-              <label className="w-[300px]" key={label + name}>
-                <span className="block">{label}</span>
+              <label className="w-[300px]" key={label + attributes.name}>
+                <span className="mb-[10px] block text-center text-[20px]">
+                  {label}
+                </span>
                 <input
+                  {...attributes}
                   className="min-w-[300px]"
-                  name={name}
-                  value={formDataUk[name]}
+                  value={formDataUk[attributes.name]}
                   onChange={e => {
                     handleChangeEn(e);
                     handleChangeUk(e);
                   }}
-                  type={type}
                 />
               </label>
             );

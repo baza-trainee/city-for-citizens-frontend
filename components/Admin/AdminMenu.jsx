@@ -19,7 +19,7 @@ const AdminMenu = () => {
   return (
     <>
       {isLoggedIn && (
-        <div className="flex gap-[15px]">
+        <div className="flex items-center gap-[15px]">
           <Link href="/admin">Add Event</Link>
           <Link href="/admin/events">Event List</Link>
           <button
