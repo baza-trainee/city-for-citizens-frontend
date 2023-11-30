@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export function useHandleFormDataImage() {
-  const [formDataImage, setFormDataImage] = useState({});
+  const [formDataImage, setFormDataImage] = useState('');
 
   const handleChangeFormDataImage = e => {
     let bodyFormData = new FormData();

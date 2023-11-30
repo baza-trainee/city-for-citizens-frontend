@@ -60,8 +60,8 @@ const getEventsBySearchParams = async params => {
   return fetchData({ url: '/events', method: 'GET', params });
 };
 
-const getAllEvents = async () => {
-  return fetchData({ url: '/events', method: 'GET' });
+const getAllEvents = async params => {
+  return fetchData({ url: '/events', method: 'GET', params });
 };
 
 const createEvent = async formData => {

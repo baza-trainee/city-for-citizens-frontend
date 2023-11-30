@@ -2,181 +2,141 @@
 
 import { useHandleFormData, useHandleFormDataImage } from '@/hooks';
 
-const EventForm = ({ buttonName, onSubmit }) => {
-  const [formDataUk, handleChangeUk] = useHandleFormData('uk_UA');
-  const [formDataEn, handleChangeEn] = useHandleFormData('en_US');
+const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
+  const [formDataUk, handleChangeUk] = useHandleFormData('uk_UA', eventUk);
+  const [formDataEn, handleChangeEn] = useHandleFormData('en_US', eventEn);
   const [formDataImageUk, handleImageChangeUk] = useHandleFormDataImage();
+
   const [formDataImageEn, handleImageChangeEn] = useHandleFormDataImage();
+
+  const formInputs = [
+    {
+      label: 'Event Name',
+      name: 'eventTitle',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Description',
+      name: 'description',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Notes',
+      name: 'notes',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Event Type',
+      name: 'eventType',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Event Image',
+      name: 'eventImage',
+      type: 'file',
+      isDouble: true,
+    },
+    {
+      label: 'Місто',
+      name: 'city',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Вулиця',
+      name: 'street',
+      type: 'text',
+      isDouble: true,
+    },
+    {
+      label: 'Координати',
+      name: 'coordinates',
+      type: 'text',
+      isDouble: false,
+    },
+    {
+      label: 'Event Url',
+      name: 'eventUrl',
+      type: 'text',
+      isDouble: false,
+    },
+    {
+      label: 'Date',
+      name: 'date',
+      type: 'date',
+      isDouble: false,
+    },
+    {
+      label: 'Time',
+      name: 'time',
+      type: 'time',
+      isDouble: false,
+    },
+  ];
 
   return (
     <>
-      <form className="mx-auto mb-[30px] flex w-[880px] flex-col   gap-[15px]">
-        <div className="flex">
-          <div className="flex flex-col">
-            <label>
-              <span>Event Name</span>
-              <input
-                name="eventTitle"
-                value={formDataUk.eventTitle}
-                onChange={handleChangeUk}
-                type="text"
-              />
-              <input
-                name="eventTitle"
-                value={formDataEn.eventTitle}
-                onChange={handleChangeEn}
-                type="text"
-              />
-            </label>
-            <label>
-              <span>description</span>
-              <textarea
-                name="description"
-                value={formDataUk.description}
-                onChange={handleChangeUk}
-              ></textarea>
-              <textarea
-                name="description"
-                value={formDataEn.description}
-                onChange={handleChangeEn}
-              ></textarea>
-            </label>
-            <label>
-              <span>notes</span>
-              <input
-                name="notes"
-                value={formDataUk.notes}
-                onChange={handleChangeUk}
-                type="text"
-              />
-              <input
-                name="notes"
-                value={formDataEn.notes}
-                onChange={handleChangeEn}
-                type="text"
-              />
-            </label>
-
-            <label>
-              <span>eventType</span>
-              <input
-                name="eventType"
-                value={formDataUk.eventType}
-                onChange={handleChangeUk}
-                type="text"
-              />
-              <input
-                name="eventType"
-                value={formDataEn.eventType}
-                onChange={handleChangeEn}
-                type="text"
-              />
-            </label>
-          </div>
-
-          <div className="flex flex-col">
-            <label>
-              <span>eventImage</span>
-              <input
-                name="eventImage"
-                onChange={handleImageChangeUk}
-                type="file"
-                accept="image/*"
-              />
-              <input
-                name="eventImage"
-                onChange={handleImageChangeEn}
-                type="file"
-                accept="image/*"
-              />
-            </label>
-            <label>
-              <span>eventUrl</span>
-              <input
-                name="eventUrl"
-                value={formDataUk.eventUrl}
-                onChange={e => {
-                  handleChangeEn(e);
-                  handleChangeUk(e);
-                }}
-                type="text"
-              />
-            </label>
-
-            <div className="flex gap-[15px]">
-              <label>
-                <span>Date</span>
+      <form className="mx-auto mb-[30px] flex w-[880px] flex-col gap-[15px]">
+        {formInputs.map(({ label, name, type, isDouble }) => {
+          if (type === 'file') {
+            return (
+              <label key={label + name}>
+                <span>{label}</span>
                 <input
-                  name="date"
-                  value={formDataUk.date}
+                  name={name}
+                  onChange={handleImageChangeUk}
+                  type={type}
+                  accept="image/*"
+                />
+                <input
+                  name={name}
+                  onChange={handleImageChangeEn}
+                  type={type}
+                  accept="image/*"
+                />
+              </label>
+            );
+          }
+          if (isDouble) {
+            return (
+              <label key={label + name}>
+                <span>{label}</span>
+                <input
+                  name={name}
+                  value={formDataUk[name]}
+                  onChange={handleChangeUk}
+                  type={type}
+                />
+                <input
+                  name={name}
+                  value={formDataEn[name]}
+                  onChange={handleChangeEn}
+                  type={type}
+                />
+              </label>
+            );
+          }
+          if (!isDouble) {
+            return (
+              <label key={label + name}>
+                <span>{label}</span>
+                <input
+                  name={name}
+                  value={formDataUk[name]}
                   onChange={e => {
                     handleChangeEn(e);
                     handleChangeUk(e);
                   }}
-                  type="date"
+                  type={type}
                 />
               </label>
-              <label>
-                <span>Time</span>
-
-                <input
-                  name="time"
-                  value={formDataUk.time}
-                  onChange={e => {
-                    handleChangeEn(e);
-                    handleChangeUk(e);
-                  }}
-                  type="time"
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <label>
-            <span>Місто / City</span>
-            <input
-              name="city"
-              value={formDataUk.city}
-              onChange={handleChangeUk}
-              type="text"
-            />
-            <input
-              name="city"
-              value={formDataEn.city}
-              onChange={handleChangeEn}
-              type="text"
-            />
-          </label>
-          <label>
-            <span>Вулиця / Street</span>
-            <input
-              name="street"
-              value={formDataUk.street}
-              onChange={handleChangeUk}
-              type="text"
-            />
-            <input
-              name="street"
-              value={formDataEn.street}
-              onChange={handleChangeEn}
-              type="text"
-            />
-          </label>
-
-          <label>
-            <span>Координати / Coordinates</span>
-            <input
-              name="coordinates"
-              value={formDataUk.coordinates}
-              onChange={e => {
-                handleChangeEn(e);
-                handleChangeUk(e);
-              }}
-              type="text"
-            />
-          </label>
-        </div>
+            );
+          }
+        })}
       </form>
       <button
         className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]"
