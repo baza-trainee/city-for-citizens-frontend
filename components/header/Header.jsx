@@ -42,8 +42,8 @@ const Header = () => {
            }`}
         >
           <Switchers />
-          <AdminMenu />
         </div>
+        <AdminMenu />
         <button
           type="button"
           className="z-30 inline-block h-[32px] w-[32px] desktop:hidden"
