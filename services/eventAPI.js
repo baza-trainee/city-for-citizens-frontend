@@ -68,7 +68,14 @@ const createEvent = async formData => {
   return fetchData({ url: '/events', method: 'POST', eventData: formData });
 };
 
-const updateEvent = () => {};
+const updateEvent = (formData, eventId) => {
+  return fetchData({
+    url: '/events',
+    method: 'PATCH',
+    eventId,
+    eventData: formData,
+  });
+};
 
 const deleteEvent = async eventId => {
   return fetchData({ url: '/events', method: 'DELETE', eventId });
@@ -89,4 +96,5 @@ export {
   createEventImage,
   deleteEvent,
   deleteEventImage,
+  updateEvent,
 };

@@ -22,10 +22,11 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     {
       label: 'Опис / Description',
       isDouble: true,
+      type: 'textarea',
       attributes: {
         required: true,
         placeholder: 'Enter your message here...',
-        type: 'textarea',
+        type: 'text',
         name: 'description',
         rows: '5',
       },
@@ -33,10 +34,11 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     {
       label: 'Примітки / Notes',
       isDouble: true,
+      type: 'textarea',
       attributes: {
         required: true,
         placeholder: 'Enter your message here...',
-        type: 'textarea',
+        type: 'text',
         name: 'notes',
         rows: '5',
       },
@@ -54,7 +56,6 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
       label: 'Зображення події / Event image',
       isDouble: true,
       attributes: {
-        required: true,
         name: 'eventImage',
         type: 'file',
         accept: 'image/*',
@@ -62,17 +63,15 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     },
     {
       label: 'Місто / City',
-      name: 'city',
       isDouble: true,
       attributes: {
         required: true,
-
         type: 'text',
+        name: 'city',
       },
     },
     {
       label: 'Вулиця / Street',
-
       isDouble: true,
       attributes: {
         required: true,
@@ -128,8 +127,13 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         <p>Деталі події українською</p>
         <p>Деталі події англійською</p>
       </div>
-      <form className="mx-auto mb-[30px] flex w-[650px] flex-wrap  gap-[15px] gap-x-[50px]">
-        {formInputs.map(({ label, isDouble, attributes }) => {
+      <form
+        onSubmit={e =>
+          onSubmit(e, formDataUk, formDataEn, formDataImageUk, formDataImageEn)
+        }
+        className="mx-auto mb-[30px] flex w-[650px] flex-wrap  gap-[15px] gap-x-[50px]"
+      >
+        {formInputs.map(({ label, type, isDouble, attributes }) => {
           if (attributes.type === 'file') {
             return (
               <label key={label + attributes.name}>
@@ -143,7 +147,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
               </label>
             );
           }
-          if (attributes.type === 'textarea') {
+          if (type === 'textarea') {
             return (
               <label key={label + attributes.name}>
                 <span className="mb-[10px] block text-center text-[20px]">
@@ -153,13 +157,13 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                   <textarea
                     {...attributes}
                     className="w-[300px]"
-                    onChange={handleImageChangeUk}
+                    onChange={handleChangeUk}
                     value={formDataUk[attributes.name]}
                   ></textarea>
                   <textarea
                     {...attributes}
                     className="w-[300px]"
-                    onChange={handleImageChangeEn}
+                    onChange={handleChangeEn}
                     value={formDataEn[attributes.name]}
                   ></textarea>
                 </div>
@@ -208,15 +212,13 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
             );
           }
         })}
+        <button
+          type="submit"
+          className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]"
+        >
+          {buttonName}
+        </button>
       </form>
-      <button
-        className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]"
-        onClick={() =>
-          onSubmit(formDataUk, formDataEn, formDataImageUk, formDataImageEn)
-        }
-      >
-        {buttonName}
-      </button>
     </>
   );
 };
