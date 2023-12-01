@@ -14,13 +14,16 @@ import {
 import EventForm from './EventForm';
 
 const AddEvent = () => {
+  
   const handleSubmit = async (
+    e,
     formDataUk,
     formDataEn,
 
     formDataImageUk,
     formDataImageEn
   ) => {
+    e.preventDefault();
     const idIdentifier = uuidv4();
 
     let responseUk;

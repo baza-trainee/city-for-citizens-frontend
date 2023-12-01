@@ -80,26 +80,6 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
       },
     },
     {
-      label: 'Координати / Coordinates',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'coordinates',
-        type: 'text',
-      },
-    },
-    {
-      label: 'URL-адреса події/ Event Url',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'eventUrl',
-        type: 'text',
-      },
-    },
-    {
       label: 'Дата / Date',
 
       isDouble: false,
@@ -117,6 +97,26 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         required: true,
         name: 'time',
         type: 'time',
+      },
+    },
+    {
+      label: 'Координати / Coordinates',
+
+      isDouble: false,
+      attributes: {
+        required: true,
+        name: 'coordinates',
+        type: 'text',
+      },
+    },
+    {
+      label: 'URL-адреса події/ Event Url',
+
+      isDouble: false,
+      attributes: {
+        required: true,
+        name: 'eventUrl',
+        type: 'text',
       },
     },
   ];
