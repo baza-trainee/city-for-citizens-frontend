@@ -20,13 +20,10 @@ const Header = () => {
      landscape:pb-0 landscape:pt-[22px] landscape:desktop:pb-[35px] landscape:desktop:pt-[35px]"
     >
       <div
-        className="container flex max-w-full justify-end gap-[50px] 
+        className="container flex max-w-full items-center justify-between gap-[50px] 
       desktop:items-baseline desktop:justify-center"
       >
-        <a
-          className="hidden text-xl leading-normal desktop:inline-block"
-          href="/"
-        >
+        <a className="z-30 text-xl leading-normal" href="/">
           Місто для містян
         </a>
 
