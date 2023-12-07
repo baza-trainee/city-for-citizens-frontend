@@ -11,7 +11,6 @@ const DropdownSwitcher = ({ content, options }) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    // Function to update font size based on window width
     const updateFontSize = () => {
       const windowWidth = window.innerWidth;
 
@@ -26,7 +25,6 @@ const DropdownSwitcher = ({ content, options }) => {
 
     updateFontSize();
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('resize', updateFontSize);
     };
@@ -40,11 +38,9 @@ const DropdownSwitcher = ({ content, options }) => {
       }
     };
 
-    // Add the event listener
     document.addEventListener('click', closeDropdownOnOutsideClick);
 
     return () => {
-      // Remove the event listener on component unmount
       document.removeEventListener('click', closeDropdownOnOutsideClick);
     };
   }, []);
@@ -56,7 +52,7 @@ const DropdownSwitcher = ({ content, options }) => {
   return (
     <div
       ref={dropdownRef}
-      className={`dropdown-block  relative h-max rounded-lg border 
+      className={`relative h-max rounded-lg border 
       bg-gray/5 text-base dark:bg-gray/5
        max-tablet:first:mb-4  tablet:w-[33%] desktop:w-[89px] desktop:border-none 
         desktop:pb-1 desktop:text-gray/100 desktop:dark:bg-gray/100 desktop:dark:text-gray/5 
@@ -97,9 +93,9 @@ const DropdownSwitcher = ({ content, options }) => {
       </div>
 
       <div
-        className={`dropdown  left-0 top-9 flex w-full flex-col
-         items-start transition-opacity 
-         duration-300 desktop:absolute desktop:items-center 
+        className={`left-0 top-[26px] flex w-full flex-col
+         items-start bg-gray/5 transition-opacity duration-300
+         dark:bg-gray/100 desktop:absolute desktop:items-center 
          desktop:gap-[10px] desktop:rounded-lg desktop:border 
          desktop:border-gray/100 desktop:p-4 desktop:dark:border-gray/5 
          ${

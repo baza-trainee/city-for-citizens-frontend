@@ -7,7 +7,7 @@ import FilteredMap from '@/components/GoogleMaps/FilteredMap';
 import Hero from '@/components/Hero';
 import Header from '@/components/header/Header';
 
-export default function IndexPage({ params: { locale } }) {
+export default async function IndexPage({ params: { locale } }) {
   const isValidLocale = locales.some(cur => cur === locale);
   if (!isValidLocale) notFound();
 
