@@ -8,5 +8,6 @@ export default getRequestConfig(async ({ locale }) => ({
     ...(await import(`./messages/${locale}/Header.json`)).default,
     ...(await import(`./messages/${locale}/Hero.json`)).default,
     ...(await import(`./messages/${locale}/Metadata.json`)).default,
+    ...(await import(`./messages/${locale}/ModalCookies.json`)).default,
   },
 }));
