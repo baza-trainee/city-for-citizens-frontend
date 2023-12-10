@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 
-import { getEvents, getFilters } from '@/services';
 import { useSearchParams } from 'next/navigation';
 import ChooseCity from './ChooseCity';
 import ChooseEventType from './ChooseEventType';
@@ -10,30 +9,31 @@ import DatePicker from './DatePicker/DatePicker';
 import Map from './Map';
 import { LOCALE } from '@/helpers/constants';
 
+import { getEventsBySearchParams } from '@/services/eventAPI';
+import { getFilters } from '@/services/getFilters';
+import { useCurrentLocale } from '@/hooks';
+
 function FilteredMap() {
   const [filters, setFilters] = useState({});
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const { localeForRequest } = useCurrentLocale();
   const searchParams = useSearchParams();
-  const locale = useLocale();
-
-  const currentLocale =
-    locale === LOCALE.uk.forIntl ? LOCALE.uk.forRequest : LOCALE.en.forRequest;
 
   useEffect(() => {
     const getAllFilters = async () => {
-      const filters = await getFilters({ locale: currentLocale });
+      const filters = await getFilters({ locale: localeForRequest });
       setFilters(filters);
     };
 
     getAllFilters();
-  }, [currentLocale]);
+  }, [localeForRequest]);
 
   useEffect(() => {
     const getEventsByFilter = async () => {
-      const events = await getEvents({
-        searchParams: searchParams.toString(),
-        locale: currentLocale,
-      });
+      const urlSearchParams = new URLSearchParams(searchParams);
+      urlSearchParams.append('locale', localeForRequest);
+
+      const events = await getEventsBySearchParams(urlSearchParams);
       setFilteredEvents(events);
     };
 
@@ -42,7 +42,7 @@ function FilteredMap() {
     } else {
       setFilteredEvents([]);
     }
-  }, [currentLocale, searchParams]);
+  }, [localeForRequest, searchParams]);
 
   return (
     <>
