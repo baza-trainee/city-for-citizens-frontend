@@ -48,7 +48,7 @@ const ChooseEventType = ({ filtersEventTypes }) => {
                   key={event}
                 >
                   <label className="flex cursor-pointer justify-between">
-                    <span className="w-[87%] select-none text-[16px] leading-[1.5] -tracking-[0.176px]  text-gray/50 dark:text-gray/10 ">
+                    <span className="w-[87%] select-none text-[16px] leading-[1.5] -tracking-[0.176px]  text-gray/50 dark:text-gray/5 ">
                       {event}
                     </span>
                     <input

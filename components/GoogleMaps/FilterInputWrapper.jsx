@@ -36,19 +36,19 @@ const FilterInputWrapper = ({
 
   const setTextColor = inputTextDefault
     ? isVisible
-      ? 'text-gray/100 dark:text-gray/5'
+      ? 'text-gray/80 dark:text-gray/5'
       : 'text-gray/30 dark:text-gray/20'
     : isVisible
-    ? 'text-gray/100 dark:text-gray/5'
-    : 'text-gray/50 dark:text-gray/10';
+    ? 'text-gray/80 dark:text-gray/5'
+    : 'text-gray/50 dark:text-gray/5';
 
   const setIconColor = inputTextDefault
     ? isVisible
-      ? 'stroke-gray/100 dark:stroke-gray/5'
+      ? 'stroke-gray/80 dark:stroke-gray/5'
       : 'stroke-gray/30 dark:stroke-gray/20'
     : isVisible
-    ? 'stroke-gray/100 dark:stroke-gray/5'
-    : 'stroke-gray/50 dark:stroke-gray/10';
+    ? 'stroke-gray/80 dark:stroke-gray/5'
+    : 'stroke-gray/50 dark:stroke-gray/5';
 
   const commonStyles = {
     text: `max-w-[87%]  select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[212px] `,
