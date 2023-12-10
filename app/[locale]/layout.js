@@ -6,7 +6,6 @@ import { locales } from '@/navigation';
 import Providers from '@/components/Providers';
 
 import './globals.css';
-import { Suspense } from 'react';
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
@@ -34,9 +33,7 @@ export default function LocaleLayout({ children, params: { locale } }) {
     <html lang={locale}>
       <body className="bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-          </Providers>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>
