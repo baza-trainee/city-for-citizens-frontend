@@ -97,11 +97,13 @@ const DropdownSwitcher = ({ content, options }) => {
       </div>
 
       <div
+
         className={`left-0 top-9 flex w-full flex-col
+
          items-start transition-opacity 
          duration-300 desktop:absolute desktop:items-center 
          desktop:gap-[10px] desktop:rounded-lg desktop:border 
-         desktop:border-gray/100 desktop:p-4 desktop:dark:border-gray/5 
+         desktop:border-gray/100 desktop:bg-gray/5 desktop:p-4  desktop:dark:border-gray/5  desktop:dark:bg-gray/100
          ${
            isDropdownVisible
              ? 'visible h-[88px] opacity-100'
