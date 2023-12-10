@@ -51,13 +51,13 @@ const FilterInputWrapper = ({
     : 'stroke-gray/50 dark:stroke-gray/10';
 
   const commonStyles = {
-    text: `max-w-[87%] mobile:max-w-[346px] select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[212px] desktop:max-w-[112px]`,
+    text: `max-w-[87%]  select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[212px] `,
     icon: `w-[24px] h-[24px] cursor-pointer transition-all ${setIconColor} `,
   };
 
   return (
     <div className="relative">
-      <p className="mb-[8px] text-[14px] leading-[1.5] -tracking-[0.154px] text-gray/100 dark:text-gray/5">
+      <p className="mb-[8px] text-[16px] leading-[1.5] -tracking-[0.154px] text-gray/100 dark:text-gray/5">
         {inputLabel}
       </p>
       <div tabIndex="0" onFocus={handleFocus} onBlur={handleLostFocus}>

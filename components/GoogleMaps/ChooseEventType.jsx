@@ -26,7 +26,7 @@ const ChooseEventType = ({ filtersEventTypes }) => {
 
   const selectedTypesIsEmpty = selectedEventTypes.length !== 0;
   return (
-    <div className="tablet:w-[264px] desktop:w-[164px]">
+    <div className="tablet:w-[264px] ">
       <FilterInputWrapper
         inputLabel={t('label')}
         inputTextDefault={selectedTypesIsEmpty ? '' : t('defaultValue')}
@@ -44,11 +44,11 @@ const ChooseEventType = ({ filtersEventTypes }) => {
             filtersEventTypes.map(event => {
               return (
                 <li
-                  className="border-b-[1px] border-b-gray/50   p-[10px] last:border-none dark:border-gray/10"
+                  className=" border-b-[1px] border-b-gray/50  p-[10px] last:border-none dark:border-gray/10"
                   key={event}
                 >
                   <label className="flex cursor-pointer justify-between">
-                    <span className="select-none text-[16px] leading-[1.5] -tracking-[0.176px]  text-gray/50 dark:text-gray/10 desktop:w-[112px]">
+                    <span className="w-[87%] select-none text-[16px] leading-[1.5] -tracking-[0.176px]  text-gray/50 dark:text-gray/10 ">
                       {event}
                     </span>
                     <input
