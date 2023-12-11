@@ -52,7 +52,7 @@ const DropdownSwitcher = ({ content, options }) => {
   return (
     <div
       ref={dropdownRef}
-      className={`relative h-max rounded-lg border 
+      className={`relative h-max rounded-lg border
       bg-gray/5 text-base dark:bg-gray/5
        max-tablet:first:mb-4  tablet:w-[33%] desktop:w-[89px] desktop:border-none 
         desktop:pb-1 desktop:text-gray/100 desktop:dark:bg-gray/100 desktop:dark:text-gray/5 
@@ -96,7 +96,6 @@ const DropdownSwitcher = ({ content, options }) => {
         className={`left-0 top-[26px] flex w-full flex-col
          items-start bg-gray/5 transition-opacity duration-300
          dark:bg-gray/100 desktop:absolute desktop:items-center 
-
          desktop:gap-[10px] desktop:rounded-lg desktop:border 
          desktop:border-gray/100 desktop:bg-gray/5 desktop:p-4  desktop:dark:border-gray/5  desktop:dark:bg-gray/100
          ${
