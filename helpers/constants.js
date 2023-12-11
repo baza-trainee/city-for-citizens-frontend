@@ -10,9 +10,7 @@ const NAVIGATION = {
   register: '/register',
 };
 
-const BASE_URL = 'http://185-237-14-12.cloud-xip.com:8082/api';
-// const BASE_URL = 'http://localhost:4000/api';
-const IMAGE_BASE_URL = 'http://185-237-14-12.cloud-xip.com:8082';
-const DOMAIN_NAME = '185-237-14-12.cloud-xip.com';
+const BASE_URL = 'http://45.94.157.117:53431/api';
+const IMAGE_BASE_URL = 'http://45.94.157.117:53431/';
 
-export { LOCALE, BASE_URL, DOMAIN_NAME, IMAGE_BASE_URL, NAVIGATION };
+export { LOCALE, BASE_URL, IMAGE_BASE_URL, NAVIGATION };
