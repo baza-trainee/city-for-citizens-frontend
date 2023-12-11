@@ -34,8 +34,6 @@ const EventItem = ({ event, activeMarker, setActiveMarker }) => {
 
   const [lat, lng] = eventAddress.coordinates.split(',');
 
-  IconMapMarker;
-
   return (
     <>
       <Marker
@@ -45,7 +43,11 @@ const EventItem = ({ event, activeMarker, setActiveMarker }) => {
         position={{ lat: Number(lat), lng: Number(lng) }}
         icon={{
           anchor: new google.maps.Point(12, 24),
-          ...IconMapMarker({ isHovered, theme }),
+          ...IconMapMarker({
+            isHovered,
+            theme,
+            isActive: activeMarker === idIdentifier,
+          }),
         }}
       >
         {activeMarker !== idIdentifier && showTitleOnHover ? (

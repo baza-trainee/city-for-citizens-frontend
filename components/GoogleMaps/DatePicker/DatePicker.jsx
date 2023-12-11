@@ -64,7 +64,7 @@ export const DatePicker = ({ filtersEventDates }) => {
     activeDates.includes(formatDateSeparatorDash(date));
 
   return (
-    <div className="tablet:w-[264px] desktop:w-[305px]">
+    <div className="tablet:w-[264px]">
       <FilterInputWrapper
         inputLabel={t('label')}
         inputTextDefault={inputText.length !== 0 ? '' : t('defaultValue')}
