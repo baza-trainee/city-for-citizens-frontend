@@ -23,6 +23,7 @@ export default function IndexPage({ params: { locale } }) {
           <Suspense fallback={<Loader />}>
             <FilteredMap />
           </Suspense>
+          <ModalCookies/>
         </main>
       </PageLayout>
     </>
