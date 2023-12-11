@@ -13,7 +13,6 @@ const Switchers = () => {
 
   return (
     <div
-
       className="mt-[190px] justify-center gap-4 px-4
        max-tablet:flex-col tablet:mt-[210px] tablet:flex desktop:mt-0 landscape:mt-[210px] landscape:flex landscape:max-tablet:flex-row landscape:desktop:mt-0"
 

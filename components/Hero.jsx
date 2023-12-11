@@ -6,13 +6,13 @@ const Hero = () => {
   return (
     <>
       <section
-        className="relative z-30 bg-gray/5 pt-[35px] text-gray/100
-       dark:bg-gray/100 dark:text-gray/5 desktop:z-0 desktop:pt-[52px]"
+        className="relative z-30 bg-gray/5 pt-[18px] text-gray/100
+       dark:bg-gray/100 dark:text-gray/5 desktop:z-0 desktop:pt-[32px]"
       >
         <div className="container max-tablet:max-w-full">
           <h1
-            className="mb-[12px] text-center font-heading text-[48px] font-light leading-[1.2] -tracking-[0.528px]
-          max-tablet:text-[34px]"
+            className="mb-[12px] text-center font-heading font-light leading-[1.2] -tracking-[0.528px] max-desktop:text-[34px] 
+          desktop:text-[64px]"
           >
             {t('title')}
           </h1>

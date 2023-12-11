@@ -8,8 +8,11 @@ import { Suspense } from 'react';
 import PageLayout from '@/components/PageLayout';
 import Loader from '@/components/Loader';
 
-export default function IndexPage({ params: { locale } }) {
-  const isValidLocale = locales.some(current => current === locale);
+
+export default async function IndexPage({ params: { locale } }) {
+  const isValidLocale = locales.some(cur => cur === locale);
+
+
   if (!isValidLocale) notFound();
 
   unstable_setRequestLocale(locale);
