@@ -1,3 +1,6 @@
+import { IMAGE_BASE_URL } from '@/helpers/constants';
+import { formatDateSeparatorDot, formatDateToTime } from '@/helpers/formatDate';
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 import IconCalendar from '../UI/IconCalendar';
 import IconClock from '../UI/IconClock';
@@ -7,8 +10,6 @@ import CloseButton from '../UI/buttons/IconClose';
 import PrimaryButton from '../UI/buttons/PrimaryButton';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
-import { formatDateSeparatorDot, formatDateToTime } from '@/helpers/formatDate';
-import Image from 'next/image';
 
 const EventCard = ({ setActiveMarker, event }) => {
   const {
@@ -42,7 +43,7 @@ const EventCard = ({ setActiveMarker, event }) => {
             width={240}
             height={105}
             alt={eventTitle}
-            src={eventImage}
+            src={`${IMAGE_BASE_URL}${eventImage}`}
             className=" h-[108px] w-[240px] rounded-[4px] border object-cover dark:border-gray/80 mobile:w-[358px]"
           />
         </div>

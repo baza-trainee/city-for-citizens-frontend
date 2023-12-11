@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <>
       <section
-        className="relative z-30 bg-gray/5 pt-[18px] text-gray/100
+        className="relative z-30 bg-gray/5 pt-[35px] text-gray/100
        dark:bg-gray/100 dark:text-gray/5 desktop:z-0 desktop:pt-[52px]"
       >
         <div className="container max-tablet:max-w-full">
