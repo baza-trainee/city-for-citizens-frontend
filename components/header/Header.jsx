@@ -14,6 +14,12 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  if (isMenuOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'visible';
+  }
+
   return (
     <header
       className="relative bg-gray/5 pb-1.5  pt-1.5 text-sm leading-6
