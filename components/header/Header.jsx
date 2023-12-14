@@ -27,7 +27,7 @@ const Header = () => {
      landscape:pb-0 landscape:pt-[22px] landscape:desktop:pb-[35px] landscape:desktop:pt-[35px]"
     >
       <div className="container flex max-w-full items-center justify-between gap-[49px] desktop:items-baseline desktop:justify-center">
-        <a className="z-30 text-xl leading-normal" href="/">
+        <a className="z-30 pl-4 text-xl leading-normal" href="/">
           Місто для містян
         </a>
 
