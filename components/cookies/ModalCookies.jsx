@@ -48,14 +48,14 @@ const ModalCookies = () => {
         className="bg-gray-5 fixed left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2  transform flex-col items-center rounded-lg border border-gray/100 bg-gray/0 px-5 py-6 text-center dark:border-gray/5 dark:bg-gray/0 dark:bg-gray/100 "
       >
         <CloseButton
-          width={32}
-          hight={32}
+          width={29}
+          hight={29}
           onClick={handleRejectCookies}
           className={`cursor-pointer ${
             resolvedTheme === 'dark' ? 'stroke-gray/5' : 'stroke-gray/100'
           } mb-3 place-self-end transition-colors hover:stroke-gray/30`}
         />
-        <p className="mb-4 px-8 font-heading text-2xl">{t('title')}</p>
+        <p className="mb-4 px-[26px] font-heading text-2xl">{t('title')}</p>
         <a
           target="_blank"
           rel="noopener noreferrer"
