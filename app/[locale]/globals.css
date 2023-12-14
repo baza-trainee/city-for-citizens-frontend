@@ -36,8 +36,3 @@
     src: url('/fonts/NewMexika.ttf') format('truetype');
   }
 }
-
-.active {
-  border-bottom: 1px solid primary/100;
-  color: primary/100;
-}
