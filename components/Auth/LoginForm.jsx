@@ -42,44 +42,42 @@ const LoginForm = () => {
 
   const { email, password } = formData;
   return (
-    <>
-      <div className="container">
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-[30px]"
-        >
-          <label>
-            <span>Email</span>
-            <input
-              value={email}
-              onChange={handleChange}
-              name="email"
-              type="text"
-            />
-          </label>
-          <label>
-            <span>Password</span>
-            <input
-              password={password}
-              onChange={handleChange}
-              name="password"
-              type="text"
-            />
-          </label>
+    <div className="container">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-[30px]"
+      >
+        <label>
+          <span>Email</span>
+          <input
+            value={email}
+            onChange={handleChange}
+            name="email"
+            type="text"
+          />
+        </label>
+        <label>
+          <span>Password</span>
+          <input
+            value={password}
+            onChange={handleChange}
+            name="password"
+            type="text"
+          />
+        </label>
 
-          {error && <p>{error}</p>}
-          <p>
-            {"Don't have an account yet?"}
-            <Link href="/register">
-              <u>Sign up.</u>
-            </Link>
-          </p>
-          <button className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]">
-            Login
-          </button>
-        </form>
-      </div>
-    </>
+        {error && <p>{error}</p>}
+        <p>
+          {"Don't have an account yet?"}
+          <Link href="/register">
+            <u>Sign up.</u>
+          </Link>
+        </p>
+        <button className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]">
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 export default publicRoute({

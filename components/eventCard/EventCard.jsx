@@ -11,7 +11,7 @@ import PrimaryButton from '../UI/buttons/PrimaryButton';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
 
-const EventCard = ({ setActiveMarker, event }) => {
+const EventCard = ({ setOnShow, event }) => {
   const {
     eventAddress,
     eventTitle,
@@ -29,7 +29,7 @@ const EventCard = ({ setActiveMarker, event }) => {
   return (
     <div className="relative w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 px-5 py-6 dark:border-gray/5 dark:bg-gray/80 mobile:w-[398px]">
       <CloseButton
-        onClick={() => setActiveMarker(null)}
+        onClick={() => setOnShow(null)}
         className="absolute right-[20px] top-[20px] h-[28px] w-[28px] cursor-pointer"
       />
       <div className="mb-[12px] mt-[38px] flex flex-wrap gap-[8px]">

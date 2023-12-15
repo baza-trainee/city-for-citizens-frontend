@@ -14,7 +14,6 @@ import {
 import EventForm from './EventForm';
 
 const AddEvent = () => {
-  
   const handleSubmit = async (
     e,
     formDataUk,
@@ -53,18 +52,14 @@ const AddEvent = () => {
     } catch (error) {
       if (responseUk?.id) {
         deleteEvent(responseUk?.id);
-      } else {
-        if (requestUk?.eventImage) {
-          deleteEventImage({ eventImage: requestUk?.eventImage });
-        }
+      } else if (requestUk?.eventImage) {
+        deleteEventImage({ eventImage: requestUk?.eventImage });
       }
 
       if (responseEn?.id) {
         deleteEvent(responseEn?.id);
-      } else {
-        if (requestEn?.eventImage) {
-          deleteEventImage({ eventImage: requestEn?.eventImage });
-        }
+      } else if (requestEn?.eventImage) {
+        deleteEventImage({ eventImage: requestEn?.eventImage });
       }
     }
   };
