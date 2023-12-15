@@ -5,8 +5,8 @@ import LanguageSwitcher from './LanguageSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';
 
 const buttonStyle =
-  'w-full  desktop:w-auto cursor-pointer flex justify-between p-2.5 desktop:p-0 desktop:justify-center desktop:h-5 max-desktop:border-t border-gray/80 max-desktop:dark:border-gray/10 max-desktop:text-gray/50 max-desktop:dark:text-gray/20 leading-normal';
-const iconCheckBoxStyle = `stroke-gray/50 dark:stroke-gray/20 transition-all`;
+  'w-full  desktop:w-auto cursor-pointer flex justify-between p-2.5 desktop:p-0 desktop:justify-center desktop:h-5 max-desktop:border-t border-gray/80 max-desktop:dark:border-gray/10 max-desktop:text-gray/50  leading-normal';
+const iconCheckBoxStyle = `stroke-gray/50  transition-all`;
 
 const Switchers = () => {
   const t = useTranslations('Header.Switchers');
