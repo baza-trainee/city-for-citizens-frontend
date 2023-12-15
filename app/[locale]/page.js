@@ -3,6 +3,7 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import Hero from '@/components/Hero';
+import ModalCookies from '@/components/cookies/ModalCookies';
 import { Suspense } from 'react';
 import PageLayout from '@/components/PageLayout';
 import Loader from '@/components/Loader';
@@ -22,6 +23,7 @@ export default async function IndexPage({ params: { locale } }) {
         <Suspense fallback={<Loader />}>
           <FilteredMap />
         </Suspense>
+          <ModalCookies/>
       </main>
     </PageLayout>
   );
