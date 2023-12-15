@@ -13,8 +13,8 @@ const Switchers = () => {
 
   return (
     <div
-      className="mt-[210px] w-full justify-center max-desktop:gap-4 max-desktop:px-4 max-tablet:flex-col
-       tablet:flex desktop:mt-0 landscape:flex  landscape:gap-4 landscape:max-tablet:flex-row landscape:desktop:mt-0 landscape:desktop:gap-0"
+      className="mt-[195px] flex w-full flex-col items-center max-desktop:gap-4 max-desktop:px-4 tablet:flex-row tablet:items-start tablet:justify-center
+        desktop:mt-0 landscape:flex landscape:items-start landscape:justify-center  landscape:max-tablet:flex-row landscape:desktop:mt-0 landscape:desktop:gap-0"
     >
       <DropdownSwitcher
         content={t('titleTheme')}

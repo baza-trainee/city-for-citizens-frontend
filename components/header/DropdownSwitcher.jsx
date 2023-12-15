@@ -52,9 +52,9 @@ const DropdownSwitcher = ({ content, options }) => {
   return (
     <div
       ref={dropdownRef}
-      className={`relative h-max rounded-lg border
+      className={`relative h-max w-full max-w-[398px] rounded-lg border
       bg-gray/5 text-base dark:bg-gray/5
-       max-tablet:first:mb-4  tablet:w-[33%] desktop:w-[89px] desktop:border-none 
+        tablet:w-[33%] tablet:w-full tablet:max-w-[264px] desktop:w-[89px] desktop:border-none 
         desktop:pb-1 desktop:text-gray/100 desktop:dark:bg-gray/100 desktop:dark:text-gray/5 
        landscape:w-[33%] landscape:desktop:w-[89px]
        ${
