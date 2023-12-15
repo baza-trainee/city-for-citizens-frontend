@@ -9,10 +9,8 @@ import { Suspense } from 'react';
 import PageLayout from '@/components/PageLayout';
 import Loader from '@/components/Loader';
 
-
 export default async function IndexPage({ params: { locale } }) {
   const isValidLocale = locales.some(cur => cur === locale);
-
 
   if (!isValidLocale) notFound();
 
