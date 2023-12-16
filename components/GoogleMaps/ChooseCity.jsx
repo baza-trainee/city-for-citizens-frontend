@@ -140,7 +140,7 @@ function ChooseCity({ filtersEventCities }) {
         onFocus={handleFocus}
         autoComplete="off"
         className={`relative z-10 h-11 text-ellipsis rounded-[8px] border border-gray/20 bg-gray/5
-        pl-2 text-gray/80 placeholder-gray/30 placeholder:w-[130px] focus:outline-none dark:bg-gray/100 dark:placeholder-gray/20
+        pl-2 text-gray/80 placeholder-gray/30 placeholder:w-[130px] focus:outline-none dark:bg-gray/100 dark:text-gray/10 dark:placeholder-gray/20
         ${
           isListVisible
             ? 'rounded-none rounded-t-lg border-gray/80 dark:border-gray/10 dark:bg-gray/100 dark:text-gray/10'
