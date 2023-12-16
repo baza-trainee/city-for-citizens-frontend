@@ -5,6 +5,7 @@ import Switchers from './Switchers';
 import IconClose from '../icons/IconClose';
 import IconBurger from '../icons/IconBurger';
 import AdminMenu from '../Admin/AdminMenu';
+import { Link } from '@/navigation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,9 +29,9 @@ const Header = () => {
      landscape:pb-0 landscape:pt-[22px] landscape:desktop:pb-[35px] landscape:desktop:pt-[35px]"
     >
       <div className="container flex max-w-full items-center justify-between gap-[49px] desktop:items-baseline desktop:justify-center">
-        <a className="z-30 pl-4 text-xl leading-normal" href="/">
+        <Link href={'/'} className="z-30 pl-4 text-xl leading-normal">
           Місто для містян
-        </a>
+        </Link>
 
         <div
           className={`fixed bottom-0  left-0 right-0 top-0 z-20 flex w-screen  bg-gray/5 transition-all

@@ -1,5 +1,6 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export function useQueryParam(paramName) {
@@ -9,10 +10,14 @@ export function useQueryParam(paramName) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (searchParams.size === 0) {
+      setParamValue([]);
+      return;
+    }
     if (searchParams.has(paramName)) {
       setParamValue(searchParams.get(paramName).split(','));
     }
-  }, [searchParams, paramName]);
+  }, [paramName, searchParams]);
 
   useEffect(() => {
     const createQueryString = (name, value) => {
@@ -28,7 +33,10 @@ export function useQueryParam(paramName) {
         { scroll: false }
       );
     } else {
-      router.push(pathname, { scroll: false });
+      const params = new URLSearchParams(searchParams);
+
+      params.delete(paramName);
+      router.push(pathname + '?' + params, { scroll: false });
     }
   }, [paramName, paramValue, pathname, router, searchParams]);
 

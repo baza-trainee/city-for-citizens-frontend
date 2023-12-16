@@ -13,8 +13,8 @@ import { useEffect, useState } from 'react';
 import { useCurrentLocale } from '@/hooks';
 
 const UpdateEventForm = ({ eventId }) => {
-  const [eventUk, setEventByIdUk] = useState(null);
-  const [eventEn, setEventByIdEn] = useState(null);
+  const [eventUk, setEventUk] = useState(null);
+  const [eventEn, setEventEn] = useState(null);
 
   const { localeForRequest } = useCurrentLocale();
 
@@ -30,11 +30,11 @@ const UpdateEventForm = ({ eventId }) => {
         );
 
         if (eventFirst.locale === 'uk_UA') {
-          setEventByIdUk(eventFirst);
-          setEventByIdEn(eventSecond);
+          setEventUk(eventFirst);
+          setEventEn(eventSecond);
         } else {
-          setEventByIdUk(eventSecond);
-          setEventByIdEn(eventFirst);
+          setEventUk(eventSecond);
+          setEventEn(eventFirst);
         }
       } catch (error) {
         console.error('Помилка завантаження даних:', error);
@@ -53,9 +53,6 @@ const UpdateEventForm = ({ eventId }) => {
     e.preventDefault();
     const idIdentifier = eventUk?.idIdentifier || eventEn?.idIdentifier;
 
-    let responseUk;
-    let responseEn;
-
     let requestUk;
     let requestEn;
 
@@ -67,7 +64,7 @@ const UpdateEventForm = ({ eventId }) => {
           ...formDataUk,
           ...imageNameForRequestUk,
         };
-        responseUk = await updateEvent(requestUk, eventUk.id);
+        await updateEvent(requestUk, eventUk.id);
         try {
           await deleteEventImage({ eventImage: formDataUk.eventImage });
         } catch (error) {
@@ -78,7 +75,7 @@ const UpdateEventForm = ({ eventId }) => {
           idIdentifier,
           ...formDataUk,
         };
-        responseUk = await updateEvent(requestUk, eventUk.id);
+        await updateEvent(requestUk, eventUk.id);
       }
     } catch (error) {
       if (requestUk?.eventImage) {
@@ -94,7 +91,7 @@ const UpdateEventForm = ({ eventId }) => {
           ...formDataEn,
           ...imageNameForRequestEn,
         };
-        responseEn = await updateEvent(requestEn, eventEn.id);
+        await updateEvent(requestEn, eventEn.id);
         try {
           await deleteEventImage({ eventImage: formDataEn.eventImage });
         } catch (error) {
@@ -106,7 +103,7 @@ const UpdateEventForm = ({ eventId }) => {
           ...formDataEn,
         };
 
-        responseEn = await updateEvent(requestEn, eventEn.id);
+        await updateEvent(requestEn, eventEn.id);
       }
     } catch (error) {
       if (requestEn?.eventImage) {
@@ -115,17 +112,15 @@ const UpdateEventForm = ({ eventId }) => {
     }
   };
   return (
-    <>
-      <div className="container">
-        <h1 className=" mb-[30px] text-center text-[34px]">Update event</h1>
-        <EventForm
-          onSubmit={handleSubmit}
-          buttonName={'Update event'}
-          eventUk={eventUk}
-          eventEn={eventEn}
-        />
-      </div>
-    </>
+    <div className="container">
+      <h1 className=" mb-[30px] text-center text-[34px]">Update event</h1>
+      <EventForm
+        onSubmit={handleSubmit}
+        buttonName={'Update event'}
+        eventUk={eventUk}
+        eventEn={eventEn}
+      />
+    </div>
   );
 };
 
