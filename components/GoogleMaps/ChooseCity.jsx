@@ -14,12 +14,10 @@ function ChooseCity({ filtersEventCities }) {
 
   useEffect(() => {
     setInputValue(selectedCities.join(', '));
-    setIsInputTyping(false);
-    setDisplayedCities(filtersEventCities);
   }, [selectedCities]);
 
   function handleInputChange(event) {
-    //const value = event.target.value;
+    const value = event.target.value;
     setInputValue(value);
     setIsInputTyping(true);
     const filteredCities = filteredCityByInputValue(value);
@@ -33,12 +31,10 @@ function ChooseCity({ filtersEventCities }) {
     } else {
       setSelectedCities(prev => [...prev, city]);
     }
+    setDisplayedCities(filtersEventCities);
   }
 
   function handleFocus(e) {
-    const inputEl = e.target;
-    setIsListVisible(true);
-    //inputEl.disabled = false;
     if (inputValue && !isInputValueIncludesCityFrom(filtersEventCities)) {
       setDisplayedCities(selectedCities);
     } else {
@@ -48,8 +44,7 @@ function ChooseCity({ filtersEventCities }) {
     }
   }
 
-  function handleMouseLive(e) {
-    //const inputEl = e.target;
+  function handleMouseLive() {
     setIsListVisible(false);
     if (
       inputValue &&
@@ -66,7 +61,6 @@ function ChooseCity({ filtersEventCities }) {
     if (!inputValue && selectedCities.length) {
       setInputValue(selectedCities.join(', '));
       setIsInputTyping(false);
-      //inputEl.disabled = true;
     }
   }
 
@@ -82,15 +76,8 @@ function ChooseCity({ filtersEventCities }) {
           setIsInputTyping(false);
           setDisplayedCities(filtersEventCities);
           break;
-        // case !isInputValueIncludesCityFrom(filtersEventCities) &&
-        //   filteredCities.length:
-        //   setDisplayedCities(filteredCities);
-        //   break;
         case isInputValueIncludesCityFrom(filtersEventCities) && isInputTyping:
-          //inputEl.disabled = true;
-          // inputEl.disabled = false;
-          // setInputValue(inputValue);
-          // setIsInputTyping(false);
+          setIsInputTyping(false);
           setDisplayedCities(filteredCities);
           break;
         case isInputValueIncludesCityFrom(selectedCities) &&
@@ -106,7 +93,7 @@ function ChooseCity({ filtersEventCities }) {
     }
   }
 
-  function handleOnclick() {
+  function handleOnclick(e) {
     if (
       isInputValueIncludesCityFrom(filtersEventCities) ||
       filteredCityByInputValue(inputValue).length === 0
@@ -173,12 +160,12 @@ function ChooseCity({ filtersEventCities }) {
             displayedCities.map(city => (
               <li
                 key={city}
+                onClick={() => toggleCheck(city)}
                 className="flex h-11 list-none items-center justify-between border-b border-gray/50 px-2
           py-0 last:border-b-0 dark:border-gray/10"
               >
                 {city}
                 <div
-                  onClick={() => toggleCheck(city)}
                   data-city={city}
                   className="flex h-6 w-6 
             items-center justify-center rounded border border-gray/50 dark:border-gray/10"
