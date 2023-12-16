@@ -5,14 +5,11 @@ import Switchers from './Switchers';
 import IconClose from '../icons/IconClose';
 import IconBurger from '../icons/IconBurger';
 import AdminMenu from '../Admin/AdminMenu';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link } from '@/navigation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { resolvedTheme } = useTheme();
-
-  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,13 +26,7 @@ const Header = () => {
 
       desktop:items-baseline desktop:justify-center"
       >
-        <Link
-          // onClick={() => router.push('/')}
-          href={{
-            pathname,
-          }}
-          className="z-30 text-xl leading-normal"
-        >
+        <Link href={'/'} className="z-30 text-xl leading-normal">
           Місто для містян
         </Link>
 

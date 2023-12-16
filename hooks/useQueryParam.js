@@ -33,7 +33,10 @@ export function useQueryParam(paramName) {
         { scroll: false }
       );
     } else {
-      router.push(pathname, { scroll: false });
+      const params = new URLSearchParams(searchParams);
+
+      params.delete(paramName);
+      router.push(pathname + '?' + params, { scroll: false });
     }
   }, [paramName, paramValue, pathname, router, searchParams]);
 

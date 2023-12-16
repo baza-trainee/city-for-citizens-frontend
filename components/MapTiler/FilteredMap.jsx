@@ -9,9 +9,7 @@ import DatePicker from './DatePicker/DatePicker';
 import { getEventsBySearchParams } from '@/services/eventAPI';
 import { getFilters } from '@/services/getFilters';
 import { useCurrentLocale } from '@/hooks';
-import 'leaflet/dist/leaflet.css';
 import InteractiveMap from './InteractiveMap/InteractiveMap';
-
 
 function FilteredMap() {
   const [filters, setFilters] = useState({});

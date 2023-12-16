@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import '@maptiler/sdk/dist/maptiler-sdk.css';
+
 import { useTheme } from 'next-themes';
 import { useLocale } from 'next-intl';
 import MapMarkerList from './MapMarkerList';
 
 const THEMES = {
   dark: 'basic-v2-dark',
-  light: 'basic-v2-light',
+  light: 'streets-v2',
 };
 
 const CENTER = {
@@ -20,9 +21,6 @@ export default function InteractiveMap({ filteredEvents }) {
   const map = useRef(null);
   const locale = useLocale();
   const { theme } = useTheme();
-  const [activeMarker, setActiveMarker] = useState(null);
-  const [showOnClick, setShowOnClick] = useState(false);
-  const [showOnHover, setShowOnHover] = useState(false);
 
   const [zoom] = useState(5.5);
 
@@ -47,88 +45,35 @@ export default function InteractiveMap({ filteredEvents }) {
       center: [CENTER.lng, CENTER.lat],
       style: theme === 'dark' ? THEMES.dark : THEMES.light,
       zoom,
+      scrollZoom: false,
     });
 
-    // map.current.on('load', function () {
-    //   if (!map.current.getSource('markers')) {
-    //     map.current.addSource('markers', {
-    //       type: 'geojson',
-    //       data: {
-    //         type: 'FeatureCollection',
-    //         features: [],
-    //       },
-    //     });
-    //   }
+    function onKeydown({ key }) {
+      if (key === 'Control' || key === 'Meta') {
+        map.current.scrollZoom.enable();
+      }
+    }
 
-    //   map.current.loadImage(
-    //     'https://docs.maptiler.com/sdk-js/assets/custom_marker.png',
-    //     function (error, image) {
-    //       if (error) throw error;
-    //       map.current.addImage('markerImage', image);
-    //     }
-    //   );
+    function onKeyup({ key }) {
+      if (key === 'Control' || key === 'Meta') {
+        map.current.scrollZoom.disable();
+      }
+    }
 
-    //   map.current.addLayer({
-    //     id: 'markers',
-    //     type: 'symbol',
-    //     source: 'markers',
-    //     layout: {
-    //       'icon-image': 'markerImage',
-    //       'icon-size': ['*', ['get', 'scalerank'], 0.01],
-    //     },
-    //     paint: {},
-    //   });
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('keyup', onKeyup);
 
-    //   map.current.on('click', () => {
-    //     console.log('map click');
-    //     setActiveMarker(null);
-    //     setShowOnClick(false);
-    //   });
+    // return () => {
+    //   document.removeEventListener('keydown', onKeydown);
 
-    //   map.current.on('click', 'markers', e => {
-    //     setActiveMarker(e.features[0].properties.id);
-    //     setShowOnClick(p => !p);
-    //     map.current.flyTo({
-    //       center: e.features[0].geometry.coordinates,
-    //     });
-    //   });
-
-    //   map.current.on('mouseenter', 'markers', e => {
-    //     setActiveMarker(e.features[0].properties.id);
-    //     setShowOnHover(true);
-    //     map.current.getCanvas().style.cursor = 'pointer';
-    //   });
-
-    //   map.current.on('mouseleave', 'markers', e => {
-    //     map.current.getCanvas().style.cursor = '';
-    //     setShowOnHover(false);
-    //   });
-    // });
-  }, [theme, zoom]);
-
-  // useEffect(() => {
-  //   if (!map.current.getSource('markers')) {
-  //     return;
-  //   }
-  //   if (filteredEvents.length === 0) {
-  //     map.current.getSource('markers').setData({
-  //       type: 'FeatureCollection',
-  //       features: [],
-  //     });
-  //   }
-  // }, [filteredEvents.length]);
+    //   document.removeEventListener('keyup', onKeyup);
+    // };
+  }, [locale, theme, zoom]);
 
   return (
-    <div className="relative mx-auto h-[865px] max-w-[1440px]">
+    <div className="relative mx-auto h-[865px] ">
       {filteredEvents.length !== 0 && (
-        <MapMarkerList
-          filteredEvents={filteredEvents}
-          map={map}
-          activeMarker={activeMarker}
-          setActiveMarker={setActiveMarker}
-          showOnClick={showOnClick}
-          showOnHover={showOnHover}
-        />
+        <MapMarkerList filteredEvents={filteredEvents} map={map} />
       )}
 
       <div ref={mapContainer} className=" h-full w-full" />

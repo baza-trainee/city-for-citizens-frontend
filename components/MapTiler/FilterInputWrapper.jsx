@@ -34,25 +34,40 @@ const FilterInputWrapper = ({
     setHasFocus(false);
   };
 
-  const setTextColor = inputTextDefault
-    ? isVisible
-      ? 'text-gray/80 dark:text-gray/5'
-      : 'text-gray/30 dark:text-gray/20'
-    : isVisible
-    ? 'text-gray/80 dark:text-gray/5'
-    : 'text-gray/50 dark:text-gray/5';
+  // const setTextColor = inputTextDefault
+  //   ? isVisible
+  //     ? 'text-gray/80 dark:text-gray/5'
+  //     : 'text-gray/30 dark:text-gray/20'
+  //   : isVisible
+  //   ? 'text-gray/80 dark:text-gray/5'
+  //   : 'text-gray/50 dark:text-gray/5';
 
-  const setIconColor = inputTextDefault
-    ? isVisible
-      ? 'stroke-gray/80 dark:stroke-gray/5'
-      : 'stroke-gray/30 dark:stroke-gray/20'
-    : isVisible
-    ? 'stroke-gray/80 dark:stroke-gray/5'
-    : 'stroke-gray/50 dark:stroke-gray/5';
+  // const setIconColor = inputTextDefault
+  //   ? isVisible
+  //     ? 'stroke-gray/80 dark:stroke-gray/5'
+  //     : 'stroke-gray/30 dark:stroke-gray/20'
+  //   : isVisible
+  //   ? 'stroke-gray/80 dark:stroke-gray/5'
+  //   : 'stroke-gray/50 dark:stroke-gray/5';
+  const setColor = (type, inputTextDefault, isVisible) => {
+    if (isVisible) return `${type}-gray/80 dark:${type}-gray/5`;
+
+    return inputTextDefault
+      ? `${type}-gray/30 dark:${type}-gray/20`
+      : `${type}-gray/50 dark:${type}-gray/10`;
+  };
 
   const commonStyles = {
-    text: `max-w-[87%]  select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setTextColor}  tablet:max-w-[212px] `,
-    icon: `w-[24px] h-[24px] cursor-pointer transition-all ${setIconColor} `,
+    text: `max-w-[87%]  select-none truncate whitespace-nowrap text-[16px] leading-[1.5] -tracking-[0.176px] ${setColor(
+      'text',
+      inputTextDefault,
+      isVisible
+    )}  tablet:max-w-[212px] `,
+    icon: `w-[24px] h-[24px] cursor-pointer transition-all ${setColor(
+      'stroke',
+      inputTextDefault,
+      isVisible
+    )} `,
   };
 
   return (
