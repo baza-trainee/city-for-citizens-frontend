@@ -9,7 +9,9 @@ const NAVIGATION = {
   login: '/login',
   register: '/register',
 };
-
+// const BASE_URL = 'https://city-for-citizens-frontend.vercel.app/uk';
+// const IMAGE_BASE_URL = 'https://city-for-citizens-frontend.vercel.app';
+// const DOMAIN_NAME = 'city-for-citizens-frontend.vercel.app';
 const BASE_URL = 'http://185-237-14-12.cloud-xip.com:8082/api';
 // const BASE_URL = 'http://localhost:4000/api';
 const IMAGE_BASE_URL = 'http://185-237-14-12.cloud-xip.com:8082';
