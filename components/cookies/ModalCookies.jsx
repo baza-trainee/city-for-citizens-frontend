@@ -57,16 +57,17 @@ const ModalCookies = () => {
         />
         <p className="mb-4 px-[26px] font-heading text-2xl">{t('title')}</p>
         <a
+          onContextMenu={e => e.preventDefault()}
           target="_blank"
           rel="noopener noreferrer"
-          href="/policy/privacy-policy.pdf"
+          href="/policy/privacy-policy.pdf#toolbar=0"
           className="font-NewMexika mb-8 underline hover:text-gray/30"
         >
           {t('privacy')}{' '}
         </a>
         <button
           onClick={handleAcceptCookies}
-          className={`${buttonStyle}   dark:border:gray/5	 mb-4 bg-primary/100 p-2.5 text-gray/0 hover:bg-primary/80 dark:bg-gray/5 dark:text-gray/100 dark:hover:border-gray/10 dark:hover:bg-gray/10 `}
+          className={`${buttonStyle}  mb-4	 bg-primary/100 p-2.5 text-gray/0 hover:bg-primary/80 dark:border-gray/5 dark:bg-gray/5 dark:text-gray/100 dark:hover:border-gray/10 dark:hover:bg-gray/10 `}
         >
           {t('accept')}
         </button>
