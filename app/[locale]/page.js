@@ -23,7 +23,7 @@ export default async function IndexPage({ params: { locale } }) {
         <Suspense fallback={<Loader />}>
           <FilteredMap />
         </Suspense>
-          <ModalCookies/>
+        <ModalCookies />
       </main>
     </PageLayout>
   );

@@ -59,7 +59,7 @@ const DropdownSwitcher = ({ content, options }) => {
        landscape:w-[33%] landscape:desktop:w-[89px]
        ${
          isDropdownVisible
-           ? 'dark:border-gray-10 border-gray/80 text-gray/80'
+           ? 'border-gray/80 text-gray/80 dark:border-gray/10 dark:text-gray/30'
            : 'border-gray/10 text-gray/20'
        }`}
       onClick={toggleDropdown}
@@ -94,9 +94,9 @@ const DropdownSwitcher = ({ content, options }) => {
 
       <div
         className={`left-0 top-[26px] flex w-full flex-col
-         items-start bg-gray/5 transition-opacity duration-300
-         dark:bg-gray/100 desktop:absolute desktop:items-center 
-         desktop:gap-[10px] desktop:rounded-lg desktop:border 
+         items-start rounded-lg bg-gray/5 transition-opacity duration-300
+         dark:bg-gray/100 dark:bg-gray/5 desktop:absolute 
+         desktop:items-center desktop:gap-[10px] desktop:border 
          desktop:border-gray/100 desktop:bg-gray/5 desktop:p-4  desktop:dark:border-gray/5  desktop:dark:bg-gray/100
          ${
            isDropdownVisible

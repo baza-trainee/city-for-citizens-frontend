@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import Switchers from './Switchers';
 import IconClose from '../icons/IconClose';
@@ -14,6 +14,13 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [isMenuOpen]);
 
   return (
     <header
@@ -21,17 +28,13 @@ const Header = () => {
       text-gray/100 dark:bg-gray/100 dark:text-gray/5 desktop:pb-[35px] desktop:pt-[35px]
      landscape:pb-0 landscape:pt-[22px] landscape:desktop:pb-[35px] landscape:desktop:pt-[35px]"
     >
-      <div
-        className="container flex max-w-full items-center justify-between gap-[50px] 
-
-      desktop:items-baseline desktop:justify-center"
-      >
-        <Link href={'/'} className="z-30 text-xl leading-normal">
+      <div className="container flex max-w-full items-center justify-between gap-[49px] desktop:items-baseline desktop:justify-center">
+        <Link href={'/'} className="z-30 pl-4 text-xl leading-normal">
           Місто для містян
         </Link>
 
         <div
-          className={`fixed bottom-0 left-0 right-0 top-0 z-20 flex w-screen items-center bg-gray/5 transition-all
+          className={`fixed bottom-0  left-0 right-0 top-0 z-20 flex w-screen  bg-gray/5 transition-all
             duration-300 
            dark:bg-gray/100 desktop:static desktop:flex  desktop:w-auto desktop:translate-y-0 
            desktop:opacity-100 ${
