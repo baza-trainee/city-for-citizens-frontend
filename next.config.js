@@ -2,7 +2,7 @@ const withNextIntl = require('next-intl/plugin')();
 
 const config = {
   images: {
-    domains: ['185-237-14-12.cloud-xip.com'],
+    domains: ['city-backend-45go.onrender.com'],
   },
 };
 

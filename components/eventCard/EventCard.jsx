@@ -10,8 +10,9 @@ import CloseButton from '../UI/buttons/IconClose';
 import PrimaryButton from '../UI/buttons/PrimaryButton';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
+import { useTheme } from 'next-themes';
 
-const EventCard = ({ setActiveMarker, event }) => {
+const EventCard = ({ onClose, event }) => {
   const {
     eventAddress,
     eventTitle,
@@ -24,13 +25,16 @@ const EventCard = ({ setActiveMarker, event }) => {
 
   const [showEventLink, setShowEventLink] = useState(false);
 
+  const { resolvedTheme } = useTheme();
   const eventShareCompRef = useRef(null);
 
   return (
     <div className="relative w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 px-5 py-6 dark:border-gray/5 dark:bg-gray/80 mobile:w-[398px]">
       <CloseButton
-        onClick={() => setActiveMarker(null)}
-        className="absolute right-[20px] top-[20px] h-[28px] w-[28px] cursor-pointer"
+        onClick={onClose}
+        className={`absolute right-[20px] top-[20px] h-[28px] w-[28px] cursor-pointer ${
+          resolvedTheme === 'dark' ? 'stroke-gray/5' : 'stroke-gray/100'
+        }  transition-colors hover:stroke-gray/30`}
       />
       <div className="mb-[12px] mt-[38px] flex flex-wrap gap-[8px]">
         {eventTypes.map(({ eventType, id }) => {

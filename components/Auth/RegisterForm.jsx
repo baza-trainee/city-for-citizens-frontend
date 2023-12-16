@@ -27,15 +27,13 @@ const RegisterForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
-    const { accessToken } = await register(formData);
-
-    if (accessToken) {
-      localStorage.setItem('accessToken', accessToken);
-      router.push(NAVIGATION.admin);
-    }
-
     try {
+      const { accessToken } = await register(formData);
+
+      if (accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        router.push(NAVIGATION.admin);
+      }
     } catch (error) {
       setError(error.message);
       console.log('error:', error.message);
@@ -65,7 +63,7 @@ const RegisterForm = () => {
         <label>
           <span>Password</span>
           <input
-            password={password}
+            value={password}
             onChange={handleChange}
             name="password"
             type="text"
