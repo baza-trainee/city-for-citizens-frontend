@@ -52,14 +52,14 @@ const DropdownSwitcher = ({ content, options }) => {
   return (
     <div
       ref={dropdownRef}
-      className={`relative h-max rounded-lg border
+      className={`relative h-max w-full max-w-[398px] rounded-lg border
       bg-gray/5 text-base dark:bg-gray/5
-       max-tablet:first:mb-4  tablet:w-[33%] desktop:w-[89px] desktop:border-none 
+      tablet:w-[33%] tablet:w-full tablet:max-w-[264px] desktop:w-[89px] desktop:border-none 
         desktop:pb-1 desktop:text-gray/100 desktop:dark:bg-gray/100 desktop:dark:text-gray/5 
        landscape:w-[33%] landscape:desktop:w-[89px]
        ${
          isDropdownVisible
-           ? 'dark:border-gray-10 border-gray/80 text-gray/80'
+           ? 'border-gray/80 text-gray/80 dark:border-gray/10 dark:text-gray/30'
            : 'border-gray/10 text-gray/20'
        }`}
       onClick={toggleDropdown}
@@ -72,7 +72,7 @@ const DropdownSwitcher = ({ content, options }) => {
         <span
           className={`title-switcher desktop:text:left relative cursor-pointer leading-normal
         ${
-          isDropdownVisible ? 'dark:text-gray/30 desktop:dark:text-gray/5' : ''
+          isDropdownVisible ? 'dark:text-gray/100 desktop:dark:text-gray/5' : ''
         }`}
         >
           {content}
@@ -85,7 +85,7 @@ const DropdownSwitcher = ({ content, options }) => {
           resolvedTheme === 'dark'
             ? 'stroke-gray/20 desktop:stroke-gray/5'
             : `${
-                isDropdownVisible ? 'stroke-gray/80' : 'stroke-gray/20'
+                isDropdownVisible ? 'stroke-gray/100' : 'stroke-gray/20'
               } desktop:stroke-gray/100`
         }
         ${isDropdownVisible ? 'rotate-180 transform' : ''}`}
@@ -94,9 +94,9 @@ const DropdownSwitcher = ({ content, options }) => {
 
       <div
         className={`left-0 top-[26px] flex w-full flex-col
-         items-start bg-gray/5 transition-opacity duration-300
-         dark:bg-gray/100 desktop:absolute desktop:items-center 
-         desktop:gap-[10px] desktop:rounded-lg desktop:border 
+         items-start rounded-lg bg-gray/5 transition-opacity duration-300
+         dark:bg-gray/100 dark:bg-gray/5 desktop:absolute 
+         desktop:items-center desktop:gap-[10px] desktop:border 
          desktop:border-gray/100 desktop:bg-gray/5 desktop:p-4  desktop:dark:border-gray/5  desktop:dark:bg-gray/100
          ${
            isDropdownVisible

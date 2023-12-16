@@ -4,14 +4,13 @@ import { notFound } from 'next/navigation';
 
 import FilteredMap from '@/components/GoogleMaps/FilteredMap';
 import Hero from '@/components/Hero';
+import ModalCookies from '@/components/cookies/ModalCookies';
 import { Suspense } from 'react';
 import PageLayout from '@/components/PageLayout';
 import Loader from '@/components/Loader';
 
-
 export default async function IndexPage({ params: { locale } }) {
   const isValidLocale = locales.some(cur => cur === locale);
-
 
   if (!isValidLocale) notFound();
 
@@ -25,6 +24,7 @@ export default async function IndexPage({ params: { locale } }) {
           <Suspense fallback={<Loader />}>
             <FilteredMap />
           </Suspense>
+          <ModalCookies/>
         </main>
       </PageLayout>
     </>
