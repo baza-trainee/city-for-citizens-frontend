@@ -11,6 +11,7 @@ import PrimaryButton from '../UI/buttons/PrimaryButton';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
 import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 
 const EventCard = ({ onClose, event }) => {
   const {
@@ -27,6 +28,8 @@ const EventCard = ({ onClose, event }) => {
 
   const { resolvedTheme } = useTheme();
   const eventShareCompRef = useRef(null);
+
+  const t = useTranslations('EventCard');
 
   return (
     <div className="relative w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 px-5 py-6 dark:border-gray/5 dark:bg-gray/80 mobile:w-[398px]">
@@ -74,24 +77,24 @@ const EventCard = ({ onClose, event }) => {
         {description}
       </p>
 
-      <div className="mb-[6px] flex items-center gap-[4px]">
-        <IconMarkerPlace className="stroke-gray/100 dark:stroke-gray/5" />
-        <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+      <div className="mb-[6px] flex  gap-[11px]">
+        <IconMarkerPlace className="h-[22px] w-[22px] stroke-gray/100 dark:stroke-gray/5" />
+        <p className="text-[16px] leading-[1.5] dark:text-gray/5">
           {eventAddress.street}
         </p>
       </div>
 
       <div className="mb-[32px] flex gap-[16px]">
-        <div className="flex items-center gap-[4px]">
-          <IconCalendar className="stroke-gray/100 dark:stroke-gray/5" />
-          <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+        <div className="flex  gap-[11px]">
+          <IconCalendar className="h-[22px] w-[22px] stroke-gray/100 dark:stroke-gray/5" />
+          <p className="text-[16px] leading-[1.5] dark:text-gray/5">
             {formatDateSeparatorDot(dateTime)}
           </p>
         </div>
 
-        <div className="flex items-center gap-[4px]">
-          <IconClock className="stroke-gray/100 dark:stroke-gray/5" />
-          <p className="text-[14px] leading-[1.5] dark:text-gray/5">
+        <div className="flex  gap-[11px]">
+          <IconClock className="h-[22px] w-[22px] stroke-gray/100 dark:stroke-gray/5" />
+          <p className="text-[16px] leading-[1.5] dark:text-gray/5">
             {formatDateToTime(dateTime)}
           </p>
         </div>
@@ -99,7 +102,7 @@ const EventCard = ({ onClose, event }) => {
 
       <div>
         <a target="_blank" rel="noreferrer noopener" href={eventUrl}>
-          <PrimaryButton message={'See cite of the event'} />
+          <PrimaryButton message={t('buttonName')} />
         </a>
         {/* <div className="mt-4">
           <SecondaryButton message={'Add to calledar'} />

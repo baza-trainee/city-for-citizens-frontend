@@ -11,23 +11,23 @@ const ModalOnHover = ({ event }) => {
         {eventTitle}
       </h3>
 
-      <div className="mb-[6px] flex items-center gap-[4px]">
-        <IconMarkerPlace className="stroke-gray/100 dark:stroke-gray/5" />
+      <div className="mb-[6px] flex  gap-[10px]">
+        <IconMarkerPlace className=" h-[22px] w-[22px] stroke-gray/100 text-[16px] dark:stroke-gray/5" />
         <p className="text-[14px] leading-[1.5] dark:text-gray/5">
           {eventAddress.street}
         </p>
       </div>
 
       <div className="flex gap-[16px]">
-        <div className="flex items-center gap-[4px]">
-          <IconCalendar className="stroke-gray/100 dark:stroke-gray/5" />
+        <div className="flex  gap-[10px]">
+          <IconCalendar className="h-[22px] w-[22px] stroke-gray/100 text-[16px] dark:stroke-gray/5" />
           <p className="text-[14px] leading-[1.5] dark:text-gray/5">
             {formatDateSeparatorDot(dateTime)}
           </p>
         </div>
 
-        <div className="flex items-center gap-[4px]">
-          <IconClock className="stroke-gray/100 dark:stroke-gray/5" />
+        <div className="flex  gap-[10px]">
+          <IconClock className="h-[22px] w-[22px] stroke-gray/100 text-[16px] dark:stroke-gray/5" />
           <p className="text-[14px] leading-[1.5] dark:text-gray/5">
             {formatDateToTime(dateTime)}
           </p>
