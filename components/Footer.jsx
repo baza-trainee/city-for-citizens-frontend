@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl';
 const FooterLink = ({ href, label }) => {
   return (
     <a
-      onContextMenu={e => e.preventDefault()}
+      href={`${href}#toolbar=0`}
+      // onContextMenu={e => e.preventDefault()}
       target="_blank"
       rel="noopener noreferrer"
-      href={`${href}#toolbar=0`}
       className="underline underline-offset-2 hover:text-gray/30"
     >
       {label}
@@ -24,19 +24,29 @@ const Footer = () => {
         <Link className="tablet:text-[20px]" href={'/'}>
           Місто для містян
         </Link>
-        <div className="flex flex-col items-center justify-center gap-2 tablet:flex-row">
-          <FooterLink
-            href="/consent/personal-data.pdf"
-            label={t('labelPersonalData')}
-          />
-          <span className="hidden tablet:inline-block">|</span>
+        <div className="flex flex-col items-center justify-center gap-1 tablet:flex-row">
           <FooterLink
             href="/consent/privacy-policy.pdf"
             label={t('labelPrivacyPolicy')}
           />
+          <span className="hidden tablet:inline-block">|</span>
+          <FooterLink
+            href="/consent/personal-data.pdf"
+            label={t('labelPersonalData')}
+          />
         </div>
         <p className="text-sm tablet:text-base">
-          {`${t('company')} ${t('year')}  ${t('copyrightText')}`}
+          {`${t('company')} ${t('year')}  ${t('copyrightText')}    |   ${t(
+            'hosted'
+          )}`}{' '}
+          <a
+            className="hover:text-gray/30"
+            href="https://deltahost.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Delta Host
+          </a>
         </p>
       </div>
     </footer>
