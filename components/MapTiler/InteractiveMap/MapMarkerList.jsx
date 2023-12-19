@@ -123,12 +123,12 @@ function MapMarkerItem({ event, map, setActiveMarker, activeMarker }) {
   return (
     <>
       {activeMarker === event.idIdentifier && showOnHover && !showOnClick ? (
-        <div style={styleObject} className="absolute -top-[80px] z-30">
+        <div style={styleObject} className="absolute -top-[80px] z-10">
           <ModalOnHover event={event} />
         </div>
       ) : null}
       {event.idIdentifier === activeMarker && showOnClick ? (
-        <div style={styleObject} className="absolute -left-[215px] z-30">
+        <div style={styleObject} className="absolute -left-[215px] z-10">
           <EventCard event={event} onClose={onClickClose} />
         </div>
       ) : null}
