@@ -1,17 +1,20 @@
-import { IMAGE_BASE_URL } from '@/helpers/constants';
-import { formatDateSeparatorDot, formatDateToTime } from '@/helpers/formatDate';
+import { useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import IconCalendar from '../UI/IconCalendar';
-import IconClock from '../UI/IconClock';
-import IconMarkerPlace from '../UI/IconPlace';
-import ShareIcon from '../UI/IconShare';
-import CloseButton from '../UI/buttons/IconClose';
+import { IMAGE_BASE_URL } from '../../helpers/constants';
+import {
+  formatDateSeparatorDot,
+  formatDateToTime,
+} from '../../helpers/formatDate';
 import PrimaryButton from '../UI/buttons/PrimaryButton';
+import IconCalendar from '../UI/icons/IconCalendar';
+import IconClock from '../UI/icons/IconClock';
+import CloseButton from '../UI/icons/IconClose';
+import IconMarkerPlace from '../UI/icons/IconPlace';
+import ShareIcon from '../UI/icons/IconShare';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
-import { useTheme } from 'next-themes';
-import { useTranslations } from 'next-intl';
 
 const EventCard = ({ onClose, event }) => {
   const {

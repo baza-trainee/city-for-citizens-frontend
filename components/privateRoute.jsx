@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from '@/navigation';
 import { refresh } from '@/services/authAPI';
-import Loader from './Loader';
+import Loader from './UI/Loader';
 
 export const privateRoute = ({ component: Component, redirectTo }) =>
   function PrivateRoute(props) {

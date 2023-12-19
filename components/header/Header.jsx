@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import Switchers from './Switchers';
-import IconClose from '../icons/IconClose';
-import IconBurger from '../icons/IconBurger';
+import IconClose from '../UI/icons/IconClose';
+import IconBurger from '../UI/icons/IconBurger';
 import AdminMenu from '../Admin/AdminMenu';
 import { Link } from '@/navigation';
 

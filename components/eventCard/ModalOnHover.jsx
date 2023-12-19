@@ -1,7 +1,7 @@
-import IconCalendar from '@/components/UI/IconCalendar';
-import IconClock from '@/components/UI/IconClock';
-import IconMarkerPlace from '@/components/UI/IconPlace';
-import { formatDateSeparatorDot, formatDateToTime } from '@/helpers';
+import IconCalendar from '../UI/icons/IconCalendar';
+import IconClock from '../UI/icons/IconClock';
+import IconMarkerPlace from '../UI/icons/IconPlace';
+import { formatDateSeparatorDot, formatDateToTime } from '../../helpers';
 
 const ModalOnHover = ({ event }) => {
   const { eventAddress, eventTitle, dateTime } = event;
