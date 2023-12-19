@@ -1,8 +1,6 @@
 import { Link } from '@/navigation';
 import { useTranslations } from 'next-intl';
 
-const wrap
-
 const FooterLink = ({ href, label }) => {
   return (
     <a
