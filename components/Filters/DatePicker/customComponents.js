@@ -1,4 +1,4 @@
-import IconNavArrow from '@/components/icons/IconNavArrow';
+import IconNavArrow from '../../UI/icons/IconNavArrow';
 
 export const customComponents = {
   IconLeft: props => (

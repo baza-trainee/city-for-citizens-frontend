@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 import Cookies from 'js-cookie';
 
-import CloseButton from '../UI/buttons/IconClose';
+import CloseButton from '../UI/icons/IconClose';
 
 const buttonStyle =
   'w-full rounded-lg border border-primary/100  p-2.5 hover:border-primary/80 focus:underline focus:underline-offset-1 transition-colors';
@@ -23,7 +23,7 @@ const ModalCookies = () => {
       }, 5000);
       return () => clearTimeout(timeout);
     }
-  }, []);
+  }, [hasAcceptedCookies]);
 
   const handleAcceptCookies = () => {
     Cookies.set('acceptedCookies', 'accept');

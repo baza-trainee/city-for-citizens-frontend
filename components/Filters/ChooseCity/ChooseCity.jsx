@@ -1,5 +1,5 @@
 'use client';
-import { useQueryParam } from '@/hooks';
+import { useQueryParam } from '../../../hooks';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 

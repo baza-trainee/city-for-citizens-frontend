@@ -4,7 +4,7 @@ import { useRouter } from '@/navigation';
 import { refresh } from '@/services/authAPI';
 
 import { useEffect, useState } from 'react';
-import Loader from './Loader';
+import Loader from './UI/Loader';
 
 export const publicRoute = ({ component: Component, redirectTo }) =>
   function PublicRoute(props) {

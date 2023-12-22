@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { uk, enUS } from 'date-fns/locale';
 
-import IconSelectArrow from '../../icons/IconSelectArrow';
+import IconSelectArrow from '../../UI/icons/IconSelectArrow';
 import FilterInputWrapper from '../FilterInputWrapper';
-import { formatDateSeparatorDash, generateDateRange } from '@/helpers';
+import { formatDateSeparatorDash, generateDateRange } from '../../../helpers';
 import { customStylesDatePicker } from './customStylesDatePicker';
 import { customComponents } from './customComponents';
-import { useQueryParam } from '@/hooks';
+import { useQueryParam } from '../../../hooks';
 import { useLocale, useTranslations } from 'next-intl';
 
 export const DatePicker = ({ filtersEventDates }) => {
@@ -79,7 +79,7 @@ export const DatePicker = ({ filtersEventDates }) => {
           components={customComponents}
           locale={locale === 'uk' ? uk : enUS}
           mode="range"
-          max={21}
+          max={61}
           weekStartsOn={1}
           showOutsideDays
           disabled={date => !isDateActive(date, filtersEventDates)}

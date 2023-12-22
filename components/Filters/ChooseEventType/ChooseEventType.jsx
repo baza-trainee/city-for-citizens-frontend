@@ -1,9 +1,9 @@
 'use client';
 
-import IconSelectArrow from '../../icons/IconSelectArrow';
-import IconCheckbox from '../../icons/IconCheckbox';
+import IconSelectArrow from '../../UI/icons/IconSelectArrow';
+import IconCheckbox from '../../UI/icons/IconCheckbox';
 import FilterInputWrapper from '../FilterInputWrapper';
-import { useQueryParam } from '@/hooks';
+import { useQueryParam } from '../../../hooks';
 import { useTranslations } from 'next-intl';
 
 const ChooseEventType = ({ filtersEventTypes }) => {

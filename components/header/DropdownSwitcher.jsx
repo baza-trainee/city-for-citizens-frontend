@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 
-import IconSelectArrow from '../icons/IconSelectArrow';
+import IconSelectArrow from '../UI/icons/IconSelectArrow';
 
 const DropdownSwitcher = ({ content, options }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);

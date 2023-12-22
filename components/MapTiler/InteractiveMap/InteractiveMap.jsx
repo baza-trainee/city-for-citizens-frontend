@@ -16,7 +16,7 @@ const CENTER = {
   lng: 31.387372519412626,
 };
 
-export default function InteractiveMap({ filteredEvents }) {
+export default function InteractiveMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const locale = useLocale();
@@ -45,36 +45,38 @@ export default function InteractiveMap({ filteredEvents }) {
       center: [CENTER.lng, CENTER.lat],
       style: theme === 'dark' ? THEMES.dark : THEMES.light,
       zoom,
-      scrollZoom: false,
+      minZoom: 5,
+      cooperativeGestures: true,
     });
-
-    function onKeydown({ key }) {
-      if (key === 'Control' || key === 'Meta') {
-        map.current.scrollZoom.enable();
-      }
-    }
-
-    function onKeyup({ key }) {
-      if (key === 'Control' || key === 'Meta') {
-        map.current.scrollZoom.disable();
-      }
-    }
-
-    document.addEventListener('keydown', onKeydown);
-    document.addEventListener('keyup', onKeyup);
-
-    // return () => {
-    //   document.removeEventListener('keydown', onKeydown);
-
-    //   document.removeEventListener('keyup', onKeyup);
-    // };
   }, [locale, theme, zoom]);
 
+  useEffect(() => {
+    if (!map.current) return;
+    let lastRightClickTime = 0;
+    const DOUBLE_CLICK_INTERVAL = 300;
+
+    function dblClickContextMenuMouseBtn() {
+      const currentTime = new Date().getTime();
+      const timeDiff = currentTime - lastRightClickTime;
+
+      if (timeDiff < DOUBLE_CLICK_INTERVAL) {
+        const zoom = map.current.getZoom();
+        map.current.flyTo({ zoom: zoom - 1 });
+      }
+
+      lastRightClickTime = currentTime;
+    }
+
+    map.current.on('contextmenu', dblClickContextMenuMouseBtn);
+
+    return () => {
+      map.current.off('contextmenu', dblClickContextMenuMouseBtn);
+    };
+  }, []);
+
   return (
-    <div className="relative mx-auto h-[865px] ">
-      {filteredEvents.length !== 0 && (
-        <MapMarkerList filteredEvents={filteredEvents} map={map} />
-      )}
+    <div className="relative mx-auto h-[865px] overflow-hidden">
+      {<MapMarkerList map={map} />}
 
       <div ref={mapContainer} className=" h-full w-full" />
     </div>

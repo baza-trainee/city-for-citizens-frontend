@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import IconCheckbox from '../icons/IconCheckbox';
+import IconCheckbox from '../UI/icons/IconCheckbox';
 import DropdownSwitcher from './DropdownSwitcher';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';

@@ -1,5 +1,5 @@
-import IconCopy from '@/components/UI/buttons/IconCopy';
-import IconTriangle from '@/components/UI/IconTriangle';
+import IconCopy from '@/components/UI/icons/IconCopy';
+import IconTriangle from '@/components/UI/icons/IconTriangle';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { useEffect } from 'react';
 
