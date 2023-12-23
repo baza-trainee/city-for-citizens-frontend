@@ -12,8 +12,10 @@ import {
   deleteEventImage,
 } from '@/services/eventAPI';
 import EventForm from './EventForm';
+import { useTranslations } from 'next-intl';
 
 const AddEvent = () => {
+  const t = useTranslations('Admin.addEvent');
   const handleSubmit = async (
     e,
     formDataUk,
@@ -66,8 +68,8 @@ const AddEvent = () => {
 
   return (
     <div className="container">
-      <h1 className=" mb-[30px] text-center text-[34px]">Add event</h1>
-      <EventForm onSubmit={handleSubmit} buttonName={'Add event'} />
+      <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
+      <EventForm onSubmit={handleSubmit} buttonName={t('buttonName.add')} />
     </div>
   );
 };

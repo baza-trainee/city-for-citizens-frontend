@@ -1,13 +1,16 @@
 'use client';
-
-import { useHandleFormData, useHandleFormDataImage } from '@/hooks';
+import { IMAGE_BASE_URL } from '@/helpers/constants';
+import { useHandleFormData } from '@/hooks';
+import ImageUpload from './UploadImage/UploadImage';
+import { useState } from 'react';
 
 const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
   const [formDataUk, handleChangeUk] = useHandleFormData('uk_UA', eventUk);
   const [formDataEn, handleChangeEn] = useHandleFormData('en_US', eventEn);
-  const [formDataImageUk, handleImageChangeUk] = useHandleFormDataImage();
 
-  const [formDataImageEn, handleImageChangeEn] = useHandleFormDataImage();
+  const [formDataImageUk, setFormDataImageUk] = useState();
+
+  const [formDataImageEn, setFormDataImageEn] = useState();
 
   const formInputs = [
     {
@@ -127,6 +130,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         <p>Деталі події українською</p>
         <p>Деталі події англійською</p>
       </div>
+
       <form
         onSubmit={e =>
           onSubmit(e, formDataUk, formDataEn, formDataImageUk, formDataImageEn)
@@ -136,15 +140,35 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         {formInputs.map(({ label, type, isDouble, attributes }) => {
           if (attributes.type === 'file') {
             return (
-              <label key={label + attributes.name}>
+              <div key={label + attributes.name}>
                 <span className="mb-[10px] block text-center text-[20px]">
                   {label}
                 </span>
                 <div className="flex gap-[50px]">
-                  <input {...attributes} onChange={handleImageChangeUk} />
-                  <input {...attributes} onChange={handleImageChangeEn} />
+                  <ImageUpload
+                    imageName={
+                      formDataUk.eventImage
+                        ? `${IMAGE_BASE_URL}${formDataUk.eventImage}`
+                        : ''
+                    }
+                    imageTitle={
+                      formDataUk.eventTitle ? formDataUk.eventTitle : ''
+                    }
+                    handleImageChange={setFormDataImageUk}
+                  />
+                  <ImageUpload
+                    imageName={
+                      formDataEn.eventImage
+                        ? `${IMAGE_BASE_URL}${formDataEn.eventImage}`
+                        : ''
+                    }
+                    imageTitle={
+                      formDataEn.eventTitle ? formDataEn.eventTitle : ''
+                    }
+                    handleImageChange={setFormDataImageEn}
+                  />
                 </div>
-              </label>
+              </div>
             );
           }
           if (type === 'textarea') {

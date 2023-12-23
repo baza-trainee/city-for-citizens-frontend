@@ -170,7 +170,7 @@ export default function MapMarkerItem({
       xOffset = 0;
       yOffset = -height - paddingY + curPosY;
     } else if (screenWidth - curPosX < width) {
-      xOffset = width + paddingX - (screenWidth - point.x);
+      xOffset = width + paddingX - (screenWidth - curPosX);
       yOffset = 0;
     } else if (curPosX < width) {
       xOffset = -width - paddingX + curPosX;

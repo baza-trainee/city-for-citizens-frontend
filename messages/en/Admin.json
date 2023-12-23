@@ -1,0 +1,35 @@
+{
+  "Admin": {
+    "addEvent": {
+      "title": "Add event",
+      "buttonName": {
+        "add": "Add event",
+        "cancel": "Cancel"
+      }
+    },
+
+    "updateEvent": {
+      "title": "Update event",
+      "buttonName": {
+        "update": "Update event",
+        "cancel": "Cancel"
+      }
+    },
+
+    "eventForm": {
+      "inputImage": {
+        "buttonName": {
+          "isImage": "Replace image",
+          "noImage": "Download image"
+        },
+        "titleNoImage": "Upload image",
+        "format": "PNG, JPG, GIF formats",
+        "size": "up to 10 MB in size"
+      }
+    },
+
+    "loginForm": "",
+    "registerForm": "",
+    "eventList": { "title": "Event list" }
+  }
+}

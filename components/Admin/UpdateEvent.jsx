@@ -11,10 +11,13 @@ import { privateRoute } from '../privateRoute';
 import { NAVIGATION } from '@/helpers/constants';
 import { useEffect, useState } from 'react';
 import { useCurrentLocale } from '@/hooks';
+import { useTranslations } from 'next-intl';
 
 const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
   const [eventEn, setEventEn] = useState(null);
+
+  const t = useTranslations('Admin.updateEvent');
 
   const { localeForRequest } = useCurrentLocale();
 
@@ -113,10 +116,10 @@ const UpdateEventForm = ({ eventId }) => {
   };
   return (
     <div className="container">
-      <h1 className=" mb-[30px] text-center text-[34px]">Update event</h1>
+      <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
       <EventForm
         onSubmit={handleSubmit}
-        buttonName={'Update event'}
+        buttonName={t('buttonName.update')}
         eventUk={eventUk}
         eventEn={eventEn}
       />
