@@ -49,22 +49,22 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
   };
 
   const ShowDeleteModal = () => (
-    <ModalPortal>
+    <ModalPortal handleModalClose={handleModalClose}>
       <ShowModal
-        bgColor="red"
+        bgColor="#d43c3c"
         onClose={handleModalClose}
         onOk={handleConfirmDelete}
         confirmButton="Видалити"
       >
         Ви дійсно хочете видалити подію{' '}
-        <span className="text-[red]">{dataDeleteEvent.title}</span>?
+        <span className="text-[#d43c3c]">{dataDeleteEvent.title}</span>?
       </ShowModal>
     </ModalPortal>
   );
 
   const ShowSuccessDeleteMessage = () => (
     <MessagePortal setIsShowMessage={setIsShowMessage}>
-      <ShowMessage bgColor="green">Подія успішно видалена</ShowMessage>
+      <ShowMessage>Подія успішно видалена</ShowMessage>
     </MessagePortal>
   );
 

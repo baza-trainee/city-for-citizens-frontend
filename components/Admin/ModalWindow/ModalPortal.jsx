@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const ModalPortal = props => {
+const ModalPortal = ({ handleModalClose, children }) => {
   const ref = useRef(null);
   const [mounted, setMounted] = useState(false);
 
@@ -17,8 +17,9 @@ const ModalPortal = props => {
       <div
         className="fixed left-0 top-0 h-full w-full
        overflow-auto bg-primary/0 bg-opacity-50"
+        onClick={handleModalClose}
       >
-        {props.children}
+        {children}
       </div>,
       ref.current
     )
