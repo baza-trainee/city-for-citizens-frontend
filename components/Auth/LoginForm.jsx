@@ -7,6 +7,11 @@ import { publicRoute } from '@/components/publicRoute';
 
 import { NAVIGATION } from '@/helpers/constants';
 
+import Input from './Input';
+
+const inputStyle =
+  'mt-1 w-full cursor-pointer text-ellipsis rounded-lg border border-gray/20 bg-gray/5 p-2.5 placeholder-gray/30 hover:border-primary/100 focus:outline-gray/100';
+
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -27,6 +32,7 @@ const LoginForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     try {
       const res = await login(formData);
 
@@ -45,35 +51,33 @@ const LoginForm = () => {
     <div className="container">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-[30px]"
+        className="mx-auto flex max-w-[394px] flex-col items-center gap-[30px]"
       >
-        <label>
-          <span>Email</span>
-          <input
-            value={email}
-            onChange={handleChange}
-            name="email"
-            type="text"
-          />
-        </label>
-        <label>
-          <span>Password</span>
-          <input
-            value={password}
-            onChange={handleChange}
-            name="password"
-            type="text"
-          />
-        </label>
+        <Input
+          label="Email"
+          value={email}
+          onChange={handleChange}
+          name="email"
+          type="text"
+          placeholder="Enter email"
+        />
+        <Input
+          label="Password"
+          value={password}
+          onChange={handleChange}
+          name="password"
+          type="text"
+          placeholder="Enter password"
+        />
 
         {error && <p>{error}</p>}
         <p>
           {"Don't have an account yet?"}
-          <Link href="/register">
+          <Link className="ml-2 hover:text-gray/30" href="/register">
             <u>Sign up.</u>
           </Link>
         </p>
-        <button className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]">
+        <button className="mx-auto my-0 block w-full rounded-lg bg-primary/100 p-2.5 px-[40px] py-[10px] text-gray/0 hover:bg-primary/80 dark:border-gray/5 dark:bg-gray/5 dark:text-gray/100 dark:hover:border-gray/10 dark:hover:bg-gray/10">
           Login
         </button>
       </form>
