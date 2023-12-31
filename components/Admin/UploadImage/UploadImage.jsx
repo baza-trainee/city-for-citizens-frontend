@@ -3,7 +3,12 @@ import ImageComponent from './ImageComponent';
 import NoImageComponent from './NoImageComponent';
 import UploadInputComponent from './UploadInputComponent';
 
-const ImageUpload = ({ handleImageChange, imageName, imageTitle }) => {
+const ImageUpload = ({
+  handleImageChange,
+  imageName,
+  imageTitle,
+  attributes,
+}) => {
   const [imageForPreview, setImageForPreview] = useState(null);
 
   const [imageData, setImageData] = useState({
@@ -45,6 +50,7 @@ const ImageUpload = ({ handleImageChange, imageName, imageTitle }) => {
       )}
 
       <UploadInputComponent
+        attributes={attributes}
         inputFileRef={inputFileRef}
         isImageUpload={imageForPreview || imageData.src}
         onChange={handleChange}

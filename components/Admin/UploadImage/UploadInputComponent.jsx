@@ -1,6 +1,11 @@
 import { useTranslations } from 'next-intl';
 
-const UploadInputComponent = ({ isImageUpload, onChange, inputFileRef }) => {
+const UploadInputComponent = ({
+  isImageUpload,
+  onChange,
+  inputFileRef,
+  attributes,
+}) => {
   const t = useTranslations('Admin.eventForm.inputImage.buttonName');
   return (
     <label
@@ -12,11 +17,9 @@ const UploadInputComponent = ({ isImageUpload, onChange, inputFileRef }) => {
     >
       <span>{isImageUpload ? t('isImage') : t('noImage')}</span>
       <input
+        className="absolute -m-[1px] h-[1px] w-[1px] overflow-hidden whitespace-nowrap border-[0px] p-[0px]"
         ref={inputFileRef}
-        name="eventImage"
-        type="file"
-        accept="image/*"
-        hidden
+        {...attributes}
         onChange={onChange}
       />
     </label>
