@@ -12,10 +12,17 @@ import { NAVIGATION } from '@/helpers/constants';
 import { useEffect, useState } from 'react';
 import { useCurrentLocale } from '@/hooks';
 import { useTranslations } from 'next-intl';
+import Loader from '../UI/Loader';
+import BasicModalWindows from './ModalWindow/BasicModalWindows';
 
 const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
   const [eventEn, setEventEn] = useState(null);
+
+  const [isError, setIsError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
 
   const t = useTranslations('Admin.updateEvent');
 
@@ -44,7 +51,7 @@ const UpdateEventForm = ({ eventId }) => {
       }
     };
     getAll();
-  }, [eventId, localeForRequest]);
+  }, [eventId, localeForRequest, isLoading]);
 
   const handleSubmit = async (
     e,
@@ -58,6 +65,11 @@ const UpdateEventForm = ({ eventId }) => {
 
     let requestUk;
     let requestEn;
+
+    setIsError(null);
+    setIsLoading(true);
+    setStatusMessage('');
+    setIsStatusMessageVisible(false);
 
     try {
       if (formDataImageUk) {
@@ -81,9 +93,16 @@ const UpdateEventForm = ({ eventId }) => {
         await updateEvent(requestUk, eventUk.id);
       }
     } catch (error) {
+      setIsError(error);
+      setStatusMessage(`Сталася помилка: ${error.message}`);
+      setIsStatusMessageVisible(true);
       if (requestUk?.eventImage) {
         deleteEventImage({ eventImage: requestUk?.eventImage });
       }
+      setIsLoading(false);
+      return;
+    } finally {
+      setIsLoading(false);
     }
 
     try {
@@ -108,22 +127,46 @@ const UpdateEventForm = ({ eventId }) => {
 
         await updateEvent(requestEn, eventEn.id);
       }
+
+      setStatusMessage('Подію успішно оновлено.');
+      setIsStatusMessageVisible(true);
     } catch (error) {
+      setIsError(error);
+      setStatusMessage(`Сталася помилка: ${error.message}`);
+      setIsStatusMessageVisible(true);
       if (requestEn?.eventImage) {
         deleteEventImage({ eventImage: requestEn?.eventImage });
       }
+      setIsLoading(false);
+      return;
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
-    <div className="container">
-      <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
-      <EventForm
-        onSubmit={handleSubmit}
-        buttonName={t('buttonName.update')}
-        eventUk={eventUk}
-        eventEn={eventEn}
-      />
-    </div>
+    <>
+      <div className="container">
+        <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
+        <EventForm
+          onSubmit={handleSubmit}
+          buttonName={t('buttonName.update')}
+          eventUk={eventUk}
+          eventEn={eventEn}
+        />
+      </div>
+      {isLoading && (
+        <div className="fixed flex h-full w-full items-center justify-center bg-primary/0/20">
+          <Loader />
+        </div>
+      )}
+
+      {isStatusMessageVisible && statusMessage && (
+        <BasicModalWindows
+          onClose={() => setIsStatusMessageVisible(false)}
+          message={statusMessage}
+        />
+      )}
+    </>
   );
 };
 

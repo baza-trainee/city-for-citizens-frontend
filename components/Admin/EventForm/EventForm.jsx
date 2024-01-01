@@ -6,13 +6,20 @@ import ImageUpload from './UploadImage/UploadImage';
 import { useHandleFormData } from '@/hooks';
 import { useState } from 'react';
 import AddEventType from './AddEventType/AddEventType';
+import { errorMessage, regexPatterns } from './constants';
 
 const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
-  const [formDataUk, handleChangeUk] = useHandleFormData('uk_UA', eventUk);
-  const [formDataEn, handleChangeEn] = useHandleFormData('en_US', eventEn);
+  const [formDataUk, handleChangeUk, resetFormUk] = useHandleFormData(
+    'uk_UA',
+    eventUk
+  );
+  const [formDataEn, handleChangeEn, resetFormEn] = useHandleFormData(
+    'en_US',
+    eventEn
+  );
 
-  const [formDataImageUk, setFormDataImageUk] = useState();
-  const [formDataImageEn, setFormDataImageEn] = useState();
+  const [formDataImageUk, setFormDataImageUk] = useState(null);
+  const [formDataImageEn, setFormDataImageEn] = useState(null);
 
   const [formDataEventTypeUk, setFormDataEventTypeUk] = useState([]);
   const [formDataEventTypeEn, setFormDataEventTypeEn] = useState([]);
@@ -25,11 +32,17 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     eventImage: '',
   });
 
-  const regexPatternForCoordinates =
-    '^(\\+|-)?((\\d((\\.)|\\.\\d{1,20})?)|(0*?[0-8]\\d((\\.)|\\.\\d{1,20})?)|(0*?4?[1-9]|0)((\\.)|\\.0{1,20})?),\\s*(\\+|-)?((\\d((\\.)|\\.\\d{1,20})?)|(0*?\\d\\d((\\.)|\\.\\d{1,20})?)|(0*?1[0-7]\\d((\\.)|\\.\\d{1,20})?)|(0*?1[0-7][0-9]|[1-8]\\d|90)((\\.)|\\.0{1,20})?)$';
+  const resetForm = () => {
+    setFormDataImageUk(null);
+    setFormDataImageEn(null);
+    setFormDataEventTypeUk([]);
+    setFormDataEventTypeEn([]);
+    resetFormUk();
+    resetFormEn();
+  };
 
   const inputClassNames =
-    'rounded-[5px] bg-gray/10 px-[16px] py-[8px] dark:bg-gray/80';
+    'rounded-[5px] bg-gray/0 px-[16px] py-[8px] dark:bg-gray/80 dark:border-gray/30 border-[1px] border-gray/10';
 
   const formInputs = [
     {
@@ -142,7 +155,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         required: true,
         name: 'coordinates',
         type: 'text',
-        pattern: regexPatternForCoordinates,
+        pattern: regexPatterns.coordinates,
         title:
           'Координати мають бути у такому форматі: "-12.3456789, +112.3456789", "45.123456, 87.654321", "0.0, 0.0" (можна скористатися онлайн картами, наприклад "Google Maps")',
         placeholder: '50.4302484, 30.4936464',
@@ -163,14 +176,53 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     },
   ];
 
-  const errorMessageForEventType = (
-    <span>
-      Натисніть на кнопку "Додати
-      <span className="relative top-[4px] text-[28px] leading-[0]"> ⊕</span>".
-    </span>
-  );
+  const handleSubmit = e => {
+    e.preventDefault();
+    const dataUk = {
+      ...formDataUk,
+      eventType: formDataEventTypeUk.join(','),
+    };
+    const dataEn = {
+      ...formDataEn,
+      eventType: formDataEventTypeEn.join(','),
+    };
 
-  const errorMessageForEventImage = <span>Додайте картинку події.</span>;
+    if (formDataEventTypeUk.length === 0) {
+      setErrorMessageUk(prev => ({
+        ...prev,
+        eventType: errorMessage.eventType,
+      }));
+      return;
+    } else if (formDataEventTypeEn.length === 0) {
+      setErrorMessageEn(prev => ({
+        ...prev,
+        eventType: errorMessage.eventType,
+      }));
+      return;
+    } else {
+      setErrorMessageEn('');
+      setErrorMessageUk('');
+    }
+
+    if (!formDataUk.eventImage && !formDataImageUk) {
+      setErrorMessageUk(prev => ({
+        ...prev,
+        eventImage: errorMessage.eventImage,
+      }));
+      return;
+    } else if (!formDataEn.eventImage && !formDataImageEn) {
+      setErrorMessageEn(prev => ({
+        ...prev,
+        eventImage: errorMessage.eventImage,
+      }));
+      return;
+    } else {
+      setErrorMessageEn('');
+      setErrorMessageUk('');
+    }
+
+    onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn, resetForm);
+  };
 
   return (
     <>
@@ -180,53 +232,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
       </div>
 
       <form
-        onSubmit={e => {
-          e.preventDefault();
-          const dataUk = {
-            ...formDataUk,
-            eventType: formDataEventTypeUk.join(','),
-          };
-          const dataEn = {
-            ...formDataEn,
-            eventType: formDataEventTypeEn.join(','),
-          };
-
-          if (formDataEventTypeUk.length === 0) {
-            setErrorMessageUk(prev => ({
-              ...prev,
-              eventType: errorMessageForEventType,
-            }));
-            return;
-          } else if (formDataEventTypeEn.length === 0) {
-            setErrorMessageEn(prev => ({
-              ...prev,
-              eventType: errorMessageForEventType,
-            }));
-            return;
-          } else {
-            setErrorMessageEn('');
-            setErrorMessageUk('');
-          }
-
-          if (!formDataUk.eventImage && !formDataImageUk) {
-            setErrorMessageUk(prev => ({
-              ...prev,
-              eventImage: errorMessageForEventImage,
-            }));
-            return;
-          } else if (!formDataEn.eventImage && !formDataImageEn) {
-            setErrorMessageEn(prev => ({
-              ...prev,
-              eventImage: errorMessageForEventImage,
-            }));
-            return;
-          } else {
-            setErrorMessageEn('');
-            setErrorMessageUk('');
-          }
-
-          onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn);
-        }}
+        onSubmit={handleSubmit}
         className="mx-auto mb-[30px] flex w-[650px] flex-wrap  gap-[15px] gap-x-[50px]"
       >
         {formInputs.map(({ label, element, isDouble, attributes }) => {
@@ -249,6 +255,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                       formDataUk.eventTitle ? formDataUk.eventTitle : ''
                     }
                     handleImageChange={setFormDataImageUk}
+                    formDataImage={formDataImageUk}
                   />
                   <ImageUpload
                     errorMessage={errorMessageEn.eventImage}
@@ -262,6 +269,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                       formDataEn.eventTitle ? formDataEn.eventTitle : ''
                     }
                     handleImageChange={setFormDataImageEn}
+                    formDataImage={formDataImageEn}
                   />
                 </div>
               </div>

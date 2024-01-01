@@ -10,6 +10,7 @@ const ImageUpload = ({
   imageTitle,
   attributes,
   errorMessage,
+  formDataImage
 }) => {
   const [imageForPreview, setImageForPreview] = useState(null);
   const [imageData, setImageData] = useState({
@@ -19,7 +20,15 @@ const ImageUpload = ({
 
   const inputFileRef = useRef(null);
 
+  useEffect(()=>{
+    if (!formDataImage) {
+      resetImage()
+    }
+
+  },[formDataImage])
+
   useEffect(() => {
+   
     setImageData({ src: imageName, alt: imageTitle });
   }, [imageName, imageTitle]);
 
@@ -39,7 +48,7 @@ const ImageUpload = ({
   };
 
   return (
-    <div className="flex w-full max-w-[300px] flex-col gap-[20px] rounded-[15px] bg-gray/10 p-[20px] dark:bg-gray/80">
+    <div className="flex w-full max-w-[300px] flex-col gap-[20px] rounded-[15px] border-[1px] border-gray/10 bg-gray/0 p-[20px] dark:border-gray/30 dark:bg-gray/80">
       {imageForPreview || imageData.src ? (
         <ImageComponent
           resetImage={resetImage}

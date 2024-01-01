@@ -113,7 +113,7 @@ const AddEventType = ({
   return (
     <div
       ref={wrapperRef}
-      className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px] bg-gray/10 p-[8px] dark:bg-gray/80"
+      className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px]  border-[1px] border-gray/10  bg-gray/0 p-[8px] dark:border-gray/30 dark:bg-gray/80"
     >
       <div className="relative h-[40px] w-full">
         {isErrorMessageVisible &&
@@ -124,7 +124,7 @@ const AddEventType = ({
         <textarea
           {...attributes}
           onKeyDown={handleEnterKey}
-          className="w-full resize-none rounded-[5px] bg-gray/20 p-[8px] dark:bg-gray/100"
+          className="w-full resize-none rounded-[5px] border-[1px] border-gray/10 bg-gray/5 p-[8px] dark:border-gray/50  dark:bg-gray/80"
           onChange={e => setInputText(e.target.value)}
           readOnly={
             !inputText && eventTypesSelected.length !== 0 && !isTypeListVisible
