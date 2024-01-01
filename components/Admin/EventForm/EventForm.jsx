@@ -16,8 +16,17 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
 
   const [formDataEventTypeUk, setFormDataEventTypeUk] = useState([]);
   const [formDataEventTypeEn, setFormDataEventTypeEn] = useState([]);
-  const [errorMessageUk, setErrorMessageUk] = useState('');
-  const [errorMessageEn, setErrorMessageEn] = useState('');
+  const [errorMessageUk, setErrorMessageUk] = useState({
+    eventType: '',
+    eventImage: '',
+  });
+  const [errorMessageEn, setErrorMessageEn] = useState({
+    eventType: '',
+    eventImage: '',
+  });
+
+  const regexPatternForCoordinates =
+    '^(\\+|-)?((\\d((\\.)|\\.\\d{1,20})?)|(0*?[0-8]\\d((\\.)|\\.\\d{1,20})?)|(0*?4?[1-9]|0)((\\.)|\\.0{1,20})?),\\s*(\\+|-)?((\\d((\\.)|\\.\\d{1,20})?)|(0*?\\d\\d((\\.)|\\.\\d{1,20})?)|(0*?1[0-7]\\d((\\.)|\\.\\d{1,20})?)|(0*?1[0-7][0-9]|[1-8]\\d|90)((\\.)|\\.0{1,20})?)$';
 
   const inputClassNames =
     'rounded-[5px] bg-gray/10 px-[16px] py-[8px] dark:bg-gray/80';
@@ -76,7 +85,6 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
       isDouble: true,
       element: 'eventImage',
       attributes: {
-        required: true,
         name: 'eventImage',
         type: 'file',
         accept: 'image/*',
@@ -134,8 +142,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         required: true,
         name: 'coordinates',
         type: 'text',
-        pattern:
-          '^(+|-)?((d((.)|.d{1,20})?)|(0*?[0-8]d((.)|.d{1,20})?)|(0*?4?[1-9]|0)((.)|.0{1,20})?),s*(+|-)?((d((.)|.d{1,20})?)|(0*?dd((.)|.d{1,20})?)|(0*?1[0-7]d((.)|.d{1,20})?)|(0*?1[0-7][0-9]|[1-8]d|90)((.)|.0{1,20})?)$',
+        pattern: regexPatternForCoordinates,
         title:
           'Координати мають бути у такому форматі: "-12.3456789, +112.3456789", "45.123456, 87.654321", "0.0, 0.0" (можна скористатися онлайн картами, наприклад "Google Maps")',
         placeholder: '50.4302484, 30.4936464',
@@ -150,10 +157,20 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         name: 'eventUrl',
         placeholder: 'https://example.com',
         type: 'url',
+        title: 'Введіть URL-адресу наприклад: https://example.com',
         pattern: 'https://.*',
       },
     },
   ];
+
+  const errorMessageForEventType = (
+    <span>
+      Натисніть на кнопку "Додати
+      <span className="relative top-[4px] text-[28px] leading-[0]"> ⊕</span>".
+    </span>
+  );
+
+  const errorMessageForEventImage = <span>Додайте картинку події.</span>;
 
   return (
     <>
@@ -175,16 +192,37 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
           };
 
           if (formDataEventTypeUk.length === 0) {
-            setErrorMessageUk('Натисніть на кнопку "Додати "⊕""');
+            setErrorMessageUk(prev => ({
+              ...prev,
+              eventType: errorMessageForEventType,
+            }));
             return;
-          } else {
-            setErrorMessageUk('');
-          }
-          if (formDataEventTypeEn.length === 0) {
-            setErrorMessageEn('Натисніть на кнопку "Додати "⊕""');
+          } else if (formDataEventTypeEn.length === 0) {
+            setErrorMessageEn(prev => ({
+              ...prev,
+              eventType: errorMessageForEventType,
+            }));
             return;
           } else {
             setErrorMessageEn('');
+            setErrorMessageUk('');
+          }
+
+          if (!formDataUk.eventImage && !formDataImageUk) {
+            setErrorMessageUk(prev => ({
+              ...prev,
+              eventImage: errorMessageForEventImage,
+            }));
+            return;
+          } else if (!formDataEn.eventImage && !formDataImageEn) {
+            setErrorMessageEn(prev => ({
+              ...prev,
+              eventImage: errorMessageForEventImage,
+            }));
+            return;
+          } else {
+            setErrorMessageEn('');
+            setErrorMessageUk('');
           }
 
           onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn);
@@ -200,6 +238,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                 </span>
                 <div className="flex gap-[50px]">
                   <ImageUpload
+                    errorMessage={errorMessageUk.eventImage}
                     attributes={attributes}
                     imageName={
                       formDataUk.eventImage
@@ -212,6 +251,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                     handleImageChange={setFormDataImageUk}
                   />
                   <ImageUpload
+                    errorMessage={errorMessageEn.eventImage}
                     attributes={attributes}
                     imageName={
                       formDataEn.eventImage
@@ -238,14 +278,14 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
                     initialState={
                       formDataUk.eventType ? formDataUk.eventType : ''
                     }
-                    errorMessage={errorMessageUk}
+                    errorMessage={errorMessageUk.eventType}
                     setEventTypesSelected={setFormDataEventTypeUk}
                     locale={LOCALE.uk.forRequest}
                     eventTypesSelected={formDataEventTypeUk}
                     attributes={attributes}
                   />
                   <AddEventType
-                    errorMessage={errorMessageEn}
+                    errorMessage={errorMessageEn.eventType}
                     attributes={attributes}
                     initialState={
                       formDataEn.eventType ? formDataEn.eventType : ''

@@ -11,7 +11,7 @@ import {
   deleteEvent,
   deleteEventImage,
 } from '@/services/eventAPI';
-import EventForm from './EventForm';
+import EventForm from './EventForm/EventForm';
 import { useTranslations } from 'next-intl';
 
 const AddEvent = () => {

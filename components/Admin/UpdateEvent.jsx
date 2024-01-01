@@ -6,7 +6,7 @@ import {
   getAllEvents,
   updateEvent,
 } from '@/services/eventAPI';
-import EventForm from './EventForm';
+import EventForm from './EventForm/EventForm';
 import { privateRoute } from '../privateRoute';
 import { NAVIGATION } from '@/helpers/constants';
 import { useEffect, useState } from 'react';

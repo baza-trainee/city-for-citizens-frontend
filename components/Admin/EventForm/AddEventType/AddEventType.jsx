@@ -1,9 +1,11 @@
-import IconCheckbox from '@/components/UI/icons/IconCheckbox';
 import CloseButton from '@/components/UI/icons/IconClose';
 import IconSelectArrow from '@/components/UI/icons/IconSelectArrow';
+
 import { getFilters } from '@/services/getFilters';
 
 import { useEffect, useRef, useState } from 'react';
+import TypeList from './TypeList';
+import ErrorMessage from '../ErrorMessage';
 
 const useOnClickOutside = (ref, handler) => {
   useEffect(() => {
@@ -31,21 +33,13 @@ const AddEventType = ({
   errorMessage,
 }) => {
   const [isTypeListVisible, setIsTypeListVisible] = useState(false);
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
 
   const [eventTypesList, setEventTypesList] = useState([]);
   const [inputText, setInputText] = useState('');
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
-
-  const errorMessageRef = useRef(null);
-
-  useEffect(() => {
-    if (errorMessage && eventTypesSelected.length === 0) {
-      errorMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-      errorMessageRef.current.focus();
-    }
-  }, [errorMessage, eventTypesSelected]);
 
   useEffect(() => {
     if (initialState) {
@@ -69,6 +63,16 @@ const AddEventType = ({
 
     getAllFilters();
   }, [locale]);
+
+  useEffect(() => {
+    if (inputText) {
+      if (errorMessage && eventTypesSelected.length === 0) {
+        setIsErrorMessageVisible(true);
+        return;
+      }
+    }
+    setIsErrorMessageVisible(false);
+  }, [inputText, errorMessage, eventTypesSelected]);
 
   const handleSubmit = () => {
     const trimmedText = inputText.trim();
@@ -112,8 +116,10 @@ const AddEventType = ({
       className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px] bg-gray/10 p-[8px] dark:bg-gray/80"
     >
       <div className="relative h-[40px] w-full">
-        {errorMessage && eventTypesSelected.length === 0 ? (
-          <p ref={errorMessageRef}>{errorMessage} </p>
+        {isErrorMessageVisible &&
+        errorMessage &&
+        eventTypesSelected.length === 0 ? (
+          <ErrorMessage errorMessage={errorMessage} />
         ) : null}
         <textarea
           {...attributes}
@@ -151,7 +157,11 @@ const AddEventType = ({
         className="flex justify-between px-[8px]"
         ref={buttonRef}
       >
-        <p>Або виберіть із списку</p>
+        <p>
+          {eventTypesSelected.length === 0
+            ? 'Або виберіть із списку'
+            : 'Виберіть із списку'}
+        </p>
         <IconSelectArrow
           width={24}
           height={24}
@@ -173,37 +183,3 @@ const AddEventType = ({
 };
 
 export default AddEventType;
-
-const TypeList = ({ eventTypesList, toggleEventType, eventTypesSelected }) => {
-  return (
-    <div className="absolute left-0 top-[calc(100%+5px)] z-10 w-full rounded-[5px] bg-gray/10 p-[6px] px-[16px] py-[8px] dark:bg-gray/80">
-      <ul className="flex flex-col gap-[5px] ">
-        {eventTypesList.map(type => {
-          return (
-            <li key={type}>
-              <button
-                type="button"
-                onClick={() => toggleEventType(type)}
-                className="flex w-full justify-between"
-              >
-                <p>{type}</p>
-                <div className="flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border-[1px] border-gray/50 dark:border-gray/10">
-                  <IconCheckbox
-                    className={`stroke-gray/50 transition-all dark:stroke-gray/10 ${
-                      eventTypesSelected.includes(type)
-                        ? 'opacity-100'
-                        : 'opacity-0'
-                    }`}
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      {eventTypesList.length === 0 ? <p>Тут порожньо ...</p> : null}
-    </div>
-  );
-};

@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import ImageComponent from './ImageComponent';
 import NoImageComponent from './NoImageComponent';
 import UploadInputComponent from './UploadInputComponent';
+import ErrorMessage from '../ErrorMessage';
 
 const ImageUpload = ({
   handleImageChange,
   imageName,
   imageTitle,
   attributes,
+  errorMessage,
 }) => {
   const [imageForPreview, setImageForPreview] = useState(null);
-
   const [imageData, setImageData] = useState({
     src: '',
     alt: '',
@@ -49,12 +50,15 @@ const ImageUpload = ({
         <NoImageComponent />
       )}
 
-      <UploadInputComponent
-        attributes={attributes}
-        inputFileRef={inputFileRef}
-        isImageUpload={imageForPreview || imageData.src}
-        onChange={handleChange}
-      />
+      <div className="relative">
+        <UploadInputComponent
+          attributes={attributes}
+          inputFileRef={inputFileRef}
+          isImageUpload={imageForPreview || imageData.src}
+          onChange={handleChange}
+        />
+        {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : null}
+      </div>
     </div>
   );
 };
