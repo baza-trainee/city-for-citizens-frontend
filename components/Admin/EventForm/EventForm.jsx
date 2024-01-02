@@ -1,5 +1,5 @@
 'use client';
-import { IMAGE_BASE_URL, LOCALE } from '@/helpers/constants';
+import { LOCALE } from '@/helpers/constants';
 
 import ImageUpload from './UploadImage/UploadImage';
 
@@ -13,6 +13,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     'uk_UA',
     eventUk
   );
+
   const [formDataEn, handleChangeEn, resetFormEn] = useHandleFormData(
     'en_US',
     eventEn
@@ -40,141 +41,6 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     resetFormUk();
     resetFormEn();
   };
-
-  const inputClassNames =
-    'rounded-[5px] bg-gray/0 px-[16px] py-[8px] dark:bg-gray/80 dark:border-gray/30 border-[1px] border-gray/10';
-
-  const formInputs = [
-    {
-      label: 'Назва Події / Event name',
-      isDouble: true,
-      attributes: {
-        required: true,
-        placeholder: 'Введіть назву',
-        name: 'eventTitle',
-        type: 'text',
-        title: 'Назва події не може бути меншим за 3 символа',
-        pattern: '.{3,}',
-      },
-    },
-    {
-      label: 'Опис / Description',
-      isDouble: true,
-      element: 'textarea',
-      attributes: {
-        required: true,
-        placeholder: 'Додайте опис',
-        type: 'text',
-        name: 'description',
-        rows: '5',
-      },
-    },
-    {
-      label: 'Примітки / Notes',
-      isDouble: true,
-      element: 'textarea',
-      attributes: {
-        required: true,
-        placeholder: 'Опишіть детально про місце',
-        type: 'text',
-        name: 'notes',
-        rows: '3',
-      },
-    },
-    {
-      label: 'Тип події / Event type',
-      isDouble: true,
-      element: 'eventType',
-      attributes: {
-        required: true,
-        name: 'eventType',
-        type: 'text',
-        rows: 1,
-        placeholder: 'Введіть новий тип тут...',
-      },
-    },
-    {
-      label: 'Зображення події / Event image',
-      isDouble: true,
-      element: 'eventImage',
-      attributes: {
-        name: 'eventImage',
-        type: 'file',
-        accept: 'image/*',
-      },
-    },
-    {
-      label: 'Місто / City',
-      isDouble: true,
-      attributes: {
-        required: true,
-        type: 'text',
-        title: 'Місто не може бути меншим за 2 символа',
-        pattern: '.{2,}',
-        name: 'city',
-        placeholder: 'Вкажіть місто',
-      },
-    },
-    {
-      label: 'Вулиця / Street',
-      isDouble: true,
-      attributes: {
-        required: true,
-        name: 'street',
-        title: 'Вулиця не може бути меншим за 2 символа',
-        pattern: '.{2,}',
-        type: 'text',
-        placeholder: 'Вкажіть вулицю',
-      },
-    },
-    {
-      label: 'Дата / Date',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'date',
-        type: 'date',
-      },
-    },
-    {
-      label: 'Час / Time',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'time',
-        type: 'time',
-      },
-    },
-    {
-      label: 'Координати / Coordinates',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'coordinates',
-        type: 'text',
-        pattern: regexPatterns.coordinates,
-        title:
-          'Координати мають бути у такому форматі: "-12.3456789, +112.3456789", "45.123456, 87.654321", "0.0, 0.0" (можна скористатися онлайн картами, наприклад "Google Maps")',
-        placeholder: '50.4302484, 30.4936464',
-      },
-    },
-    {
-      label: 'URL-адреса події/ Event Url',
-
-      isDouble: false,
-      attributes: {
-        required: true,
-        name: 'eventUrl',
-        placeholder: 'https://example.com',
-        type: 'url',
-        title: 'Введіть URL-адресу наприклад: https://example.com',
-        pattern: 'https://.*',
-      },
-    },
-  ];
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -224,6 +90,109 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn, resetForm);
   };
 
+  const inputsAttributes = {
+    firstGroup: [
+      {
+        tag: 'input',
+        label: 'Назва Події / Event name',
+        name: 'eventTitle',
+        type: 'text',
+        placeholder: 'Введіть назву',
+        title: 'Назва події не може бути меншим за 3 символа',
+        pattern: '.{3,}',
+        required: true,
+      },
+      {
+        tag: 'input',
+        label: 'Місто / City',
+        name: 'city',
+        type: 'text',
+        placeholder: 'Вкажіть місто',
+        title: 'Місто не може бути меншим за 2 символа',
+        pattern: '.{2,}',
+        required: true,
+      },
+      {
+        tag: 'input',
+        label: 'Вулиця / Street',
+        name: 'street',
+        type: 'text',
+        placeholder: 'Вкажіть вулицю',
+        title: 'Вулиця не може бути меншим за 2 символа',
+        pattern: '.{2,}',
+        required: true,
+      },
+      {
+        tag: 'textarea',
+        label: 'Опис / Description',
+        name: 'description',
+        type: 'text',
+        rows: '5',
+        placeholder: 'Додайте опис',
+        required: true,
+      },
+      {
+        tag: 'textarea',
+        label: 'Примітки / Notes',
+        name: 'notes',
+        type: 'text',
+        rows: '3',
+        placeholder: 'Опишіть детально про місце',
+        required: true,
+      },
+    ],
+    secondGroup: [
+      {
+        tag: 'input',
+        label: 'Дата / Date',
+        name: 'date',
+        type: 'date',
+        required: true,
+      },
+      {
+        tag: 'input',
+        label: 'Час / Time',
+        name: 'time',
+        type: 'time',
+        required: true,
+      },
+      {
+        tag: 'input',
+        label: 'Координати / Coordinates',
+        name: 'coordinates',
+        type: 'text',
+        placeholder: '49.04761451133044, 31.387372519412626',
+        title:
+          'Координати мають бути у такому форматі: "-12.3456789, +112.3456789", "45.123456, 87.654321", "0.0, 0.0" (можна скористатися онлайн картами, наприклад "Google Maps")',
+        pattern: regexPatterns.coordinates,
+        required: true,
+      },
+      {
+        tag: 'input',
+        label: 'URL-адреса події/ Event Url',
+        name: 'eventUrl',
+        type: 'url',
+        placeholder: 'https://example.com',
+        title: 'Введіть URL-адресу наприклад: https://example.com',
+        pattern: 'https://.*',
+        required: true,
+      },
+    ],
+
+    eventType: {
+      name: 'eventType',
+      type: 'text',
+      rows: '1',
+      placeholder: 'Введіть новий тип тут...',
+      required: true,
+    },
+    eventImage: {
+      name: 'eventImage',
+      type: 'file',
+      accept: 'image/*',
+    },
+  };
+
   return (
     <>
       <div className="mb-[30px] flex justify-center gap-[70px] text-[26px]">
@@ -231,149 +200,89 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         <p>Деталі події англійською</p>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="mx-auto mb-[30px] flex w-[650px] flex-wrap  gap-[15px] gap-x-[50px]"
-      >
-        {formInputs.map(({ label, element, isDouble, attributes }) => {
-          if (element === 'eventImage') {
+      <form onSubmit={handleSubmit} className="mx-auto mb-[30px] w-[650px]">
+        <div className="mb-[35px] flex flex-wrap gap-[15px] gap-x-[50px]">
+          {inputsAttributes.firstGroup.map(({ label, name, tag, ...attr }) => {
+            const commonProps = {
+              name: name,
+              tag: tag,
+              attributes: attr,
+            };
+
             return (
-              <div key={label + attributes.name}>
-                <span className="mb-[10px] block text-center text-[20px]">
-                  {label}
-                </span>
-                <div className="flex gap-[50px]">
-                  <ImageUpload
-                    errorMessage={errorMessageUk.eventImage}
-                    attributes={attributes}
-                    imageName={
-                      formDataUk.eventImage
-                        ? `${IMAGE_BASE_URL}${formDataUk.eventImage}`
-                        : ''
-                    }
-                    imageTitle={
-                      formDataUk.eventTitle ? formDataUk.eventTitle : ''
-                    }
-                    handleImageChange={setFormDataImageUk}
-                    formDataImage={formDataImageUk}
-                  />
-                  <ImageUpload
-                    errorMessage={errorMessageEn.eventImage}
-                    attributes={attributes}
-                    imageName={
-                      formDataEn.eventImage
-                        ? `${IMAGE_BASE_URL}${formDataEn.eventImage}`
-                        : ''
-                    }
-                    imageTitle={
-                      formDataEn.eventTitle ? formDataEn.eventTitle : ''
-                    }
-                    handleImageChange={setFormDataImageEn}
-                    formDataImage={formDataImageEn}
-                  />
-                </div>
-              </div>
-            );
-          }
-          if (element === 'eventType') {
-            return (
-              <div key={label + attributes.name}>
-                <span className="mb-[10px] block text-center text-[20px]">
-                  {label}
-                </span>
-                <div className="flex gap-[50px]">
-                  <AddEventType
-                    initialState={
-                      formDataUk.eventType ? formDataUk.eventType : ''
-                    }
-                    errorMessage={errorMessageUk.eventType}
-                    setEventTypesSelected={setFormDataEventTypeUk}
-                    locale={LOCALE.uk.forRequest}
-                    eventTypesSelected={formDataEventTypeUk}
-                    attributes={attributes}
-                  />
-                  <AddEventType
-                    errorMessage={errorMessageEn.eventType}
-                    attributes={attributes}
-                    initialState={
-                      formDataEn.eventType ? formDataEn.eventType : ''
-                    }
-                    setEventTypesSelected={setFormDataEventTypeEn}
-                    locale={LOCALE.en.forRequest}
-                    eventTypesSelected={formDataEventTypeEn}
-                  />
-                </div>
-              </div>
-            );
-          }
-          if (element === 'textarea') {
-            return (
-              <div key={label + attributes.name}>
-                <span className="mb-[10px] block text-center text-[20px]">
-                  {label}
-                </span>
-                <div className="flex gap-[50px]">
-                  <textarea
-                    {...attributes}
-                    className={`w-[300px] resize-none ${inputClassNames}`}
-                    onChange={handleChangeUk}
-                    value={formDataUk[attributes.name]}
-                  ></textarea>
-                  <textarea
-                    {...attributes}
-                    className={`w-[300px] resize-none ${inputClassNames}`}
-                    onChange={handleChangeEn}
-                    value={formDataEn[attributes.name]}
-                  ></textarea>
-                </div>
-              </div>
-            );
-          }
-          if (isDouble) {
-            return (
-              <div className="" key={label + attributes.name}>
-                <span className="mb-[10px] block text-center text-[20px]">
-                  {label}
-                </span>
-                <div className="flex gap-[50px]">
-                  <input
-                    {...attributes}
-                    className={`w-[300px] ${inputClassNames}`}
-                    value={formDataUk[attributes.name]}
-                    onChange={handleChangeUk}
-                  />
-                  <input
-                    {...attributes}
-                    className={`w-[300px] ${inputClassNames}`}
-                    value={formDataEn[attributes.name]}
-                    onChange={handleChangeEn}
-                  />
-                </div>
-              </div>
-            );
-          }
-          if (!isDouble) {
-            return (
-              <div className="w-[300px]" key={label + attributes.name}>
-                <span className="mb-[10px] block text-center text-[20px]">
-                  {label}
-                </span>
-                <input
-                  {...attributes}
-                  className={`min-w-[300px] ${inputClassNames}`}
-                  value={formDataUk[attributes.name]}
-                  onChange={e => {
-                    handleChangeEn(e);
-                    handleChangeUk(e);
-                  }}
+              <FieldWrapper label={label} key={label}>
+                <FormElement
+                  value={formDataUk[name]}
+                  handleChange={handleChangeUk}
+                  {...commonProps}
                 />
-              </div>
+                <FormElement
+                  value={formDataEn[name]}
+                  handleChange={handleChangeEn}
+                  {...commonProps}
+                />
+              </FieldWrapper>
             );
-          }
-        })}
+          })}
+
+          <FieldWrapper label={'Тип події / Event type'}>
+            <AddEventType
+              attributes={inputsAttributes.eventType}
+              initialState={formDataUk.eventType || ''}
+              errorMessage={errorMessageUk.eventType}
+              setEventTypesSelected={setFormDataEventTypeUk}
+              eventTypesSelected={formDataEventTypeUk}
+              locale={LOCALE.uk.forRequest}
+            />
+            <AddEventType
+              attributes={inputsAttributes.eventType}
+              errorMessage={errorMessageEn.eventType}
+              initialState={formDataEn.eventType || ''}
+              setEventTypesSelected={setFormDataEventTypeEn}
+              eventTypesSelected={formDataEventTypeEn}
+              locale={LOCALE.en.forRequest}
+            />
+          </FieldWrapper>
+          <FieldWrapper label={'Зображення події / Event image'}>
+            <ImageUpload
+              attributes={inputsAttributes.eventImage}
+              errorMessage={errorMessageUk.eventImage}
+              imageName={formDataUk.eventImage || ''}
+              imageTitle={formDataUk.eventTitle || ''}
+              handleImageChange={setFormDataImageUk}
+              formDataImage={formDataImageUk}
+            />
+            <ImageUpload
+              attributes={inputsAttributes.eventImage}
+              errorMessage={errorMessageEn.eventImage}
+              imageName={formDataEn.eventImage || ''}
+              imageTitle={formDataEn.eventTitle || ''}
+              handleImageChange={setFormDataImageEn}
+              formDataImage={formDataImageEn}
+            />
+          </FieldWrapper>
+          {inputsAttributes.secondGroup.map(({ label, name, tag, ...attr }) => (
+            <FieldWrapper label={label} key={label}>
+              <FormElement
+                value={formDataUk[name]}
+                name={name}
+                tag={tag}
+                handleChange={e => {
+                  handleChangeEn(e);
+                  handleChangeUk(e);
+                }}
+                attributes={attr}
+              />
+            </FieldWrapper>
+          ))}
+        </div>
+
         <button
           type="submit"
-          className="mx-auto my-0 block rounded-[10px] bg-primary/80 px-[40px] py-[10px]"
+          className="mx-auto my-0 block cursor-pointer rounded-[10px] bg-primary/100 
+           px-[40px] py-[10px]  
+          text-center text-[16px]  text-gray/5 transition-colors 
+    hover:bg-primary/80"
         >
           {buttonName}
         </button>
@@ -382,3 +291,25 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
   );
 };
 export default EventForm;
+
+const FieldWrapper = ({ children, label }) => {
+  return (
+    <div>
+      <h3 className="mb-[10px] text-center text-[20px]">{label}</h3>
+      <div className="flex gap-[50px]">{children}</div>
+    </div>
+  );
+};
+
+const FormElement = ({ handleChange, value, name, attributes, tag }) => {
+  const Tag = tag === 'input' ? 'input' : 'textarea';
+  return (
+    <Tag
+      className="w-[300px] resize-none rounded-[5px] border-[1px] border-gray/50 bg-gray/0 px-[16px] py-[8px] dark:border-gray/20 dark:bg-gray/80"
+      {...attributes}
+      value={value}
+      name={name}
+      onChange={handleChange}
+    />
+  );
+};

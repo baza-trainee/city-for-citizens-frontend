@@ -3,6 +3,7 @@ import ImageComponent from './ImageComponent';
 import NoImageComponent from './NoImageComponent';
 import UploadInputComponent from './UploadInputComponent';
 import ErrorMessage from '../ErrorMessage';
+import { IMAGE_BASE_URL } from '@/helpers/constants';
 
 const ImageUpload = ({
   handleImageChange,
@@ -10,7 +11,7 @@ const ImageUpload = ({
   imageTitle,
   attributes,
   errorMessage,
-  formDataImage
+  formDataImage,
 }) => {
   const [imageForPreview, setImageForPreview] = useState(null);
   const [imageData, setImageData] = useState({
@@ -20,15 +21,13 @@ const ImageUpload = ({
 
   const inputFileRef = useRef(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!formDataImage) {
-      resetImage()
+      resetImage();
     }
-
-  },[formDataImage])
+  }, [formDataImage]);
 
   useEffect(() => {
-   
     setImageData({ src: imageName, alt: imageTitle });
   }, [imageName, imageTitle]);
 
@@ -48,12 +47,12 @@ const ImageUpload = ({
   };
 
   return (
-    <div className="flex w-full max-w-[300px] flex-col gap-[20px] rounded-[15px] border-[1px] border-gray/10 bg-gray/0 p-[20px] dark:border-gray/30 dark:bg-gray/80">
+    <div className="flex w-full max-w-[300px] flex-col gap-[20px] rounded-[15px] border-[1px] border-gray/50 bg-gray/0 p-[20px] dark:border-gray/20 dark:bg-gray/80">
       {imageForPreview || imageData.src ? (
         <ImageComponent
           resetImage={resetImage}
-          src={imageData.src ? imageData.src : imageForPreview}
-          alt={imageData.alt ? imageData.alt : ''}
+          src={imageForPreview || `${IMAGE_BASE_URL}${imageData.src}`}
+          alt={imageData.alt || ''}
         />
       ) : (
         <NoImageComponent />

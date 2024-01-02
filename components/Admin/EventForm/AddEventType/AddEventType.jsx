@@ -113,7 +113,7 @@ const AddEventType = ({
   return (
     <div
       ref={wrapperRef}
-      className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px]  border-[1px] border-gray/10  bg-gray/0 p-[8px] dark:border-gray/30 dark:bg-gray/80"
+      className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px]  border-[1px] border-gray/50  bg-gray/0 p-[8px] dark:border-gray/20 dark:bg-gray/80"
     >
       <div className="relative h-[40px] w-full">
         {isErrorMessageVisible &&
