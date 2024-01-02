@@ -19,7 +19,6 @@ import BasicModalWindows from './ModalWindow/BasicModalWindows';
 import Loader from '../UI/Loader';
 
 const AddEvent = () => {
-  const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
@@ -42,7 +41,6 @@ const AddEvent = () => {
     let requestUk;
     let requestEn;
     try {
-      setIsError(null);
       setIsLoading(true);
       setStatusMessage('');
       setIsStatusMessageVisible(false);
@@ -69,7 +67,6 @@ const AddEvent = () => {
       setIsStatusMessageVisible(true);
       resetForm();
     } catch (error) {
-      setIsError(error);
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);
       if (responseUk?.id) {

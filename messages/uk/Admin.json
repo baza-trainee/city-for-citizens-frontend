@@ -16,18 +16,6 @@
       }
     },
 
-    "eventForm": {
-      "inputImage": {
-        "buttonName": {
-          "isImage": "Замінити зображення",
-          "noImage": "Завантажити зображення"
-        },
-        "titleNoImage": "Завантажте зображення",
-        "format": "формату PNG, JPG, GIF",
-        "size": "розміром до 10 МБ"
-      }
-    },
-    
     "loginForm": "",
     "registerForm": "",
     "eventList": { "title": "Список подій" }

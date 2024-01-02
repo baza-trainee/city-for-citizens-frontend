@@ -34,7 +34,7 @@ function ChooseCity({ filtersEventCities }) {
     setDisplayedCities(filtersEventCities);
   }
 
-  function handleFocus(e) {
+  function handleFocus() {
     if (inputValue && !isInputValueIncludesCityFrom(filtersEventCities)) {
       setDisplayedCities(selectedCities);
     } else {
@@ -64,8 +64,7 @@ function ChooseCity({ filtersEventCities }) {
     }
   }
 
-  function handleMouseOver(e) {
-    const inputEl = e.target;
+  function handleMouseOver() {
     setIsListVisible(true);
     if (inputValue) {
       const filteredCities = filteredCityByInputValue();
@@ -93,7 +92,7 @@ function ChooseCity({ filtersEventCities }) {
     }
   }
 
-  function handleOnclick(e) {
+  function handleOnclick() {
     if (
       isInputValueIncludesCityFrom(filtersEventCities) ||
       filteredCityByInputValue(inputValue).length === 0

@@ -19,7 +19,6 @@ const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
   const [eventEn, setEventEn] = useState(null);
 
-  const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
@@ -66,7 +65,6 @@ const UpdateEventForm = ({ eventId }) => {
     let requestUk;
     let requestEn;
 
-    setIsError(null);
     setIsLoading(true);
     setStatusMessage('');
     setIsStatusMessageVisible(false);
@@ -93,7 +91,6 @@ const UpdateEventForm = ({ eventId }) => {
         await updateEvent(requestUk, eventUk.id);
       }
     } catch (error) {
-      setIsError(error);
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);
       if (requestUk?.eventImage) {
@@ -131,7 +128,6 @@ const UpdateEventForm = ({ eventId }) => {
       setStatusMessage('Подію успішно оновлено.');
       setIsStatusMessageVisible(true);
     } catch (error) {
-      setIsError(error);
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);
       if (requestEn?.eventImage) {

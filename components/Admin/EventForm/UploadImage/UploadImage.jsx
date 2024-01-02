@@ -12,6 +12,7 @@ const ImageUpload = ({
   attributes,
   errorMessage,
   formDataImage,
+  lang,
 }) => {
   const [imageForPreview, setImageForPreview] = useState(null);
   const [imageData, setImageData] = useState({
@@ -55,7 +56,7 @@ const ImageUpload = ({
           alt={imageData.alt || ''}
         />
       ) : (
-        <NoImageComponent />
+        <NoImageComponent lang={lang} />
       )}
 
       <div className="relative">

@@ -6,6 +6,7 @@ import { getFilters } from '@/services/getFilters';
 import { useEffect, useRef, useState } from 'react';
 import TypeList from './TypeList';
 import ErrorMessage from '../ErrorMessage';
+import { useTranslations } from 'next-intl';
 
 const useOnClickOutside = (ref, handler) => {
   useEffect(() => {
@@ -31,6 +32,7 @@ const AddEventType = ({
   setEventTypesSelected,
   attributes,
   errorMessage,
+  eventTypePlaceholder,
 }) => {
   const [isTypeListVisible, setIsTypeListVisible] = useState(false);
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
@@ -40,6 +42,8 @@ const AddEventType = ({
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const t = useTranslations('EventForm.eventType.listTitle');
 
   useEffect(() => {
     if (initialState) {
@@ -123,6 +127,7 @@ const AddEventType = ({
         ) : null}
         <textarea
           {...attributes}
+          placeholder={eventTypePlaceholder}
           onKeyDown={handleEnterKey}
           className="w-full resize-none rounded-[5px] border-[1px] border-gray/10 bg-gray/5 p-[8px] dark:border-gray/50  dark:bg-gray/80"
           onChange={e => setInputText(e.target.value)}
@@ -158,9 +163,7 @@ const AddEventType = ({
         ref={buttonRef}
       >
         <p>
-          {eventTypesSelected.length === 0
-            ? 'Або виберіть із списку'
-            : 'Виберіть із списку'}
+          {eventTypesSelected.length === 0 ? t('listEmpty') : t('noListEmpty')}
         </p>
         <IconSelectArrow
           width={24}

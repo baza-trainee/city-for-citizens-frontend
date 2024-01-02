@@ -7,6 +7,7 @@ import { useHandleFormData } from '@/hooks';
 import { useState } from 'react';
 import AddEventType from './AddEventType/AddEventType';
 import { errorMessage, regexPatterns } from './constants';
+import { useTranslations } from 'next-intl';
 
 const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
   const [formDataUk, handleChangeUk, resetFormUk] = useHandleFormData(
@@ -90,90 +91,91 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn, resetForm);
   };
 
+  const t = useTranslations('EventForm');
+
   const inputsAttributes = {
     firstGroup: [
       {
         tag: 'input',
-        label: 'Назва Події / Event name',
+        label: t('eventTitle.title'),
         name: 'eventTitle',
         type: 'text',
-        placeholder: 'Введіть назву',
-        title: 'Назва події не може бути меншим за 3 символа',
+        placeholder: t('eventTitle.placeholder'),
+        title: t('eventTitle.infoMessage'),
         pattern: '.{3,}',
         required: true,
       },
       {
         tag: 'input',
-        label: 'Місто / City',
+        label: t('city.title'),
         name: 'city',
         type: 'text',
-        placeholder: 'Вкажіть місто',
-        title: 'Місто не може бути меншим за 2 символа',
+        placeholder: t('city.placeholder'),
+        title: t('city.infoMessage'),
         pattern: '.{2,}',
         required: true,
       },
       {
         tag: 'input',
-        label: 'Вулиця / Street',
+        label: t('street.title'),
         name: 'street',
         type: 'text',
-        placeholder: 'Вкажіть вулицю',
-        title: 'Вулиця не може бути меншим за 2 символа',
+        placeholder: t('street.placeholder'),
+        title: t('street.infoMessage'),
         pattern: '.{2,}',
         required: true,
       },
       {
         tag: 'textarea',
-        label: 'Опис / Description',
+        label: t('description.title'),
         name: 'description',
         type: 'text',
         rows: '5',
-        placeholder: 'Додайте опис',
+        placeholder: t('description.placeholder'),
         required: true,
       },
       {
         tag: 'textarea',
-        label: 'Примітки / Notes',
+        label: t('notes.title'),
         name: 'notes',
         type: 'text',
         rows: '3',
-        placeholder: 'Опишіть детально про місце',
+        placeholder: t('notes.placeholder'),
         required: true,
       },
     ],
     secondGroup: [
       {
         tag: 'input',
-        label: 'Дата / Date',
+        label: t('date.title'),
         name: 'date',
         type: 'date',
         required: true,
       },
       {
         tag: 'input',
-        label: 'Час / Time',
+        label: t('time.title'),
         name: 'time',
         type: 'time',
         required: true,
       },
       {
         tag: 'input',
-        label: 'Координати / Coordinates',
+        label: t('coordinates.title'),
         name: 'coordinates',
         type: 'text',
-        placeholder: '49.04761451133044, 31.387372519412626',
-        title:
-          'Координати мають бути у такому форматі: "-12.3456789, +112.3456789", "45.123456, 87.654321", "0.0, 0.0" (можна скористатися онлайн картами, наприклад "Google Maps")',
+        placeholder: '49.0476145113, 31.38737251941',
+        title: t('coordinates.infoMessage'),
         pattern: regexPatterns.coordinates,
         required: true,
       },
       {
         tag: 'input',
-        label: 'URL-адреса події/ Event Url',
+        label: t('eventUrl.title'),
         name: 'eventUrl',
         type: 'url',
         placeholder: 'https://example.com',
-        title: 'Введіть URL-адресу наприклад: https://example.com',
+        title: t('eventUrl.infoMessage'),
         pattern: 'https://.*',
         required: true,
       },
@@ -183,9 +185,9 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
       name: 'eventType',
       type: 'text',
       rows: '1',
-      placeholder: 'Введіть новий тип тут...',
       required: true,
     },
+    eventTypePlaceholder: t('eventType.placeholder'),
     eventImage: {
       name: 'eventImage',
       type: 'file',
@@ -195,37 +197,36 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
 
   return (
     <>
-      <div className="mb-[30px] flex justify-center gap-[70px] text-[26px]">
-        <p>Деталі події українською</p>
-        <p>Деталі події англійською</p>
-      </div>
+      <form onSubmit={handleSubmit} className="mx-auto mb-[30px] max-w-[650px]">
+        <div className="mx-auto mb-[35px] flex flex-wrap items-center justify-center gap-[15px] gap-x-[50px]">
+          {inputsAttributes.firstGroup.map(
+            ({ label, placeholder, name, tag, ...attr }) => {
+              const commonProps = {
+                name: name,
+                tag: tag,
+                attributes: attr,
+              };
 
-      <form onSubmit={handleSubmit} className="mx-auto mb-[30px] w-[650px]">
-        <div className="mb-[35px] flex flex-wrap gap-[15px] gap-x-[50px]">
-          {inputsAttributes.firstGroup.map(({ label, name, tag, ...attr }) => {
-            const commonProps = {
-              name: name,
-              tag: tag,
-              attributes: attr,
-            };
+              return (
+                <FieldWrapper label={label} key={label}>
+                  <FormElement
+                    value={formDataUk[name]}
+                    handleChange={handleChangeUk}
+                    placeholder={`${placeholder} ${t('language.uk')}`}
+                    {...commonProps}
+                  />
+                  <FormElement
+                    value={formDataEn[name]}
+                    handleChange={handleChangeEn}
+                    placeholder={`${placeholder} ${t('language.en')}`}
+                    {...commonProps}
+                  />
+                </FieldWrapper>
+              );
+            }
+          )}
 
-            return (
-              <FieldWrapper label={label} key={label}>
-                <FormElement
-                  value={formDataUk[name]}
-                  handleChange={handleChangeUk}
-                  {...commonProps}
-                />
-                <FormElement
-                  value={formDataEn[name]}
-                  handleChange={handleChangeEn}
-                  {...commonProps}
-                />
-              </FieldWrapper>
-            );
-          })}
-
-          <FieldWrapper label={'Тип події / Event type'}>
+          <FieldWrapper label={t('eventType.title')}>
             <AddEventType
               attributes={inputsAttributes.eventType}
               initialState={formDataUk.eventType || ''}
@@ -233,6 +234,9 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
               setEventTypesSelected={setFormDataEventTypeUk}
               eventTypesSelected={formDataEventTypeUk}
               locale={LOCALE.uk.forRequest}
+              eventTypePlaceholder={` ${
+                inputsAttributes.eventTypePlaceholder
+              } ${t('language.uk')}`}
             />
             <AddEventType
               attributes={inputsAttributes.eventType}
@@ -241,9 +245,12 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
               setEventTypesSelected={setFormDataEventTypeEn}
               eventTypesSelected={formDataEventTypeEn}
               locale={LOCALE.en.forRequest}
+              eventTypePlaceholder={` ${
+                inputsAttributes.eventTypePlaceholder
+              } ${t('language.en')}`}
             />
           </FieldWrapper>
-          <FieldWrapper label={'Зображення події / Event image'}>
+          <FieldWrapper label={t('inputImage.title')}>
             <ImageUpload
               attributes={inputsAttributes.eventImage}
               errorMessage={errorMessageUk.eventImage}
@@ -251,6 +258,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
               imageTitle={formDataUk.eventTitle || ''}
               handleImageChange={setFormDataImageUk}
               formDataImage={formDataImageUk}
+              lang={t('language.uk')}
             />
             <ImageUpload
               attributes={inputsAttributes.eventImage}
@@ -259,22 +267,26 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
               imageTitle={formDataEn.eventTitle || ''}
               handleImageChange={setFormDataImageEn}
               formDataImage={formDataImageEn}
+              lang={t('language.en')}
             />
           </FieldWrapper>
-          {inputsAttributes.secondGroup.map(({ label, name, tag, ...attr }) => (
-            <FieldWrapper label={label} key={label}>
-              <FormElement
-                value={formDataUk[name]}
-                name={name}
-                tag={tag}
-                handleChange={e => {
-                  handleChangeEn(e);
-                  handleChangeUk(e);
-                }}
-                attributes={attr}
-              />
-            </FieldWrapper>
-          ))}
+          {inputsAttributes.secondGroup.map(
+            ({ label, placeholder, name, tag, ...attr }) => (
+              <FieldWrapper label={label} key={label}>
+                <FormElement
+                  value={formDataUk[name]}
+                  name={name}
+                  tag={tag}
+                  placeholder={placeholder}
+                  handleChange={e => {
+                    handleChangeEn(e);
+                    handleChangeUk(e);
+                  }}
+                  attributes={attr}
+                />
+              </FieldWrapper>
+            )
+          )}
         </div>
 
         <button
@@ -294,21 +306,31 @@ export default EventForm;
 
 const FieldWrapper = ({ children, label }) => {
   return (
-    <div>
+    <div className="">
       <h3 className="mb-[10px] text-center text-[20px]">{label}</h3>
-      <div className="flex gap-[50px]">{children}</div>
+      <div className="flex flex-col gap-[10px] tablet:flex-row tablet:gap-[50px]">
+        {children}
+      </div>
     </div>
   );
 };
 
-const FormElement = ({ handleChange, value, name, attributes, tag }) => {
+const FormElement = ({
+  handleChange,
+  value,
+  placeholder,
+  name,
+  attributes,
+  tag,
+}) => {
   const Tag = tag === 'input' ? 'input' : 'textarea';
   return (
     <Tag
-      className="w-[300px] resize-none rounded-[5px] border-[1px] border-gray/50 bg-gray/0 px-[16px] py-[8px] dark:border-gray/20 dark:bg-gray/80"
+      className="w-[300px] max-w-[300px] resize-none rounded-[5px] border-[1px] border-gray/50 bg-gray/0 px-[16px] py-[8px] dark:border-gray/20 dark:bg-gray/80"
       {...attributes}
       value={value}
       name={name}
+      placeholder={placeholder}
       onChange={handleChange}
     />
   );

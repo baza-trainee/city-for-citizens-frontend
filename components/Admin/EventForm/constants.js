@@ -3,8 +3,9 @@ const coordinates =
 
 const eventType = (
   <span>
-    Натисніть на кнопку "Додати
-    <span className="relative top-[4px] text-[28px] leading-[0]"> ⊕</span>".
+    Натисніть на кнопку &quot;Додати
+    <span className="relative top-[4px] text-[28px] leading-[0]"> ⊕</span>
+    &quot;.
   </span>
 );
 

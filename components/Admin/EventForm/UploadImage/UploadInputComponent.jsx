@@ -6,7 +6,7 @@ const UploadInputComponent = ({
   inputFileRef,
   attributes,
 }) => {
-  const t = useTranslations('Admin.eventForm.inputImage.buttonName');
+  const t = useTranslations('EventForm.inputImage.buttonName');
   return (
     <label
       className="block cursor-pointer

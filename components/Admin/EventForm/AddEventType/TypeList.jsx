@@ -2,7 +2,7 @@ import IconCheckbox from '@/components/UI/icons/IconCheckbox';
 
 const TypeList = ({ eventTypesList, toggleEventType, eventTypesSelected }) => {
   return (
-    <div className="absolute left-0 top-[calc(100%+5px)] z-10 w-full rounded-[5px] border-[1px] border-gray/10 bg-gray/0 p-[6px] px-[16px] py-[8px] dark:border-gray/30  dark:bg-gray/80">
+    <div className="absolute left-0 top-[calc(100%+5px)] z-10 w-full rounded-[5px] border-[1px] border-gray/50 bg-gray/0 p-[6px] px-[16px] py-[8px] dark:border-gray/20  dark:bg-gray/80">
       <ul className="flex flex-col gap-[5px] ">
         {eventTypesList.map(type => {
           return (
