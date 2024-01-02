@@ -1,0 +1,23 @@
+{
+  "Admin": {
+    "addEvent": {
+      "title": "Add event",
+      "buttonName": {
+        "add": "Add event",
+        "cancel": "Cancel"
+      }
+    },
+
+    "updateEvent": {
+      "title": "Update event",
+      "buttonName": {
+        "update": "Update event",
+        "cancel": "Cancel"
+      }
+    },
+
+    "loginForm": "",
+    "registerForm": "",
+    "eventList": { "title": "Event list" }
+  }
+}

@@ -64,7 +64,7 @@ const FilterInputWrapper = ({
       isVisible
     )}  tablet:max-w-[212px] `,
     icon: `w-[24px] h-[24px] cursor-pointer transition-all ${setColor(
-      'stroke',
+      'text',
       inputTextDefault,
       isVisible
     )} `,

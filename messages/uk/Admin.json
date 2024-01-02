@@ -1,0 +1,23 @@
+{
+  "Admin": {
+    "addEvent": {
+      "title": "Додати подію",
+      "buttonName": {
+        "add": "Додати подію",
+        "cancel": "Відмінити"
+      }
+    },
+
+    "updateEvent": {
+      "title": "Редагувати подію",
+      "buttonName": {
+        "update": "Редагувати подію",
+        "cancel": "Відмінити"
+      }
+    },
+
+    "loginForm": "",
+    "registerForm": "",
+    "eventList": { "title": "Список подій" }
+  }
+}

@@ -188,10 +188,10 @@ const EventList = () => {
           <div className="flex items-center gap-2" data-eventname>
             <span className="">Назва</span>
             <SortedControl
-              handleClickSortZA={e =>
+              handleClickSortZA={() =>
                 handleClickSort('eventTitle', 'za', 'name')
               }
-              handleClickSortAZ={e =>
+              handleClickSortAZ={() =>
                 handleClickSort('eventTitle', 'az', 'name')
               }
               direction={
@@ -204,10 +204,10 @@ const EventList = () => {
           <div className="flex items-center gap-2" data-eventcity>
             <span className="">Місто</span>
             <SortedControl
-              handleClickSortZA={e =>
+              handleClickSortZA={() =>
                 handleClickSort('eventAddress.city', 'za', 'city')
               }
-              handleClickSortAZ={e =>
+              handleClickSortAZ={() =>
                 handleClickSort('eventAddress.city', 'az', 'city')
               }
               direction={
@@ -220,8 +220,12 @@ const EventList = () => {
           <div className="flex items-center gap-2" data-eventdate>
             <span className="">Дата</span>
             <SortedControl
-              handleClickSortZA={e => handleClickSort('dateTime', 'za', 'date')}
-              handleClickSortAZ={e => handleClickSort('dateTime', 'az', 'date')}
+              handleClickSortZA={() =>
+                handleClickSort('dateTime', 'za', 'date')
+              }
+              handleClickSortAZ={() =>
+                handleClickSort('dateTime', 'az', 'date')
+              }
               direction={
                 statusEventSorted.sort === 'date'
                   ? statusEventSorted.direction

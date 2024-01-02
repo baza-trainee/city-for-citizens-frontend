@@ -10,5 +10,7 @@ export default getRequestConfig(async ({ locale }) => ({
     ...(await import(`./messages/${locale}/Metadata.json`)).default,
     ...(await import(`./messages/${locale}/ModalCookies.json`)).default,
     ...(await import(`./messages/${locale}/EventCard.json`)).default,
+    ...(await import(`./messages/${locale}/Admin.json`)).default,
+    ...(await import(`./messages/${locale}/EventForm.json`)).default,
   },
 }));

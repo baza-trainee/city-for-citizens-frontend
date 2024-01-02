@@ -2,7 +2,7 @@ import { formatDateSeparatorDash, formatDateToTime } from '@/helpers';
 import { useEffect, useState } from 'react';
 
 export function useHandleFormData(locale, eventData) {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     locale,
     eventTitle: '',
     description: '',
@@ -15,7 +15,9 @@ export function useHandleFormData(locale, eventData) {
     date: '',
     time: '',
     coordinates: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   useEffect(() => {
     if (eventData) {
       const {
@@ -45,6 +47,10 @@ export function useHandleFormData(locale, eventData) {
     }
   }, [eventData]);
 
+  const resetForm = () => {
+    setFormData(initialFormData);
+  };
+
   const handleChangeFormData = e => {
     const { name, value } = e.target;
 
@@ -54,5 +60,5 @@ export function useHandleFormData(locale, eventData) {
     }));
   };
 
-  return [formData, handleChangeFormData];
+  return [formData, handleChangeFormData, resetForm];
 }

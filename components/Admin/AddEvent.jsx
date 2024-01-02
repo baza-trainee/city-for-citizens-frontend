@@ -11,16 +11,27 @@ import {
   deleteEvent,
   deleteEventImage,
 } from '@/services/eventAPI';
-import EventForm from './EventForm';
+import EventForm from './EventForm/EventForm';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+
+import BasicModalWindows from './ModalWindow/BasicModalWindows';
+import Loader from '../UI/Loader';
 
 const AddEvent = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
+
+  const t = useTranslations('Admin.addEvent');
   const handleSubmit = async (
     e,
     formDataUk,
     formDataEn,
 
     formDataImageUk,
-    formDataImageEn
+    formDataImageEn,
+    resetForm
   ) => {
     e.preventDefault();
     const idIdentifier = uuidv4();
@@ -30,6 +41,9 @@ const AddEvent = () => {
     let requestUk;
     let requestEn;
     try {
+      setIsLoading(true);
+      setStatusMessage('');
+      setIsStatusMessageVisible(false);
       const imageNameForRequestUk = await createEventImage(formDataImageUk);
 
       const imageNameForRequestEn = await createEventImage(formDataImageEn);
@@ -49,7 +63,12 @@ const AddEvent = () => {
 
       responseUk = await createEvent(requestUk);
       responseEn = await createEvent(requestEn);
+      setStatusMessage('Подію успішно додано.');
+      setIsStatusMessageVisible(true);
+      resetForm();
     } catch (error) {
+      setStatusMessage(`Сталася помилка: ${error.message}`);
+      setIsStatusMessageVisible(true);
       if (responseUk?.id) {
         deleteEvent(responseUk?.id);
       } else if (requestUk?.eventImage) {
@@ -61,14 +80,31 @@ const AddEvent = () => {
       } else if (requestEn?.eventImage) {
         deleteEventImage({ eventImage: requestEn?.eventImage });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="container">
-      <h1 className=" mb-[30px] text-center text-[34px]">Add event</h1>
-      <EventForm onSubmit={handleSubmit} buttonName={'Add event'} />
-    </div>
+    <>
+      <div className="container">
+        <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
+        <EventForm onSubmit={handleSubmit} buttonName={t('buttonName.add')} />
+      </div>
+
+      {isLoading && (
+        <div className="fixed flex h-full w-full items-center justify-center bg-primary/0/20">
+          <Loader />
+        </div>
+      )}
+
+      {isStatusMessageVisible && statusMessage && (
+        <BasicModalWindows
+          onClose={() => setIsStatusMessageVisible(false)}
+          message={statusMessage}
+        />
+      )}
+    </>
   );
 };
 
