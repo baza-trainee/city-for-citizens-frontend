@@ -71,7 +71,7 @@ const RegisterForm = () => {
           value={password}
           onChange={handleChange}
           name="password"
-          type="text"
+          type="password"
         />
 
         {error && <p>{error}</p>}

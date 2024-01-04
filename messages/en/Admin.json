@@ -7,7 +7,6 @@
         "cancel": "Cancel"
       }
     },
-
     "updateEvent": {
       "title": "Update event",
       "buttonName": {
@@ -15,9 +14,20 @@
         "cancel": "Cancel"
       }
     },
-
-    "loginForm": "",
+    "loginForm": {
+      "email": "Email",
+      "pswd": "Password",
+      "buttonName": "Login",
+      "placeholderEmail": "Enter email",
+      "placeholderPswd": "Enter password",
+      "link": "Forgot your password?",
+      "error": "Email or password is invalid",
+      "errorEmail": "Invalid email address",
+      "errorPswd": "Password should be at least 8 digits long"
+    },
     "registerForm": "",
-    "eventList": { "title": "Event list" }
+    "eventList": {
+      "title": "Event list"
+    }
   }
 }

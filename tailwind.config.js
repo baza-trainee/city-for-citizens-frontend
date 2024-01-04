@@ -23,6 +23,7 @@ module.exports = {
       'gray/10': '#DFE5EC',
       'gray/5': '#F6F6F6',
       'gray/0': '#FCFCFC',
+      error: '#FF0000',
     },
     extend: {
       textColor: {
