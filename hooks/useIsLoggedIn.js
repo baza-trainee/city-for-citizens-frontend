@@ -6,6 +6,7 @@ export function useIsLoggedIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [isToken, setIsToken] = useState(false);
   const [error, setError] = useState(null);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -19,9 +20,12 @@ export function useIsLoggedIn() {
     const refreshToken = async () => {
       setIsLoading(true);
       try {
-        const { accessToken } = await refresh();
+        const data = await refresh();
+
+        const { accessToken, user } = data;
 
         if (accessToken) {
+          setUserData(user);
           localStorage.setItem('accessToken', accessToken);
           setIsLoggedIn(true);
         }
@@ -35,5 +39,5 @@ export function useIsLoggedIn() {
 
     refreshToken();
   }, []);
-  return { isLoggedIn, isToken, isLoading, error };
+  return { isLoggedIn, isToken, isLoading, error, userData };
 }

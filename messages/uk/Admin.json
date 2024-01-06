@@ -15,6 +15,22 @@
         "cancel": "Відмінити"
       }
     },
+    "navMenu": {
+      "nav": {
+        "addEvent": "Додати подію",
+        "allEvents": "Всі події"
+      },
+      "confirmationModal": {
+        "title": "Дійсно вийти?",
+        "buttons": {
+          "cancel": "Ні",
+          "ok": "Так"
+        }
+      },
+      "buttons": {
+        "logout": "Вийти"
+      }
+    },
 
     "loginForm": "",
     "registerForm": "",
