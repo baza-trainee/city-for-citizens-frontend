@@ -3,14 +3,11 @@ import { Link, useRouter } from '@/navigation';
 import { login } from '@/services/authAPI';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 import { publicRoute } from '@/components/publicRoute';
-
 import { NAVIGATION } from '@/helpers/constants';
-
+import { FORM_STYLES } from '@/helpers/constants';
 import Input from './Input';
 
 const LoginForm = () => {
@@ -18,12 +15,10 @@ const LoginForm = () => {
     email: '',
     password: '',
   });
-
   const [errors, setErrors] = useState({
     email: '',
     password: '',
   });
-
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -89,14 +84,12 @@ const LoginForm = () => {
   };
 
   const { email, password } = formData;
+  const { formContainer, formBtn } = FORM_STYLES;
 
   return (
     <div className="container">
       <h2 className="mb-3 text-center text-xl font-bold">{t('title')}</h2>
-      <form
-        onSubmit={handleSubmit}
-        className="mx-auto flex max-w-[394px] flex-col items-center gap-[30px] py-4"
-      >
+      <form onSubmit={handleSubmit} className={formContainer}>
         <Input
           label={t('email')}
           value={email}
@@ -133,18 +126,16 @@ const LoginForm = () => {
           </span>
         </div>
 
-        {error && <p className="text-error">{error}</p>}
+        {error && <p className="text-error font-bold tracking-wide">{error}</p>}
         <Link
           className="ml-2 underline underline-offset-2 hover:text-gray/30"
-          href="/register"
+          href="/password-reset/request"
         >
           <u>{t('link')}</u>
         </Link>
         <button
           disabled={!isFormValid}
-          className={`mx-auto my-0 block w-full rounded-lg p-2.5 px-[40px]
-           py-[10px] text-gray/0 dark:border-gray/5 
-            dark:text-gray/100  dark:hover:bg-gray/10
+          className={`${formBtn}
            ${
              !isFormValid || error
                ? 'cursor-not-allowed bg-gray/50 dark:bg-gray/20'

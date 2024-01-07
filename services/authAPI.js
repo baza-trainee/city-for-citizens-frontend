@@ -47,8 +47,12 @@ export const logout = async () => {
 //   return fetchData('/', 'POST');
 // };
 
-export const requestPasswordReset = async () => {
-  return fetchData('/', 'POST');
+export const requestPasswordReset = async credential => {
+  return fetchData({
+    url: '/passwordReset/request',
+    method: 'POST',
+    credential,
+  });
 };
 
 export const passwordReset = async () => {
