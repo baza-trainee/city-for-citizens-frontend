@@ -26,6 +26,13 @@
       "errorEmail": "Invalid email address",
       "errorPswd": "Password should be at least 8 digits long"
     },
+    "requestPswd": {
+      "title": "Please enter your email address to reset your password:",
+      "email": "Email",
+      "placeholderEmail": "Enter email",
+      "buttonName": "Reset password",
+      "error": "There is no user with that email"
+    },
     "navMenu": {
       "nav": {
         "addEvent": "Add event",
