@@ -26,6 +26,22 @@
       "errorEmail": "Invalid email address",
       "errorPswd": "Password should be at least 8 digits long"
     },
+    "navMenu": {
+      "nav": {
+        "addEvent": "Add event",
+        "allEvents": "All events"
+      },
+      "confirmationModal": {
+        "title": "Really exit?",
+        "buttons": {
+          "cancel": "No",
+          "ok": "Yes"
+        }
+      },
+      "buttons": {
+        "logout": "Logout"
+      }
+    },
     "registerForm": "",
     "eventList": {
       "title": "Event list"

@@ -26,6 +26,22 @@
       "errorEmail": "Введено невірну адресу ел. пошти",
       "errorPswd": "Пароль повинен містити щонайменше 8 символів"
     },
+    "navMenu": {
+      "nav": {
+        "addEvent": "Додати подію",
+        "allEvents": "Всі події"
+      },
+      "confirmationModal": {
+        "title": "Дійсно вийти?",
+        "buttons": {
+          "cancel": "Ні",
+          "ok": "Так"
+        }
+      },
+      "buttons": {
+        "logout": "Вийти"
+      }
+    },
     "registerForm": "",
     "eventList": {
       "title": "Список подій"

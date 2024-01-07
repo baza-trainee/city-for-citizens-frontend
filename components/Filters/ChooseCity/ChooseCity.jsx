@@ -2,6 +2,7 @@
 import { useQueryParam } from '../../../hooks';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
@@ -9,20 +10,82 @@ function ChooseCity({ filtersEventCities }) {
   const [isInputTyping, setIsInputTyping] = useState(false);
   const [displayedCities, setDisplayedCities] = useState([]);
   const [selectedCities, setSelectedCities] = useQueryParam('city');
+  const [validationMessage, setValidationMessage] = useState('');
+  const [inputDisable, setInputDisable] = useState(false);
 
   const t = useTranslations('Filters.ChooseCity');
+  const pathname = usePathname();
+  const locale = pathname.split('/')[1];
 
   useEffect(() => {
     setInputValue(selectedCities.join(', '));
   }, [selectedCities]);
 
+  useEffect(() => {
+    displayedCities.length === 0 && setValidationMessage('textIsEmpty');
+  }, [displayedCities]);
+
+  useEffect(() => {
+    if (isInputValueIncludesCityFrom(filtersEventCities)) {
+      setInputDisable(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue]);
+
   function handleInputChange(event) {
-    const value = event.target.value;
+    const value = event.target.value.trim();
     setInputValue(value);
-    setIsInputTyping(true);
-    const filteredCities = filteredCityByInputValue(value);
-    setDisplayedCities(filteredCities);
+
+    if (value) {
+      setValidationMessage('');
+      if (isInputValueValid(value)) {
+        setIsInputTyping(true);
+        const filteredCities = filteredCityByInputValue(value);
+        setDisplayedCities(filteredCities);
+      } else {
+        setValidationMessage(
+          isNeedSwitchKeyboardLayout(value) ? 'switchLayout' : 'noValid'
+        );
+      }
+    } else {
+      setValidationMessage('');
+      setDisplayedCities(filtersEventCities);
+    }
     setIsListVisible(true);
+  }
+
+  function isInputValueValid(value, currLocale = locale) {
+    switch (currLocale) {
+      case 'uk':
+        return [...value].every(char => ukrainanLayout(char));
+      case 'en':
+        return [...value].every(char => englishLayout(char));
+    }
+  }
+
+  function isNeedSwitchKeyboardLayout(value, currLocale = locale) {
+    switch (currLocale) {
+      case 'uk':
+        return [...value].some(char => englishLayout(char));
+      case 'en':
+        return [...value].some(char => ukrainanLayout(char));
+    }
+  }
+
+  function englishLayout(char) {
+    return (
+      (char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= 90) ||
+      (char.charCodeAt(0) >= 97 && char.charCodeAt(0) <= 122)
+    );
+  }
+
+  function ukrainanLayout(char) {
+    return (
+      (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1103) ||
+      char.charCodeAt(0) === 1108 ||
+      char.charCodeAt(0) === 1110 ||
+      char.charCodeAt(0) === 1111
+    );
   }
 
   function toggleCheck(city) {
@@ -45,6 +108,7 @@ function ChooseCity({ filtersEventCities }) {
   }
 
   function handleMouseLive() {
+    setValidationMessage('');
     setIsListVisible(false);
     if (
       inputValue &&
@@ -66,6 +130,7 @@ function ChooseCity({ filtersEventCities }) {
 
   function handleMouseOver() {
     setIsListVisible(true);
+    setInputDisable(false);
     if (inputValue) {
       const filteredCities = filteredCityByInputValue();
       switch (true) {
@@ -137,6 +202,7 @@ function ChooseCity({ filtersEventCities }) {
         onClick={handleOnclick}
         onMouseOver={handleMouseOver}
         onFocus={handleFocus}
+        disabled={inputDisable}
         autoComplete="off"
         className={`relative z-10 h-11 text-ellipsis rounded-[8px] border border-gray/20 bg-gray/5
         pl-2 text-gray/80 placeholder-gray/30 placeholder:w-[130px] focus:outline-none dark:bg-gray/100 dark:text-gray/10 dark:placeholder-gray/20
@@ -151,9 +217,9 @@ function ChooseCity({ filtersEventCities }) {
           className="custom-scroll dark:dark-scroll absolute top-[75px] z-10 max-h-[300px] w-full
        overflow-y-auto rounded-b-lg border border-gray/50  bg-gray/5 dark:border-gray/10 dark:bg-gray/100 dark:text-gray/10"
         >
-          {displayedCities.length === 0 ? (
+          {validationMessage ? (
             <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
-              {t('textIsEmpty')}
+              {t(validationMessage)}
             </p>
           ) : (
             displayedCities.map(city => (
