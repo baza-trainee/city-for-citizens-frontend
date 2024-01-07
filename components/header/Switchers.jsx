@@ -13,7 +13,7 @@ const Switchers = () => {
   const t = useTranslations('Header.Switchers');
 
   return (
-    <div className="flex w-full flex-col justify-between gap-[30px] pb-[80px]">
+    <div className="flex w-full flex-col justify-between gap-[30px] pb-[80px] desktop:pb-0">
       <div
         className="mt-[195px] flex w-full flex-col items-center max-desktop:gap-4 max-desktop:px-4 tablet:flex-row tablet:items-start tablet:justify-center
           desktop:mt-0 landscape:flex landscape:items-start landscape:justify-center  landscape:max-tablet:flex-row landscape:desktop:mt-0 landscape:desktop:gap-0"
