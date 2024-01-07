@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@maptiler/sdk": "^1.2.0",
+    "clsx": "^2.1.0",
     "date-fns": "^2.30.0",
     "eslint-plugin-prettier": "^5.1.0",
     "js-cookie": "^3.0.5",

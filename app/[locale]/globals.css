@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+button {
+  cursor: pointer;
+}
+
 .custom-scroll::-webkit-scrollbar {
   width: 5px;
 }
