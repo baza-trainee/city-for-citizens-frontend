@@ -19,7 +19,7 @@ const Footer = () => {
   const t = useTranslations('Footer');
 
   return (
-    <footer className="bg-gray/100 py-[20px] text-gray/5 dark:bg-gray/100 tablet:py-[72px]">
+    <footer className="bg-gray/100 py-[20px] text-gray/5 dark:bg-gray/100 tablet:py-[35px]">
       <div className="flex flex-col items-center gap-4 tracking-[-0.176px] tablet:gap-6">
         <Link className="tablet:text-[20px]" href={'/'}>
           Місто для містян
