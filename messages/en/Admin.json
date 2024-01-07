@@ -7,13 +7,24 @@
         "cancel": "Cancel"
       }
     },
-
     "updateEvent": {
       "title": "Update event",
       "buttonName": {
         "update": "Update event",
         "cancel": "Cancel"
       }
+    },
+    "loginForm": {
+      "title": "Log in",
+      "email": "Email",
+      "pswd": "Password",
+      "buttonName": "Login",
+      "placeholderEmail": "Enter email",
+      "placeholderPswd": "Enter password",
+      "link": "Forgot your password?",
+      "error": "Email or password is invalid",
+      "errorEmail": "Invalid email address",
+      "errorPswd": "Password should be at least 8 digits long"
     },
     "navMenu": {
       "nav": {
@@ -31,8 +42,9 @@
         "logout": "Logout"
       }
     },
-    "loginForm": "",
     "registerForm": "",
-    "eventList": { "title": "Event list" }
+    "eventList": {
+      "title": "Event list"
+    }
   }
 }

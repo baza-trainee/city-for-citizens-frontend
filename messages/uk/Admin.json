@@ -7,13 +7,24 @@
         "cancel": "Відмінити"
       }
     },
-
     "updateEvent": {
       "title": "Редагувати подію",
       "buttonName": {
         "update": "Редагувати подію",
         "cancel": "Відмінити"
       }
+    },
+    "loginForm": {
+      "title": "Вхід",
+      "email": "Ел. пошта",
+      "pswd": "Пароль",
+      "buttonName": "Увійти",
+      "placeholderEmail": "Введіть ел. пошту",
+      "placeholderPswd": "Введіть пароль",
+      "link": "Забули пароль?",
+      "error": "Введено невірний пароль або ел. пошта!",
+      "errorEmail": "Введено невірну адресу ел. пошти",
+      "errorPswd": "Пароль повинен містити щонайменше 8 символів"
     },
     "navMenu": {
       "nav": {
@@ -31,9 +42,9 @@
         "logout": "Вийти"
       }
     },
-
-    "loginForm": "",
     "registerForm": "",
-    "eventList": { "title": "Список подій" }
+    "eventList": {
+      "title": "Список подій"
+    }
   }
 }
