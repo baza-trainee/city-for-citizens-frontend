@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { publicRoute } from '../publicRoute';
+import { NAVIGATION } from '@/helpers/constants';
 
 const PasswordReset = ({ token }) => {
   const [newPassword, setNewPassword] = useState('');
