@@ -15,6 +15,7 @@
       }
     },
     "loginForm": {
+      "title": "Вхід",
       "email": "Ел. пошта",
       "pswd": "Пароль",
       "buttonName": "Увійти",

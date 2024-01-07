@@ -15,6 +15,7 @@
       }
     },
     "loginForm": {
+      "title": "Log in",
       "email": "Email",
       "pswd": "Password",
       "buttonName": "Login",

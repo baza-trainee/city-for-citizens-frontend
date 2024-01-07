@@ -6,18 +6,18 @@ const Input = ({
   type,
   placeholder,
   errors,
-  error,
   onBlur,
-  onFocus,
 }) => (
   <>
     <label className="w-full">
       <span>{label}</span>
       <input
-        className={`my-1 w-full text-ellipsis rounded-lg border  bg-gray/5 p-2.5 placeholder-gray/30  hover:${
-          errors ? 'border-error' : 'border-primary/100'
-        } focus:outline-gray/100 dark:text-gray/100
-      ${errors || error ? 'border-error' : 'border-gray/20'}`}
+        className={`my-1 w-full text-ellipsis rounded-lg border
+       border-gray/20 bg-gray/5 p-2.5 placeholder-gray/30  hover:${
+         errors ? 'border-error' : 'border-primary/100'
+       }  focus:border-primary/100 focus:outline-primary/100
+       dark:text-gray/100 dark:focus:shadow-inner dark:focus:shadow-primary/80 dark:focus:outline-primary/100
+    `}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
