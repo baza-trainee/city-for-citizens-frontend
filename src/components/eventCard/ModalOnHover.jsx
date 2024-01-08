@@ -4,6 +4,24 @@ import IconMarkerPlace from '../UI/icons/IconPlace';
 import { formatDateSeparatorDot, formatDateToTime } from '../../helpers';
 
 const ModalOnHover = ({ event }) => {
+  if (event.sameAddress) {
+    return <ModalOnHoverSlider events={event.sameAddress} />;
+  }
+  return <ModalOnHoverItem event={event} />;
+};
+export default ModalOnHover;
+
+const ModalOnHoverSlider = ({ events }) => {
+  return (
+    <div className="gap-[5px] tablet:grid tablet:grid-cols-2">
+      {events.map(event => (
+        <ModalOnHoverItem key={event.idIdentifier} event={event} />
+      ))}
+    </div>
+  );
+};
+
+const ModalOnHoverItem = ({ event }) => {
   const { eventAddress, eventTitle, dateTime } = event;
   return (
     <div className="max-w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 p-[10px] dark:border-gray/5 dark:bg-gray/80">
@@ -36,4 +54,3 @@ const ModalOnHover = ({ event }) => {
     </div>
   );
 };
-export default ModalOnHover;

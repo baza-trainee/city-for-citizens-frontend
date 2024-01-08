@@ -16,7 +16,65 @@ import ShareIcon from '../UI/icons/IconShare';
 import TagItem from './TagItem';
 import EventShareComp from './eventShare/EventShareCard';
 
+import IconNavigationArrow from '../UI/icons/IconNavigationArrow';
+
 const EventCard = ({ onClose, event }) => {
+  if (event.sameAddress) {
+    return <EventCardSlider events={event.sameAddress} onClose={onClose} />;
+  }
+  return <EventItem onClose={onClose} event={event} />;
+};
+
+export default EventCard;
+
+const EventCardSlider = ({ events, onClose }) => {
+  const [activeEventIndex, setActiveEventIndex] = useState(0);
+
+  const nextEvent = () => {
+    setActiveEventIndex(prevIndex =>
+      prevIndex === events.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevEvent = () => {
+    setActiveEventIndex(prevIndex =>
+      prevIndex === 0 ? events.length - 1 : prevIndex - 1
+    );
+  };
+
+  const iconNavigationArrowClassNames =
+    'h-[100px] w-[100px] stroke-gray/50 hover:stroke-gray/5 hover:text-gray/50 transition-all text-gray/5 dark:stroke-gray/10 dark:hover:stroke-gray/100 dark:hover:text-gray/10 dark:text-gray/80';
+
+  const buttonIconNavigationArrowClassNames =
+    'absolute bottom-0 z-10 translate-y-[calc(100%+15px)] tablet:static tablet:translate-y-0';
+
+  return (
+    <div className="relative tablet:flex">
+      <button
+        className={`${buttonIconNavigationArrowClassNames} left-0`}
+        onClick={prevEvent}
+      >
+        <IconNavigationArrow
+          className={`${iconNavigationArrowClassNames} rotate-180`}
+        />
+      </button>
+      {events.map((event, index) => {
+        return index === activeEventIndex ? (
+          <EventItem onClose={onClose} key={event.idIdentifier} event={event} />
+        ) : null;
+      })}
+
+      <button
+        className={`${buttonIconNavigationArrowClassNames} right-0`}
+        onClick={nextEvent}
+      >
+        <IconNavigationArrow className={`${iconNavigationArrowClassNames}`} />
+      </button>
+    </div>
+  );
+};
+
+const EventItem = ({ event, onClose }) => {
   const {
     eventAddress,
     eventTitle,
@@ -27,12 +85,11 @@ const EventCard = ({ onClose, event }) => {
     dateTime,
   } = event;
 
+  const { resolvedTheme } = useTheme();
+  const t = useTranslations('EventCard');
   const [showEventLink, setShowEventLink] = useState(false);
 
-  const { resolvedTheme } = useTheme();
   const eventShareCompRef = useRef(null);
-
-  const t = useTranslations('EventCard');
 
   return (
     <div className="relative w-[280px] rounded-[8px] border border-solid border-gray/100 bg-gray/5 px-5 py-6 dark:border-gray/5 dark:bg-gray/80 mobile:w-[398px]">
@@ -108,11 +165,9 @@ const EventCard = ({ onClose, event }) => {
           <PrimaryButton message={t('buttonName')} />
         </a>
         {/* <div className="mt-4">
-          <SecondaryButton message={'Add to calledar'} />
-        </div> */}
+      <SecondaryButton message={'Add to calledar'} />
+    </div> */}
       </div>
     </div>
   );
 };
-
-export default EventCard;

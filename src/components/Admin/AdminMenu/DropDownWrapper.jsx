@@ -1,4 +1,5 @@
 import IconSelectArrow from '@/components/UI/icons/IconSelectArrow';
+import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
@@ -42,9 +43,10 @@ export const DropDownWrapper = ({ buttonContent, dropdownContent }) => {
         <IconSelectArrow
           width={24}
           height={24}
-          className={`h-[24px] w-[24px] cursor-pointer text-gray/50 transition-all group-hover:text-gray/100 ${
-            isDropDownListVisible ? '-rotate-180' : ''
-          }`}
+          className={clsx(
+            'h-[24px] w-[24px] cursor-pointer text-gray/50 transition-all group-hover:text-gray/100 dark:text-gray/20 group-hover:dark:text-gray/0',
+            isDropDownListVisible && '-rotate-180'
+          )}
         />
       </div>
 

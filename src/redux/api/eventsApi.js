@@ -4,6 +4,7 @@ import { BASE_URL } from '@/helpers/constants';
 import { addTokenToHeaders } from './helpers/addTokenToHeaders';
 import { generateQueryStr } from './helpers/generateQueryStr';
 import { getLocalizedEventsByIdentifier } from './helpers/getLocalizedEventsByIdentifier';
+import { groupEventsByCoordinates } from './helpers/groupEventsByCoordinates';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
@@ -28,13 +29,14 @@ export const eventsApi = createApi({
 
         return { url: queryStr, method: 'GET' };
       },
-      providesTags: result =>
-        result
+      providesTags: result => {
+        return result
           ? [
               ...result.map(({ id }) => ({ type: 'Events', id })),
               { type: 'Events', id: 'LIST' },
             ]
-          : [{ type: 'Events', id: 'LIST' }],
+          : [{ type: 'Events', id: 'LIST' }];
+      },
     }),
 
     //
@@ -55,6 +57,7 @@ export const eventsApi = createApi({
 
         return { url: queryStr, method: 'GET' };
       },
+      transformResponse: groupEventsByCoordinates,
     }),
 
     //
