@@ -8,9 +8,10 @@ import IconTrash from '../../UI/icons/IconTrash';
 import IconPencil from '../../UI/icons/IconPencil';
 import ShowModal from '../ModalWindow/ShowModal';
 import ShowMessage from '../Message/ShowMessage';
-
+import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import ModalPortal from '../ModalWindow/ModalPortal';
 import MessagePortal from '../Message/MessagePortal';
+import { useTranslations } from 'next-intl';
 
 const ShowEventList = ({ eventsData, needDeleteEvent }) => {
   const { resolvedTheme } = useTheme();
@@ -18,6 +19,13 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
   const [isShowMessage, setIsShowMessage] = useState(false);
   const initialDataEvent = { id: '', title: '' };
   const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
+  const t = useTranslations('EventList');
+  const { matches: isMobile } = useStyleMediaQuery({
+    mixOrMax: 'max',
+    widthOrHeight: 'width',
+    value: 767,
+  });
+  const { localeForIntl } = useCurrentLocale();
 
   useEffect(() => {
     if (!isShowMessage) {
@@ -79,21 +87,21 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
             resolvedTheme === 'dark'
               ? ' hover:bg-gray/50 [&:nth-child(even)]:bg-gray/80 [&:nth-child(even)]:hover:bg-gray/50'
               : ' hover:bg-gray/20 [&:nth-child(even)]:bg-gray/10 [&:nth-child(even)]:hover:bg-gray/20'
-          }`}
+          } ${isMobile ? 'text-sm' : null}`}
         >
           <span>{ind + 1}</span>
           <span>{event.eventTitle}</span>
           <span>{event.eventAddress.city}</span>
-          <span>
-            {new Date(event.dateTime).toLocaleDateString('uk', {
+          <span className={`${isMobile ? 'text-sm' : null}`}>
+            {new Date(event.dateTime).toLocaleDateString(`${localeForIntl}`, {
               year: 'numeric',
-              month: 'long',
+              month: `${isMobile ? 'short' : 'long'}`,
               day: '2-digit',
             })}
           </span>
           <div
             className="inline-flex items-center justify-center gap-2 pr-2"
-            title="edit event"
+            title={t('table.editEvent')}
           >
             <Link href={`/admin/events/${event.id}`}>
               <IconPencil
@@ -106,7 +114,7 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
             </Link>
             <button
               onClick={() => handleDeleteEvent(event.id, event.eventTitle)}
-              title="delete event"
+              title={t('table.deleteEvent')}
             >
               <IconTrash
                 width="16"

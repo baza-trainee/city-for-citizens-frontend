@@ -11,6 +11,8 @@ import IconSearch from '../../UI/icons/IconSearch';
 import IconPlus from '../../UI/icons/IconPlus';
 import SortedControl from './SortedControl';
 import { Link } from '@/navigation';
+import { useTranslations } from 'next-intl';
+import IconCloseButton from '@/components/UI/icons/IconClose';
 
 const EventList = () => {
   const [eventList, setEventList] = useState([]);
@@ -31,6 +33,7 @@ const EventList = () => {
     widthOrHeight: 'width',
     value: 767,
   });
+  const t = useTranslations('EventList');
 
   useEffect(() => {
     const getAll = async () => {
@@ -151,7 +154,7 @@ const EventList = () => {
           />
           <input
             type="search"
-            placeholder="Search event"
+            placeholder={t('searchEvent.placeholder')}
             value={inputValue}
             onChange={handleChangeSearch}
             className={`${
@@ -165,9 +168,9 @@ const EventList = () => {
           className="group block self-center rounded-lg bg-[#6589e3] py-1 text-center transition duration-200 hover:bg-primary/100 hover:text-[#ffffff]"
           href={NAVIGATION.admin}
         >
-          <button type="button" className="" title="Add event">
+          <button type="button" title={t('addEvent')}>
             {!isMobile ? (
-              'Add event'
+              t('addEvent')
             ) : (
               <IconPlus
                 width="14"
@@ -178,15 +181,14 @@ const EventList = () => {
           </button>
         </Link>
       </div>
-      <div className="grid grid-cols-1 grid-rows-[auto_auto] gap-y-3 rounded-lg border border-gray/10 p-4">
+      <div className="grid grid-cols-1 grid-rows-[auto_auto] gap-y-3 rounded-lg border border-gray/10 px-4 pb-4">
         <div
-          className={`grid grid-cols-[10px_4fr_2fr_2fr_1fr] content-center justify-items-center gap-x-3 px-3 ${
-            resolvedTheme === 'dark' ? ' bg-gray/80' : ' bg-gray/10'
-          }`}
+          className={`grid grid-cols-[10px_4fr_2fr_2fr_1fr] content-center items-center  
+          justify-items-center gap-x-3 border-b-[1px] border-gray/10 p-3`}
         >
           <div className="self-center text-sm">&#8470;</div>
           <div className="flex items-center gap-2" data-eventname>
-            <span className="">Назва</span>
+            <span>{t('table.name')}</span>
             <SortedControl
               handleClickSortZA={() =>
                 handleClickSort('eventTitle', 'za', 'name')
@@ -202,7 +204,7 @@ const EventList = () => {
             />
           </div>
           <div className="flex items-center gap-2" data-eventcity>
-            <span className="">Місто</span>
+            <span className="">{t('table.city')}</span>
             <SortedControl
               handleClickSortZA={() =>
                 handleClickSort('eventAddress.city', 'za', 'city')
@@ -218,7 +220,7 @@ const EventList = () => {
             />
           </div>
           <div className="flex items-center gap-2" data-eventdate>
-            <span className="">Дата</span>
+            <span className="">{t('table.date')}</span>
             <SortedControl
               handleClickSortZA={() =>
                 handleClickSort('dateTime', 'za', 'date')
@@ -234,15 +236,30 @@ const EventList = () => {
             />
           </div>
           <button
-            className={`rounded-lg  px-[9px]  ${
-              resolvedTheme === 'dark'
-                ? ' bg-[#d43c3c] text-gray/5 hover:bg-[red] disabled:bg-gray/80 disabled:text-gray/50 disabled:hover:bg-gray/80'
-                : ' bg-[#d43c3c] text-gray/100 hover:bg-[red] disabled:bg-gray/10 disabled:text-gray/20 disabled:hover:bg-gray/10'
+            className={`group rounded-lg  px-[9px] text-sm ${
+              isMobile
+                ? null
+                : resolvedTheme === 'dark'
+                ? ' bg-[#d43c3c] text-gray/5 hover:bg-[red] disabled:bg-gray/100 disabled:text-gray/50 disabled:hover:bg-gray/100'
+                : ' bg-[#d43c3c] text-gray/100 hover:bg-[red] disabled:bg-gray/5 disabled:text-gray/20 disabled:hover:bg-gray/5'
             }`}
             onClick={handleClearSorted}
             disabled={disabledBtn}
           >
-            Clear sorted
+            {!isMobile ? (
+              t('table.clearSorted')
+            ) : (
+              <IconCloseButton
+                width="18"
+                height="18"
+                className={`inline stroke-[#d43c3c] transition duration-200 group-enabled:hover:scale-105 group-enabled:hover:stroke-[red] ${
+                  resolvedTheme === 'dark'
+                    ? 'group-disabled:stroke-gray/80'
+                    : 'group-disabled:stroke-gray/10'
+                }
+                 `}
+              />
+            )}
           </button>
         </div>
 
