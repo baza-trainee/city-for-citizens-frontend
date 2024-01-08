@@ -61,15 +61,15 @@ export default function MapMarkerItem({
     mapRef.on('drag', setPositionEventCard);
     mapRef.on('click', onMapClick);
     mapRef.on('move', setPositionEventCard);
-    mapRef.on('movestart', onMoveStart);
-    mapRef.on('moveend', onMoveEnd);
+    // mapRef.on('movestart', onMoveStart);
+    // mapRef.on('moveend', onMoveEnd);
 
-    function onMoveStart() {
-      document.body.style.pointerEvents = 'none';
-    }
-    function onMoveEnd() {
-      document.body.style.pointerEvents = 'auto';
-    }
+    // function onMoveStart() {
+    //   document.body.style.pointerEvents = 'none';
+    // }
+    // function onMoveEnd() {
+    //   document.body.style.pointerEvents = 'auto';
+    // }
 
     function onMapClick(event) {
       const { point, originalEvent } = event;
@@ -88,12 +88,12 @@ export default function MapMarkerItem({
     }
 
     return () => {
-      document.body.style.pointerEvents = 'auto';
+      // document.body.style.pointerEvents = 'auto';
       mapRef.off('click', onMapClick);
       mapRef.off('drag', setPositionEventCard);
       mapRef.off('move', setPositionEventCard);
-      mapRef.off('movestart', onMoveStart);
-      mapRef.off('moveend', onMoveEnd);
+      // mapRef.off('movestart', onMoveStart);
+      // mapRef.off('moveend', onMoveEnd);
     };
   }, [elementDimensions, map, setActiveMarker, showOnClick]);
 
