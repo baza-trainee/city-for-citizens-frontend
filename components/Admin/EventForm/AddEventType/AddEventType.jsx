@@ -1,12 +1,11 @@
 import CloseButton from '@/components/UI/icons/IconClose';
 import IconSelectArrow from '@/components/UI/icons/IconSelectArrow';
 
-import { getFilters } from '@/services/getFilters';
-
 import { useEffect, useRef, useState } from 'react';
 import TypeList from './TypeList';
 import ErrorMessage from '../ErrorMessage';
 import { useTranslations } from 'next-intl';
+import { useGetTypesEventsQuery } from '@/redux/api/filtersApi';
 
 const useOnClickOutside = (ref, handler) => {
   useEffect(() => {
@@ -51,22 +50,13 @@ const AddEventType = ({
     }
   }, [initialState, setEventTypesSelected]);
 
+  const { data } = useGetTypesEventsQuery({ locale });
+
   useEffect(() => {
-    const getAllFilters = async () => {
-      try {
-        const { eventTypes } = await getFilters({
-          locale,
-        });
-
-        setEventTypesList(eventTypes);
-      } catch (error) {
-        console.error('Error:', error);
-        setEventTypesList([]);
-      }
-    };
-
-    getAllFilters();
-  }, [locale]);
+    if (data) {
+      setEventTypesList(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (inputText) {

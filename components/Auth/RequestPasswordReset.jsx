@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from '@/navigation';
-import { requestPasswordReset } from '@/services/authAPI';
-import { useTranslations } from 'next-intl';
+
 import { publicRoute } from '@/components/publicRoute';
-import { NAVIGATION } from '@/helpers/constants';
-import { FORM_STYLES } from '@/helpers/constants';
+import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { useRequestPasswordResetMutation } from '@/redux/api/authApi';
+import { useTranslations } from 'next-intl';
+import { LoadingButton } from '../UI/LoadingButton';
 import Input from './Input';
 
 const RequestPasswordReset = () => {
@@ -13,8 +13,10 @@ const RequestPasswordReset = () => {
     email: '',
   });
   const [error, setError] = useState(null);
-  const router = useRouter();
   const t = useTranslations('Admin.requestPswd');
+
+  const [requestPasswordReset, { isLoading }] =
+    useRequestPasswordResetMutation();
 
   const handleChange = e => {
     setError(null);
@@ -26,15 +28,10 @@ const RequestPasswordReset = () => {
     e.preventDefault();
 
     try {
-      const res = await requestPasswordReset(formData);
-      const { accessToken } = res;
+      await requestPasswordReset(formData).unwrap();
 
-      if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
-        router.push(NAVIGATION.admin);
-      }
+      console.log('password reset');
     } catch (error) {
-      console.log('error:', error.message);
       setError(t('error'));
     }
   };
@@ -56,12 +53,13 @@ const RequestPasswordReset = () => {
           required
         />
         <button
+          disabled={isLoading}
           type="submit"
           className={`${formBtn} bg-primary/100 hover:bg-primary/80 dark:bg-gray/5`}
         >
-          {t('buttonName')}
+          {isLoading ? <LoadingButton /> : t('buttonName')}
         </button>
-        {error && <p className="text-error font-bold tracking-wide">{error}</p>}
+        {error && <p className="font-bold tracking-wide text-error">{error}</p>}
       </form>
     </div>
   );

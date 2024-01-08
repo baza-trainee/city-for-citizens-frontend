@@ -196,110 +196,108 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="mx-auto mb-[30px] max-w-[650px]">
-        <div className="mx-auto mb-[35px] flex flex-wrap items-center justify-center gap-[15px] gap-x-[50px]">
-          {inputsAttributes.firstGroup.map(
-            ({ label, placeholder, name, tag, ...attr }) => {
-              const commonProps = {
-                name: name,
-                tag: tag,
-                attributes: attr,
-              };
+    <form onSubmit={handleSubmit} className="mx-auto mb-[30px] max-w-[650px]">
+      <div className="mx-auto mb-[35px] flex flex-wrap items-center justify-center gap-[15px] gap-x-[50px]">
+        {inputsAttributes.firstGroup.map(
+          ({ label, placeholder, name, tag, ...attr }) => {
+            const commonProps = {
+              name: name,
+              tag: tag,
+              attributes: attr,
+            };
 
-              return (
-                <FieldWrapper label={label} key={label}>
-                  <FormElement
-                    value={formDataUk[name]}
-                    handleChange={handleChangeUk}
-                    placeholder={`${placeholder} ${t('language.uk')}`}
-                    {...commonProps}
-                  />
-                  <FormElement
-                    value={formDataEn[name]}
-                    handleChange={handleChangeEn}
-                    placeholder={`${placeholder} ${t('language.en')}`}
-                    {...commonProps}
-                  />
-                </FieldWrapper>
-              );
-            }
-          )}
-
-          <FieldWrapper label={t('eventType.title')}>
-            <AddEventType
-              attributes={inputsAttributes.eventType}
-              initialState={formDataUk.eventType || ''}
-              errorMessage={errorMessageUk.eventType}
-              setEventTypesSelected={setFormDataEventTypeUk}
-              eventTypesSelected={formDataEventTypeUk}
-              locale={LOCALE.uk.forRequest}
-              eventTypePlaceholder={` ${
-                inputsAttributes.eventTypePlaceholder
-              } ${t('language.uk')}`}
-            />
-            <AddEventType
-              attributes={inputsAttributes.eventType}
-              errorMessage={errorMessageEn.eventType}
-              initialState={formDataEn.eventType || ''}
-              setEventTypesSelected={setFormDataEventTypeEn}
-              eventTypesSelected={formDataEventTypeEn}
-              locale={LOCALE.en.forRequest}
-              eventTypePlaceholder={` ${
-                inputsAttributes.eventTypePlaceholder
-              } ${t('language.en')}`}
-            />
-          </FieldWrapper>
-          <FieldWrapper label={t('inputImage.title')}>
-            <ImageUpload
-              attributes={inputsAttributes.eventImage}
-              errorMessage={errorMessageUk.eventImage}
-              imageName={formDataUk.eventImage || ''}
-              imageTitle={formDataUk.eventTitle || ''}
-              handleImageChange={setFormDataImageUk}
-              formDataImage={formDataImageUk}
-              lang={t('language.uk')}
-            />
-            <ImageUpload
-              attributes={inputsAttributes.eventImage}
-              errorMessage={errorMessageEn.eventImage}
-              imageName={formDataEn.eventImage || ''}
-              imageTitle={formDataEn.eventTitle || ''}
-              handleImageChange={setFormDataImageEn}
-              formDataImage={formDataImageEn}
-              lang={t('language.en')}
-            />
-          </FieldWrapper>
-          {inputsAttributes.secondGroup.map(
-            ({ label, placeholder, name, tag, ...attr }) => (
+            return (
               <FieldWrapper label={label} key={label}>
                 <FormElement
                   value={formDataUk[name]}
-                  name={name}
-                  tag={tag}
-                  placeholder={placeholder}
-                  handleChange={e => {
-                    handleChangeEn(e);
-                    handleChangeUk(e);
-                  }}
-                  attributes={attr}
+                  handleChange={handleChangeUk}
+                  placeholder={`${placeholder} ${t('language.uk')}`}
+                  {...commonProps}
+                />
+                <FormElement
+                  value={formDataEn[name]}
+                  handleChange={handleChangeEn}
+                  placeholder={`${placeholder} ${t('language.en')}`}
+                  {...commonProps}
                 />
               </FieldWrapper>
-            )
-          )}
-        </div>
+            );
+          }
+        )}
 
-        <button
-          type="submit"
-          className="mx-auto my-0 block cursor-pointer rounded-[10px] bg-primary/100 
+        <FieldWrapper label={t('eventType.title')}>
+          <AddEventType
+            attributes={inputsAttributes.eventType}
+            initialState={formDataUk.eventType || ''}
+            errorMessage={errorMessageUk.eventType}
+            setEventTypesSelected={setFormDataEventTypeUk}
+            eventTypesSelected={formDataEventTypeUk}
+            locale={LOCALE.uk.forRequest}
+            eventTypePlaceholder={` ${
+              inputsAttributes.eventTypePlaceholder
+            } ${t('language.uk')}`}
+          />
+          <AddEventType
+            attributes={inputsAttributes.eventType}
+            errorMessage={errorMessageEn.eventType}
+            initialState={formDataEn.eventType || ''}
+            setEventTypesSelected={setFormDataEventTypeEn}
+            eventTypesSelected={formDataEventTypeEn}
+            locale={LOCALE.en.forRequest}
+            eventTypePlaceholder={` ${
+              inputsAttributes.eventTypePlaceholder
+            } ${t('language.en')}`}
+          />
+        </FieldWrapper>
+        <FieldWrapper label={t('inputImage.title')}>
+          <ImageUpload
+            attributes={inputsAttributes.eventImage}
+            errorMessage={errorMessageUk.eventImage}
+            imageName={formDataUk.eventImage || ''}
+            imageTitle={formDataUk.eventTitle || ''}
+            handleImageChange={setFormDataImageUk}
+            formDataImage={formDataImageUk}
+            lang={t('language.uk')}
+          />
+          <ImageUpload
+            attributes={inputsAttributes.eventImage}
+            errorMessage={errorMessageEn.eventImage}
+            imageName={formDataEn.eventImage || ''}
+            imageTitle={formDataEn.eventTitle || ''}
+            handleImageChange={setFormDataImageEn}
+            formDataImage={formDataImageEn}
+            lang={t('language.en')}
+          />
+        </FieldWrapper>
+        {inputsAttributes.secondGroup.map(
+          ({ label, placeholder, name, tag, ...attr }) => (
+            <FieldWrapper label={label} key={label}>
+              <FormElement
+                value={formDataUk[name]}
+                name={name}
+                tag={tag}
+                placeholder={placeholder}
+                handleChange={e => {
+                  handleChangeEn(e);
+                  handleChangeUk(e);
+                }}
+                attributes={attr}
+              />
+            </FieldWrapper>
+          )
+        )}
+      </div>
+
+      <button
+        type="submit"
+        className="mx-auto my-0 block cursor-pointer rounded-[10px] bg-primary/100 
            px-[40px] py-[10px]  
           text-center text-[16px]  text-gray/5 transition-colors 
     hover:bg-primary/80"
-        >
-          {buttonName}
-        </button>
-      </form>
-    </>
+      >
+        {buttonName}
+      </button>
+    </form>
   );
 };
 export default EventForm;

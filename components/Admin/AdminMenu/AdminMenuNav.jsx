@@ -1,9 +1,14 @@
+import { LoadingButton } from '@/components/UI/LoadingButton';
 import { NAVIGATION } from '@/helpers/constants';
 import { Link, useRouter } from '@/navigation';
-import { logout } from '@/services/authAPI';
+import { useLogoutMutation } from '@/redux/api/authApi';
+import { resetState } from '@/redux/slice/authSlice';
+
 import clsx from 'clsx';
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const AdminMenuNav = () => {
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
@@ -11,14 +16,17 @@ export const AdminMenuNav = () => {
   const [modalPosition, setModalPosition] = useState({});
 
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const buttonRef = useRef(null);
+
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const t = useTranslations('Admin.navMenu');
 
   const handleLogout = async () => {
     await logout();
-    localStorage.removeItem('accessToken');
+    dispatch(resetState());
+    Cookies.remove('accessToken');
     router.push(NAVIGATION.login);
   };
 
@@ -64,7 +72,7 @@ export const AdminMenuNav = () => {
           onClick={() => setIsConfirmationModalVisible(p => !p)}
           className="block cursor-pointer rounded-[10px] bg-primary/100 px-[20px] py-[8px] text-center text-[16px]  text-gray/5 transition-colors hover:bg-primary/80"
         >
-          {t('buttons.logout')}
+          {isLoading ? <LoadingButton /> : <>{t('buttons.logout')}</>}
         </button>
 
         <div
@@ -79,6 +87,7 @@ export const AdminMenuNav = () => {
           </p>
           <div className="flex gap-[15px]">
             <button
+              disabled={isLoading}
               className="min-w-[50px] rounded-[5px] border-[1px] bg-primary/100  px-[12px] py-[4px]  text-center text-[16px]  text-gray/5 transition-colors hover:bg-primary/80"
               onClick={() => setIsConfirmationModalVisible(false)}
               type="button"
@@ -86,6 +95,7 @@ export const AdminMenuNav = () => {
               {t('confirmationModal.buttons.cancel')}
             </button>
             <button
+              disabled={isLoading}
               className="min-w-[50px] rounded-[5px] border-[1px] bg-primary/100  px-[12px] py-[4px] text-center text-[16px]  text-gray/5 transition-colors hover:bg-[#d43c3c]"
               onClick={handleLogout}
               type="button"

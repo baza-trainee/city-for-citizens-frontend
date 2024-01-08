@@ -1,28 +1,39 @@
 'use client';
-import { Link, useRouter } from '@/navigation';
-import { login } from '@/services/authAPI';
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { publicRoute } from '@/components/publicRoute';
-import { NAVIGATION } from '@/helpers/constants';
-import { FORM_STYLES } from '@/helpers/constants';
+import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { Link, useRouter } from '@/navigation';
+import { useLoginMutation } from '@/redux/api/authApi';
+import { setCredentials } from '@/redux/slice/authSlice';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Input from './Input';
+
+import Cookies from 'js-cookie';
+import { LoadingButton } from '../UI/LoadingButton';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const [error, setError] = useState();
+
   const [errors, setErrors] = useState({
     email: '',
     password: '',
   });
-  const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
 
   const t = useTranslations('Admin.loginForm');
+
   const router = useRouter();
 
   const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -67,11 +78,11 @@ const LoginForm = () => {
     }
 
     try {
-      const res = await login(formData);
-      const { accessToken } = res;
+      const data = await login(formData).unwrap();
 
-      if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
+      if (data) {
+        dispatch(setCredentials(data));
+        Cookies.set('accessToken', data.accessToken);
         router.push(NAVIGATION.admin);
       }
     } catch (error) {
@@ -126,7 +137,7 @@ const LoginForm = () => {
           </span>
         </div>
 
-        {error && <p className="text-error font-bold tracking-wide">{error}</p>}
+        {error && <p className="font-bold tracking-wide text-error">{error}</p>}
         <Link
           className="ml-2 underline underline-offset-2 hover:text-gray/30"
           href="/password-reset/request"
@@ -134,7 +145,7 @@ const LoginForm = () => {
           <u>{t('link')}</u>
         </Link>
         <button
-          disabled={!isFormValid}
+          disabled={!isFormValid || isLoading}
           className={`${formBtn}
            ${
              !isFormValid || error
@@ -142,7 +153,7 @@ const LoginForm = () => {
                : 'bg-primary/100 hover:bg-primary/80 dark:bg-gray/5 dark:hover:border-gray/10'
            }`}
         >
-          {t('buttonName')}
+          {isLoading ? <LoadingButton /> : <>{t('buttonName')}</>}
         </button>
       </form>
     </div>

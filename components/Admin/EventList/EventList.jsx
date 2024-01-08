@@ -3,8 +3,8 @@
 import { NAVIGATION } from '@/helpers/constants';
 import { privateRoute } from '../../privateRoute';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { getAllEvents } from '@/services/eventAPI';
+import { useState } from 'react';
+
 import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import ShowEventList from './ShowEventList';
 import IconSearch from '../../UI/icons/IconSearch';
@@ -13,9 +13,9 @@ import SortedControl from './SortedControl';
 import { Link } from '@/navigation';
 import { useTranslations } from 'next-intl';
 import IconCloseButton from '@/components/UI/icons/IconClose';
+import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
 
 const EventList = () => {
-  const [eventList, setEventList] = useState([]);
   const { localeForRequest } = useCurrentLocale();
   const { resolvedTheme } = useTheme();
   const [inputValue, setInputValue] = useState('');
@@ -24,7 +24,7 @@ const EventList = () => {
     direction: '',
     sort: '',
   });
-  const [deleteEvent, setDeleteEvent] = useState(false);
+
   const [disabledBtn, setDisabledBtn] = useState(true);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [sortedEvents, setSortedEvents] = useState([]);
@@ -35,20 +35,9 @@ const EventList = () => {
   });
   const t = useTranslations('EventList');
 
-  useEffect(() => {
-    const getAll = async () => {
-      try {
-        const allEvents = await getAllEvents(
-          new URLSearchParams({ locale: localeForRequest })
-        );
-        setEventList(allEvents);
-      } catch (error) {
-        console.error('Помилка завантаження даних:', error);
-      }
-    };
-    getAll();
-    setDeleteEvent(false);
-  }, [localeForRequest, deleteEvent]);
+  const { data: eventList = [] } = useGetAllEventsByLocaleQuery({
+    locale: localeForRequest,
+  });
 
   function handleChangeSearch(event) {
     const inputValue = event.target.value.trim();
@@ -268,21 +257,12 @@ const EventList = () => {
           <div id="message-portal" />
           {!inputValue ? (
             statusEventSorted.isSorted ? (
-              <ShowEventList
-                eventsData={sortedEvents}
-                needDeleteEvent={setDeleteEvent}
-              />
+              <ShowEventList eventsData={sortedEvents} />
             ) : (
-              <ShowEventList
-                eventsData={eventList}
-                needDeleteEvent={setDeleteEvent}
-              />
+              <ShowEventList eventsData={eventList} />
             )
           ) : (
-            <ShowEventList
-              eventsData={filteredEvents}
-              needDeleteEvent={setDeleteEvent}
-            />
+            <ShowEventList eventsData={filteredEvents} />
           )}
         </ol>
       </div>

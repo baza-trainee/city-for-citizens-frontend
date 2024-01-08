@@ -5,23 +5,30 @@ import { NAVIGATION } from '@/helpers/constants';
 
 import { privateRoute } from '../privateRoute';
 
-import {
-  createEvent,
-  createEventImage,
-  deleteEvent,
-  deleteEventImage,
-} from '@/services/eventAPI';
 import EventForm from './EventForm/EventForm';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import BasicModalWindows from './ModalWindow/BasicModalWindows';
 import Loader from '../UI/Loader';
+import {
+  useCreateEventMutation,
+  useDeleteEventMutation,
+} from '@/redux/api/eventsApi';
+import {
+  useCreateImageMutation,
+  useDeleteImageMutation,
+} from '@/redux/api/imageApi';
 
 const AddEvent = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
+
+  const [addEvent, { isLoading }] = useCreateEventMutation();
+
+  const [deleteEvent] = useDeleteEventMutation();
+  const [addImage] = useCreateImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
 
   const t = useTranslations('Admin.addEvent');
   const handleSubmit = async (
@@ -41,12 +48,11 @@ const AddEvent = () => {
     let requestUk;
     let requestEn;
     try {
-      setIsLoading(true);
       setStatusMessage('');
       setIsStatusMessageVisible(false);
-      const imageNameForRequestUk = await createEventImage(formDataImageUk);
+      const imageNameForRequestUk = await addImage(formDataImageUk).unwrap();
 
-      const imageNameForRequestEn = await createEventImage(formDataImageEn);
+      const imageNameForRequestEn = await addImage(formDataImageEn).unwrap();
 
       requestUk = {
         idIdentifier,
@@ -61,8 +67,8 @@ const AddEvent = () => {
         ...imageNameForRequestEn,
       };
 
-      responseUk = await createEvent(requestUk);
-      responseEn = await createEvent(requestEn);
+      responseUk = await addEvent(requestUk).unwrap();
+      responseEn = await addEvent(requestEn).unwrap();
       setStatusMessage('Подію успішно додано.');
       setIsStatusMessageVisible(true);
       resetForm();
@@ -72,16 +78,14 @@ const AddEvent = () => {
       if (responseUk?.id) {
         deleteEvent(responseUk?.id);
       } else if (requestUk?.eventImage) {
-        deleteEventImage({ eventImage: requestUk?.eventImage });
+        deleteImage({ eventImage: requestUk?.eventImage });
       }
 
       if (responseEn?.id) {
         deleteEvent(responseEn?.id);
       } else if (requestEn?.eventImage) {
-        deleteEventImage({ eventImage: requestEn?.eventImage });
+        deleteImage({ eventImage: requestEn?.eventImage });
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 

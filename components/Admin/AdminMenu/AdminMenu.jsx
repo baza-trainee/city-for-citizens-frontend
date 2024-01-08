@@ -1,14 +1,20 @@
 'use client';
 
-import { useIsLoggedIn } from '@/hooks/useIsLoggedIn';
-
 import { useEffect, useState } from 'react';
 
 import { AdminMenuNav } from './AdminMenuNav';
 import { DropDownWrapper } from './DropDownWrapper';
+import { useSelector } from 'react-redux';
+import {
+  selectIsLoggedIn,
+  selectToken,
+  selectUserEmail,
+} from '@/redux/slice/selectors';
 
 const AdminMenu = () => {
-  const { isLoggedIn, userData } = useIsLoggedIn();
+  const token = useSelector(selectToken);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userEmail = useSelector(selectUserEmail);
 
   const [screenWidth, setScreenWidth] = useState(null);
 
@@ -29,17 +35,17 @@ const AdminMenu = () => {
 
   return (
     <>
-      {isLoggedIn && (
+      {token && isLoggedIn ? (
         <>
           {screenWidth > 1440 ? (
             <DropDownWrapper
               buttonContent={
                 <>
                   <p className="transition-transform first-letter:capitalize group-hover:scale-[1.05]">
-                    {userData.email}
+                    {userEmail}
                   </p>
                   <div className="flex h-[36px] w-[36px] cursor-pointer  items-center justify-center rounded-[50%] bg-primary/80 font-[sans-serif] text-[20px] font-bold uppercase text-gray/10 transition-colors group-hover:bg-primary/100">
-                    {userData.email[0]}
+                    {userEmail[0]}
                   </div>
                 </>
               }
@@ -47,7 +53,7 @@ const AdminMenu = () => {
             />
           ) : null}
         </>
-      )}
+      ) : null}
     </>
   );
 };

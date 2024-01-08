@@ -1,9 +1,8 @@
 'use client';
 
 import { Link } from '@/navigation';
-import { deleteEvent } from '@/services/eventAPI';
 import { useTheme } from 'next-themes';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import IconTrash from '../../UI/icons/IconTrash';
 import IconPencil from '../../UI/icons/IconPencil';
 import ShowModal from '../ModalWindow/ShowModal';
@@ -12,8 +11,9 @@ import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import ModalPortal from '../ModalWindow/ModalPortal';
 import MessagePortal from '../Message/MessagePortal';
 import { useTranslations } from 'next-intl';
+import { useDeleteEventMutation } from '@/redux/api/eventsApi';
 
-const ShowEventList = ({ eventsData, needDeleteEvent }) => {
+const ShowEventList = ({ eventsData }) => {
   const { resolvedTheme } = useTheme();
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowMessage, setIsShowMessage] = useState(false);
@@ -26,13 +26,7 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
     value: 767,
   });
   const { localeForIntl } = useCurrentLocale();
-
-  useEffect(() => {
-    if (!isShowMessage) {
-      needDeleteEvent(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShowMessage]);
+  const [deleteEvent] = useDeleteEventMutation();
 
   const handleDeleteEvent = (eventId, eventTitle) => {
     setDataDeleteEvent({ id: eventId, title: eventTitle });
@@ -41,7 +35,7 @@ const ShowEventList = ({ eventsData, needDeleteEvent }) => {
 
   const handleConfirmDelete = async () => {
     try {
-      await deleteEvent(dataDeleteEvent.id);
+      await deleteEvent(dataDeleteEvent.id).unwrap();
 
       setIsShowDeleteModal(false);
       setDataDeleteEvent(initialDataEvent);

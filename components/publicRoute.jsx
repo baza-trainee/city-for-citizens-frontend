@@ -1,51 +1,36 @@
 'use client';
 
 import { useRouter } from '@/navigation';
-import { refresh } from '@/services/authAPI';
 
-import { useEffect, useState } from 'react';
-import Loader from './UI/Loader';
+import { useEffect } from 'react';
 
-export const publicRoute = ({ component: Component, redirectTo }) =>
-  function PublicRoute(props) {
-    const [isValidToken, setIsValidToken] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+import { useCheckTokenValidity } from '@/hooks/useCheckTokenValidity';
+
+export const publicRoute = ({ component: Component, redirectTo }) => {
+  return function PublicRoute(props) {
+    const { token, isLoggedIn, isLoading } = useCheckTokenValidity(redirectTo);
 
     const router = useRouter();
 
     useEffect(() => {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        setIsLoading(false);
-        return;
+      if (token && isLoggedIn) {
+        router.push(redirectTo);
       }
+    }, [isLoggedIn, router, token]);
 
-      const refreshToken = async () => {
-        try {
-          const { accessToken } = await refresh();
-
-          if (accessToken) {
-            localStorage.setItem('accessToken', accessToken);
-            setIsValidToken(true);
-            router.push(redirectTo);
-          }
-        } catch {
-          setIsValidToken(false);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      refreshToken();
-    }, [router]);
+    if (token && isLoggedIn) {
+      return null;
+    }
 
     return (
       <>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>{isValidToken ? null : <Component {...props} />}</>
+        {isLoading && (
+          <div className="fixed z-40 flex h-screen w-screen items-center justify-center bg-gray/100/90 text-[66px] text-gray/5">
+            Loading....
+          </div>
         )}
+        <Component {...props} />
       </>
     );
   };
+};

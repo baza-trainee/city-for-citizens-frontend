@@ -1,53 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { useRouter } from '@/navigation';
-import { refresh } from '@/services/authAPI';
-import Loader from './UI/Loader';
+
+import { useEffect } from 'react';
+
+import { useCheckTokenValidity } from '@/hooks/useCheckTokenValidity';
 
 export const privateRoute = ({ component: Component, redirectTo }) =>
   function PrivateRoute(props) {
-    const [isValidToken, setIsValidToken] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const { token, isLoggedIn, isLoading } = useCheckTokenValidity(redirectTo);
 
     const router = useRouter();
 
     useEffect(() => {
-      const token = localStorage.getItem('accessToken');
-
-      if (!token) {
+      if (!token && !isLoggedIn) {
         router.push(redirectTo);
-        return;
       }
+    }, [isLoggedIn, router, token]);
 
-      const refreshToken = async () => {
-        try {
-          const { accessToken } = await refresh();
-
-          if (accessToken) {
-            localStorage.setItem('accessToken', accessToken);
-            setIsValidToken(true);
-            setIsLoading(false);
-          }
-        } catch {
-          setIsValidToken(false);
-          router.push(redirectTo);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      refreshToken();
-    }, [router]);
+    if (!token || !isLoggedIn) {
+      return null;
+    }
 
     return (
       <>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>{isValidToken ? <Component {...props} /> : null}</>
+        {isLoading && (
+          <div className="fixed z-40 flex h-screen w-screen items-center justify-center bg-gray/100/90 text-[66px] text-gray/5">
+            Loading....
+          </div>
         )}
+        <Component {...props} />
       </>
     );
   };

@@ -2,10 +2,12 @@
 
 import { NAVIGATION } from '@/helpers/constants';
 import { Link, useRouter } from '@/navigation';
-import { register } from '@/services/authAPI';
 import { useState } from 'react';
 import { publicRoute } from '../publicRoute';
 import Input from './Input';
+import { useRegistrationMutation } from '@/redux/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '@/redux/slice/authSlice';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +15,10 @@ const RegisterForm = () => {
     email: '',
     password: '',
   });
-  const [error, setError] = useState(null);
 
   const router = useRouter();
-
+  const dispatch = useDispatch();
+  const [register] = useRegistrationMutation();
   const handleChange = e => {
     const { name, value } = e.target;
 
@@ -25,20 +27,14 @@ const RegisterForm = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = async e => {
     e.preventDefault();
 
-    try {
-      const { accessToken } = await register(formData);
+    const data = await register(formData).unwrap();
 
-      if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
-        router.push(NAVIGATION.admin);
-      }
-    } catch (error) {
-      setError(error.message);
-      console.log('error:', error.message);
+    if (data) {
+      dispatch(setCredentials(data));
+      router.push(NAVIGATION.admin);
     }
   };
 
@@ -74,8 +70,6 @@ const RegisterForm = () => {
           type="password"
         />
 
-        {error && <p>{error}</p>}
-
         <p>
           Already have an account?{' '}
           <Link className="ml-2 hover:text-gray/30" href="/login">
@@ -89,6 +83,7 @@ const RegisterForm = () => {
     </div>
   );
 };
+
 export default publicRoute({
   component: RegisterForm,
   redirectTo: NAVIGATION.admin,

@@ -1,19 +1,21 @@
 'use client';
 
-import {
-  createEventImage,
-  deleteEventImage,
-  getAllEvents,
-  updateEvent,
-} from '@/services/eventAPI';
 import EventForm from './EventForm/EventForm';
 import { privateRoute } from '../privateRoute';
 import { NAVIGATION } from '@/helpers/constants';
 import { useEffect, useState } from 'react';
-import { useCurrentLocale } from '@/hooks';
+
 import { useTranslations } from 'next-intl';
 import Loader from '../UI/Loader';
 import BasicModalWindows from './ModalWindow/BasicModalWindows';
+import {
+  useGetEventsByIdQuery,
+  useUpdateEventMutation,
+} from '@/redux/api/eventsApi';
+import {
+  useCreateImageMutation,
+  useDeleteImageMutation,
+} from '@/redux/api/imageApi';
 
 const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
@@ -23,34 +25,20 @@ const UpdateEventForm = ({ eventId }) => {
   const [statusMessage, setStatusMessage] = useState('');
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
 
+  const [updateEvent] = useUpdateEventMutation();
+  const [addImage] = useCreateImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
+
   const t = useTranslations('Admin.updateEvent');
 
-  const { localeForRequest } = useCurrentLocale();
+  const { data } = useGetEventsByIdQuery(eventId);
 
   useEffect(() => {
-    const getAll = async () => {
-      try {
-        const allEvents = await getAllEvents();
-
-        const eventFirst = allEvents.find(({ id }) => id === Number(eventId));
-        const eventSecond = allEvents.find(
-          ({ idIdentifier, id }) =>
-            idIdentifier === eventFirst.idIdentifier && id !== Number(eventId)
-        );
-
-        if (eventFirst.locale === 'uk_UA') {
-          setEventUk(eventFirst);
-          setEventEn(eventSecond);
-        } else {
-          setEventUk(eventSecond);
-          setEventEn(eventFirst);
-        }
-      } catch (error) {
-        console.error('Помилка завантаження даних:', error);
-      }
-    };
-    getAll();
-  }, [eventId, localeForRequest, isLoading]);
+    if (data) {
+      setEventUk(data.eventUk);
+      setEventEn(data.eventEn);
+    }
+  }, [data, eventId]);
 
   const handleSubmit = async (
     e,
@@ -71,15 +59,15 @@ const UpdateEventForm = ({ eventId }) => {
 
     try {
       if (formDataImageUk) {
-        const imageNameForRequestUk = await createEventImage(formDataImageUk);
+        const imageNameForRequestUk = await addImage(formDataImageUk).unwrap();
         requestUk = {
           idIdentifier,
           ...formDataUk,
           ...imageNameForRequestUk,
         };
-        await updateEvent(requestUk, eventUk.id);
+        await updateEvent({ body: requestUk, eventId: eventUk.id }).unwrap();
         try {
-          await deleteEventImage({ eventImage: formDataUk.eventImage });
+          await deleteImage({ eventImage: formDataUk.eventImage }).unwrap();
         } catch (error) {
           console.log('error:', error);
         }
@@ -88,13 +76,13 @@ const UpdateEventForm = ({ eventId }) => {
           idIdentifier,
           ...formDataUk,
         };
-        await updateEvent(requestUk, eventUk.id);
+        await updateEvent({ body: requestUk, eventId: eventUk.id }).unwrap();
       }
     } catch (error) {
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);
       if (requestUk?.eventImage) {
-        deleteEventImage({ eventImage: requestUk?.eventImage });
+        deleteImage({ eventImage: requestUk?.eventImage }).unwrap();
       }
       setIsLoading(false);
       return;
@@ -104,15 +92,15 @@ const UpdateEventForm = ({ eventId }) => {
 
     try {
       if (formDataImageEn) {
-        const imageNameForRequestEn = await createEventImage(formDataImageEn);
+        const imageNameForRequestEn = await addImage(formDataImageEn).unwrap();
         requestEn = {
           idIdentifier,
           ...formDataEn,
           ...imageNameForRequestEn,
         };
-        await updateEvent(requestEn, eventEn.id);
+        await updateEvent({ body: requestEn, eventId: eventEn.id }).unwrap();
         try {
-          await deleteEventImage({ eventImage: formDataEn.eventImage });
+          await deleteImage({ eventImage: formDataEn.eventImage }).unwrap();
         } catch (error) {
           console.log('error:', error);
         }
@@ -122,7 +110,7 @@ const UpdateEventForm = ({ eventId }) => {
           ...formDataEn,
         };
 
-        await updateEvent(requestEn, eventEn.id);
+        await updateEvent({ body: requestEn, eventId: eventEn.id }).unwrap();
       }
 
       setStatusMessage('Подію успішно оновлено.');
@@ -131,7 +119,7 @@ const UpdateEventForm = ({ eventId }) => {
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);
       if (requestEn?.eventImage) {
-        deleteEventImage({ eventImage: requestEn?.eventImage });
+        deleteImage({ eventImage: requestEn?.eventImage }).unwrap();
       }
       setIsLoading(false);
       return;

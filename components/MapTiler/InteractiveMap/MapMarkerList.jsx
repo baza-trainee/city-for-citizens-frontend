@@ -3,28 +3,36 @@ import { useEffect, useState } from 'react';
 import MapMarkerItem from './MapMarkerItem/MapMarkerItem';
 import { useSearchParams } from 'next/navigation';
 import { useCurrentLocale } from '../../../hooks';
-import { getEventsBySearchParams } from '../../../services/eventAPI';
+import { useGetEventsBySearchParamsQuery } from '@/redux/api/eventsApi';
 export default function MapMarkerList({ map }) {
   const [activeMarker, setActiveMarker] = useState(null);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const { localeForRequest } = useCurrentLocale();
+
   const searchParams = useSearchParams();
+  const queryParams = {};
+
+  searchParams.forEach((value, key) => {
+    queryParams[key] = value;
+  });
+
+  const { data } = useGetEventsBySearchParamsQuery(
+    {
+      queryParams,
+      locale: localeForRequest,
+    },
+    { skip: searchParams.size === 0 }
+  );
 
   useEffect(() => {
-    const getEventsByFilter = async () => {
-      const urlSearchParams = new URLSearchParams(searchParams);
-      urlSearchParams.append('locale', localeForRequest);
-
-      const events = await getEventsBySearchParams(urlSearchParams);
-      setFilteredEvents(events);
-    };
-
-    if (searchParams.size !== 0) {
-      getEventsByFilter();
-    } else {
-      setFilteredEvents([]);
+    if (data) {
+      if (searchParams.size !== 0) {
+        setFilteredEvents(data);
+      } else {
+        setFilteredEvents([]);
+      }
     }
-  }, [localeForRequest, searchParams]);
+  }, [data, searchParams.size]);
 
   return (
     <>
