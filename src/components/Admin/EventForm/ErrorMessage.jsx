@@ -27,7 +27,7 @@ const ErrorMessage = ({ errorMessage }) => {
   }, [errorMessage]);
   return (
     <p
-      className="absolute right-1/2 top-[calc(100%+10px)] flex translate-x-1/2 items-end gap-[10px] whitespace-nowrap rounded-[4px] border-[1px] border-[#858585] bg-[#3b3b3b] p-[8px]  text-[14px]"
+      className="absolute right-1/2 top-[calc(100%+10px)] flex translate-x-1/2 items-end gap-[10px] whitespace-nowrap rounded-[4px] border-[1px] border-[#858585] bg-[#ffffff] p-[8px]  text-[14px]  dark:bg-[#3b3b3b]"
       ref={errorMessageRef}
     >
       <svg
@@ -38,7 +38,11 @@ const ErrorMessage = ({ errorMessage }) => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M10.2571 1L1 11H19L10.2571 1Z" fill="#3b3b3b" />
+        <path
+          className="fill-[#ffffff]   dark:fill-[#3b3b3b]"
+          d="M10.2571 1L1 11H19L10.2571 1Z"
+          fill="#3b3b3b"
+        />
         <path d="M19 10.5L10 1L1 10.5" stroke="#858585" strokeLinecap="round" />
       </svg>
 

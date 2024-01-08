@@ -36,5 +36,5 @@ export const useCheckTokenValidity = redirectTo => {
     }
   }, [dispatch, isError, isLoggedIn, redirectTo, refresh, router, token]);
 
-  return { token, isLoggedIn, isLoading };
+  return { token, isLoggedIn, isLoading, isError };
 };

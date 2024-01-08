@@ -25,7 +25,7 @@ export const publicRoute = ({ component: Component, redirectTo }) => {
     return (
       <>
         {isLoading && (
-          <div className="fixed z-40 flex h-screen w-screen items-center justify-center bg-gray/100/90 text-[66px] text-gray/5">
+          <div className="fixed left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-gray/100/90 text-[66px] text-gray/5">
             Loading....
           </div>
         )}

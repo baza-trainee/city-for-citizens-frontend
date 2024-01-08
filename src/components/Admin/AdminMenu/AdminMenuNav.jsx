@@ -54,13 +54,13 @@ export const AdminMenuNav = () => {
     <div className="flex flex-col items-center justify-between gap-[30px]">
       <div className="flex flex-col gap-[10px] text-[18px] ">
         <Link
-          className="rounded-[5px] border-[1px] border-[transparent] px-[10px] py-[4px] text-center hover:border-gray/80"
+          className="rounded-[5px] border-[1px] border-[transparent] px-[10px] py-[4px] text-center hover:border-gray/80 dark:hover:border-gray/10"
           href="/admin"
         >
           {t('nav.addEvent')}
         </Link>
         <Link
-          className="rounded-[5px] border-[1px] border-[transparent] px-[10px] py-[4px] text-center hover:border-gray/80"
+          className="rounded-[5px] border-[1px] border-[transparent] px-[10px] py-[4px] text-center hover:border-gray/80 dark:hover:border-gray/10"
           href="/admin/events"
         >
           {t('nav.allEvents')}

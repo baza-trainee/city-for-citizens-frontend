@@ -8,6 +8,8 @@ import { useState } from 'react';
 import AddEventType from './AddEventType/AddEventType';
 import { errorMessage, regexPatterns } from './constants';
 import { useTranslations } from 'next-intl';
+import { formatDateSeparatorDash } from '@/helpers';
+import { formatTime } from '@/helpers/formatDate';
 
 const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
   const [formDataUk, handleChangeUk, resetFormUk] = useHandleFormData(
@@ -48,10 +50,12 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     const dataUk = {
       ...formDataUk,
       eventType: formDataEventTypeUk.join(','),
+      time: formatTime(formDataEn.time),
     };
     const dataEn = {
       ...formDataEn,
       eventType: formDataEventTypeEn.join(','),
+      time: formatTime(formDataEn.time),
     };
 
     if (formDataEventTypeUk.length === 0) {
@@ -150,6 +154,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
         label: t('date.title'),
         name: 'date',
         type: 'date',
+        min: formatDateSeparatorDash(new Date()),
         required: true,
       },
       {
@@ -191,7 +196,7 @@ const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
     eventImage: {
       name: 'eventImage',
       type: 'file',
-      accept: 'image/*',
+      accept: 'image/png, image/jpeg, image/png',
     },
   };
 

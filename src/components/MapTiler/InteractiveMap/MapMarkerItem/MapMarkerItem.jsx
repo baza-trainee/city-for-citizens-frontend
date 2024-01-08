@@ -183,6 +183,7 @@ export default function MapMarkerItem({
   function onClickClose() {
     setActiveMarker(null);
     setShowOnClick(false);
+    setShowOnHover(false);
   }
 
   return (
