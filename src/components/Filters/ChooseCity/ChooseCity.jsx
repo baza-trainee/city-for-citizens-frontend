@@ -3,6 +3,7 @@ import { useQueryParam } from '../../../hooks';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import IconCheckbox from '@/components/UI/icons/IconCheckbox';
 
 function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
@@ -12,18 +13,31 @@ function ChooseCity({ filtersEventCities }) {
   const [selectedCities, setSelectedCities] = useQueryParam('city');
   const [validationMessage, setValidationMessage] = useState('');
   const [inputDisable, setInputDisable] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   const t = useTranslations('Filters.ChooseCity');
   const pathname = usePathname();
   const locale = pathname.split('/')[1];
 
   useEffect(() => {
+    filtersEventCities.length !== 0 && setIsLoadingData(false);
+  }, [filtersEventCities]);
+
+  useEffect(() => {
     setInputValue(selectedCities.join(', '));
   }, [selectedCities]);
 
   useEffect(() => {
-    displayedCities.length === 0 && setValidationMessage('textIsEmpty');
-  }, [displayedCities]);
+    !isLoadingData &&
+      inputValue &&
+      displayedCities.length === 0 &&
+      setValidationMessage('textIsEmpty');
+  }, [displayedCities, inputValue, isLoadingData]);
+
+  useEffect(() => {
+    !isLoadingData && setDisplayedCities(filtersEventCities);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingData]);
 
   useEffect(() => {
     if (isInputValueIncludesCityFrom(filtersEventCities)) {
@@ -51,6 +65,7 @@ function ChooseCity({ filtersEventCities }) {
       setValidationMessage('');
       setDisplayedCities(filtersEventCities);
     }
+
     setIsListVisible(true);
   }
 
@@ -133,15 +148,18 @@ function ChooseCity({ filtersEventCities }) {
     setInputDisable(false);
     if (inputValue) {
       const filteredCities = filteredCityByInputValue();
+
       switch (true) {
         case !isInputValueIncludesCityFrom(filtersEventCities) &&
           !filteredCities.length:
           setInputValue('');
           setIsInputTyping(false);
+
           setDisplayedCities(filtersEventCities);
           break;
         case isInputValueIncludesCityFrom(filtersEventCities) && isInputTyping:
           setIsInputTyping(false);
+
           setDisplayedCities(filteredCities);
           break;
         case isInputValueIncludesCityFrom(selectedCities) &&
@@ -169,7 +187,7 @@ function ChooseCity({ filtersEventCities }) {
   }
 
   function filteredCityByInputValue(value = inputValue) {
-    if (value || inputValue) {
+    if (value) {
       const valueToLowerCase = value.toLowerCase();
       return filtersEventCities.filter(city =>
         city.toLowerCase().startsWith(valueToLowerCase)
@@ -181,8 +199,14 @@ function ChooseCity({ filtersEventCities }) {
   function isInputValueIncludesCityFrom(cityArr) {
     return inputValue
       .split(', ')
-      .every(value =>
-        cityArr.includes(value.replace(/^[\wа-я]/, char => char.toUpperCase()))
+      .every(
+        value =>
+          cityArr.includes(
+            value.replace(/^[\wа-я]/, char => char.toUpperCase())
+          ) ||
+          cityArr.includes(
+            value.replace(/^[\wа-я]/, char => char.toLowerCase())
+          )
       );
   }
 
@@ -217,6 +241,11 @@ function ChooseCity({ filtersEventCities }) {
           className="custom-scroll dark:dark-scroll absolute top-[75px] z-10 max-h-[300px] w-full
        overflow-y-auto rounded-b-lg border border-gray/50  bg-gray/5 dark:border-gray/10 dark:bg-gray/100 dark:text-gray/10"
         >
+          {isLoadingData && (
+            <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
+              {t('loading')}
+            </p>
+          )}
           {validationMessage ? (
             <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-gray/50 dark:text-gray/10">
               {t(validationMessage)}
@@ -235,17 +264,15 @@ function ChooseCity({ filtersEventCities }) {
                   className="flex h-6 w-6 
             items-center justify-center rounded border border-gray/50 dark:border-gray/10"
                 >
-                  <svg
+                  <IconCheckbox
+                    width={16}
+                    height={16}
                     className={`stroke-gray/50 transition-all dark:stroke-gray/20 ${
                       selectedCities.includes(city)
                         ? 'opacity-100'
                         : 'opacity-0'
                     }`}
-                    width={16}
-                    height={16}
-                  >
-                    <use href="icons/sprite.svg#icon-checkbox"></use>
-                  </svg>
+                  />
                 </div>
               </li>
             ))
