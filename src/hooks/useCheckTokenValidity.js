@@ -36,5 +36,10 @@ export const useCheckTokenValidity = redirectTo => {
     }
   }, [dispatch, isError, isLoggedIn, redirectTo, refresh, router, token]);
 
-  return { token, isLoggedIn, isLoading, isError };
+  return {
+    token,
+    isLoggedIn,
+    isLoading,
+    isAccessToken: Cookies.get('accessToken'),
+  };
 };

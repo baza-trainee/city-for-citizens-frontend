@@ -1,12 +1,11 @@
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { locales } from '@/navigation';
 
 import Providers from '@/components/Providers';
 
 import './globals.css';
 import { ReduxProvider } from '@/redux/Provider/ReduxProvider';
+import { locales } from '@/config';
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
@@ -22,10 +21,6 @@ export async function generateMetadata({ params: { locale } }) {
 }
 
 export default function LocaleLayout({ children, params: { locale } }) {
-  if (!locales.includes(locale)) {
-    notFound();
-  }
-
   unstable_setRequestLocale(locale);
 
   const messages = useMessages();

@@ -8,16 +8,16 @@ import { useCheckTokenValidity } from '@/hooks/useCheckTokenValidity';
 
 export const privateRoute = ({ component: Component, redirectTo }) =>
   function PrivateRoute(props) {
-    const { token, isLoggedIn, isLoading, isError } =
+    const { token, isLoggedIn, isLoading, isAccessToken } =
       useCheckTokenValidity(redirectTo);
 
     const router = useRouter();
 
     useEffect(() => {
-      if (!token && !isLoggedIn && isError) {
+      if (!token && !isLoggedIn && !isAccessToken) {
         router.push(redirectTo);
       }
-    }, [isError, isLoading, isLoggedIn, router, token]);
+    }, [isAccessToken, isLoading, isLoggedIn, router, token]);
 
     if (!token || !isLoggedIn) {
       return (

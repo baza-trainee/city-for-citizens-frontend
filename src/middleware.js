@@ -1,15 +1,15 @@
 import createMiddleware from 'next-intl/middleware';
-import { locales, pathnames } from './navigation';
-import { LOCALE } from './helpers/constants';
+import { locales, pathnames, localePrefix } from './config';
 
 export default createMiddleware({
-  defaultLocale: LOCALE.uk.forIntl,
+  defaultLocale: 'uk',
   locales,
   pathnames,
+  localePrefix,
 });
 
 export const config = {
   matcher: ['/', '/(uk|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
 };
 
-export function middleware() {}
+// export function middleware() {}
