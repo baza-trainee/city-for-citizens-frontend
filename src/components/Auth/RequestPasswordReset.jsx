@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-
 import { publicRoute } from '@/components/publicRoute';
 import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
 import { useRequestPasswordResetMutation } from '@/redux/api/authApi';
@@ -37,8 +36,8 @@ const RequestPasswordReset = () => {
   };
 
   const { email } = formData;
-
   const { formContainer, formBtn } = FORM_STYLES;
+
   return (
     <div className="container">
       <h2 className="mb-3 text-center text-xl font-bold">{t('title')}</h2>

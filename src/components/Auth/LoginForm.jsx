@@ -9,8 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import {
+  validateInput,
+  isValidEmail,
+  isValidPassword,
+} from '@/helpers/validation';
 import Input from './Input';
-
 import Cookies from 'js-cookie';
 import { LoadingButton } from '../UI/LoadingButton';
 
@@ -36,25 +40,6 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isValidPassword = password => password.length >= 8;
-
-  const validateInput = (name, value) => {
-    if (name === 'email') {
-      if (!isValidEmail(value) && value.trim() !== '') {
-        setErrors(prev => ({ ...prev, email: t('errorEmail') }));
-      } else {
-        setErrors(prev => ({ ...prev, email: '' }));
-      }
-    } else if (name === 'password') {
-      if (!isValidPassword(value) && value.trim() !== '') {
-        setErrors(prev => ({ ...prev, password: t('errorPswd') }));
-      } else {
-        setErrors(prev => ({ ...prev, password: '' }));
-      }
-    }
-  };
-
   const handleChange = e => {
     setError(null);
     const { name, value } = e.target;
@@ -64,29 +49,28 @@ const LoginForm = () => {
 
   const handleBlur = e => {
     const { name, value } = e.target;
-    validateInput(name, value);
+    validateInput(name, value, setErrors, t);
   };
 
   const isFormValid =
-    isValidEmail(formData.email) && isValidPassword(formData.password);
+    isValidEmail(formData.email) &&
+    isValidPassword(formData.password, t) === true;
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!isFormValid) {
-      return;
-    }
+    if (!errors.email && !errors.password) {
+      try {
+        const data = await login(formData).unwrap();
 
-    try {
-      const data = await login(formData).unwrap();
-
-      if (data) {
-        dispatch(setCredentials(data));
-        Cookies.set('accessToken', data.accessToken);
-        router.push(NAVIGATION.admin);
+        if (data) {
+          dispatch(setCredentials(data));
+          Cookies.set('accessToken', data.accessToken);
+          router.push(NAVIGATION.admin);
+        }
+      } catch (error) {
+        setError(t('error'));
       }
-    } catch (error) {
-      setError(t('error'));
     }
   };
 

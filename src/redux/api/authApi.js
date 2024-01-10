@@ -62,6 +62,16 @@ export const authApi = createApi({
         };
       },
     }),
+    //
+    passwordReset: builder.mutation({
+      query: credentials => {
+        return {
+          url: 'passwordReset/reset',
+
+          body: JSON.stringify(credentials),
+        };
+      },
+    }),
   }),
 });
 
@@ -71,4 +81,5 @@ export const {
   useLazyRefreshQuery,
   useLogoutMutation,
   useRequestPasswordResetMutation,
+  usePasswordResetMutation,
 } = authApi;
