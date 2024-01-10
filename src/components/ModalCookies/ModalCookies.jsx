@@ -60,7 +60,7 @@ const ModalCookies = () => {
           onContextMenu={e => e.preventDefault()}
           target="_blank"
           rel="noopener noreferrer"
-          href="/policy/privacy-policy.pdf#toolbar=0"
+          href="/consent/privacy-policy.pdf#toolbar=0"
           className="font-NewMexika mb-8 underline hover:text-gray/30"
         >
           {t('privacy')}{' '}
