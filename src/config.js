@@ -8,6 +8,7 @@ export const pathnames = {
   [NAVIGATION.login]: NAVIGATION.login,
   [NAVIGATION.register]: NAVIGATION.register,
   '/password-reset/request': '/password-reset/request',
+  '/password-reset/reset': '/password-reset/reset',
   '/admin/events': '/admin/events',
   // '/events:id': '/events:id',
 };

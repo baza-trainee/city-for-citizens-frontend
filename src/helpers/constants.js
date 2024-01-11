@@ -9,6 +9,7 @@ const NAVIGATION = {
   login: '/login',
   register: '/register',
   requestPasswordReset: '/password-reset/request',
+  passwordReset: '/password-reset/reset',
 };
 
 const FORM_STYLES = {
