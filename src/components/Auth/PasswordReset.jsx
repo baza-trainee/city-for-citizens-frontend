@@ -1,15 +1,14 @@
 'use client';
-import { useState } from 'react';
-import { usePasswordResetMutation } from '@/redux/api/authApi';
-import { setCredentials } from '@/redux/slice/authSlice';
-import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
-import { useTranslations } from 'next-intl';
 import { publicRoute } from '@/components/publicRoute';
-import { NAVIGATION } from '@/helpers/constants';
-import { FORM_STYLES } from '@/helpers/constants';
-import { LoadingButton } from '../UI/LoadingButton';
+import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
 import { validateInput } from '@/helpers/validation';
+import { useRouter } from '@/navigation';
+import { usePasswordResetMutation } from '@/redux/api/authApi';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import BasicModalWindows from '../Admin/ModalWindow/BasicModalWindows';
+import { LoadingButton } from '../UI/LoadingButton';
 import Input from './Input';
 
 const PasswordReset = () => {
@@ -19,8 +18,17 @@ const PasswordReset = () => {
   const [errors, setErrors] = useState({
     password: '',
   });
+  const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
   const t = useTranslations('Admin.resetPswd');
-  const dispatch = useDispatch();
+
+  const router = useRouter();
+  const searchParam = useSearchParams();
+
+  useEffect(() => {
+    if (!searchParam.has('token')) {
+      router.push(NAVIGATION.login);
+    }
+  }, [router, searchParam]);
 
   const [passwordReset, { isLoading }] = usePasswordResetMutation();
 
@@ -40,15 +48,16 @@ const PasswordReset = () => {
 
     if (!errors.password) {
       try {
-        const data = await passwordReset(formData).unwrap();
+        const data = await passwordReset({
+          newPassword: formData.password,
+          token: searchParam.get('token'),
+        }).unwrap();
 
         if (data) {
-          dispatch(setCredentials(data));
-          Cookies.set('accessToken', data.accessToken);
-          router.push(NAVIGATION.admin);
+          router.push(NAVIGATION.login);
         }
-      } catch (error) {
-        console.log(error);
+      } catch {
+        setIsStatusMessageVisible(true);
       }
     }
   };
@@ -77,6 +86,11 @@ const PasswordReset = () => {
           {isLoading ? <LoadingButton /> : t('buttonName')}
         </button>
       </form>
+      {isStatusMessageVisible && (
+        <BasicModalWindows onClose={() => setIsStatusMessageVisible(false)}>
+          {'Сталася помилка... Спробуйте ще раз.'}
+        </BasicModalWindows>
+      )}
     </div>
   );
 };
