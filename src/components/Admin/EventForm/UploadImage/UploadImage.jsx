@@ -1,73 +1,95 @@
-import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import PreviewFile from './PreviewFile';
 import ImageComponent from './ImageComponent';
 import NoImageComponent from './NoImageComponent';
-import UploadInputComponent from './UploadInputComponent';
-import ErrorMessage from '../ErrorMessage';
-import { IMAGE_BASE_URL } from '@/helpers/constants';
 
 const ImageUpload = ({
-  handleImageChange,
-  imageName,
-  imageTitle,
-  attributes,
+  register,
+  placeholder,
+  type,
   errorMessage,
-  formDataImage,
-  lang,
+  inputName,
+  inputLabel,
+  resetField,
+  watch,
+  eventImageName,
+  validFileExtensions,
 }) => {
-  const [imageForPreview, setImageForPreview] = useState(null);
-  const [imageData, setImageData] = useState({
-    src: '',
-    alt: '',
-  });
+  const [defaultValue, setDefaultValue] = useState(null);
 
-  const inputFileRef = useRef(null);
+  const t = useTranslations('EventForm.inputImage.buttonName');
 
   useEffect(() => {
-    if (!formDataImage) {
-      resetImage();
+    if (watch(inputName) === null && defaultValue !== null) {
+      resetField(inputName, { defaultValue });
     }
-  }, [formDataImage]);
+  }, [defaultValue, inputName, resetField, watch]);
 
   useEffect(() => {
-    setImageData({ src: imageName, alt: imageTitle });
-  }, [imageName, imageTitle]);
-
-  const handleChange = evt => {
-    setImageData({ src: '', alt: '' });
-    setImageForPreview(URL.createObjectURL(evt.target.files[0]));
-    let bodyFormData = new FormData();
-    bodyFormData.append('file', evt.target.files[0]);
-
-    handleImageChange(bodyFormData);
-  };
+    if (defaultValue) {
+      return;
+    }
+    if (watch(inputName)) {
+      setDefaultValue(watch(inputName));
+    }
+  }, [defaultValue, inputName, watch]);
 
   const resetImage = () => {
-    setImageForPreview(null);
-    setImageData({ src: '', alt: '' });
-    inputFileRef.current.value = null;
+    resetField(inputName, { defaultValue });
   };
 
-  return (
-    <div className="flex w-full max-w-[300px] flex-col gap-[20px] rounded-[15px] border-[1px] border-gray/50 bg-gray/0 p-[20px] dark:border-gray/20 dark:bg-gray/80">
-      {imageForPreview || imageData.src ? (
-        <ImageComponent
-          resetImage={resetImage}
-          src={imageForPreview || `${IMAGE_BASE_URL}${imageData.src}`}
-          alt={imageData.alt || ''}
-        />
-      ) : (
-        <NoImageComponent lang={lang} />
-      )}
+  function getAllowedExt() {
+    return validFileExtensions.map(e => `.${e}`).toString();
+  }
 
-      <div className="relative">
-        <UploadInputComponent
-          attributes={attributes}
-          inputFileRef={inputFileRef}
-          isImageUpload={imageForPreview || imageData.src}
-          onChange={handleChange}
-        />
-        {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : null}
+  let allowedExts = getAllowedExt();
+  return (
+    <div className="w-full">
+      <p className="pl-[10px] font-heading text-[22px]">{inputLabel}</p>
+      <div className="relative mb-[30px]">
+        {watch(inputName) && watch(inputName)[0] ? (
+          <PreviewFile resetImage={resetImage} file={watch(inputName)[0]} />
+        ) : eventImageName ? (
+          <ImageComponent eventImageName={eventImageName} />
+        ) : (
+          <NoImageComponent errorMessage={errorMessage} />
+        )}
+
+        {errorMessage && (
+          <p
+            className="absolute top-[calc(100%+2px)] text-[#f94545]"
+            role="alert"
+          >
+            {`${errorMessage} ${
+              watch(inputName) &&
+              watch(inputName)[0] &&
+              `-".${watch(inputName)[0].name.split('.').pop()}"`
+            }`}
+          </p>
+        )}
       </div>
+
+      <label
+        className="relative flex w-full cursor-pointer flex-col
+      rounded-[10px] bg-gray/80 px-[20px] py-[10px] 
+      text-center text-[16px] text-gray/5 transition-colors 
+    hover:bg-gray/50
+    "
+      >
+        <span>
+          {watch(inputName) && watch(inputName)[0]
+            ? t('isImage')
+            : t('noImage')}
+        </span>
+        <input
+          className="hidden"
+          {...register(inputName)}
+          accept={allowedExts}
+          placeholder={placeholder}
+          type={type}
+        />
+      </label>
     </div>
   );
 };

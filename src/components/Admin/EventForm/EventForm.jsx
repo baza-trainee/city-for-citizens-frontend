@@ -1,340 +1,285 @@
 'use client';
-import { LOCALE } from '@/helpers/constants';
 
-import ImageUpload from './UploadImage/UploadImage';
-
-import { useHandleFormData } from '@/hooks';
-import { useState } from 'react';
-import AddEventType from './AddEventType/AddEventType';
-import { errorMessage, regexPatterns } from './constants';
+import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import { formatDateSeparatorDash } from '@/helpers';
-import { formatTime } from '@/helpers/formatDate';
+import { useForm } from 'react-hook-form';
+import { getValidationScheme, validFileExtensions } from './helpers';
+import { useState } from 'react';
+import ImageUpload from './UploadImage/UploadImage';
+import AddEventType from './AddEventType/AddEventType';
 
-const EventForm = ({ buttonName, onSubmit, eventUk, eventEn }) => {
-  const [formDataUk, handleChangeUk, resetFormUk] = useHandleFormData(
-    'uk_UA',
-    eventUk
-  );
-
-  const [formDataEn, handleChangeEn, resetFormEn] = useHandleFormData(
-    'en_US',
-    eventEn
-  );
-
-  const [formDataImageUk, setFormDataImageUk] = useState(null);
-  const [formDataImageEn, setFormDataImageEn] = useState(null);
-
-  const [formDataEventTypeUk, setFormDataEventTypeUk] = useState([]);
-  const [formDataEventTypeEn, setFormDataEventTypeEn] = useState([]);
-  const [errorMessageUk, setErrorMessageUk] = useState({
-    eventType: '',
-    eventImage: '',
-  });
-  const [errorMessageEn, setErrorMessageEn] = useState({
-    eventType: '',
-    eventImage: '',
-  });
-
-  const resetForm = () => {
-    setFormDataImageUk(null);
-    setFormDataImageEn(null);
-    setFormDataEventTypeUk([]);
-    setFormDataEventTypeEn([]);
-    resetFormUk();
-    resetFormEn();
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const dataUk = {
-      ...formDataUk,
-      eventType: formDataEventTypeUk.join(','),
-      time: formatTime(formDataEn.time),
-    };
-    const dataEn = {
-      ...formDataEn,
-      eventType: formDataEventTypeEn.join(','),
-      time: formatTime(formDataEn.time),
-    };
-
-    if (formDataEventTypeUk.length === 0) {
-      setErrorMessageUk(prev => ({
-        ...prev,
-        eventType: errorMessage.eventType,
-      }));
-      return;
-    } else if (formDataEventTypeEn.length === 0) {
-      setErrorMessageEn(prev => ({
-        ...prev,
-        eventType: errorMessage.eventType,
-      }));
-      return;
-    } else {
-      setErrorMessageEn('');
-      setErrorMessageUk('');
-    }
-
-    if (!formDataUk.eventImage && !formDataImageUk) {
-      setErrorMessageUk(prev => ({
-        ...prev,
-        eventImage: errorMessage.eventImage,
-      }));
-      return;
-    } else if (!formDataEn.eventImage && !formDataImageEn) {
-      setErrorMessageEn(prev => ({
-        ...prev,
-        eventImage: errorMessage.eventImage,
-      }));
-      return;
-    } else {
-      setErrorMessageEn('');
-      setErrorMessageUk('');
-    }
-
-    onSubmit(e, dataUk, dataEn, formDataImageUk, formDataImageEn, resetForm);
+export default function EventForm({
+  onSubmit,
+  initialData,
+  buttonNameSubmit,
+  buttonNameReset,
+}) {
+  const initialFormData = {
+    firstLocale: {
+      eventTitle: '',
+      city: '',
+      street: '',
+      description: '',
+      notes: '',
+      eventType: '',
+      eventImage: '',
+    },
+    secundLocale: {
+      eventTitle: '',
+      city: '',
+      street: '',
+      description: '',
+      notes: '',
+      eventType: '',
+      eventImage: '',
+    },
+    common: { time: '', date: '', coordinates: '', eventUrl: '' },
   };
 
   const t = useTranslations('EventForm');
+  const {
+    register,
+    formState: { errors, isDirty },
+    handleSubmit,
+    setValue,
+    resetField,
+    reset,
+    watch,
+  } = useForm({
+    defaultValues: initialData || initialFormData,
+    resolver: yupResolver(getValidationScheme(t)),
+  });
 
-  const inputsAttributes = {
+  const [clickResetForm, setClickResetForm] = useState(false);
+
+  const resetForm = () => {
+    setClickResetForm(prev => !prev);
+    reset();
+  };
+
+  const wrapperForPairInputsClassNames =
+    'col-span-2 flex tablet:items-end flex-col tablet:flex-row gap-[25px]';
+
+  const inputsSettings = {
     firstGroup: [
       {
         tag: 'input',
-        label: t('eventTitle.title'),
-        name: 'eventTitle',
+        inputLabel: t('eventTitle.title'),
+        inputName: 'eventTitle',
         type: 'text',
         placeholder: t('eventTitle.placeholder'),
-        title: t('eventTitle.infoMessage'),
-        pattern: '.{3,}',
-        required: true,
       },
       {
         tag: 'input',
-        label: t('city.title'),
-        name: 'city',
+        inputLabel: t('city.title'),
+        inputName: 'city',
         type: 'text',
         placeholder: t('city.placeholder'),
-        title: t('city.infoMessage'),
-        pattern: '.{2,}',
-        required: true,
       },
       {
         tag: 'input',
-        label: t('street.title'),
-        name: 'street',
+        inputLabel: t('street.title'),
+        inputName: 'street',
         type: 'text',
         placeholder: t('street.placeholder'),
-        title: t('street.infoMessage'),
-        pattern: '.{2,}',
-        required: true,
       },
       {
         tag: 'textarea',
-        label: t('description.title'),
-        name: 'description',
+        inputLabel: t('description.title'),
+        inputName: 'description',
         type: 'text',
-        rows: '5',
         placeholder: t('description.placeholder'),
-        required: true,
       },
       {
         tag: 'textarea',
-        label: t('notes.title'),
-        name: 'notes',
+        inputLabel: t('notes.title'),
+        inputName: 'notes',
         type: 'text',
-        rows: '3',
         placeholder: t('notes.placeholder'),
-        required: true,
       },
     ],
     secondGroup: [
       {
         tag: 'input',
-        label: t('date.title'),
-        name: 'date',
+        inputLabel: t('date.title'),
+        inputName: 'date',
         type: 'date',
-        min: formatDateSeparatorDash(new Date()),
-        required: true,
       },
       {
         tag: 'input',
-        label: t('time.title'),
-        name: 'time',
+        inputLabel: t('time.title'),
+        inputName: 'time',
         type: 'time',
-        required: true,
       },
       {
         tag: 'input',
-        label: t('coordinates.title'),
-        name: 'coordinates',
+        inputLabel: t('coordinates.title'),
+        inputName: 'coordinates',
         type: 'text',
-        placeholder: '49.0476145113, 31.38737251941',
-        title: t('coordinates.infoMessage'),
-        pattern: regexPatterns.coordinates,
-        required: true,
+        placeholder: t('coordinates.placeholder'),
       },
       {
         tag: 'input',
-        label: t('eventUrl.title'),
-        name: 'eventUrl',
+        inputLabel: t('eventUrl.title'),
+        inputName: 'eventUrl',
         type: 'url',
-        placeholder: 'https://example.com',
-        title: t('eventUrl.infoMessage'),
-        pattern: 'https://.*',
-        required: true,
+        placeholder: t('eventUrl.placeholder'),
       },
     ],
-
-    eventType: {
-      name: 'eventType',
-      type: 'text',
-      rows: '1',
-      required: true,
-    },
-    eventTypePlaceholder: t('eventType.placeholder'),
-    eventImage: {
-      name: 'eventImage',
-      type: 'file',
-      accept: 'image/png, image/jpeg, image/png',
-    },
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto mb-[30px] max-w-[650px]">
-      <div className="mx-auto mb-[35px] flex flex-wrap items-center justify-center gap-[15px] gap-x-[50px]">
-        {inputsAttributes.firstGroup.map(
-          ({ label, placeholder, name, tag, ...attr }) => {
-            const commonProps = {
-              name: name,
-              tag: tag,
-              attributes: attr,
-            };
-
-            return (
-              <FieldWrapper label={label} key={label}>
-                <FormElement
-                  value={formDataUk[name]}
-                  handleChange={handleChangeUk}
-                  placeholder={`${placeholder} ${t('language.uk')}`}
-                  {...commonProps}
-                />
-                <FormElement
-                  value={formDataEn[name]}
-                  handleChange={handleChangeEn}
-                  placeholder={`${placeholder} ${t('language.en')}`}
-                  {...commonProps}
-                />
-              </FieldWrapper>
-            );
-          }
-        )}
-
-        <FieldWrapper label={t('eventType.title')}>
-          <AddEventType
-            attributes={inputsAttributes.eventType}
-            initialState={formDataUk.eventType || ''}
-            errorMessage={errorMessageUk.eventType}
-            setEventTypesSelected={setFormDataEventTypeUk}
-            eventTypesSelected={formDataEventTypeUk}
-            locale={LOCALE.uk.forRequest}
-            eventTypePlaceholder={` ${
-              inputsAttributes.eventTypePlaceholder
-            } ${t('language.uk')}`}
-          />
-          <AddEventType
-            attributes={inputsAttributes.eventType}
-            errorMessage={errorMessageEn.eventType}
-            initialState={formDataEn.eventType || ''}
-            setEventTypesSelected={setFormDataEventTypeEn}
-            eventTypesSelected={formDataEventTypeEn}
-            locale={LOCALE.en.forRequest}
-            eventTypePlaceholder={` ${
-              inputsAttributes.eventTypePlaceholder
-            } ${t('language.en')}`}
-          />
-        </FieldWrapper>
-        <FieldWrapper label={t('inputImage.title')}>
-          <ImageUpload
-            attributes={inputsAttributes.eventImage}
-            errorMessage={errorMessageUk.eventImage}
-            imageName={formDataUk.eventImage || ''}
-            imageTitle={formDataUk.eventTitle || ''}
-            handleImageChange={setFormDataImageUk}
-            formDataImage={formDataImageUk}
-            lang={t('language.uk')}
-          />
-          <ImageUpload
-            attributes={inputsAttributes.eventImage}
-            errorMessage={errorMessageEn.eventImage}
-            imageName={formDataEn.eventImage || ''}
-            imageTitle={formDataEn.eventTitle || ''}
-            handleImageChange={setFormDataImageEn}
-            formDataImage={formDataImageEn}
-            lang={t('language.en')}
-          />
-        </FieldWrapper>
-        {inputsAttributes.secondGroup.map(
-          ({ label, placeholder, name, tag, ...attr }) => (
-            <FieldWrapper label={label} key={label}>
+    <form
+      className="mx-auto mb-[50px] grid grid-flow-row-dense grid-cols-2 gap-x-[32px] gap-y-[30px] rounded-[20px] border-[3px] border-primary/0 px-[30px] py-[50px] dark:border-gray/20 tablet:w-[700px]"
+      onSubmit={handleSubmit(formData => onSubmit(formData, resetForm))}
+    >
+      {inputsSettings.firstGroup.map(
+        ({ tag, inputLabel, inputName, placeholder, type }) => {
+          return (
+            <div key={inputLabel} className={wrapperForPairInputsClassNames}>
               <FormElement
-                value={formDataUk[name]}
-                name={name}
+                type={type}
+                placeholder={`${placeholder} ${t('language.uk')}`}
                 tag={tag}
-                placeholder={placeholder}
-                handleChange={e => {
-                  handleChangeEn(e);
-                  handleChangeUk(e);
-                }}
-                attributes={attr}
+                errorMessage={errors?.firstLocale?.[inputName]?.message}
+                inputLabel={inputLabel}
+                register={register(`firstLocale.${inputName}`)}
               />
-            </FieldWrapper>
-          )
-        )}
+
+              <FormElement
+                type={type}
+                placeholder={`${placeholder} ${t('language.en')}`}
+                tag={tag}
+                errorMessage={errors?.secundLocale?.[inputName]?.message}
+                register={register(`secundLocale.${inputName}`)}
+              />
+            </div>
+          );
+        }
+      )}
+      <div className={wrapperForPairInputsClassNames}>
+        <ImageUpload
+          type="file"
+          watch={watch}
+          validFileExtensions={validFileExtensions}
+          resetField={resetField}
+          eventImageName={initialData?.firstLocale?.eventImageName}
+          errorMessage={errors?.firstLocale?.eventImage?.message}
+          inputName={'firstLocale.eventImage'}
+          inputLabel={t('inputImage.title')}
+          register={register}
+        />
+
+        <ImageUpload
+          type="file"
+          watch={watch}
+          validFileExtensions={validFileExtensions}
+          resetField={resetField}
+          eventImageName={initialData?.secundLocale?.eventImageName}
+          errorMessage={errors?.secundLocale?.eventImage?.message}
+          inputName={'secundLocale.eventImage'}
+          register={register}
+        />
+      </div>
+      <div className={wrapperForPairInputsClassNames}>
+        <AddEventType
+          locale="uk_UA"
+          watch={watch}
+          placeholder={`${t('eventType.placeholder')}`}
+          errorMessage={errors?.firstLocale?.eventType?.message}
+          initialState={initialData?.firstLocale?.eventType}
+          inputName={'firstLocale.eventType'}
+          inputLabel={t('eventType.title')}
+          register={register}
+          setValue={setValue}
+          clickResetForm={clickResetForm}
+        />
+        <AddEventType
+          locale="en_US"
+          watch={watch}
+          placeholder={`${t('eventType.placeholder')}`}
+          errorMessage={errors?.secundLocale?.eventType?.message}
+          initialState={initialData?.secundLocale?.eventType}
+          inputName={'secundLocale.eventType'}
+          register={register}
+          setValue={setValue}
+          clickResetForm={clickResetForm}
+        />
       </div>
 
-      <button
+      {inputsSettings.secondGroup.map(
+        ({ tag, inputLabel, inputName, placeholder, type }) => {
+          return (
+            <FormElement
+              key={inputLabel}
+              type={type}
+              tag={tag}
+              errorMessage={errors?.common?.[inputName]?.message}
+              inputLabel={inputLabel}
+              register={register(`common.${inputName}`)}
+              placeholder={placeholder}
+            />
+          );
+        }
+      )}
+
+      <input
+        className={`mt-[30px]  cursor-pointer rounded-[10px] px-[20px] py-[10px] text-center text-[16px] transition-colors ${
+          isDirty
+            ? 'bg-gray/80 text-gray/5 hover:bg-primary/80'
+            : '!cursor-not-allowed bg-gray/50 text-gray/5 hover:bg-[#9e2929]'
+        }`}
         type="submit"
-        className="mx-auto my-0 block cursor-pointer rounded-[10px] bg-primary/100 
-           px-[40px] py-[10px]  
-          text-center text-[16px]  text-gray/5 transition-colors 
-    hover:bg-primary/80"
-      >
-        {buttonName}
-      </button>
+        disabled={!isDirty}
+        value={buttonNameSubmit}
+      />
+
+      <input
+        className="mt-[30px] cursor-pointer rounded-[10px] bg-gray/80 px-[20px] py-[10px] 
+        text-center text-[16px] text-gray/5 transition-colors 
+      hover:bg-[#9e2929]"
+        type="button"
+        onClick={resetForm}
+        value={buttonNameReset}
+      />
     </form>
   );
-};
-export default EventForm;
-
-const FieldWrapper = ({ children, label }) => {
-  return (
-    <div className="">
-      <h3 className="mb-[10px] text-center text-[20px]">{label}</h3>
-      <div className="flex flex-col gap-[10px] tablet:flex-row tablet:gap-[50px]">
-        {children}
-      </div>
-    </div>
-  );
-};
+}
 
 const FormElement = ({
-  handleChange,
-  value,
+  errorMessage,
+  register,
+  inputLabel,
   placeholder,
-  name,
-  attributes,
   tag,
+  type,
 }) => {
+  const inputClassNames = `rounded-[5px] border-[2px] p-[10px] outline-none bg-gray/0 dark:border-gray/20 dark:bg-gray/80`;
   const Tag = tag === 'input' ? 'input' : 'textarea';
   return (
-    <Tag
-      className="w-[300px] max-w-[300px] resize-none rounded-[5px] border-[1px] border-gray/50 bg-gray/0 px-[16px] py-[8px] dark:border-gray/20 dark:bg-gray/80"
-      {...attributes}
-      value={value}
-      name={name}
-      placeholder={placeholder}
-      onChange={handleChange}
-    />
+    <label className="relative flex w-full flex-col ">
+      {inputLabel && (
+        <p className="pl-[10px] font-heading text-[22px]">{inputLabel}</p>
+      )}
+      <Tag
+        type={type}
+        autoComplete="off"
+        placeholder={placeholder}
+        className={`${inputClassNames} ${clsx(
+          tag === 'textarea' && 'resize-none',
+          errorMessage && '!border-[#f94545]'
+        )}`}
+        {...register}
+      />
+      {errorMessage && (
+        <p
+          className="absolute top-[calc(100%+2px)] grid grid-rows-[15px]  overflow-hidden px-[3px] leading-[1] text-[#f94545] transition-all hover:grid-rows-[1fr] hover:bg-gray/5/90 dark:hover:bg-gray/100/90"
+          role="alert"
+        >
+          {errorMessage}
+        </p>
+      )}
+    </label>
   );
 };

@@ -4,10 +4,11 @@
       "uk": "ukrainian",
       "en": "english"
     },
+    "requiredMessage": "This field is required",
     "eventTitle": {
       "title": "Event name",
       "placeholder": "Enter the name in",
-      "infoMessage": "The name of the event cannot be less than 3 characters"
+      "infoMessage": "The name of the event cannot be less than 5 characters"
     },
     "city": {
       "title": "City",
@@ -32,7 +33,7 @@
     "date": {
       "title": "Enter the date",
       "placeholder": "",
-      "infoMessage": ""
+      "infoMessage": "Date cannot be in the past"
     },
     "time": {
       "title": "Enter the time",
@@ -41,21 +42,24 @@
     },
     "coordinates": {
       "title": "Coordinates",
-      "placeholder": "",
+      "placeholder": "49.0476145113, 31.38737251941",
       "infoMessage": "The coordinates should be in the following format: '-12.3456789, +112.3456789', '45.123456, 87.654321', '0.0, 0.0' (you can use online maps, for example, Google Maps)"
     },
     "eventUrl": {
       "title": "Event Url",
-      "placeholder": "",
+      "placeholder": "https://example.com",
       "infoMessage": "Enter a URL, for example: https://example.com"
     },
     "eventType": {
       "title": "Event type",
-      "placeholder": "Enter a new type in",
+      "placeholder": "Enter type in",
       "listTitle": {
         "listEmpty": "Or select from the list",
         "noListEmpty": "Select from the list"
       },
+      "addNewType": "Add a new type +",
+      "addNewTypeForm": "Enter something...",
+
       "infoMessage": "Click on the 'Add"
     },
 
@@ -67,8 +71,12 @@
       },
       "titleNoImage": "Upload image",
       "format": "PNG, JPG, GIF formats",
-      "size": "up to 10 MB in size",
-      "infoMessage": "Add a picture of the event."
+      "size": "up to 2 MB in size",
+      "infoMessage": "Add a picture of the event.",
+      "isValidType": "Not a valid image type",
+      "isValidSize": "Max allowed size is 2 MB",
+      "errorUrl": "We're sorry, but the image could not be loaded at the specified URL. The link may be invalid or the image may be missing. Please check if the image is displayed on the map in the event card. If the problem persists, try uploading a new image.",
+      "noImage": "Sorry, but the file you uploaded is not an image. Please make sure you have selected the correct file and try again. The image must be in a supported format, JPEG, PNG, GIF."
     }
   }
 }

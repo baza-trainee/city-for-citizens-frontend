@@ -1,28 +1,31 @@
-import CloseButton from '@/components/UI/icons/IconClose';
+import { IMAGE_BASE_URL } from '@/helpers/constants';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useState } from 'react';
 
-const ImageComponent = ({ resetImage, src, alt }) => {
+const ImageComponent = ({ eventImageName }) => {
+  const [onError, setOnError] = useState(false);
   const handleImageError = () => {
-    resetImage();
+    setOnError(true);
   };
+  const t = useTranslations('EventForm.inputImage');
 
   return (
     <div className="relative">
-      <Image
-        onError={handleImageError}
-        className=" h-[108px] w-[240px] rounded-[10px] border object-cover dark:border-gray/80 mobile:w-[358px]"
-        src={src}
-        alt={alt}
-        width={240}
-        height={105}
-      />
-      <button
-        className="absolute -right-[10px] -top-[10px] rounded-[50%] bg-gray/10 dark:bg-gray/50"
-        onClick={resetImage}
-        type="button"
-      >
-        <CloseButton className="h-[32px]  w-[32px] stroke-gray/80 transition-colors hover:stroke-[#ff0000] dark:stroke-gray/10 hover:dark:stroke-[#cd4747]" />
-      </button>
+      {!onError ? (
+        <Image
+          onError={handleImageError}
+          className="h-[108px] w-full rounded-[10px] border object-cover dark:border-gray/80"
+          src={`${IMAGE_BASE_URL}${eventImageName}`}
+          alt={eventImageName}
+          width={260}
+          height={105}
+        />
+      ) : (
+        <p className="h-[108px] w-full overflow-scroll rounded-[10px] border-[2px] border-[#f94545] bg-gray/5 p-[10px] text-[#f94545] dark:bg-gray/50">
+          {t('errorUrl')}
+        </p>
+      )}
     </div>
   );
 };

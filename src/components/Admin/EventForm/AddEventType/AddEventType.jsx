@@ -1,90 +1,45 @@
-import CloseButton from '@/components/UI/icons/IconClose';
-import IconSelectArrow from '@/components/UI/icons/IconSelectArrow';
-
-import { useEffect, useRef, useState } from 'react';
-import TypeList from './TypeList';
-import ErrorMessage from '../ErrorMessage';
-import { useTranslations } from 'next-intl';
 import { useGetTypesEventsQuery } from '@/redux/api/filtersApi';
-
-const useOnClickOutside = (ref, handler) => {
-  useEffect(() => {
-    const listener = event => {
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      handler(event);
-    };
-
-    document.addEventListener('click', listener);
-
-    return () => {
-      document.removeEventListener('click', listener);
-    };
-  }, [ref, handler]);
-};
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import TypeList from './TypeList';
+import FormAddNewType from './FormAddNewType';
 
 const AddEventType = ({
   locale,
-  initialState,
-  eventTypesSelected,
-  setEventTypesSelected,
-  attributes,
   errorMessage,
-  eventTypePlaceholder,
+  inputName,
+  register,
+  inputLabel,
+  placeholder,
+  setValue,
+  clickResetForm,
+  watch,
+  initialState,
 }) => {
-  const [isTypeListVisible, setIsTypeListVisible] = useState(false);
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
-
+  const [eventTypesSelected, setEventTypesSelected] = useState([]);
   const [eventTypesList, setEventTypesList] = useState([]);
-  const [inputText, setInputText] = useState('');
+  const { data: serverTypeList } = useGetTypesEventsQuery({ locale });
 
-  const wrapperRef = useRef(null);
-  const buttonRef = useRef(null);
-
-  const t = useTranslations('EventForm.eventType.listTitle');
+  useEffect(() => {
+    setEventTypesSelected([]);
+  }, [clickResetForm]);
 
   useEffect(() => {
     if (initialState) {
-      setEventTypesSelected(initialState.split(','));
+      const arr = initialState.split(', ');
+      setEventTypesSelected(prev => [...prev, ...arr]);
     }
-  }, [initialState, setEventTypesSelected]);
-
-  const { data } = useGetTypesEventsQuery({ locale });
-
-  useEffect(() => {
-    if (data) {
-      setEventTypesList(data);
-    }
-  }, [data]);
+  }, [initialState, clickResetForm]);
 
   useEffect(() => {
-    if (inputText) {
-      if (errorMessage && eventTypesSelected.length === 0) {
-        setIsErrorMessageVisible(true);
-        return;
-      }
+    if (serverTypeList) {
+      setEventTypesList(serverTypeList.map(e => e.trim()));
     }
-    setIsErrorMessageVisible(false);
-  }, [inputText, errorMessage, eventTypesSelected]);
+  }, [serverTypeList]);
 
-  const handleSubmit = () => {
-    const trimmedText = inputText.trim();
-    if (trimmedText !== '') {
-      if (!eventTypesList.includes(trimmedText)) {
-        setEventTypesList(prev => [...prev, trimmedText]);
-        setEventTypesSelected(prev => [...prev, trimmedText]);
-      }
-      setInputText('');
-    }
-  };
-
-  const handleEnterKey = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSubmit();
-    }
-  };
+  useEffect(() => {
+    setValue(inputName, eventTypesSelected.join(', '));
+  }, [eventTypesSelected, inputName, setValue]);
 
   const toggleEventType = type => {
     setEventTypesSelected(prev => {
@@ -98,79 +53,62 @@ const AddEventType = ({
     });
   };
 
-  useOnClickOutside(wrapperRef, event => {
-    if (!buttonRef.current.contains(event.target)) {
-      setIsTypeListVisible(false);
+  const handleAddNewType = value => {
+    if (!eventTypesList.includes(value.trim())) {
+      setEventTypesList(prev => [value, ...prev]);
+      setEventTypesSelected(prev => [...prev, value]);
     }
-  });
+  };
+
+  const onDeleteAddedType = type => {
+    const onDelete = (prev, type) => {
+      const newSet = new Set(prev);
+      newSet.delete(type);
+      return Array.from(newSet);
+    };
+
+    setEventTypesList(prev => onDelete(prev, type));
+    setEventTypesSelected(prev => onDelete(prev, type));
+  };
+
+  const inputClassNames = `rounded-[5px] border-[2px] p-[10px] outline-none bg-gray/0 dark:border-gray/20 dark:bg-gray/80`;
 
   return (
-    <div
-      ref={wrapperRef}
-      className="relative flex w-[300px] flex-col gap-[10px] rounded-[5px]  border-[1px] border-gray/50  bg-gray/0 p-[8px] dark:border-gray/20 dark:bg-gray/80"
-    >
-      <div className="relative h-[40px] w-full">
-        {isErrorMessageVisible &&
-        errorMessage &&
-        eventTypesSelected.length === 0 ? (
-          <ErrorMessage errorMessage={errorMessage} />
-        ) : null}
+    <div className="relative flex h-full w-full flex-col justify-end gap-[6px]">
+      <label className="relative flex w-full flex-col">
+        <p className="pl-[10px] font-heading text-[22px]">{inputLabel}</p>
+
         <textarea
-          {...attributes}
-          placeholder={eventTypePlaceholder}
-          onKeyDown={handleEnterKey}
-          className="w-full resize-none rounded-[5px] border-[1px] border-gray/10 bg-gray/5 p-[8px] dark:border-gray/50  dark:bg-gray/80"
-          onChange={e => setInputText(e.target.value)}
-          readOnly={
-            !inputText && eventTypesSelected.length !== 0 && !isTypeListVisible
-          }
-          value={
-            isTypeListVisible || inputText
-              ? inputText
-              : eventTypesSelected.join(', ')
-          }
+          readOnly={true}
+          rows={1}
+          className={`${inputClassNames} ${clsx(
+            'mt-[3px] resize-none',
+            errorMessage && watch(inputName) === '' && '!border-[#f94545]'
+          )}`}
+          autoComplete="off"
+          placeholder={placeholder}
+          {...register(inputName)}
         />
-        {inputText ? (
-          <button
-            onClick={handleSubmit}
-            className="absolute right-[8px] top-[8px] "
+
+        {errorMessage && watch(inputName) === '' && (
+          <p
+            className="absolute top-[calc(100%+2px)] text-[#f94545]"
+            role="alert"
           >
-            <CloseButton
-              width={24}
-              height={24}
-              className="rotate-[45deg] stroke-[currentColor]"
-            />
-          </button>
-        ) : null}
-      </div>
+            {errorMessage}
+          </p>
+        )}
+      </label>
 
-      <button
-        type="button"
-        onClick={() => {
-          setIsTypeListVisible(prev => !prev);
-        }}
-        className="flex justify-between px-[8px]"
-        ref={buttonRef}
-      >
-        <p>
-          {eventTypesSelected.length === 0 ? t('listEmpty') : t('noListEmpty')}
-        </p>
-        <IconSelectArrow
-          width={24}
-          height={24}
-          className={`h-[24px] w-[24px] cursor-pointer transition-all ${
-            isTypeListVisible ? '-rotate-180' : ''
-          }`}
-        />
-      </button>
+      <TypeList
+        serverTypeList={serverTypeList && serverTypeList.map(e => e.trim())}
+        onDeleteAddedType={onDeleteAddedType}
+        eventTypesSelected={eventTypesSelected}
+        eventTypesList={eventTypesList}
+        toggleEventType={toggleEventType}
+      />
 
-      {isTypeListVisible ? (
-        <TypeList
-          eventTypesList={eventTypesList}
-          toggleEventType={toggleEventType}
-          eventTypesSelected={eventTypesSelected}
-        />
-      ) : null}
+      <FormAddNewType handleAddNewType={handleAddNewType} />
     </div>
   );
 };

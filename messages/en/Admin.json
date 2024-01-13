@@ -2,16 +2,28 @@
   "Admin": {
     "addEvent": {
       "title": "Add event",
+      "message": {
+        "error": "There was an unknown error, please try again later.",
+        "success": "Event added successfully.",
+        "refresh": "Your session time has expired, so we had to verify your information, please try clicking the 'Add Event' button again."
+      },
       "buttonName": {
         "add": "Add event",
-        "cancel": "Cancel"
+        "cancel": "Reset"
       }
     },
     "updateEvent": {
       "title": "Update event",
+      "message": {
+        "error": "There was an unknown error, please try again later.",
+        "errorImage": "The old image has not been deleted from the database, it may not have existed, but contact support to check the information.",
+        "errorImageDetail": "Detail:",
+        "success": "The event has been successfully updated.",
+        "refresh": "Your session time has expired, so we had to verify your details, please try clicking the 'Update event' button again."
+      },
       "buttonName": {
         "update": "Update event",
-        "cancel": "Cancel"
+        "cancel": "Reset"
       }
     },
     "loginForm": {
