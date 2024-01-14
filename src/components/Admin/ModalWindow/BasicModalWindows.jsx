@@ -17,11 +17,11 @@ const BasicModalWindows = ({ onClose, message, children, detailsMessage }) => {
         >
           <CloseButton className="h-[24px] w-[24px] stroke-gray/100 dark:stroke-gray/0" />
         </button>
-        <p>{message}</p>
+        <p className="text-justify">{message}</p>
         {detailsMessage && (
           <div className="relative">
             <p className="peer">{t('message.errorImageDetail')}</p>
-            <p className="absolute left-1/2 top-full grid w-[100%] min-w-[200px] max-w-[300px] -translate-x-1/2 grid-rows-[0px] overflow-hidden rounded-[10px] bg-gray/5 p-[3px] px-[25px] pb-[25px] leading-[1] opacity-0 transition-all peer-hover:grid-rows-[1fr] peer-hover:opacity-[1] dark:bg-gray/80">
+            <p className="absolute left-1/2 top-full grid w-[100%] min-w-[200px] max-w-[300px] -translate-x-1/2 grid-rows-[0px] overflow-hidden rounded-[10px] bg-gray/5 p-[3px] px-[25px] pb-[25px] text-justify leading-[1] opacity-0 transition-all peer-hover:grid-rows-[1fr] peer-hover:opacity-[1] dark:bg-gray/80">
               {detailsMessage}
             </p>
           </div>

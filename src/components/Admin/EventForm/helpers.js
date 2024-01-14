@@ -1,3 +1,4 @@
+import { formatTime } from '@/helpers/formatDate';
 import * as yup from 'yup';
 
 export function isValidFileType(fileName, validFile) {
@@ -59,7 +60,7 @@ export function getValidationScheme(t) {
           ),
     }),
   };
-
+  //formatTime
   const commonScheme = {
     date: yup
       .string()
@@ -74,7 +75,10 @@ export function getValidationScheme(t) {
         return enteredDate > currentDate;
       }),
 
-    time: yup.string().required(t('requiredMessage')),
+    time: yup
+      .string()
+      .required(t('requiredMessage'))
+      .transform(value => formatTime(value)),
     coordinates: yup
       .string()
       .required(t('requiredMessage'))
