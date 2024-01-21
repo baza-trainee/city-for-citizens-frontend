@@ -1,6 +1,6 @@
-import AddEvent from '@/components/Admin/AddEvent';
+import EventList from '@/components/Admin/EventList/EventList';
 
-const AdminPage = async () => {
-  return <AddEvent />;
+const Page = async () => {
+  return <EventList />;
 };
-export default AdminPage;
+export default Page;
