@@ -8,10 +8,83 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
+      // new design
+      roboto: ['var(--font-roboto)'],
+      ubuntu: ['var(--font-font-ubuntu)'],
+      exo_2: ['var(--font-exo-2)'],
+      source_sans_3: ['var(--font-source-sans-3)'],
+
+      // old design
       sans: ['NewMexika', 'sans-serif'],
       heading: ['MAK', 'sans-serif'],
     },
     colors: {
+      // new design
+      admin: {
+        darkblue: '#3D4756',
+        dark: '#131313',
+        menu: '#B0C1EF',
+        light_1: '#FBFAFA',
+        light_2: '#FEFEFE',
+        light_3: '#FFFFFF',
+      },
+      state: {
+        success: '#2D982B',
+        error_main: '#E21B00',
+        error_primary: '#E11717',
+        error_second: '#FFF0F0',
+        non_focus: '#868686',
+      },
+
+      icon: '#767676',
+      black: '#000000',
+      white: '#FFFFFF',
+      yellow: '#FFD646',
+
+      // light
+      light: {
+        accent: '#000000',
+
+        // text
+        head: '#000000',
+        main: '#696969',
+
+        // background
+        primary: '#FFFFFF',
+        secondary: '#F2F2F2',
+        border: '#AEAEAE',
+
+        button: {
+          hover: '#464646',
+          default: '#000000',
+          pressed: '#222222',
+          text: '#FFFFFF',
+        },
+      },
+
+      // dark
+
+      dark: {
+        accent: '#FFD646',
+
+        // text
+        head: '#FFFFFF',
+        main: '#BBBBBB',
+
+        // background
+        primary: '#191919',
+        secondary: '#060606',
+        border: '#2B2B2B',
+
+        button: {
+          hover: '#FFF464',
+          default: '#FFD646',
+          pressed: '#E1B828',
+          text: '#000000',
+        },
+      },
+
+      // old design
       'primary/100': '#0D3BDD',
       'primary/80': '#6589E3',
       'primary/0': '#000',

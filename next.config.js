@@ -2,7 +2,12 @@ const withNextIntl = require('next-intl/plugin')();
 
 const config = {
   images: {
-    domains: ['city-backend-45go.onrender.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'city-backend-45go.onrender.com',
+      },
+    ],
   },
 };
 

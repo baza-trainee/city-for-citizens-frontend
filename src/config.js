@@ -10,7 +10,6 @@ export const pathnames = {
   '/password-reset/request': '/password-reset/request',
   '/password-reset/reset': '/password-reset/reset',
   '/admin/events': '/admin/events',
-  // '/events:id': '/events:id',
 };
-// Use the default: `always`
+
 export const localePrefix = undefined;
