@@ -19,6 +19,7 @@ import {
   useCreateImageMutation,
   useDeleteImageMutation,
 } from '@/redux/api/imageApi';
+import AdminHeader from './AdminHeader';
 
 const AddEvent = () => {
   const [statusMessage, setStatusMessage] = useState('');
@@ -91,9 +92,12 @@ const AddEvent = () => {
 
   return (
     <>
-      <div className="container">
-        <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
-        <EventForm onSubmit={handleSubmit} buttonName={t('buttonName.add')} />
+      <div>
+        <AdminHeader title={t('title')}></AdminHeader>
+
+        <div className="px-[15px]">
+          <EventForm onSubmit={handleSubmit} buttonName={t('buttonName.add')} />
+        </div>
       </div>
 
       {isLoading && (

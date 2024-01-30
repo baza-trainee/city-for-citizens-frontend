@@ -97,7 +97,7 @@ const ShowEventList = ({ eventsData }) => {
             className="inline-flex items-center justify-center gap-2 pr-2"
             title={t('table.editEvent')}
           >
-            <Link href={`/admin/events/${event.id}`}>
+            <Link href={`/admin/event/${event.id}`}>
               <IconPencil
                 width="16"
                 height="16"

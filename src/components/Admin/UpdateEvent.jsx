@@ -16,6 +16,7 @@ import {
   useCreateImageMutation,
   useDeleteImageMutation,
 } from '@/redux/api/imageApi';
+import AdminHeader from './AdminHeader';
 
 const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
@@ -129,15 +130,18 @@ const UpdateEventForm = ({ eventId }) => {
   };
   return (
     <>
-      <div className="container">
-        <h1 className=" mb-[30px] text-center text-[34px]">{t('title')}</h1>
-        <EventForm
-          onSubmit={handleSubmit}
-          buttonName={t('buttonName.update')}
-          eventUk={eventUk}
-          eventEn={eventEn}
-        />
+      <div>
+        <AdminHeader title={t('title')}></AdminHeader>
+        <div className="px-[15px]">
+          <EventForm
+            onSubmit={handleSubmit}
+            buttonName={t('buttonName.update')}
+            eventUk={eventUk}
+            eventEn={eventEn}
+          />
+        </div>
       </div>
+
       {isLoading && (
         <div className="fixed flex h-full w-full items-center justify-center bg-primary/0/20">
           <Loader />

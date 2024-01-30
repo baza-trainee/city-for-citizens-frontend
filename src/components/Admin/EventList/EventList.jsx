@@ -14,6 +14,7 @@ import { Link } from '@/navigation';
 import { useTranslations } from 'next-intl';
 import IconCloseButton from '@/components/UI/icons/IconClose';
 import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
+import AdminHeader from '../AdminHeader';
 
 const EventList = () => {
   const { localeForRequest } = useCurrentLocale();
@@ -131,45 +132,47 @@ const EventList = () => {
   }
 
   return (
-    <div className="mx-auto mb-4 grid w-[90%] grid-cols-1 rounded px-1 ">
-      <div className="mb-2 grid grid-cols-[auto_20%]">
-        <div className="relative">
-          <IconSearch
-            width="16"
-            height="16"
-            className={`${
-              resolvedTheme === 'dark' ? 'fill-gray/20' : 'fill-gray/30'
-            } absolute left-3 inline translate-y-[calc(50%+4px)]`}
-          />
-          <input
-            type="search"
-            placeholder={t('searchEvent.placeholder')}
-            value={inputValue}
-            onChange={handleChangeSearch}
-            className={`${
-              resolvedTheme === 'dark'
-                ? 'hover:bg-gray/50'
-                : 'bg-gray/5 hover:bg-[#ffffff]'
-            } rounded-full border border-gray/20 p-2 pl-[35px] transition duration-200 focus:outline-none`}
-          />
+    <div>
+      <AdminHeader title={'Всі події'}>
+        <div className="flex">
+          <div className="relative">
+            <IconSearch
+              width="16"
+              height="16"
+              className={`${
+                resolvedTheme === 'dark' ? 'fill-gray/20' : 'fill-gray/30'
+              } absolute left-3 inline translate-y-[calc(50%+4px)]`}
+            />
+            <input
+              type="search"
+              placeholder={t('searchEvent.placeholder')}
+              value={inputValue}
+              onChange={handleChangeSearch}
+              className={`${
+                resolvedTheme === 'dark'
+                  ? 'hover:bg-gray/50'
+                  : 'bg-gray/5 hover:bg-[#ffffff]'
+              } rounded-full border border-gray/20 p-2 pl-[35px] transition duration-200 focus:outline-none`}
+            />
+          </div>
+          <Link
+            className="group block self-center rounded-lg bg-[#6589e3] py-1 text-center transition duration-200 hover:bg-primary/100 hover:text-[#ffffff]"
+            href={'/admin/event'}
+          >
+            <button type="button" title={t('addEvent')}>
+              {!isMobile ? (
+                t('addEvent')
+              ) : (
+                <IconPlus
+                  width="14"
+                  height="14"
+                  className="inline fill-gray/80 transition duration-200 group-hover:fill-[#ffffff]"
+                />
+              )}
+            </button>
+          </Link>
         </div>
-        <Link
-          className="group block self-center rounded-lg bg-[#6589e3] py-1 text-center transition duration-200 hover:bg-primary/100 hover:text-[#ffffff]"
-          href={NAVIGATION.admin}
-        >
-          <button type="button" title={t('addEvent')}>
-            {!isMobile ? (
-              t('addEvent')
-            ) : (
-              <IconPlus
-                width="14"
-                height="14"
-                className="inline fill-gray/80 transition duration-200 group-hover:fill-[#ffffff]"
-              />
-            )}
-          </button>
-        </Link>
-      </div>
+      </AdminHeader>
       <div className="grid grid-cols-1 grid-rows-[auto_auto] gap-y-3 rounded-lg border border-gray/10 px-4 pb-4">
         <div
           className={`grid grid-cols-[10px_4fr_2fr_2fr_1fr] content-center items-center  
