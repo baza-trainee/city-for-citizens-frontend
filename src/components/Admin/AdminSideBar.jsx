@@ -1,5 +1,5 @@
 'use client';
-import { NAVIGATION } from '@/helpers/constants';
+import { ADMIN_NAVIGATION, NAVIGATION } from '@/helpers/constants';
 import { usePathname, useRouter } from '@/navigation';
 import { useLogoutMutation } from '@/redux/api/authApi';
 import { resetState } from '@/redux/slice/authSlice';
@@ -12,13 +12,15 @@ import { useDispatch } from 'react-redux';
 import { LoadingButton } from '../UI/LoadingButton';
 import BasicModalWindows from './ModalWindow/BasicModalWindows';
 
-const ADMIN_NAVIGATION = [
-  { href: '/admin', name: 'Всі події' },
-  { href: '/admin/event-types', name: 'Типи подій' },
-  { href: '/admin/documents', name: 'Документи' },
-  { href: '/admin/partners', name: 'Партнери' },
-  { href: '/admin/contacts', name: 'Контакти' },
-  { href: '/admin/password-change', name: 'Змінити пароль' },
+import AllEventsIcon from '/public/icons/all-events-icon.svg';
+
+const adminNav = [
+  { href: ADMIN_NAVIGATION.event_list, name: 'Всі події', icon: AllEventsIcon },
+  { href: ADMIN_NAVIGATION.event_types, name: 'Типи подій', icon: '' },
+  { href: ADMIN_NAVIGATION.documents, name: 'Документи', icon: '' },
+  { href: ADMIN_NAVIGATION.partners, name: 'Партнери', icon: '' },
+  { href: ADMIN_NAVIGATION.contacts, name: 'Контакти', icon: '' },
+  { href: ADMIN_NAVIGATION.password_change, name: 'Змінити пароль', icon: '' },
 ];
 
 export function AdminSideBar() {
@@ -47,10 +49,11 @@ export function AdminSideBar() {
       <Link href={'/'} className="py-[42px]">
         LOGO
       </Link>
+
       <div className="flex h-full flex-col justify-between bg-primary/80 pb-[36px]">
         <nav className="p-[16px]">
           <ul className="flex flex-col gap-[6px]">
-            {ADMIN_NAVIGATION.map(({ href, name }) => {
+            {adminNav.map(({ href, name, icon: Icon }) => {
               return (
                 <li
                   className={`${clsx(
@@ -60,7 +63,8 @@ export function AdminSideBar() {
                   )}`}
                   key={href}
                 >
-                  <span className="h-[33px] w-[33px] bg-[currentColor] text-[24px]"></span>
+                  {Icon && <Icon className={'fill-state-error_main'} />}
+
                   <Link href={href}>{name}</Link>
                 </li>
               );
