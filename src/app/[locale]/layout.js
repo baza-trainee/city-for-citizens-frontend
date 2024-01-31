@@ -6,6 +6,7 @@ import Providers from '@/components/Providers';
 import './globals.css';
 import { ReduxProvider } from '@/redux/Provider/ReduxProvider';
 import { locales } from '@/config';
+import { exo_2, roboto, source_sans_3, ubuntu } from '../fonts';
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
@@ -26,8 +27,11 @@ export default function LocaleLayout({ children, params: { locale } }) {
   const messages = useMessages();
 
   return (
-    <html lang={locale}>
-      <body className="bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5">
+    <html
+      lang={locale}
+      className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable}`}
+    >
+      <body className="font-source_sans_3 bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <ReduxProvider>{children}</ReduxProvider>

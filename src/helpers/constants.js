@@ -3,6 +3,21 @@ const LOCALE = {
   uk: { forRequest: 'uk_UA', forIntl: 'uk' },
 };
 
+const ADMIN_NAVIGATION = {
+  event_list: '/admin',
+  event_types: '/admin/event-types',
+  documents: '/admin/documents',
+  partners: '/admin/partners',
+  contacts: '/admin/contacts',
+  password_change: '/admin/password-change',
+};
+
+const AUTH_NAVIGATION = {
+  login: '/login',
+  request_password_reset: '/password-reset/request',
+  password_reset: '/password-reset/reset',
+};
+
 const NAVIGATION = {
   home: '/',
   admin: '/admin',
@@ -24,4 +39,12 @@ const FORM_STYLES = {
 const BASE_URL = 'https://city-backend-45go.onrender.com/api';
 const IMAGE_BASE_URL = 'https://city-backend-45go.onrender.com/images/events/';
 
-export { LOCALE, BASE_URL, IMAGE_BASE_URL, NAVIGATION, FORM_STYLES };
+export {
+  LOCALE,
+  BASE_URL,
+  IMAGE_BASE_URL,
+  NAVIGATION,
+  FORM_STYLES,
+  ADMIN_NAVIGATION,
+  AUTH_NAVIGATION,
+};

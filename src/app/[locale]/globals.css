@@ -28,15 +28,3 @@ button {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #485058;
 }
-
-@layer base {
-  @font-face {
-    font-family: 'Mak';
-    src: url('/fonts/MAK.woff') format('woff');
-  }
-
-  @font-face {
-    font-family: 'NewMexika';
-    src: url('/fonts/NewMexika.ttf') format('truetype');
-  }
-}
