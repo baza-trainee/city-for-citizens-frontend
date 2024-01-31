@@ -9,14 +9,13 @@ const Input = ({
   onBlur,
 }) => (
   <>
-    <label className="w-full">
-      <span>{label}</span>
+    <label className="w-full text-start">
+      <span className="leading-[1]">{label}</span>
       <input
-        className={`my-1 w-full text-ellipsis rounded-lg border
-       border-gray/20 bg-gray/5 p-2.5 placeholder-gray/30  hover:${
-         errors ? 'border-error' : 'border-primary/100'
-       }  focus:border-primary/100 focus:outline-primary/100
-       dark:text-gray/100 dark:focus:shadow-inner dark:focus:shadow-primary/80 dark:focus:outline-primary/100
+        className={`placeholder-admin-light_0 my-1 w-full text-ellipsis
+       rounded border bg-admin-light_1 py-3 pl-2 pr-12 leading-[1.35] ${
+         errors ? 'border-state-error_main' : 'border-admin-light_0'
+       }
     `}
         placeholder={placeholder}
         value={value}

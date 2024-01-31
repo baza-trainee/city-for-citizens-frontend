@@ -1,10 +1,12 @@
 export const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export const isValidPassword = (password, t) => {
-  const hasMinimumLength = password.length >= 8;
-  const hasLettersAndDigits = /^(?=.*[a-zA-Z])(?=.*\d).*$/.test(password);
+  const hasLength = password.length >= 8 && password.length <= 32;
+  const hasLettersAndDigits = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/.test(
+    password
+  );
 
-  if (!hasMinimumLength) {
+  if (!hasLength) {
     return t('errorLength');
   }
 

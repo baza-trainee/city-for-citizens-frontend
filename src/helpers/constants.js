@@ -28,10 +28,8 @@ const NAVIGATION = {
 };
 
 const FORM_STYLES = {
-  formContainer:
-    'mx-auto flex max-w-[394px] flex-col items-center gap-[30px] py-4',
   formBtn:
-    'mx-auto my-0 block w-full rounded-lg p-2.5px-[40px] py-[10px] text-gray/0 dark:border-gray/5 dark:text-gray/100  dark:hover:bg-gray/10',
+    'mx-auto block text-xl rounded p-2.5 px-8 py-[10px] text-white font-bold',
 };
 
 // const BASE_URL = 'http://45.94.157.117:53431/api';
