@@ -16,8 +16,7 @@ import Input from './Input';
 import Cookies from 'js-cookie';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
-import IconEyeOpen from '../UI/icons/eyes/IconEyeOpen';
-import IconEyeClose from '../UI/icons/eyes/IconEyeClose';
+
 import { LoadingButton } from '../UI/LoadingButton';
 
 const LoginForm = () => {
@@ -98,26 +97,28 @@ const LoginForm = () => {
           errors={errors.email}
           error={error}
         />
-        <div className="relative w-full">
-          <Input
-            label={t('pswd')}
-            value={password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            name="password"
-            type={showPassword ? 'text' : 'password'}
-            placeholder={t('placeholderPswd')}
-            errors={errors.password}
-            error={error}
-          />
-          <span
+        {/* <div className="relative w-full"> */}
+        <Input
+          label={t('pswd')}
+          value={password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          placeholder={t('placeholderPswd')}
+          errors={errors.password}
+          error={error}
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
+        />
+        {/* <span
             onClick={togglePasswordVisibility}
             className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] cursor-pointer items-center
             justify-center bg-gray/5`}
           >
             {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
-          </span>
-        </div>
+          </span> */}
+        {/* </div> */}
 
         <Link
           className="ml-2 underline underline-offset-2 hover:opacity-80"
