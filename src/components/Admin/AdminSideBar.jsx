@@ -1,5 +1,5 @@
 'use client';
-import { NAVIGATION } from '@/helpers/constants';
+import { ADMIN_NAVIGATION, NAVIGATION } from '@/helpers/constants';
 import { usePathname, useRouter } from '@/navigation';
 import { useLogoutMutation } from '@/redux/api/authApi';
 import { resetState } from '@/redux/slice/authSlice';
@@ -12,80 +12,119 @@ import { useDispatch } from 'react-redux';
 import { LoadingButton } from '../UI/LoadingButton';
 import BasicModalWindows from './ModalWindow/BasicModalWindows';
 
-const ADMIN_NAVIGATION = [
-  { href: '/admin', name: 'Всі події' },
-  { href: '/admin/event-types', name: 'Типи подій' },
-  { href: '/admin/documents', name: 'Документи' },
-  { href: '/admin/partners', name: 'Партнери' },
-  { href: '/admin/contacts', name: 'Контакти' },
-  { href: '/admin/password-change', name: 'Змінити пароль' },
+import allEventsIcon from '/public/icons/admin-sidebar/all-events-icon.svg';
+import contactsIcon from '/public/icons/admin-sidebar/contacts-icon.svg';
+import documentsIcon from '/public/icons/admin-sidebar/documents-icon.svg';
+import partnersIcon from '/public/icons/admin-sidebar/partners-icon.svg';
+import passwordChangeIcon from '/public/icons/admin-sidebar/password-change-icon.svg';
+import typeEventsIcon from '/public/icons/admin-sidebar/type-events-icon.svg';
+import logotype from '/public/icons/logotype.svg?url';
+import LogoutIcon from '/public/icons/logout-icon.svg';
+import Image from 'next/image';
+
+const adminNav = [
+  { href: ADMIN_NAVIGATION.event_list, name: 'Всі події', icon: allEventsIcon },
+  {
+    href: ADMIN_NAVIGATION.event_types,
+    name: 'Типи подій',
+    icon: typeEventsIcon,
+  },
+  { href: ADMIN_NAVIGATION.documents, name: 'Документи', icon: documentsIcon },
+  { href: ADMIN_NAVIGATION.partners, name: 'Партнери', icon: partnersIcon },
+  { href: ADMIN_NAVIGATION.contacts, name: 'Контакти', icon: contactsIcon },
+  {
+    href: ADMIN_NAVIGATION.password_change,
+    name: 'Змінити пароль',
+    icon: passwordChangeIcon,
+  },
 ];
 
 export function AdminSideBar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const buttonRef = useRef(null);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
-
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const buttonRef = useRef(null);
-
   const [logout, { isLoading }] = useLogoutMutation();
 
   const t = useTranslations('Admin.navMenu');
 
-  const handleLogout = async () => {
+  async function handleLogout() {
     await logout();
     dispatch(resetState());
     Cookies.remove('accessToken');
     router.push(NAVIGATION.login);
-  };
+  }
+
+  function isActivePage(href) {
+    const isAddOrEditEvent =
+      href === '/admin' &&
+      (pathname.startsWith('/admin/event/') || pathname === '/admin/event');
+
+    const isAddOrEditPartner =
+      href === '/admin/partners' &&
+      (pathname.startsWith('/admin/partner/') || pathname === '/admin/partner');
+
+    return isAddOrEditEvent || isAddOrEditPartner || pathname === href;
+  }
 
   return (
-    <aside className="flex flex-col">
-      <Link href={'/'} className="py-[42px]">
-        LOGO
+    <aside className="flex flex-col gap-20 bg-admin-side_bar p-4 pb-10">
+      <Link
+        href={'/'}
+        className="flex items-center justify-center gap-2 rounded bg-admin-light_3 py-11 font-roboto text-lg font-black uppercase leading-6 text-black"
+      >
+        <Image src={logotype} alt="logotype" />
+        <p>MistoFest</p>
       </Link>
-      <div className="flex h-full flex-col justify-between bg-primary/80 pb-[36px]">
-        <nav className="p-[16px]">
-          <ul className="flex flex-col gap-[6px]">
-            {ADMIN_NAVIGATION.map(({ href, name }) => {
-              return (
-                <li
-                  className={`${clsx(
-                    'flex items-center gap-[12px] rounded-[4px] px-[6px] py-[9px]',
-                    pathname === href && 'bg-gray/5 text-gray/100',
-                    pathname !== href && 'bg-[transparent] text-gray/0'
+
+      <div className="flex h-full flex-col justify-between gap-4">
+        <nav>
+          <ul className="flex flex-col gap-4">
+            {adminNav.map(({ href, name, icon: Icon }) => (
+              <li
+                className={`flex items-center gap-3 rounded px-1.5 py-[9px] 
+                  ${clsx(
+                    isActivePage(href) && 'bg-admin-light_3 text-admin-dark',
+                    !isActivePage(href) && 'bg-[transparent] text-admin-light_3'
                   )}`}
-                  key={href}
+                key={href}
+              >
+                <Icon className={'h-8'} />
+
+                <Link
+                  className="font-exo_2 text-base font-semibold leading-loose "
+                  href={href}
                 >
-                  <span className="h-[33px] w-[33px] bg-[currentColor] text-[24px]"></span>
-                  <Link href={href}>{name}</Link>
-                </li>
-              );
-            })}
+                  {name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
+
         <button
           ref={buttonRef}
           onClick={() => setIsConfirmationModalVisible(true)}
-          className="mt-auto h-[52px] w-[213px] self-center rounded-[4px] border-[1px] border-gray/100 bg-gray/5"
+          className="border--admin-dark mx-auto flex h-[52px] w-[213px]
+          items-center justify-center gap-2 rounded border bg-white px-8 text-xl font-bold leading-tight text-admin-dark"
         >
+          {<LogoutIcon className={'h-6 w-6'} />}
           {isLoading ? <LoadingButton /> : <>{t('buttons.logout')}</>}
         </button>
 
         {isConfirmationModalVisible && (
           <BasicModalWindows
             onClose={() => setIsConfirmationModalVisible(false)}
+            title={t('confirmationModal.title')}
           >
-            <p className="mb-[20px] w-max text-[16px]">
-              {t('confirmationModal.title')}
-            </p>
             <div className="flex gap-[15px]">
               <button
                 disabled={isLoading}
-                className="min-w-[50px] rounded-[5px] border-[1px] bg-primary/100  px-[12px] py-[4px]  text-center text-[16px]  text-gray/5 transition-colors hover:bg-primary/80"
+                className="button-close"
                 onClick={() => setIsConfirmationModalVisible(false)}
                 type="button"
               >
@@ -93,7 +132,7 @@ export function AdminSideBar() {
               </button>
               <button
                 disabled={isLoading}
-                className="min-w-[50px] rounded-[5px] border-[1px] bg-primary/100  px-[12px] py-[4px] text-center text-[16px]  text-gray/5 transition-colors hover:bg-[#d43c3c]"
+                className="button-confirm"
                 onClick={handleLogout}
                 type="button"
               >
@@ -106,3 +145,5 @@ export function AdminSideBar() {
     </aside>
   );
 }
+
+//  close

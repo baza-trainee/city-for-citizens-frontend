@@ -9,8 +9,8 @@ const IconMapMarker = ({ isHovered, theme, isActive }) => {
           ? '#6589E3'
           : '#F6F6F6'
         : isHovered || isActive
-        ? '#0D3BDD'
-        : '#121923',
+          ? '#0D3BDD'
+          : '#121923',
     scale: 1.5,
   };
 
