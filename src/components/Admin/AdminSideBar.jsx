@@ -72,7 +72,7 @@ export function AdminSideBar() {
   }
 
   return (
-    <aside className="flex flex-col gap-20 bg-admin-side_bar p-4 pb-10">
+    <aside className="flex max-h-[1025px] flex-col gap-20 bg-admin-side_bar p-4 pb-10">
       <Link
         href={'/'}
         className="flex items-center justify-center gap-2 rounded bg-admin-light_3 py-11 font-roboto text-lg font-black uppercase leading-6 text-black"
