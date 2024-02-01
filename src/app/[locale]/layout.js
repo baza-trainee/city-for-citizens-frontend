@@ -31,7 +31,7 @@ export default function LocaleLayout({ children, params: { locale } }) {
       lang={locale}
       className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable}`}
     >
-      <body className="font-source_sans_3 bg-gray/5 text-gray/100 dark:bg-gray/100 dark:text-gray/5">
+      <body className="bg-light-primary font-source_sans_3 text-light-head dark:bg-dark-primary dark:text-dark-head">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <ReduxProvider>{children}</ReduxProvider>

@@ -17,6 +17,7 @@ import {
   useDeleteImageMutation,
 } from '@/redux/api/imageApi';
 import AdminHeader from './AdminHeader';
+import ButtonBack from './button-back';
 
 const UpdateEventForm = ({ eventId }) => {
   const [eventUk, setEventUk] = useState(null);
@@ -131,7 +132,10 @@ const UpdateEventForm = ({ eventId }) => {
   return (
     <>
       <div>
-        <AdminHeader title={t('title')}></AdminHeader>
+        <AdminHeader title={t('title')}>
+          <ButtonBack />
+        </AdminHeader>
+
         <div className="px-[15px]">
           <EventForm
             onSubmit={handleSubmit}

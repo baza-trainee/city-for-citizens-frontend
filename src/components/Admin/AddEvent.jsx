@@ -20,6 +20,7 @@ import {
   useDeleteImageMutation,
 } from '@/redux/api/imageApi';
 import AdminHeader from './AdminHeader';
+import ButtonBack from './button-back';
 
 const AddEvent = () => {
   const [statusMessage, setStatusMessage] = useState('');
@@ -93,7 +94,10 @@ const AddEvent = () => {
   return (
     <>
       <div>
-        <AdminHeader title={t('title')}></AdminHeader>
+        <AdminHeader title={t('title')}>
+          {' '}
+          <ButtonBack />
+        </AdminHeader>
 
         <div className="px-[15px]">
           <EventForm onSubmit={handleSubmit} buttonName={t('buttonName.add')} />

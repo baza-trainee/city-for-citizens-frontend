@@ -1,9 +1,11 @@
 const AdminHeader = ({ title, children }) => {
   return (
-    <div className="flex h-[140px] items-center justify-between pl-[42px] pr-[82px] ">
-      <h2 className="text-[40px]">{title}</h2>
+    <header className="flex h-[150px] items-center justify-between  pl-5 pr-20 ">
+      <h2 className="font-source_sans_3 text-[40px] font-bold leading-8 text-admin-dark">
+        {title}
+      </h2>
       {children}
-    </div>
+    </header>
   );
 };
 

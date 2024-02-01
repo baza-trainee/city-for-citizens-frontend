@@ -50,12 +50,13 @@
       "confirmationModal": {
         "title": "Really exit?",
         "buttons": {
-          "cancel": "No",
-          "ok": "Yes"
+          "cancel": "Cancel",
+          "ok": "Confirm"
         }
       },
       "buttons": {
-        "logout": "Logout"
+        "logout": "Logout",
+        "back": "Back"
       }
     },
     "registerForm": "",

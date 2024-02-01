@@ -1,22 +1,32 @@
-import CloseButton from '@/components/UI/icons/IconClose';
+import CloseIcon from '/public/icons/close-icon.svg';
 
-const BasicModalWindows = ({ onClose, message, children }) => {
+const BasicModalWindows = ({ onClose, message, children, title }) => {
   return (
     <>
-      <div
+      <button
+        type="button"
         onClick={onClose}
-        className="fixed left-0 top-0 h-full w-full bg-primary/0/20"
-      ></div>
-      <div className="fixed left-1/2 top-1/2 max-w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-[10px] bg-gray/5 px-[50px] py-[30px] dark:bg-gray/80">
+        className="bg-admin-backdrop fixed left-0  top-0  h-full w-full"
+      ></button>
+      <div className="fixed left-1/2 top-1/2 inline-flex w-[427px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 rounded bg-white px-6 py-8">
         <button
-          onClick={onClose}
+          className={'absolute right-0 top-0 p-4'}
           type="button"
-          className="absolute right-[10px] top-[10px]"
+          onClick={onClose}
         >
-          <CloseButton className="h-[24px] w-[24px] stroke-gray/100 dark:stroke-gray/0" />
+          <CloseIcon className={'h-4 w-4'} />
         </button>
-        <p>{message}</p>
-        <p>{children}</p>
+        {title && (
+          <p className="text-center font-exo_2 text-2xl font-bold leading-8 text-admin-dark">
+            {title}
+          </p>
+        )}
+        {message && (
+          <p className="w-[285px] text-center font-source_sans_3 text-lg text-admin-dark">
+            {message}
+          </p>
+        )}
+        {children}
       </div>
     </>
   );
