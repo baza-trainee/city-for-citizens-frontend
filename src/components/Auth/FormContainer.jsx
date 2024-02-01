@@ -1,13 +1,20 @@
-const FormContainer = ({ children }) => {
+import ErrorMessage from './ErrorMessage';
+
+const FormContainer = ({ children, error }) => {
   return (
-    <div className="fixed inset-0 bg-admin-dark bg-opacity-50 ">
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-headline"
-        className="fixed left-1/2 top-1/2 mt-4 flex -translate-x-1/2 -translate-y-1/2 transform  flex-col gap-8 rounded-lg bg-admin-light_2  p-6 "
-      >
-        {children}
+    <div
+      className={`absolute inset-x-0 flex max-h-[120vh] min-h-screen ${error ? 'items-center pb-[7%]' : 'items-center pt-[2%]'} justify-center overflow-y-auto bg-admin-dark bg-opacity-50 `}
+    >
+      <div className="flex w-[460px] flex-col gap-[30px]">
+        {error && <ErrorMessage error={error} />}
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-headline"
+          className="relative flex  flex-col gap-8 rounded-lg bg-admin-light_2 p-6"
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

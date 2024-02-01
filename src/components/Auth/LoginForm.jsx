@@ -19,7 +19,6 @@ import FormAuth from './FormAuth';
 import IconEyeOpen from '../UI/icons/eyes/IconEyeOpen';
 import IconEyeClose from '../UI/icons/eyes/IconEyeClose';
 import { LoadingButton } from '../UI/LoadingButton';
-import ErrorMessage from './ErrorMessage';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -85,8 +84,7 @@ const LoginForm = () => {
   const { formBtn } = FORM_STYLES;
 
   return (
-    <FormContainer>
-      {error && <ErrorMessage error={error} />}
+    <FormContainer error={error}>
       <h2 className="text-[40px] font-bold leading-[1]">{t('title')}</h2>
       <FormAuth onSubmit={handleSubmit}>
         <Input
@@ -114,9 +112,8 @@ const LoginForm = () => {
           />
           <span
             onClick={togglePasswordVisibility}
-            className={`absolute right-3 flex h-[24px] w-[24px] items-center justify-center bg-gray/5 ${
-              errors.password ? 'top-1/2 -translate-y-1/2' : 'top-1/2'
-            } transform cursor-pointer`}
+            className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] cursor-pointer items-center
+            justify-center bg-gray/5`}
           >
             {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
           </span>

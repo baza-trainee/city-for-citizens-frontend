@@ -9,10 +9,10 @@ const Input = ({
   onBlur,
 }) => (
   <>
-    <label className="w-full text-start">
+    <label className="w-full pb-[22px] text-start">
       <span className="leading-[1]">{label}</span>
       <input
-        className={`placeholder-admin-light_0 my-1 w-full text-ellipsis
+        className={`placeholder-admin-light_0 mt-1 w-full text-ellipsis
        rounded border bg-admin-light_1 py-3 pl-2 pr-12 leading-[1.35] ${
          errors ? 'border-state-error_main' : 'border-admin-light_0'
        }
@@ -25,7 +25,9 @@ const Input = ({
         type={type}
         required
       />
-      {errors && <p className="text-error">{errors}</p>}
+      {errors && (
+        <p className="absolute pt-[2px] text-state-error_main">{errors}</p>
+      )}
     </label>
   </>
 );
