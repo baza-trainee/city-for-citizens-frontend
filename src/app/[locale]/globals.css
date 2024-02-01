@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
-  cursor: pointer;
-}
-
 .custom-scroll::-webkit-scrollbar {
   width: 5px;
 }
@@ -27,4 +23,20 @@ button {
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #485058;
+}
+
+/* --- admin --- */
+
+/* modal */
+
+/* button */
+
+.button-common {
+  @apply h-[49px] min-w-[181px]  rounded-md border border-admin-dark font-exo_2 text-xl font-bold;
+}
+.button-confirm {
+  @apply button-common bg-admin-dark  text-white;
+}
+.button-close {
+  @apply button-common text-admin-dark;
 }

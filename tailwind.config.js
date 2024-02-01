@@ -21,10 +21,12 @@ module.exports = {
     colors: {
       // new design
       admin: {
+        backdrop: '#1E1E1E80',
         darkblue: '#3D4756',
         dark: '#131313',
         menu: '#B0C1EF',
         light_0: '#7E8492',
+        side_bar: '#6589E3',
         light_1: '#FBFAFA',
         light_2: '#FEFEFE',
         light_3: '#FFFFFF',

@@ -50,12 +50,13 @@
       "confirmationModal": {
         "title": "Дійсно вийти?",
         "buttons": {
-          "cancel": "Ні",
-          "ok": "Так"
+          "cancel": "Скасувати",
+          "ok": "Підтвердити"
         }
       },
       "buttons": {
-        "logout": "Вийти"
+        "logout": "Вийти",
+        "back": "Назад"
       }
     },
     "registerForm": "",
