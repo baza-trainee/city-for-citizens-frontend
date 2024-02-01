@@ -24,6 +24,7 @@ module.exports = {
         backdrop: '#1E1E1E80',
         darkblue: '#3D4756',
         dark: '#131313',
+        dark_2: '#4E4E4E',
         menu: '#B0C1EF',
         side_bar: '#6589E3',
         light_1: '#FBFAFA',

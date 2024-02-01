@@ -1,13 +1,15 @@
 {
   "EventList": {
     "searchEvent": {
-      "placeholder": "Search event"
+      "placeholder": "Enter a keyword to search for"
     },
+    "pageName": "All events",
     "addEvent": "Add event",
     "table": {
       "name": "Name",
       "city": "City",
-      "date": "Date",
+      "type": "Event type",
+      "date": "Date and hour",
       "clearSorted": "Clear sorted",
       "editEvent": "Edit event",
       "deleteEvent": "Delete event"

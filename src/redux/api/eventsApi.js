@@ -30,13 +30,14 @@ export const eventsApi = createApi({
         return { url: queryStr, method: 'GET' };
       },
       providesTags: result => {
-        return result
+        return result.events
           ? [
-              ...result.map(({ id }) => ({ type: 'Events', id })),
+              ...result.events.map(({ id }) => ({ type: 'Events', id })),
               { type: 'Events', id: 'LIST' },
             ]
           : [{ type: 'Events', id: 'LIST' }];
       },
+      transformResponse: res => res.events,
     }),
 
     //

@@ -1,7 +1,7 @@
 'use client';
 
 import { Link } from '@/navigation';
-import { useTheme } from 'next-themes';
+//import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import IconTrash from '../../UI/icons/IconTrash';
 import IconPencil from '../../UI/icons/IconPencil';
@@ -14,7 +14,7 @@ import { useTranslations } from 'next-intl';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
 
 const ShowEventList = ({ eventsData }) => {
-  const { resolvedTheme } = useTheme();
+  //const { resolvedTheme } = useTheme();
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowMessage, setIsShowMessage] = useState(false);
   const initialDataEvent = { id: '', title: '' };
@@ -74,36 +74,39 @@ const ShowEventList = ({ eventsData }) => {
     <>
       {isShowDeleteModal && <ShowDeleteModal />}
       {isShowMessage && <ShowSuccessDeleteMessage />}
-      {eventsData.map((event, ind) => (
+      {eventsData.map(event => (
         <li
           key={event.id + event.idIdentifier}
-          className={`grid grid-cols-[10px_4fr_2fr_2fr_1fr] gap-x-3 px-3 transition duration-200 [&:nth-child(even)]:rounded [&:nth-child(even)]:bg-gray/10 ${
-            resolvedTheme === 'dark'
-              ? ' hover:bg-gray/50 [&:nth-child(even)]:bg-gray/80 [&:nth-child(even)]:hover:bg-gray/50'
-              : ' hover:bg-gray/20 [&:nth-child(even)]:bg-gray/10 [&:nth-child(even)]:hover:bg-gray/20'
-          } ${isMobile ? 'text-sm' : null}`}
+          className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] justify-items-center gap-x-3 bg-admin-light_3 py-3
+          transition duration-200 hover:bg-gray/20
+           ${isMobile ? 'text-sm' : null}`}
         >
-          <span>{ind + 1}</span>
+          {console.log('event', event)}
           <span>{event.eventTitle}</span>
           <span>{event.eventAddress.city}</span>
-          <span className={`${isMobile ? 'text-sm' : null}`}>
-            {new Date(event.dateTime).toLocaleDateString(`${localeForIntl}`, {
-              year: 'numeric',
-              month: `${isMobile ? 'short' : 'long'}`,
-              day: '2-digit',
-            })}
+          <span>
+            {event.eventTypes.map(({ eventType }) => eventType).join(', ')}
+          </span>
+          <span className="">
+            {new Date(event.dateTime)
+              .toLocaleDateString(`${localeForIntl}`, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+              .replace(',', '\u00A0\u00A0\u00A0')}
           </span>
           <div
-            className="inline-flex items-center justify-center gap-2 pr-2"
+            className="inline-flex items-center justify-center gap-x-10 pr-2"
             title={t('table.editEvent')}
           >
             <Link href={`/admin/event/${event.id}`}>
               <IconPencil
-                width="16"
-                height="16"
-                className={`${
-                  resolvedTheme === 'dark' ? 'fill-gray/20' : 'fill-[#121923]'
-                } inline transition duration-200 hover:fill-primary/100`}
+                width="22"
+                height="20"
+                className="inline fill-admin-dark transition duration-200 hover:fill-primary/100"
               />
             </Link>
             <button
@@ -111,11 +114,9 @@ const ShowEventList = ({ eventsData }) => {
               title={t('table.deleteEvent')}
             >
               <IconTrash
-                width="16"
-                height="16"
-                className={`${
-                  resolvedTheme === 'dark' ? 'fill-gray/20' : 'fill-[#121923]'
-                } inline transition duration-200 hover:fill-[red]`}
+                width="17"
+                height="24"
+                className="inline fill-admin-dark transition duration-200 hover:fill-[red]"
               />
             </button>
           </div>

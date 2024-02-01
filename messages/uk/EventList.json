@@ -1,13 +1,15 @@
 {
   "EventList": {
     "searchEvent": {
-      "placeholder": "Пошук події"
+      "placeholder": "Введіть ключове слово для пошуку"
     },
+    "pageName": "Всі події",
     "addEvent": "Додати подію",
     "table": {
       "name": "Назва",
       "city": "Місто",
-      "date": "Дата",
+      "type": "Тип події",
+      "date": "Дата та час",
       "clearSorted": "Відмінити сортування ",
       "editEvent": "Відредагувати подію",
       "deleteEvent": "Видалити подію"
