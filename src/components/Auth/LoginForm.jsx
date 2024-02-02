@@ -1,6 +1,6 @@
 'use client';
 import { publicRoute } from '@/components/publicRoute';
-import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { NAVIGATION } from '@/helpers/constants';
 import { Link, useRouter } from '@/navigation';
 import { useLoginMutation } from '@/redux/api/authApi';
 import { setCredentials } from '@/redux/slice/authSlice';
@@ -16,8 +16,7 @@ import Input from './Input';
 import Cookies from 'js-cookie';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
-
-import { LoadingButton } from '../UI/LoadingButton';
+import AuthButton from './AuthButton';
 import FormTitle from './FormTitle';
 
 const LoginForm = () => {
@@ -81,7 +80,6 @@ const LoginForm = () => {
   };
 
   const { email, password } = formData;
-  const { formBtn } = FORM_STYLES;
 
   return (
     <FormContainer error={error}>
@@ -117,17 +115,12 @@ const LoginForm = () => {
         >
           <u>{t('link')}</u>
         </Link>
-        <button
-          disabled={!isFormValid || isLoading}
-          className={`${formBtn} 
-           ${
-             !isFormValid || error
-               ? 'bg-auth-dark_10 cursor-not-allowed'
-               : 'bg-auth-dark_90 hover:opacity-90'
-           }`}
-        >
-          {isLoading ? <LoadingButton /> : <>{t('buttonName')}</>}
-        </button>
+        <AuthButton
+          btnName="Увійти"
+          isFormValid={isFormValid}
+          isLoading={isLoading}
+          error={error}
+        />
       </FormAuth>
     </FormContainer>
   );
