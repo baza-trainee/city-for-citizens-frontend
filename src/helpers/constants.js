@@ -27,11 +27,6 @@ const NAVIGATION = {
   passwordReset: '/password-reset/reset',
 };
 
-const FORM_STYLES = {
-  formBtn:
-    'mx-auto block text-xl rounded p-2.5 px-8 py-[10px] text-white font-bold',
-};
-
 // const BASE_URL = 'http://45.94.157.117:53431/api';
 // const IMAGE_BASE_URL = 'http://45.94.157.117:53431/images/events/';
 const BASE_URL = 'https://city-backend-45go.onrender.com/api';
@@ -42,7 +37,6 @@ export {
   BASE_URL,
   IMAGE_BASE_URL,
   NAVIGATION,
-  FORM_STYLES,
   ADMIN_NAVIGATION,
   AUTH_NAVIGATION,
 };

@@ -1,6 +1,6 @@
 'use client';
 import { publicRoute } from '@/components/publicRoute';
-import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { NAVIGATION } from '@/helpers/constants';
 import { Link, useRouter } from '@/navigation';
 import { useLoginMutation } from '@/redux/api/authApi';
 import { setCredentials } from '@/redux/slice/authSlice';
@@ -16,8 +16,8 @@ import Input from './Input';
 import Cookies from 'js-cookie';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
-
-import { LoadingButton } from '../UI/LoadingButton';
+import AuthButton from './AuthButton';
+import FormTitle from './FormTitle';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -80,11 +80,10 @@ const LoginForm = () => {
   };
 
   const { email, password } = formData;
-  const { formBtn } = FORM_STYLES;
 
   return (
     <FormContainer error={error}>
-      <h2 className="text-[40px] font-bold leading-[1]">{t('title')}</h2>
+      <FormTitle title="Вхід" />
       <FormAuth onSubmit={handleSubmit}>
         <Input
           label={t('email')}
@@ -97,7 +96,6 @@ const LoginForm = () => {
           errors={errors.email}
           error={error}
         />
-        {/* <div className="relative w-full"> */}
         <Input
           label={t('pswd')}
           value={password}
@@ -111,32 +109,18 @@ const LoginForm = () => {
           showPassword={showPassword}
           togglePasswordVisibility={togglePasswordVisibility}
         />
-        {/* <span
-            onClick={togglePasswordVisibility}
-            className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] cursor-pointer items-center
-            justify-center bg-gray/5`}
-          >
-            {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
-          </span> */}
-        {/* </div> */}
-
         <Link
-          className="ml-2 underline underline-offset-2 hover:opacity-80"
+          className="ml-2 text-lg leading-[1.35] underline underline-offset-2 hover:opacity-80"
           href="/password-reset/request"
         >
           <u>{t('link')}</u>
         </Link>
-        <button
-          disabled={!isFormValid || isLoading}
-          className={`${formBtn} text-admin-light_3
-           ${
-             !isFormValid || error
-               ? 'bg-admin-light_0 cursor-not-allowed'
-               : 'bg-admin-dark hover:opacity-90'
-           }`}
-        >
-          {isLoading ? <LoadingButton /> : <>{t('buttonName')}</>}
-        </button>
+        <AuthButton
+          btnName="Увійти"
+          isFormValid={isFormValid}
+          isLoading={isLoading}
+          error={error}
+        />
       </FormAuth>
     </FormContainer>
   );
