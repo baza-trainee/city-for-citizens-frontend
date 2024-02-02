@@ -18,6 +18,7 @@ import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
 
 import { LoadingButton } from '../UI/LoadingButton';
+import FormTitle from './FormTitle';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -84,7 +85,7 @@ const LoginForm = () => {
 
   return (
     <FormContainer error={error}>
-      <h2 className="text-[40px] font-bold leading-[1]">{t('title')}</h2>
+      <FormTitle title="Вхід" />
       <FormAuth onSubmit={handleSubmit}>
         <Input
           label={t('email')}
@@ -97,7 +98,6 @@ const LoginForm = () => {
           errors={errors.email}
           error={error}
         />
-        {/* <div className="relative w-full"> */}
         <Input
           label={t('pswd')}
           value={password}
@@ -111,28 +111,19 @@ const LoginForm = () => {
           showPassword={showPassword}
           togglePasswordVisibility={togglePasswordVisibility}
         />
-        {/* <span
-            onClick={togglePasswordVisibility}
-            className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] cursor-pointer items-center
-            justify-center bg-gray/5`}
-          >
-            {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
-          </span> */}
-        {/* </div> */}
-
         <Link
-          className="ml-2 underline underline-offset-2 hover:opacity-80"
+          className="ml-2 text-lg leading-[1.35] underline underline-offset-2 hover:opacity-80"
           href="/password-reset/request"
         >
           <u>{t('link')}</u>
         </Link>
         <button
           disabled={!isFormValid || isLoading}
-          className={`${formBtn} text-admin-light_3
+          className={`${formBtn} 
            ${
              !isFormValid || error
-               ? 'bg-admin-light_0 cursor-not-allowed'
-               : 'bg-admin-dark hover:opacity-90'
+               ? 'bg-auth-dark_10 cursor-not-allowed'
+               : 'bg-auth-dark_90 hover:opacity-90'
            }`}
         >
           {isLoading ? <LoadingButton /> : <>{t('buttonName')}</>}

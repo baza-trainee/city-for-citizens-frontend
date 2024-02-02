@@ -11,7 +11,7 @@ const FormContainer = ({ children, error }) => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
-          className="relative flex  flex-col gap-8 rounded-lg bg-admin-light_2 p-6"
+          className="text-auth-dark relative  flex flex-col gap-8 rounded-lg bg-admin-light_2 p-6"
         >
           {children}
         </div>

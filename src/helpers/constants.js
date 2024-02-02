@@ -28,8 +28,7 @@ const NAVIGATION = {
 };
 
 const FORM_STYLES = {
-  formBtn:
-    'mx-auto block text-xl rounded p-2.5 px-8 py-[10px] text-white font-bold',
+  formBtn: `mx-auto block text-xl rounded p-2.5 px-8 py-[10px] text-auth-light font-bold `,
 };
 
 // const BASE_URL = 'http://45.94.157.117:53431/api';
