@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { publicRoute } from '@/components/publicRoute';
-import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { NAVIGATION } from '@/helpers/constants';
 import { useRequestPasswordResetMutation } from '@/redux/api/authApi';
 import { useTranslations } from 'next-intl';
 import { LoadingButton } from '../UI/LoadingButton';
@@ -36,12 +36,11 @@ const RequestPasswordReset = () => {
   };
 
   const { email } = formData;
-  const { formContainer, formBtn } = FORM_STYLES;
 
   return (
     <div className="container">
       <h2 className="mb-3 text-center text-xl font-bold">{t('title')}</h2>
-      <form className={formContainer} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <Input
           type="email"
           label={t('email')}
@@ -54,7 +53,7 @@ const RequestPasswordReset = () => {
         <button
           disabled={isLoading}
           type="submit"
-          className={`${formBtn} bg-primary/100 hover:bg-primary/80 dark:bg-gray/5`}
+          className={`bg-primary/100 hover:bg-primary/80 dark:bg-gray/5`}
         >
           {isLoading ? <LoadingButton /> : t('buttonName')}
         </button>

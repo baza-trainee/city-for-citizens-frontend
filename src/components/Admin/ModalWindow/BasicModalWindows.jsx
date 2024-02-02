@@ -6,7 +6,7 @@ const BasicModalWindows = ({ onClose, message, children, title }) => {
       <button
         type="button"
         onClick={onClose}
-        className="bg-admin-backdrop fixed left-0  top-0  h-full w-full"
+        className="fixed left-0 top-0  h-full  w-full bg-admin-backdrop"
       ></button>
       <div className="fixed left-1/2 top-1/2 inline-flex w-[427px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 rounded bg-white px-6 py-8">
         <button
