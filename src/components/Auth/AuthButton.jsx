@@ -7,7 +7,8 @@ const AuthButton = ({ error, isFormValid, isLoading, btnName }) => {
         (!isFormValid && btnName !== 'Повернутися') ||
         (isLoading && btnName !== 'Повернутися')
       }
-      className={` mx-auto block rounded border p-2.5 px-8 py-[10px] text-xl font-bold 
+      className={`flex justify-center rounded border py-[10px] text-xl font-bold 
+      ${btnName === 'Увійти' ? 'mx-auto  px-8' : 'w-[182px]'}
      ${
        btnName === 'Повернутися'
          ? 'text-auth-dark border-auth-dark  bg-white hover:opacity-70'

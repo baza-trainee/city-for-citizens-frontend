@@ -1,6 +1,6 @@
 'use client';
 import { publicRoute } from '@/components/publicRoute';
-import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
+import { NAVIGATION } from '@/helpers/constants';
 import { validateInput } from '@/helpers/validation';
 import { useRouter } from '@/navigation';
 import { usePasswordResetMutation } from '@/redux/api/authApi';
@@ -8,20 +8,23 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BasicModalWindows from '../Admin/ModalWindow/BasicModalWindows';
-import { LoadingButton } from '../UI/LoadingButton';
 import Input from './Input';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
+import AuthButton from './AuthButton';
 
 const PasswordReset = () => {
   const [formData, setFormData] = useState({
-    password: '',
+    password1: '',
+    password2: '',
   });
   const [errors, setErrors] = useState({
-    password: '',
+    password1: '',
+    password2: '',
   });
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const t = useTranslations('Admin.resetPswd');
 
@@ -50,10 +53,15 @@ const PasswordReset = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!errors.password) {
+    if (password1 !== password2) {
+      setErrors('Паролі не співпадають');
+      return;
+    }
+
+    if (!errors.password1 && !errors.password2) {
       try {
         const data = await passwordReset({
-          newPassword: formData.password,
+          newPassword: formData.password1,
           token: searchParam.get('token'),
         }).unwrap();
 
@@ -66,12 +74,16 @@ const PasswordReset = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(prev => !prev);
+  const togglePasswordVisibility = name => {
+    if (name === 'password1') {
+      setShowPassword1(prev => !prev);
+    }
+    if (name === 'password2') {
+      setShowPassword2(prev => !prev);
+    }
   };
 
-  const { formBtn } = FORM_STYLES;
-  const { password } = formData;
+  const { password1, password2 } = formData;
 
   return (
     <FormContainer>
@@ -81,23 +93,33 @@ const PasswordReset = () => {
       </h3>
       <FormAuth onSubmit={handleSubmit}>
         <Input
-          label={t('pswd')}
-          value={password}
+          label="Новий"
+          value={password1}
           onChange={handleChange}
           onBlur={handleBlur}
-          name="password"
-          type={showPassword ? 'text' : 'password'}
-          placeholder={t('placeholderPswd')}
-          errors={errors.password}
-          showPassword={showPassword}
-          togglePasswordVisibility={togglePasswordVisibility}
+          name="password1"
+          type={showPassword1 ? 'text' : 'password'}
+          placeholder="Введіть пароль"
+          errors={errors.password1}
+          showPassword={showPassword1}
+          togglePasswordVisibility={() => togglePasswordVisibility('password1')}
         />
-        <button
-          type="submit"
-          className={`${formBtn} bg-primary/100 hover:bg-primary/80 dark:bg-gray/5`}
-        >
-          {isLoading ? <LoadingButton /> : t('buttonName')}
-        </button>
+        <Input
+          label="Підтвердити пароль"
+          value={password2}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          name="password2"
+          type={showPassword2 ? 'text' : 'password'}
+          placeholder="Введіть пароль"
+          errors={errors.password2}
+          showPassword={showPassword2}
+          togglePasswordVisibility={() => togglePasswordVisibility('password2')}
+        />
+        <div className="flex w-full justify-between">
+          <AuthButton btnName="Повернутися" isLoading={isLoading} />
+          <AuthButton btnName="Зберегти" isLoading={isLoading} />
+        </div>
       </FormAuth>
       {isStatusMessageVisible && (
         <BasicModalWindows onClose={() => setIsStatusMessageVisible(false)}>
