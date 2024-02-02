@@ -14,13 +14,13 @@ const Input = ({
   togglePasswordVisibility,
 }) => (
   <>
-    <label className="w-full pb-[22px] text-start ">
+    <label className="w-full pb-[22px] text-start">
       <span className="text-lg leading-none">{label}</span>
       <div className="relative">
         <input
-          className={`w-full text-ellipsis rounded border
-       bg-admin-light_1 py-3 pl-2 pr-12 text-base leading-[1.35] placeholder-admin-light_0 ${
-         errors ? 'border-state-error_main' : 'border-admin-light_0'
+          className={` placeholder-auth-dark_10 w-full text-ellipsis
+       rounded border bg-admin-light_1 py-3 pl-2 pr-12 leading-[1.35] ${
+         errors ? 'border-state-error_main' : 'border-auth-dark_10'
        }
     `}
           placeholder={placeholder}
