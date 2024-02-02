@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-
 import { NAVIGATION } from '@/helpers/constants';
 import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import { Link } from '@/navigation';
 import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
-
 import { privateRoute } from '../../privateRoute';
 import AdminHeader from '../AdminHeader';
 import ShowEventList from './ShowEventList';
@@ -23,7 +20,6 @@ const EventList = () => {
     widthOrHeight: 'width',
     value: 767,
   });
-  const t = useTranslations('EventList');
   const { data: eventList = [] } = useGetAllEventsByLocaleQuery({
     locale: localeForRequest,
   });
@@ -49,10 +45,10 @@ const EventList = () => {
   }
   function SearchField() {
     return (
-      <div className="border-admin-dark_2 flex h-[2.9rem] w-[28rem] justify-between rounded-md border">
+      <div className="flex h-[2.9rem] w-[28rem] justify-between rounded-md border border-admin-dark_2">
         <input
           type="search"
-          placeholder={t('searchEvent.placeholder')}
+          placeholder="Введіть ключове слово для пошуку"
           value={inputValue}
           onChange={handleChangeSearch}
           className="flex-grow rounded-md bg-admin-light_1 p-2 pl-3.5 transition duration-200 hover:bg-[#ffffff] focus:outline-none"
@@ -71,9 +67,9 @@ const EventList = () => {
         text-center text-xl font-bold text-admin-light_3 transition duration-200 hover:bg-primary/100 hover:text-[#ffffff]"
         href={'/admin/event'}
       >
-        <button type="button" title={t('addEvent')}>
+        <button type="button" title="Додати подію">
           {!isMobile ? (
-            t('addEvent')
+            'Додати подію'
           ) : (
             <IconPlus
               width="14"
@@ -91,10 +87,10 @@ const EventList = () => {
         className="text-dark mb-4 grid grid-cols-[4fr_2fr_3fr_2fr_1fr] justify-items-center
           gap-x-3 bg-admin-menu py-3 font-source_sans_3 text-lg"
       >
-        <div className="">{t('table.name')}</div>
-        <div className="">{t('table.city')}</div>
-        <div className="">{t('table.type')}</div>
-        <div className="">{t('table.date')}</div>
+        <div className="">Назва</div>
+        <div className="">Місто</div>
+        <div className="">Тип події</div>
+        <div className="">Дата та час</div>
       </div>
     );
   }
@@ -112,7 +108,7 @@ const EventList = () => {
 
   return (
     <div className="ml-5 mr-20 ">
-      <AdminHeader title={t('pageName')}>
+      <AdminHeader title="Всі події">
         <div className="flex gap-x-14">
           <SearchField />
           <AddEventButton />

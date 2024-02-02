@@ -10,16 +10,14 @@ import ShowMessage from '../Message/ShowMessage';
 import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import ModalPortal from '../ModalWindow/ModalPortal';
 import MessagePortal from '../Message/MessagePortal';
-import { useTranslations } from 'next-intl';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
 
 const ShowEventList = ({ eventsData }) => {
-  //const { resolvedTheme } = useTheme();
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowMessage, setIsShowMessage] = useState(false);
   const initialDataEvent = { id: '', title: '' };
   const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
-  const t = useTranslations('EventList');
+
   const { matches: isMobile } = useStyleMediaQuery({
     mixOrMax: 'max',
     widthOrHeight: 'width',
@@ -100,7 +98,7 @@ const ShowEventList = ({ eventsData }) => {
           </span>
           <div
             className="inline-flex items-center justify-center gap-x-10 pr-2"
-            title={t('table.editEvent')}
+            title="Відредагувати подію"
           >
             <Link href={`/admin/event/${event.id}`}>
               <IconPencil
@@ -111,7 +109,7 @@ const ShowEventList = ({ eventsData }) => {
             </Link>
             <button
               onClick={() => handleDeleteEvent(event.id, event.eventTitle)}
-              title={t('table.deleteEvent')}
+              title="Видалити подію"
             >
               <IconTrash
                 width="17"
