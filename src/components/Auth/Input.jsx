@@ -1,3 +1,6 @@
+import IconEyeOpen from '../UI/icons/eyes/IconEyeOpen';
+import IconEyeClose from '../UI/icons/eyes/IconEyeClose';
+
 const Input = ({
   label,
   value,
@@ -7,26 +10,40 @@ const Input = ({
   placeholder,
   errors,
   onBlur,
+  showPassword,
+  togglePasswordVisibility,
 }) => (
   <>
-    <label className="w-full">
-      <span>{label}</span>
-      <input
-        className={`my-1 w-full text-ellipsis rounded-lg border
-       border-gray/20 bg-gray/5 p-2.5 placeholder-gray/30  hover:${
-         errors ? 'border-error' : 'border-primary/100'
-       }  focus:border-primary/100 focus:outline-primary/100
-       dark:text-gray/100 dark:focus:shadow-inner dark:focus:shadow-primary/80 dark:focus:outline-primary/100
+    <label className="w-full pb-[22px] text-start">
+      <span className="leading-[1]">{label}</span>
+      <div className="relative">
+        <input
+          className={`placeholder-admin-light_0 w-full text-ellipsis
+       rounded border bg-admin-light_1 py-3 pl-2 pr-12 leading-[1.35] ${
+         errors ? 'border-state-error_main' : 'border-admin-light_0'
+       }
     `}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        name={name}
-        type={type}
-        required
-      />
-      {errors && <p className="text-error">{errors}</p>}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          name={name}
+          type={type}
+          required
+        />
+        {name === 'password' && (
+          <span
+            onClick={togglePasswordVisibility}
+            className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer items-center
+            justify-center bg-gray/5`}
+          >
+            {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
+          </span>
+        )}
+      </div>
+      {errors && (
+        <p className="absolute pt-[2px] text-state-error_main">{errors}</p>
+      )}
     </label>
   </>
 );
