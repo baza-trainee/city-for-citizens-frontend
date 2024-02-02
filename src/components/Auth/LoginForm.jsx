@@ -97,7 +97,6 @@ const LoginForm = () => {
           errors={errors.email}
           error={error}
         />
-        {/* <div className="relative w-full"> */}
         <Input
           label={t('pswd')}
           value={password}
@@ -111,15 +110,6 @@ const LoginForm = () => {
           showPassword={showPassword}
           togglePasswordVisibility={togglePasswordVisibility}
         />
-        {/* <span
-            onClick={togglePasswordVisibility}
-            className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] cursor-pointer items-center
-            justify-center bg-gray/5`}
-          >
-            {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
-          </span> */}
-        {/* </div> */}
-
         <Link
           className="ml-2 underline underline-offset-2 hover:opacity-80"
           href="/password-reset/request"
@@ -131,7 +121,7 @@ const LoginForm = () => {
           className={`${formBtn} text-admin-light_3
            ${
              !isFormValid || error
-               ? 'bg-admin-light_0 cursor-not-allowed'
+               ? 'cursor-not-allowed bg-admin-light_0'
                : 'bg-admin-dark hover:opacity-90'
            }`}
         >

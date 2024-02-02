@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import BasicModalWindows from '../Admin/ModalWindow/BasicModalWindows';
 import { LoadingButton } from '../UI/LoadingButton';
 import Input from './Input';
+import FormContainer from './FormContainer';
+import FormAuth from './FormAuth';
 
 const PasswordReset = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +21,8 @@ const PasswordReset = () => {
     password: '',
   });
   const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const t = useTranslations('Admin.resetPswd');
 
   const router = useRouter();
@@ -62,22 +66,31 @@ const PasswordReset = () => {
     }
   };
 
-  const { formContainer, formBtn } = FORM_STYLES;
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
+  };
+
+  const { formBtn } = FORM_STYLES;
   const { password } = formData;
 
   return (
-    <div className="container">
-      <h2 className="mb-3 text-center text-xl font-bold">{t('title')}</h2>
-      <form className={formContainer} onSubmit={handleSubmit}>
+    <FormContainer>
+      <h2 className="text-[40px] font-bold leading-[1]">{t('title')}</h2>
+      <h3 className="text-lg font-semibold leading-[1.35]">
+        Створіть новий пароль
+      </h3>
+      <FormAuth onSubmit={handleSubmit}>
         <Input
           label={t('pswd')}
           value={password}
           onChange={handleChange}
           onBlur={handleBlur}
           name="password"
-          type="text"
+          type={showPassword ? 'text' : 'password'}
           placeholder={t('placeholderPswd')}
           errors={errors.password}
+          showPassword={showPassword}
+          togglePasswordVisibility={togglePasswordVisibility}
         />
         <button
           type="submit"
@@ -85,13 +98,13 @@ const PasswordReset = () => {
         >
           {isLoading ? <LoadingButton /> : t('buttonName')}
         </button>
-      </form>
+      </FormAuth>
       {isStatusMessageVisible && (
         <BasicModalWindows onClose={() => setIsStatusMessageVisible(false)}>
           {'Сталася помилка... Спробуйте ще раз.'}
         </BasicModalWindows>
       )}
-    </div>
+    </FormContainer>
   );
 };
 

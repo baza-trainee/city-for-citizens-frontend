@@ -14,12 +14,12 @@ const Input = ({
   togglePasswordVisibility,
 }) => (
   <>
-    <label className="w-full pb-[22px] text-start">
-      <span className="leading-[1]">{label}</span>
+    <label className="w-full pb-[22px] text-start ">
+      <span className="text-lg leading-none">{label}</span>
       <div className="relative">
         <input
-          className={`placeholder-admin-light_0 w-full text-ellipsis
-       rounded border bg-admin-light_1 py-3 pl-2 pr-12 leading-[1.35] ${
+          className={`w-full text-ellipsis rounded border
+       bg-admin-light_1 py-3 pl-2 pr-12 text-base leading-[1.35] placeholder-admin-light_0 ${
          errors ? 'border-state-error_main' : 'border-admin-light_0'
        }
     `}
@@ -31,7 +31,7 @@ const Input = ({
           type={type}
           required
         />
-        {name === 'password' && (
+        {name.includes('password') && (
           <span
             onClick={togglePasswordVisibility}
             className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer items-center
