@@ -71,11 +71,11 @@ export default function RegisterForm() {
 
         <p>
           Already have an account?{' '}
-          <Link className="ml-2 hover:text-gray/30" href="/login">
+          <Link className="hover:text-gray/30 ml-2" href="/login">
             <u>Log in.</u>
           </Link>
         </p>
-        <button className="mx-auto my-0 block w-full rounded-lg bg-primary/100 p-2.5 px-[40px] py-[10px] text-gray/0 hover:bg-primary/80 dark:border-gray/5 dark:bg-gray/5 dark:text-gray/100 dark:hover:border-gray/10 dark:hover:bg-gray/10">
+        <button className="bg-primary/100 text-gray/0 hover:bg-primary/80 dark:border-gray/5 dark:bg-gray/5 dark:text-gray/100 dark:hover:border-gray/10 dark:hover:bg-gray/10 mx-auto my-0 block w-full rounded-lg p-2.5 px-[40px] py-[10px]">
           Sing Up
         </button>
       </form>

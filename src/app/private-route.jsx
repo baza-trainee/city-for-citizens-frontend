@@ -1,13 +1,11 @@
 'use client';
 
+import useCheckTokenValidity from '@/hooks/useCheckTokenValidity';
 import { useRouter } from '@/navigation';
-
 import { useEffect } from 'react';
 
-import { useCheckTokenValidity } from '@/hooks/useCheckTokenValidity';
-
-export const privateRoute = ({ component: Component, redirectTo }) =>
-  function PrivateRoute(props) {
+export default function privateRoute({ component: Component, redirectTo }) {
+  return function PrivateRoute(props) {
     const { token, isLoggedIn, isLoading, isAccessToken } =
       useCheckTokenValidity(redirectTo);
 
@@ -23,7 +21,7 @@ export const privateRoute = ({ component: Component, redirectTo }) =>
       return (
         <>
           {isLoading ? (
-            <div className="fixed left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-gray/100/90 text-[66px] text-gray/5">
+            <div className="fixed left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-admin-backdrop text-[66px] text-admin-light_1">
               Loading....
             </div>
           ) : null}
@@ -33,3 +31,4 @@ export const privateRoute = ({ component: Component, redirectTo }) =>
 
     return <Component {...props} />;
   };
+}

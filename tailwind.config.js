@@ -8,18 +8,13 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      // new design
       roboto: ['var(--font-roboto)'],
       ubuntu: ['var(--font-font-ubuntu)'],
       exo_2: ['var(--font-exo-2)'],
       source_sans_3: ['var(--font-source-sans-3)'],
-
-      // old design
-      sans: ['NewMexika', 'sans-serif'],
-      heading: ['MAK', 'sans-serif'],
     },
+
     colors: {
-      // new design
       admin: {
         backdrop: '#1E1E1E80',
         darkblue: '#3D4756',
@@ -30,12 +25,14 @@ module.exports = {
         light_2: '#FEFEFE',
         light_3: '#FFFFFF',
       },
+
       auth: {
         dark: '#131313',
         dark_90: '#121212',
         dark_10: '#7E8492',
         light: '#fcfcfc',
       },
+
       state: {
         success: '#2D982B',
         error_main: '#E21B00',
@@ -91,39 +88,21 @@ module.exports = {
           text: '#000000',
         },
       },
+    },
 
-      // old design
-      'primary/100': '#0D3BDD',
-      'primary/80': '#6589E3',
-      'primary/0': '#000',
-      'gray/100': '#121923',
-      'gray/80': '#222A30',
-      'gray/50': '#485058',
-      'gray/30': '#858E97',
-      'gray/20': '#ACB5BE',
-      'gray/10': '#DFE5EC',
-      'gray/5': '#F6F6F6',
-      'gray/0': '#FCFCFC',
-      error: '#FF0000',
-    },
-    extend: {
-      textColor: {
-        active: '#0D3BDD',
-      },
-      borderColor: {
-        active: '#0D3BDD',
-      },
-    },
     screens: {
-      mobile: '430px',
-      tablet: '932px',
-      desktop: '1440px',
+      mobile: '360px',
+      tablet: '738px',
+      laptop: '960px',
+      desktop: '1920px',
     },
+
     container: {
       center: true,
       padding: {
         DEFAULT: '16px',
-        tablet: '26px',
+        laptop: '26px',
+        desktop: '240px',
       },
     },
   },
