@@ -39,8 +39,8 @@ const AddEvent = () => {
     formDataEn,
 
     formDataImageUk,
-    formDataImageEn,
-    resetForm
+    formDataImageEn
+    //resetForm
   ) => {
     e.preventDefault();
     const idIdentifier = uuidv4();
@@ -73,7 +73,7 @@ const AddEvent = () => {
       responseEn = await addEvent(requestEn).unwrap();
       setStatusMessage('Подію успішно додано.');
       setIsStatusMessageVisible(true);
-      resetForm();
+      //resetForm();
     } catch (error) {
       setStatusMessage(`Сталася помилка: ${error.message}`);
       setIsStatusMessageVisible(true);

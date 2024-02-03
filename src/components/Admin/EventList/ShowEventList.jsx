@@ -1,20 +1,20 @@
 'use client';
 
 import { Link } from '@/navigation';
-//import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IconTrash from '../../UI/icons/IconTrash';
 import IconPencil from '../../UI/icons/IconPencil';
 import ShowModal from '../ModalWindow/ShowModal';
 import ShowMessage from '../Message/ShowMessage';
 import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
 import ModalPortal from '../ModalWindow/ModalPortal';
-import MessagePortal from '../Message/MessagePortal';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
+import MessagePortal from '../Message/MessagePortal';
 
 const ShowEventList = ({ eventsData }) => {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
-  const [isShowMessage, setIsShowMessage] = useState(false);
+  const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
+  const [isShowErrorMessage, setIsShowErrorsMessage] = useState(false);
   const initialDataEvent = { id: '', title: '' };
   const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
 
@@ -36,9 +36,10 @@ const ShowEventList = ({ eventsData }) => {
       await deleteEvent(dataDeleteEvent.id).unwrap();
 
       setIsShowDeleteModal(false);
+      setIsShowSuccessMessage(true);
       setDataDeleteEvent(initialDataEvent);
-      setIsShowMessage(true);
     } catch (error) {
+      setIsShowErrorsMessage(true);
       console.error('Помилка видалення події:', error);
     }
   };
@@ -48,38 +49,50 @@ const ShowEventList = ({ eventsData }) => {
     setDataDeleteEvent(initialDataEvent);
   };
 
+  const handleMessageClose = () => {
+    setIsShowSuccessMessage(false);
+    setIsShowErrorsMessage(false);
+  };
+
   const ShowDeleteModal = () => (
     <ModalPortal handleModalClose={handleModalClose}>
       <ShowModal
-        bgColor="#d43c3c"
+        title="Видалити подію"
         onClose={handleModalClose}
         onOk={handleConfirmDelete}
-        confirmButton="Видалити"
       >
-        Ви дійсно хочете видалити подію{' '}
-        <span className="text-[#d43c3c]">{dataDeleteEvent.title}</span>?
+        Ви точно хочете видалити подію?
       </ShowModal>
     </ModalPortal>
   );
 
   const ShowSuccessDeleteMessage = () => (
-    <MessagePortal setIsShowMessage={setIsShowMessage}>
-      <ShowMessage>Подія успішно видалена</ShowMessage>
+    <MessagePortal handleMessageClose={handleMessageClose}>
+      <ShowMessage title="Успіх" type="success" onClose={handleMessageClose}>
+        Подію видалено
+      </ShowMessage>
+    </MessagePortal>
+  );
+  const ShowErrorDeleteMessage = () => (
+    <MessagePortal handleMessageClose={handleMessageClose}>
+      <ShowMessage title="Помилка" type="error" onClose={handleMessageClose}>
+        Сталася помилка. Спробуйте ще раз або зверніться до розробника
+      </ShowMessage>
     </MessagePortal>
   );
 
   return (
     <>
       {isShowDeleteModal && <ShowDeleteModal />}
-      {isShowMessage && <ShowSuccessDeleteMessage />}
+      {isShowSuccessMessage && <ShowSuccessDeleteMessage />}
+      {isShowErrorMessage && <ShowErrorDeleteMessage />}
       {eventsData.map(event => (
         <li
           key={event.id + event.idIdentifier}
-          className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] justify-items-center gap-x-3 bg-admin-light_3 py-3
-          transition duration-200 hover:bg-gray/20
+          className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
+          hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center
            ${isMobile ? 'text-sm' : null}`}
         >
-          {console.log('event', event)}
           <span>{event.eventTitle}</span>
           <span>{event.eventAddress.city}</span>
           <span>

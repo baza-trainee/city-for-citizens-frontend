@@ -13,6 +13,7 @@ module.exports = {
       ubuntu: ['var(--font-font-ubuntu)'],
       exo_2: ['var(--font-exo-2)'],
       source_sans_3: ['var(--font-source-sans-3)'],
+      oswald: ['var(--font-oswald)'],
 
       // old design
       sans: ['NewMexika', 'sans-serif'],
@@ -23,13 +24,20 @@ module.exports = {
       admin: {
         backdrop: '#1E1E1E80',
         darkblue: '#3D4756',
+        gray: '#9DAFDC',
+        gray_2: '#747474',
+        lightgray: '#EAEAEA',
+        darkgray: '#7E8492',
         dark: '#131313',
         dark_2: '#4E4E4E',
+        dark_3: '#151515',
         menu: '#B0C1EF',
         side_bar: '#6589E3',
         light_1: '#FBFAFA',
         light_2: '#FEFEFE',
         light_3: '#FFFFFF',
+        green: '#2D982B',
+        red: '#F00631',
       },
       state: {
         success: '#2D982B',

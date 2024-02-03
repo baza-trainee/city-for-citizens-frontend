@@ -2,24 +2,21 @@
 
 import { useState } from 'react';
 import { NAVIGATION } from '@/helpers/constants';
-import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
+import { useCurrentLocale } from '@/hooks';
 import { Link } from '@/navigation';
 import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
 import { privateRoute } from '../../privateRoute';
 import AdminHeader from '../AdminHeader';
 import ShowEventList from './ShowEventList';
 import IconSearch from '../../UI/icons/IconSearch';
-import IconPlus from '../../UI/icons/IconPlus';
+import EventPagination from './EventPagination';
 
 const EventList = () => {
   const { localeForRequest } = useCurrentLocale();
   const [inputValue, setInputValue] = useState('');
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const { matches: isMobile } = useStyleMediaQuery({
-    mixOrMax: 'max',
-    widthOrHeight: 'width',
-    value: 767,
-  });
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { data: eventList = [] } = useGetAllEventsByLocaleQuery({
     locale: localeForRequest,
   });
@@ -43,40 +40,15 @@ const EventList = () => {
     );
     setFilteredEvents(filteredEvents);
   }
-  function SearchField() {
-    return (
-      <div className="flex h-[2.9rem] w-[28rem] justify-between rounded-md border border-admin-dark_2">
-        <input
-          type="search"
-          placeholder="Введіть ключове слово для пошуку"
-          value={inputValue}
-          onChange={handleChangeSearch}
-          className="flex-grow rounded-md bg-admin-light_1 p-2 pl-3.5 transition duration-200 hover:bg-[#ffffff] focus:outline-none"
-        />
-        <div className="flex h-full w-[2.9rem] items-center justify-center bg-admin-dark">
-          <IconSearch width="25" height="26" className="" />
-        </div>
-      </div>
-    );
-  }
-
   function AddEventButton() {
     return (
       <Link
-        className="group block self-center rounded-lg bg-admin-dark px-[1.88rem] py-2.5
-        text-center text-xl font-bold text-admin-light_3 transition duration-200 hover:bg-primary/100 hover:text-[#ffffff]"
+        className="hover:bg-admin-darkgray group block self-center rounded-lg bg-admin-dark px-[1.88rem]
+        py-2.5 text-center text-xl font-bold text-admin-light_3 transition duration-200 hover:text-[#ffffff]"
         href={'/admin/event'}
       >
         <button type="button" title="Додати подію">
-          {!isMobile ? (
-            'Додати подію'
-          ) : (
-            <IconPlus
-              width="14"
-              height="14"
-              className="inline fill-gray/80 transition duration-200 group-hover:fill-[#ffffff]"
-            />
-          )}
+          Додати подію
         </button>
       </Link>
     );
@@ -87,10 +59,10 @@ const EventList = () => {
         className="text-dark mb-4 grid grid-cols-[4fr_2fr_3fr_2fr_1fr] justify-items-center
           gap-x-3 bg-admin-menu py-3 font-source_sans_3 text-lg"
       >
-        <div className="">Назва</div>
-        <div className="">Місто</div>
-        <div className="">Тип події</div>
-        <div className="">Дата та час</div>
+        <span className="">Назва</span>
+        <span className="">Місто</span>
+        <span className="">Тип події</span>
+        <span className="">Дата та час</span>
       </div>
     );
   }
@@ -107,19 +79,32 @@ const EventList = () => {
   }
 
   return (
-    <div className="ml-5 mr-20 ">
+    <div className="font-source_sans_3">
       <AdminHeader title="Всі події">
         <div className="flex gap-x-14">
-          <SearchField />
+          <div className="hover:border-admin-gray group flex h-[2.9rem] justify-between rounded-md border border-admin-dark_2 mobile:w-60 tablet:w-72 desktop:w-[28rem]">
+            <input
+              type="search"
+              placeholder="Введіть ключове слово для пошуку"
+              value={inputValue}
+              onChange={handleChangeSearch}
+              className="flex-grow rounded-md  bg-admin-light_1 p-2 pl-3.5 transition duration-200 placeholder:text-lg placeholder:text-admin-dark_2
+          hover:bg-[#ffffff] focus:outline-none tablet:placeholder-shown:overflow-hidden tablet:placeholder-shown:text-ellipsis"
+            />
+            <div className="group-hover:bg-admin-darkgray flex h-full w-[2.9rem] items-center justify-center bg-admin-dark">
+              <IconSearch width="25" height="26" className="" />
+            </div>
+          </div>
           <AddEventButton />
         </div>
       </AdminHeader>
       <div id="portal" />
       <div id="message-portal" />
-      <div className="grid grid-cols-1 grid-rows-[auto_auto] pb-4">
+      <div className="ml-5 grid grid-cols-1 grid-rows-[auto_auto] pb-4 tablet:mr-10 desktop:mr-20 ">
         <TableHeader />
         <TableBody />
       </div>
+      <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
     </div>
   );
 };

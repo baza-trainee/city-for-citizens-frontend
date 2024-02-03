@@ -1,4 +1,4 @@
-import { Roboto, Ubuntu, Exo_2, Source_Sans_3 } from 'next/font/google';
+import { Roboto, Ubuntu, Exo_2, Source_Sans_3, Oswald } from 'next/font/google';
 
 export const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
@@ -26,4 +26,11 @@ export const source_sans_3 = Source_Sans_3({
   display: 'swap',
   variable: '--font-source-sans-3',
   weight: ['400', '600', '700'],
+});
+
+export const oswald = Oswald({
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  variable: '--font-oswald',
+  weight: ['400', '500', '700'],
 });
