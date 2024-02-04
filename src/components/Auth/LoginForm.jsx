@@ -4,7 +4,6 @@ import { NAVIGATION } from '@/helpers/constants';
 import { Link, useRouter } from '@/navigation';
 import { useLoginMutation } from '@/redux/api/authApi';
 import { setCredentials } from '@/redux/slice/authSlice';
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -37,8 +36,6 @@ const LoginForm = () => {
   const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
 
-  const t = useTranslations('Admin.loginForm');
-
   const router = useRouter();
 
   const handleChange = e => {
@@ -50,12 +47,11 @@ const LoginForm = () => {
 
   const handleBlur = e => {
     const { name, value } = e.target;
-    validateInput(name, value, setErrors, t);
+    validateInput(name, value, setErrors);
   };
 
   const isFormValid =
-    isValidEmail(formData.email) &&
-    isValidPassword(formData.password, t) === true;
+    isValidEmail(formData.email) && isValidPassword(formData.password) === true;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -70,7 +66,9 @@ const LoginForm = () => {
           router.push(NAVIGATION.admin);
         }
       } catch (error) {
-        setError(t('error'));
+        setError(
+          'Надані облікові дані невірні. Будь ласка, перевірте свій логін і пароль та спробуйте ще раз.'
+        );
       }
     }
   };
@@ -86,24 +84,24 @@ const LoginForm = () => {
       <FormTitle title="Вхід" />
       <FormAuth onSubmit={handleSubmit}>
         <Input
-          label={t('email')}
+          label="Ел. пошта"
           value={email}
           onChange={handleChange}
           onBlur={handleBlur}
           name="email"
-          type="text"
-          placeholder={t('placeholderEmail')}
+          type="email"
+          placeholder="Введіть ел. пошту"
           errors={errors.email}
           error={error}
         />
         <Input
-          label={t('pswd')}
+          label="Пароль"
           value={password}
           onChange={handleChange}
           onBlur={handleBlur}
           name="password"
           type={showPassword ? 'text' : 'password'}
-          placeholder={t('placeholderPswd')}
+          placeholder="Введіть пароль"
           errors={errors.password}
           error={error}
           showPassword={showPassword}
@@ -113,7 +111,7 @@ const LoginForm = () => {
           className="ml-2 text-lg leading-[1.35] underline underline-offset-2 hover:opacity-80"
           href="/password-reset/request"
         >
-          <u>{t('link')}</u>
+          <u>Забули пароль?</u>
         </Link>
         <AuthButton
           btnName="Увійти"

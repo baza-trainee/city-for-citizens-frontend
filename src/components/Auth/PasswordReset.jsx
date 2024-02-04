@@ -4,7 +4,6 @@ import { NAVIGATION } from '@/helpers/constants';
 import { validateInput } from '@/helpers/validation';
 import { useRouter } from '@/navigation';
 import { usePasswordResetMutation } from '@/redux/api/authApi';
-import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import BasicModalWindows from '../Admin/ModalWindow/BasicModalWindows';
@@ -12,6 +11,7 @@ import Input from './Input';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
 import AuthButton from './AuthButton';
+import BackLink from './BackLink';
 
 const PasswordReset = () => {
   const [formData, setFormData] = useState({
@@ -22,11 +22,10 @@ const PasswordReset = () => {
     password1: '',
     password2: '',
   });
-  const [isStatusMessageVisible, setIsStatusMessageVisible] = useState(false);
+  const [error, setError] = useState();
+  const [successMessage, setSuccessMessage] = useState('');
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-
-  const t = useTranslations('Admin.resetPswd');
 
   const router = useRouter();
   const searchParam = useSearchParams();
@@ -40,36 +39,48 @@ const PasswordReset = () => {
   const [passwordReset, { isLoading }] = usePasswordResetMutation();
 
   const handleChange = e => {
+    setError(null);
     const { name, value } = e.target;
     setErrors(prev => ({ ...prev, [name]: '' }));
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleBlur = e => {
-    const { name, value } = e.target;
-    validateInput(name, value, setErrors, t);
+    const { value, name } = e.target;
+    validateInput(name, value, setErrors);
   };
+
+  const isFormValid = formData.password1 === formData.password2;
 
   const handleSubmit = async e => {
     e.preventDefault();
 
     if (password1 !== password2) {
-      setErrors('Паролі не співпадають');
+      setError('Паролі не співпадають');
       return;
     }
 
-    if (!errors.password1 && !errors.password2) {
+    if (
+      !errors.password1 &&
+      !errors.password2 &&
+      formData.password1 === formData.password2
+    ) {
       try {
         const data = await passwordReset({
-          newPassword: formData.password1,
+          newPassword: formData.password2,
           token: searchParam.get('token'),
         }).unwrap();
 
         if (data) {
+          setSuccessMessage(
+            'Перейдіть за посиланням, відправленим у листі на Вашу пошту'
+          );
           router.push(NAVIGATION.login);
         }
       } catch {
-        setIsStatusMessageVisible(true);
+        setError(
+          'Сталася помилка, пороль не відновлено, спробуйте ще раз відправити запит на скидання пороля, і перейти по посиланню яку прийде на е-пошту'
+        );
       }
     }
   };
@@ -86,8 +97,8 @@ const PasswordReset = () => {
   const { password1, password2 } = formData;
 
   return (
-    <FormContainer>
-      <h2 className="text-[40px] font-bold leading-[1]">{t('title')}</h2>
+    <FormContainer message={successMessage} error={error}>
+      <h2 className="text-[40px] font-bold leading-[1]">Відновити пароль</h2>
       <h3 className="text-lg font-semibold leading-[1.35]">
         Створіть новий пароль
       </h3>
@@ -117,15 +128,14 @@ const PasswordReset = () => {
           togglePasswordVisibility={() => togglePasswordVisibility('password2')}
         />
         <div className="flex w-full justify-between">
-          <AuthButton btnName="Повернутися" isLoading={isLoading} />
-          <AuthButton btnName="Зберегти" isLoading={isLoading} />
+          <BackLink />
+          <AuthButton
+            btnName="Зберегти"
+            isFormValid={isFormValid}
+            isLoading={isLoading}
+          />
         </div>
       </FormAuth>
-      {isStatusMessageVisible && (
-        <BasicModalWindows onClose={() => setIsStatusMessageVisible(false)}>
-          {'Сталася помилка... Спробуйте ще раз.'}
-        </BasicModalWindows>
-      )}
     </FormContainer>
   );
 };
