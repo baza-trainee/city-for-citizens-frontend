@@ -1,4 +1,4 @@
-import IconClose from '../../UI/icons/IconAdminClose';
+import IconClose from '../../../../components-old/UI/icons/IconAdminClose';
 
 function ShowModal({ title = '', onClose, onOk, children }) {
   return (

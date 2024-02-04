@@ -1,28 +1,23 @@
 'use client';
 
 import { Link } from '@/navigation';
-import { useEffect, useState } from 'react';
-import IconTrash from '../../UI/icons/IconTrash';
-import IconPencil from '../../UI/icons/IconPencil';
-import ShowModal from '../ModalWindow/ShowModal';
-import ShowMessage from '../Message/ShowMessage';
-import { useCurrentLocale, useStyleMediaQuery } from '@/hooks';
-import ModalPortal from '../ModalWindow/ModalPortal';
+import { useState } from 'react';
+import IconTrash from '@/assets/icons/admin-sidebar/trash-icon.svg';
+import IconPencil from '@/assets/icons/admin-sidebar/pencil-icon.svg';
+import ShowModal from '@/components/admin-panel/common/ModalWindow/ShowModal';
+import ShowMessage from '@/components/admin-panel/common/Message/ShowMessage';
+import { useCurrentLocale } from '@/hooks';
+import ModalPortal from '@/components/admin-panel/common/ModalWindow/ModalPortal';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
-import MessagePortal from '../Message/MessagePortal';
+import MessagePortal from '@/components/admin-panel/common/Message/MessagePortal';
 
-const ShowEventList = ({ eventsData }) => {
+export default function DisplayEventList({ eventsData }) {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
   const [isShowErrorMessage, setIsShowErrorsMessage] = useState(false);
   const initialDataEvent = { id: '', title: '' };
   const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
 
-  const { matches: isMobile } = useStyleMediaQuery({
-    mixOrMax: 'max',
-    widthOrHeight: 'width',
-    value: 767,
-  });
   const { localeForIntl } = useCurrentLocale();
   const [deleteEvent] = useDeleteEventMutation();
 
@@ -90,8 +85,7 @@ const ShowEventList = ({ eventsData }) => {
         <li
           key={event.id + event.idIdentifier}
           className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
-          hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center
-           ${isMobile ? 'text-sm' : null}`}
+          hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center`}
         >
           <span>{event.eventTitle}</span>
           <span>{event.eventAddress.city}</span>
@@ -117,7 +111,7 @@ const ShowEventList = ({ eventsData }) => {
               <IconPencil
                 width="22"
                 height="20"
-                className="inline fill-admin-dark transition duration-200 hover:fill-primary/100"
+                className="inline fill-admin-dark transition duration-200 hover:fill-admin-green"
               />
             </Link>
             <button
@@ -135,5 +129,4 @@ const ShowEventList = ({ eventsData }) => {
       ))}
     </>
   );
-};
-export default ShowEventList;
+}

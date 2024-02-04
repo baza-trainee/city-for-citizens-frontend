@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import IconAdminPaginationArrow from '@/components/UI/icons/IconAdminPaginationArrow';
+import IconAdminPaginationArrow from '@/assets/icons/admin-sidebar/pagination-arrow-icon.svg';
 
 const EventPagination = ({ currentPage, onClick }) => {
   const [pagination, setPagination] = useState(5);
@@ -23,19 +23,14 @@ const EventPagination = ({ currentPage, onClick }) => {
   }
   return (
     <div className="mb-12 mt-[6.7rem] flex justify-end gap-x-6 tablet:mr-10 desktop:mr-[5.8rem]">
-      <ol className="font-oswald flex gap-x-6  text-2xl font-medium">
+      <ol className="flex gap-x-6 font-oswald  text-2xl font-medium">
         {arrayOfPageNumbers.map(pageNumber => (
           <li
             key={uuidv4()}
             onClick={() => onClick(pageNumber)}
             className={`text-admin-dark
             ${
-              pageNumber === currentPage
-                ? 'bg-admin-dark_3 text-admin-light_3'
-                : pageNumber === currentPage + 1 ||
-                    pageNumber === currentPage - 1
-                  ? 'bg-admin-gray'
-                  : null
+              pageNumber === currentPage ? 'bg-admin-gray' : null
             } flex h-11 w-11 cursor-pointer items-center justify-center  rounded transition-colors`}
           >
             {pageNumber}
@@ -52,7 +47,7 @@ const EventPagination = ({ currentPage, onClick }) => {
           <IconAdminPaginationArrow
             height="44"
             weight="44"
-            className={`group-disabled:stroke-admin-darkgray bg-admin-lightgray rounded-xl stroke-admin-dark transition-colors`}
+            className={`rounded-xl bg-admin-lightgray stroke-admin-dark transition-colors group-disabled:stroke-admin-darkgray`}
           />
         </button>
         <button
@@ -64,7 +59,7 @@ const EventPagination = ({ currentPage, onClick }) => {
           <IconAdminPaginationArrow
             height="44"
             weight="44"
-            className={`group-disabled:stroke-admin-darkgray bg-admin-lightgray -scale-x-100 rounded-xl stroke-admin-dark transition-colors`}
+            className={`-scale-x-100 rounded-xl bg-admin-lightgray stroke-admin-dark transition-colors group-disabled:stroke-admin-darkgray`}
           />
         </button>
       </div>
