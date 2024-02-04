@@ -4,7 +4,7 @@ import PrivateProvider from '@/providers/provider-private-route';
 export default function AdminLayout({ children }) {
   return (
     <PrivateProvider>
-      <div className="grid h-screen grid-cols-[298px_1fr]">
+      <div className="grid grid-cols-[298px_1fr] bg-admin-light_1">
         <AdminSideBar />
         {children}
       </div>
