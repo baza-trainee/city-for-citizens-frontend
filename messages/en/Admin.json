@@ -22,10 +22,10 @@
       "placeholderEmail": "Enter email",
       "placeholderPswd": "Enter password",
       "link": "Forgot your password?",
-      "error": "Email or password is invalid",
+      "error": "Provided credentials are incorrect. Please verify your login and password and try again.",
       "errorEmail": "Invalid email address",
-      "errorLength": "Password should be at least 8 digits long",
-      "errorLettersDigits": "Password must contain both letters and digits."
+      "errorLength": "Password must be between 8 and 32 characters long",
+      "errorLettersDigits": "Password requires a digit, lowercase, uppercase letter."
     },
     "requestPswd": {
       "title": "Please enter your email address to reset your password:",

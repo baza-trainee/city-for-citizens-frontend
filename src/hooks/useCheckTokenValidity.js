@@ -6,17 +6,16 @@ import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const useCheckTokenValidity = redirectTo => {
+export default function useCheckTokenValidity(redirectTo) {
   const token = useSelector(selectToken);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const router = useRouter();
 
   const [refresh, { isLoading, isError }] = useLazyRefreshQuery();
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkTokenValidity = async () => {
+    async function checkTokenValidity() {
       try {
         const response = await refresh().unwrap();
         if (!isError) {
@@ -29,7 +28,7 @@ export const useCheckTokenValidity = redirectTo => {
           Cookies.remove('accessToken');
         }
       }
-    };
+    }
 
     if (Cookies.get('accessToken') && !token && !isLoggedIn) {
       checkTokenValidity();
@@ -42,4 +41,4 @@ export const useCheckTokenValidity = redirectTo => {
     isLoading,
     isAccessToken: Cookies.get('accessToken'),
   };
-};
+}
