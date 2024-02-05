@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import IconAdminPaginationArrow from '@/assets/icons/admin-sidebar/pagination-arrow-icon.svg';
 
-const EventPagination = ({ currentPage, onClick }) => {
+function EventPagination({ currentPage, onClick }) {
   const [pagination, setPagination] = useState(5);
   const arrayOfPageNumbers = Array.from(
     { length: pagination },
@@ -21,6 +21,7 @@ const EventPagination = ({ currentPage, onClick }) => {
       onClick(currentPage + 1);
     }
   }
+
   return (
     <div className="mb-12 mt-[6.7rem] flex justify-end gap-x-6 tablet:mr-10 desktop:mr-[5.8rem]">
       <ol className="flex gap-x-6 font-oswald  text-2xl font-medium">
@@ -30,7 +31,7 @@ const EventPagination = ({ currentPage, onClick }) => {
             onClick={() => onClick(pageNumber)}
             className={`text-admin-dark
             ${
-              pageNumber === currentPage ? 'bg-admin-gray' : null
+              pageNumber === currentPage && 'bg-admin-gray'
             } flex h-11 w-11 cursor-pointer items-center justify-center  rounded transition-colors`}
           >
             {pageNumber}
@@ -41,7 +42,7 @@ const EventPagination = ({ currentPage, onClick }) => {
         <button
           className="group cursor-pointer disabled:cursor-default"
           onClick={handleChangePagination}
-          disabled={`${currentPage === 1 ? true : ''}`}
+          disabled={currentPage === 1}
           data-arrow-left
         >
           <IconAdminPaginationArrow
@@ -53,7 +54,7 @@ const EventPagination = ({ currentPage, onClick }) => {
         <button
           className="group cursor-pointer disabled:cursor-default"
           onClick={handleChangePagination}
-          disabled={`${currentPage === pagination ? true : ''}`}
+          disabled={currentPage === pagination}
           data-arrow-right
         >
           <IconAdminPaginationArrow
@@ -65,6 +66,6 @@ const EventPagination = ({ currentPage, onClick }) => {
       </div>
     </div>
   );
-};
+}
 
 export default EventPagination;

@@ -1,17 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { NAVIGATION } from '@/helpers/constants';
+//import { NAVIGATION } from '@/helpers/constants';
 import { useCurrentLocale } from '@/hooks';
-import { Link } from '@/navigation';
+
 import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
-import { privateRoute } from '@/app/private-route';
+import AddEventButton from './add-event-button';
+//import { privateRoute } from '@/app/private-route';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
 import DisplayEventList from './display-event-list';
-import Image from 'next/image';
 import IconSearch from '@/assets/icons/common/search-icon.svg';
-//import IconSearch from '@/assets/icons/common/search-icon.svg?url';
-//import IconSearch from '../../UI/icons/IconSearch';
 import EventPagination from './event-pagination';
 
 export default function EventList() {
@@ -43,19 +41,7 @@ export default function EventList() {
     );
     setFilteredEvents(filteredEvents);
   }
-  function AddEventButton() {
-    return (
-      <Link
-        className="group block self-center rounded-lg bg-admin-dark px-[1.88rem] py-2.5
-        text-center text-xl font-bold text-admin-light_3 transition duration-200 hover:bg-admin-darkgray hover:text-[#ffffff]"
-        href={'/admin/event'}
-      >
-        <button type="button" title="Додати подію">
-          Додати подію
-        </button>
-      </Link>
-    );
-  }
+
   function TableHeader() {
     return (
       <div
@@ -69,6 +55,7 @@ export default function EventList() {
       </div>
     );
   }
+
   function TableBody() {
     return (
       <ol className="grid auto-rows-auto gap-y-3 font-exo_2 text-base">
@@ -80,6 +67,7 @@ export default function EventList() {
       </ol>
     );
   }
+
   return (
     <div className="font-source_sans_3">
       <AdminHeader title="Всі події">
@@ -100,13 +88,12 @@ export default function EventList() {
           <AddEventButton />
         </div>
       </AdminHeader>
-      <div id="portal" />
-      <div id="message-portal" />
       <div className="ml-5 grid grid-cols-1 grid-rows-[auto_auto] pb-4 tablet:mr-10 desktop:mr-20 ">
         <TableHeader />
         <TableBody />
       </div>
       <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
+      {console.log('eventList', eventList)}
     </div>
   );
 }
