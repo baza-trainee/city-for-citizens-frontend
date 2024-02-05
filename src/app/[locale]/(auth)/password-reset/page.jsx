@@ -1,5 +1,10 @@
 import PasswordReset from '@/components/authentication/password-reset';
+import { Suspense } from 'react';
 
 export default function Page() {
-  return <PasswordReset />;
+  return (
+    <Suspense>
+      <PasswordReset />
+    </Suspense>
+  );
 }
