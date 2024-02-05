@@ -12,7 +12,7 @@ export default function FormContainer({ children, error, message }) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
-          className="relative flex  flex-col gap-8 rounded-lg bg-admin-light_2 p-6 text-auth-dark"
+          className="bg-auth-light_2 relative  flex flex-col gap-8 rounded-lg p-6 text-auth-dark"
         >
           {children}
         </div>

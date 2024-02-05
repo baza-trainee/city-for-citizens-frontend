@@ -29,7 +29,8 @@ module.exports = {
       auth: {
         dark: '#131313',
         dark_10: '#7E8492',
-        light: '#ffffff',
+        light: '#FFFFFF',
+        light_2: '#FEFEFE',
       },
 
       state: {
