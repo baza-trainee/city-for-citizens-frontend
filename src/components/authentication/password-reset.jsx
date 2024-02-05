@@ -1,7 +1,7 @@
 'use client';
 
 import { NAVIGATION } from '@/helpers/constants';
-import { validateInput } from '@/helpers/validation';
+import { validateInput, isValidPassword } from '@/helpers/validation';
 import { useRouter } from '@/navigation';
 import { usePasswordResetMutation } from '@/redux/api/authApi';
 import { useSearchParams } from 'next/navigation';
@@ -89,9 +89,12 @@ export default function PasswordReset() {
       setShowPassword2(prev => !prev);
     }
   };
+  const isFormValid =
+    isValidPassword(formData.password1) === true &&
+    isValidPassword(formData.password2) === true &&
+    formData.password1 === formData.password2;
 
   const { password1, password2 } = formData;
-  const isFormValid = password1 === password2;
 
   return (
     <FormContainer message={successMessage} error={error}>

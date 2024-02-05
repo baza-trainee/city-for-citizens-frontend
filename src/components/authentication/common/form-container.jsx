@@ -1,6 +1,7 @@
 import ErrorMessage from './error-message';
+import SucceessMessage from './success-message';
 
-export default function FormContainer({ children, error }) {
+export default function FormContainer({ children, error, message }) {
   return (
     <div
       className={`absolute inset-x-0 flex max-h-[120vh] min-h-screen ${error ? 'items-center pb-[7%]' : 'items-center pt-[2%]'} justify-center overflow-y-auto bg-admin-dark bg-opacity-50 `}
@@ -15,6 +16,7 @@ export default function FormContainer({ children, error }) {
         >
           {children}
         </div>
+        {message && <SucceessMessage message={message} />}
       </div>
     </div>
   );
