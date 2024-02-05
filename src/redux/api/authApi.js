@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { BASE_URL } from '@/helpers/constants';
 
 export const authApi = createApi({
@@ -8,8 +7,15 @@ export const authApi = createApi({
     baseUrl: BASE_URL,
     credentials: 'include',
     method: 'POST',
-    prepareHeaders: headers => {
+    prepareHeaders: (headers, { getState, endpoint }) => {
       headers.set('Content-Type', 'application/json;charset=utf-8');
+
+      if (endpoint === 'changePassword') {
+        const token = getState().authSlice.accessToken;
+        if (token) {
+          headers.set('authorization', `Bearer ${token}`);
+        }
+      }
 
       return headers;
     },
@@ -72,6 +78,17 @@ export const authApi = createApi({
         };
       },
     }),
+    //
+    changePassword: builder.mutation({
+      query: credentials => {
+        return {
+          url: 'password/change',
+          body: JSON.stringify(credentials),
+        };
+      },
+      providesTags: ['changePassword'],
+    }),
+    //
   }),
 });
 
@@ -82,4 +99,5 @@ export const {
   useLogoutMutation,
   useRequestPasswordResetMutation,
   usePasswordResetMutation,
+  useChangePasswordMutation,
 } = authApi;
