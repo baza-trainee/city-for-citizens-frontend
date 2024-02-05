@@ -1,9 +1,9 @@
-const PrimaryButton = ({
+export default function Button({
   children,
   className,
   variant = 'filled',
   ...props
-}) => {
+}) {
   return (
     <button
       {...props}
@@ -16,6 +16,4 @@ const PrimaryButton = ({
       {children}
     </button>
   );
-};
-
-export default PrimaryButton;
+}

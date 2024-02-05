@@ -1,10 +1,17 @@
 'use client';
 
 import React, { useState, useId } from 'react';
-import IconEyeOpen from '../../UI/icons/eyes/IconEyeOpen';
-import IconEyeClose from '../../UI/icons/eyes/IconEyeClose';
+import IconEyeOpen from '@/assets/icons/eyes-password/password-visible.svg';
+import IconEyeClose from '@/assets/icons/eyes-password/password-protected.svg';
 
-const Input = ({ label, name, register, errors, type = 'text', ...props }) => {
+export default function Input({
+  label,
+  name,
+  register,
+  errors,
+  type = 'text',
+  ...props
+}) {
   const inputId = useId();
 
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -48,6 +55,4 @@ const Input = ({ label, name, register, errors, type = 'text', ...props }) => {
       )}
     </label>
   );
-};
-
-export default Input;
+}

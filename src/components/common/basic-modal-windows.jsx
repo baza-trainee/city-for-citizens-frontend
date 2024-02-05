@@ -1,6 +1,11 @@
 import CloseIcon from '@/assets/icons/common/close-icon.svg';
 
-export function BasicModalWindows({ onClose, message, children, title }) {
+export default function BasicModalWindows({
+  onClose,
+  message,
+  children,
+  title,
+}) {
   return (
     <>
       <button

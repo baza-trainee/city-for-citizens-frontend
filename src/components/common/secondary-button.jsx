@@ -1,4 +1,4 @@
-const SecondaryButton = ({ message, className, ...props }) => {
+export default function SecondaryButton({ message, className, ...props }) {
   return (
     <button
       {...props}
@@ -8,6 +8,4 @@ const SecondaryButton = ({ message, className, ...props }) => {
       {message}
     </button>
   );
-};
-
-export default SecondaryButton;
+}
