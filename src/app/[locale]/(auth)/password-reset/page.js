@@ -1,6 +1,5 @@
-import PasswordReset from '@/components/Auth/PasswordReset';
+// import PasswordReset from '@/components/Auth/PasswordReset';
 
-const PasswordResetPage = () => {
-  return <PasswordReset />;
-};
-export default PasswordResetPage;
+// export default function PasswordResetPage() {
+//   return <PasswordReset />;
+// }

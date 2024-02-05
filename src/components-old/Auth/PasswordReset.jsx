@@ -1,28 +1,18 @@
 'use client';
-<<<<<<< HEAD:src/components/Auth/PasswordReset.jsx
+
 import { publicRoute } from '@/components/publicRoute';
 import { NAVIGATION } from '@/helpers/constants';
-=======
-import { publicRoute } from '@/components-old/public-route';
-import { FORM_STYLES, NAVIGATION } from '@/helpers/constants';
->>>>>>> dev:src/components-old/Auth/PasswordReset.jsx
 import { validateInput } from '@/helpers/validation';
 import { useRouter } from '@/navigation';
 import { usePasswordResetMutation } from '@/redux/api/authApi';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD:src/components/Auth/PasswordReset.jsx
-import BasicModalWindows from '../Admin/ModalWindow/BasicModalWindows';
+
 import Input from './Input';
 import FormContainer from './FormContainer';
 import FormAuth from './FormAuth';
 import AuthButton from './AuthButton';
-import BackLink from './BackLink';
-=======
-
-import Input from './Input';
-import { BasicModalWindows, LoadingButton } from '@/components/common';
->>>>>>> dev:src/components-old/Auth/PasswordReset.jsx
+import GoBackLink from './BackLink';
 
 const PasswordReset = () => {
   const [formData, setFormData] = useState({
@@ -139,7 +129,7 @@ const PasswordReset = () => {
           togglePasswordVisibility={() => togglePasswordVisibility('password2')}
         />
         <div className="flex w-full justify-between">
-          <BackLink />
+          <GoBackLink />
           <AuthButton
             btnName="Зберегти"
             isFormValid={isFormValid}

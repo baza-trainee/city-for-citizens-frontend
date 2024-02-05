@@ -31,10 +31,10 @@ export default function Input({
           type={type}
           required
         />
-        {name === 'password' && (
+        {name.includes('password') && (
           <button
             type="button"
-            onClick={togglePasswordVisibility}
+            onClick={() => togglePasswordVisibility(name)}
             className={`absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer items-center
             justify-center bg-gray/5`}
           >

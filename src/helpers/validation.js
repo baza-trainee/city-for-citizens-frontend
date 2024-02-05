@@ -39,16 +39,16 @@ export const validateEmail = (email, setErrors) => {
   }
 };
 
-export const validatePassword = (password, fieldName, setErrors) => {
+export const validatePassword = (password, name, setErrors) => {
   if (password.trim() === '') {
-    setErrors(prev => ({ ...prev, [fieldName]: "Це поле обов'язкове" }));
+    setErrors(prev => ({ ...prev, [name]: "Це поле обов'язкове" }));
   } else {
     const passwordValidationResult = isValidPassword(password);
 
     if (passwordValidationResult !== true) {
-      setErrors(prev => ({ ...prev, [fieldName]: passwordValidationResult }));
+      setErrors(prev => ({ ...prev, [name]: passwordValidationResult }));
     } else {
-      setErrors(prev => ({ ...prev, [fieldName]: '' }));
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   }
 };
