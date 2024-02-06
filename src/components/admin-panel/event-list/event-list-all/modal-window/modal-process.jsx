@@ -14,13 +14,19 @@ import {
   closeModal,
 } from '@/redux/slice/modalEventSlice';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ModalProcess() {
   const isShowDeleteModal = useSelector(selectIsShowModal);
-  const isShowSuccessMessage = useSelector(selectIsShowSuccessMessage);
-  const isShowErrorMessage = useSelector(selectIsShowErrorMessage);
+  //const isShowSuccessMessage = useSelector(selectIsShowSuccessMessage);
+  //const isShowErrorMessage = useSelector(selectIsShowErrorMessage);
   const idDeleteEvent = useSelector(selectIdEvent);
+  const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(
+    useSelector(selectIsShowSuccessMessage)
+  );
+  const [isShowErrorMessage, setIsShowErrorMessage] = useState(
+    useSelector(selectIsShowErrorMessage)
+  );
   const [deleteEvent] = useDeleteEventMutation();
   const dispatch = useDispatch();
 
@@ -33,13 +39,15 @@ export default function ModalProcess() {
   }, [isShowDeleteModal]);
   async function handleConfirmDelete() {
     try {
-      //dispatch(closeModal());
+      dispatch(closeModal());
       console.log('now I am about to delete event');
       await deleteEvent(idDeleteEvent).unwrap();
       console.log('I deleted event');
+      setIsShowSuccessMessage(true);
       dispatch(showSuccessMessage());
       console.log('now I about to show successful message after delete');
     } catch {
+      setIsShowErrorMessage(true);
       dispatch(showErrorMessage());
     } finally {
       dispatch(resetState());
@@ -48,6 +56,8 @@ export default function ModalProcess() {
 
   function handleModalClose() {
     dispatch(resetState());
+    setIsShowSuccessMessage(false);
+    setIsShowErrorMessage(false);
   }
 
   function ShowDeleteModal() {

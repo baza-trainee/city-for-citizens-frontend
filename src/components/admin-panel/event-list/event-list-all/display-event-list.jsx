@@ -37,6 +37,7 @@ export default function DisplayEventList({ eventsData }) {
             className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
           hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center`}
           >
+            {console.log('event.id = ', event.id)}
             <span>{event.eventTitle}</span>
             <span>{event.eventAddress.city}</span>
             <span>
