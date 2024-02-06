@@ -14,5 +14,4 @@ export const selectIsShowSuccessMessage = state =>
   state.modalEventSlice.isShowSuccessMessage;
 export const selectIsShowErrorMessage = state =>
   state.modalEventSlice.isShowErrorMessage;
-export const selectDeleteEventData = state =>
-  state.modalEventSlice.deleteEventData;
+export const selectIdEvent = state => state.modalEventSlice.idEvent;

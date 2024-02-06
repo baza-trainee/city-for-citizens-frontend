@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectIsShowModal,
-  selectDeleteEventData,
+  selectIdEvent,
   selectIsShowSuccessMessage,
   selectIsShowErrorMessage,
 } from '@/redux/slice/selectors';
@@ -14,20 +14,28 @@ import {
   closeModal,
 } from '@/redux/slice/modalEventSlice';
 import { useDeleteEventMutation } from '@/redux/api/eventsApi';
+import { useEffect } from 'react';
 
 export default function ModalProcess() {
   const isShowDeleteModal = useSelector(selectIsShowModal);
   const isShowSuccessMessage = useSelector(selectIsShowSuccessMessage);
   const isShowErrorMessage = useSelector(selectIsShowErrorMessage);
-  const dataDeleteEvent = useSelector(selectDeleteEventData);
+  const idDeleteEvent = useSelector(selectIdEvent);
   const [deleteEvent] = useDeleteEventMutation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log('modal-process in act');
+    console.log('state modal window: ', isShowDeleteModal);
+    console.log('state success message: ', isShowSuccessMessage);
+    console.log('state error message: ', isShowErrorMessage);
+    console.log('state data delete event: ', idDeleteEvent);
+  }, [isShowDeleteModal]);
   async function handleConfirmDelete() {
     try {
-      dispatch(closeModal());
+      //dispatch(closeModal());
       console.log('now I am about to delete event');
-      await deleteEvent(dataDeleteEvent.id).unwrap();
+      await deleteEvent(idDeleteEvent).unwrap();
       console.log('I deleted event');
       dispatch(showSuccessMessage());
       console.log('now I about to show successful message after delete');

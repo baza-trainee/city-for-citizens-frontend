@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-//import { NAVIGATION } from '@/helpers/constants';
 import { useCurrentLocale } from '@/hooks';
 
 import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
 import AddEventButton from './add-event-button';
-//import { privateRoute } from '@/app/private-route';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
 import DisplayEventList from './display-event-list';
 import IconSearch from '@/assets/icons/common/search-icon.svg';
@@ -94,7 +92,7 @@ export default function EventList() {
         <div id="message-portal" />
         <TableHeader />
         <TableBody />
-        <ModalProcess></ModalProcess>
+        <ModalProcess />
       </div>
       <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
     </div>

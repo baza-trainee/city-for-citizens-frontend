@@ -4,15 +4,15 @@ export const initialState = {
   isShowModal: false,
   isShowSuccessMessage: false,
   isShowErrorMessage: false,
-  deleteEventData: { id: '', title: '' },
+  idEvent: null,
 };
 
 export const modalEventSlice = createSlice({
   name: 'modalEvent',
   initialState,
   reducers: {
-    startDeleteEvent: (state, { payload: { deleteEventData } }) => {
-      state.deleteEventData = deleteEventData;
+    startDeleteEvent: (state, { payload: idEvent }) => {
+      state.idEvent = idEvent;
       state.isShowModal = true;
     },
     closeModal: state => {
@@ -20,11 +20,11 @@ export const modalEventSlice = createSlice({
     },
     showSuccessMessage: state => {
       state.isShowSuccessMessage = true;
-      state.deleteEventData = { id: '', title: '' };
+      state.idEvent = null;
     },
     showErrorMessage: state => {
       state.isShowErrorMessage = true;
-      state.deleteEventData = { id: '', title: '' };
+      state.idEvent = null;
     },
     resetState: () => initialState,
   },

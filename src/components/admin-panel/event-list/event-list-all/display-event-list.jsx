@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { Link } from '@/navigation';
@@ -14,20 +13,13 @@ import IconPencil from '@/assets/icons/admin-sidebar/pencil-icon.svg';
 import AddEventButton from './add-event-button';
 
 export default function DisplayEventList({ eventsData }) {
-  // const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
-  // const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
-  // const [isShowErrorMessage, setIsShowErrorsMessage] = useState(false);
-  //const initialDataEvent = { id: '', title: '' };
-  // const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
-
   const { localeForIntl } = useCurrentLocale();
 
   const dispatch = useDispatch();
 
-  function handleDeleteEvent(eventId, eventTitle) {
-    dispatch(startDeleteEvent({ id: eventId, title: eventTitle }));
-    // setDataDeleteEvent();
-    // setIsShowDeleteModal(true);
+  function handleDeleteEvent(eventId) {
+    console.log('need delete', eventId);
+    dispatch(startDeleteEvent(eventId));
   }
 
   return (
@@ -73,7 +65,7 @@ export default function DisplayEventList({ eventsData }) {
                 />
               </Link>
               <button
-                onClick={() => handleDeleteEvent(event.id, event.eventTitle)}
+                onClick={() => handleDeleteEvent(event.id)}
                 title="Видалити подію"
               >
                 <IconTrash
