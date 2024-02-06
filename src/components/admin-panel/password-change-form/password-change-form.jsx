@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useChangePasswordMutation } from '@/redux/api/authApi';
 import Input from '@/components/admin-panel/password-change-form/Input';
-import BasicModalWindows from '@/components/common/basic-modal-windows';
+import { BasicModalWindows } from '@/components/common';
 import Button from '@/components/common/button';
 import Loader from '@/components-old/UI/Loader';
 
@@ -169,6 +169,7 @@ const PasswordChangeForm = () => {
         <BasicModalWindows
           onClose={() => setIsSuccessModalVisible(false)}
           title={'Успішно'}
+          type="success"
           message={'Зміна паролю виконана успішно!'}
         ></BasicModalWindows>
       )}
@@ -176,11 +177,12 @@ const PasswordChangeForm = () => {
         <BasicModalWindows
           onClose={() => setIsErrorModalVisible(false)}
           title={'Помилка'}
+          type={'error'}
           message={errorMessage ? errorMessage : 'Помилка відправлення форми'}
         ></BasicModalWindows>
       )}
       {isLoading && (
-        <div className="fixed flex h-full w-full items-center justify-center bg-primary/0/20 backdrop-blur-[1px]">
+        <div className="bg-primary/0/20 fixed flex h-full w-full items-center justify-center backdrop-blur-[1px]">
           <Loader />
         </div>
       )}
