@@ -8,6 +8,7 @@ import { authApi } from './api/authApi';
 import { authSlice } from './slice/authSlice';
 import { appStatusSlice } from './slice/fetchStatesSlice';
 import { imageApi } from './api/imageApi';
+import { modalEventSlice } from './slice/modalEventSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     appStatusSlice: appStatusSlice.reducer,
 
     authSlice: authSlice.reducer,
+    modalEventSlice: modalEventSlice.reducer,
   },
 
   middleware: getDefaultMiddleware =>

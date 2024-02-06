@@ -11,6 +11,7 @@ import AdminHeader from '@/components/admin-panel/common/admin-header';
 import DisplayEventList from './display-event-list';
 import IconSearch from '@/assets/icons/common/search-icon.svg';
 import EventPagination from './event-pagination';
+import ModalProcess from './modal-window/modal-process';
 
 export default function EventList() {
   const { localeForRequest } = useCurrentLocale();
@@ -89,11 +90,13 @@ export default function EventList() {
         </div>
       </AdminHeader>
       <div className="ml-5 grid grid-cols-1 grid-rows-[auto_auto] pb-4 tablet:mr-10 desktop:mr-20 ">
+        <div id="portal" />
+        <div id="message-portal" />
         <TableHeader />
         <TableBody />
+        <ModalProcess></ModalProcess>
       </div>
       <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
-      {console.log('eventList', eventList)}
     </div>
   );
 }

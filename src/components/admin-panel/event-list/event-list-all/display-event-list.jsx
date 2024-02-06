@@ -2,85 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
 import { Link } from '@/navigation';
 
 import { useCurrentLocale } from '@/hooks';
-import { useDeleteEventMutation } from '@/redux/api/eventsApi';
+
+import { startDeleteEvent } from '@/redux/slice/modalEventSlice';
 import IconTrash from '@/assets/icons/admin-sidebar/trash-icon.svg';
 import IconPencil from '@/assets/icons/admin-sidebar/pencil-icon.svg';
-import ShowModal from '@/components/admin-panel/common/modal-window/show-modal';
-import ShowMessage from '@/components/admin-panel/common/modal-window/show-message';
+
 import AddEventButton from './add-event-button';
 
 export default function DisplayEventList({ eventsData }) {
-  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
-  const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
-  const [isShowErrorMessage, setIsShowErrorsMessage] = useState(false);
-  const initialDataEvent = { id: '', title: '' };
-  const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  // const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+  // const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
+  // const [isShowErrorMessage, setIsShowErrorsMessage] = useState(false);
+  //const initialDataEvent = { id: '', title: '' };
+  // const [dataDeleteEvent, setDataDeleteEvent] = useState(initialDataEvent);
 
   const { localeForIntl } = useCurrentLocale();
-  const [deleteEvent] = useDeleteEventMutation();
+
+  const dispatch = useDispatch();
 
   function handleDeleteEvent(eventId, eventTitle) {
-    setDataDeleteEvent({ id: eventId, title: eventTitle });
-    setIsShowDeleteModal(true);
-  }
-
-  useEffect(() => {
-    confirmDelete &&
-      setIsShowDeleteModal(false) &&
-      deleteEvent(dataDeleteEvent.id)
-        .unwrap()
-        .then(() => {
-          setIsShowSuccessMessage(true);
-        })
-        .catch(() => setIsShowErrorsMessage(true))
-        .finally(() => {
-          setDataDeleteEvent(initialDataEvent);
-          setConfirmDelete(false);
-        });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [confirmDelete]);
-
-  function handleModalClose() {
-    setIsShowDeleteModal(false);
-    setDataDeleteEvent(initialDataEvent);
-  }
-
-  function handleMessageClose() {
-    setIsShowSuccessMessage(false);
-    setIsShowErrorsMessage(false);
-  }
-
-  function ShowDeleteModal() {
-    return (
-      <ShowModal
-        title="Видалити подію"
-        onClose={handleModalClose}
-        onOk={setConfirmDelete}
-      >
-        Ви точно хочете видалити подію?
-      </ShowModal>
-    );
-  }
-
-  function ShowSuccessDeleteMessage() {
-    return (
-      <ShowMessage title="Успіх" type="success" onClose={handleMessageClose}>
-        Подію видалено
-      </ShowMessage>
-    );
-  }
-
-  function ShowErrorDeleteMessage() {
-    return (
-      <ShowMessage title="Помилка" type="error" onClose={handleMessageClose}>
-        Сталася помилка. Спробуйте ще раз або зверніться до розробника
-      </ShowMessage>
-    );
+    dispatch(startDeleteEvent({ id: eventId, title: eventTitle }));
+    // setDataDeleteEvent();
+    // setIsShowDeleteModal(true);
   }
 
   return (
@@ -138,9 +85,6 @@ export default function DisplayEventList({ eventsData }) {
             </div>
           </li>
         ))}
-      {isShowDeleteModal && <ShowDeleteModal />}
-      {isShowSuccessMessage && <ShowSuccessDeleteMessage />}
-      {isShowErrorMessage && <ShowErrorDeleteMessage />}
     </>
   );
 }

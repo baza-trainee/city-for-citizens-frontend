@@ -7,3 +7,12 @@ export const selectIsLoggedIn = state => state.authSlice.isLoggedIn;
 export const selectIsLoading = state => state.appStatusSlice.isLoading;
 export const selectIsError = state => state.appStatusSlice.isError;
 export const selectError = state => state.appStatusSlice.error;
+
+//modalEventSlice
+export const selectIsShowModal = state => state.modalEventSlice.isShowModal;
+export const selectIsShowSuccessMessage = state =>
+  state.modalEventSlice.isShowSuccessMessage;
+export const selectIsShowErrorMessage = state =>
+  state.modalEventSlice.isShowErrorMessage;
+export const selectDeleteEventData = state =>
+  state.modalEventSlice.deleteEventData;

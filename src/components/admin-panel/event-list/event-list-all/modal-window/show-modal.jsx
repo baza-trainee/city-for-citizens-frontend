@@ -28,7 +28,7 @@ function ShowModal({ title = '', onClose, onOk, children }) {
           </button>
           <button
             className={`flex w-[11.3rem] justify-center rounded-md bg-admin-dark pb-[10px] pt-[7px] font-exo_2 text-xl font-bold text-admin-light_3`}
-            onClick={() => onOk(true)}
+            onClick={() => onOk()}
           >
             Підтвердити
           </button>
