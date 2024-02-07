@@ -13,6 +13,7 @@ import FormTitles from './common/form-titles';
 import FormAuth from './common/form-auth';
 import Button from '../common/button';
 import GoBackLink from './common/go-back-link';
+import { LoadingButton } from '../common';
 
 export default function PasswordReset() {
   const [formData, setFormData] = useState({
@@ -119,7 +120,8 @@ export default function PasswordReset() {
             disabled={isLoading || !isFormValid}
             onClick={handleSubmit}
           >
-            Зберегти
+            {isLoading ? <LoadingButton /> : 'Зберегти'}
+
           </Button>
         </div>
       </FormAuth>
