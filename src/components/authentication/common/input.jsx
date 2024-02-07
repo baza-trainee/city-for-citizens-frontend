@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import IconEyeOpen from '@/assets/icons/eyes-password/password-visible.svg';
 import IconEyeClose from '@/assets/icons/eyes-password/password-protected.svg';
 
@@ -10,9 +11,12 @@ export default function Input({
   placeholder,
   errors,
   onBlur,
-  showPassword,
-  togglePasswordVisibility,
 }) {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsShowPassword(prev => !prev);
+  };
   return (
     <label className="w-full pb-[22px] text-start">
       <span className="text-lg leading-none">{label}</span>
@@ -28,17 +32,17 @@ export default function Input({
           onChange={onChange}
           onBlur={onBlur}
           name={name}
-          type={type}
+          type={isShowPassword ? 'text' : type}
           required
         />
-        {name.includes('password') && (
+        {type === 'password' && (
           <button
             type="button"
-            onClick={() => togglePasswordVisibility(name)}
+            onClick={togglePasswordVisibility}
             className={`bg-gray/5 absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer
             items-center justify-center`}
           >
-            {showPassword ? <IconEyeOpen /> : <IconEyeClose />}
+            {isShowPassword ? <IconEyeOpen /> : <IconEyeClose />}
           </button>
         )}
       </div>

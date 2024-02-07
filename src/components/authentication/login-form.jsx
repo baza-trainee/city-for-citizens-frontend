@@ -15,10 +15,12 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import Input from './common/input';
-import AuthButton from './common/auth-button';
 import FormContainer from './common/form-container';
-import FormTitle from './common/form-title';
+import FormTitle from './common/form-titles';
 import FormAuth from './common/form-auth';
+import Button from '../common/button';
+import { LoadingButton } from '../common';
+
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -102,7 +104,7 @@ export default function LoginForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           name="password"
-          type={showPassword ? 'text' : 'password'}
+          type="password"
           placeholder="Введіть пароль"
           errors={errors.password}
           error={error}
@@ -115,12 +117,14 @@ export default function LoginForm() {
         >
           <u>Забули пароль?</u>
         </Link>
-        <AuthButton
-          btnName="Увійти"
-          isFormValid={isFormValid}
-          isLoading={isLoading}
-          error={error}
-        />
+        <Button
+          type="button"
+          className="mx-auto"
+          disabled={isLoading || !isFormValid}
+          onClick={handleSubmit}
+        >
+          {isLoading ? <LoadingButton /> : 'Увійти'}
+        </Button>
       </FormAuth>
     </FormContainer>
   );
