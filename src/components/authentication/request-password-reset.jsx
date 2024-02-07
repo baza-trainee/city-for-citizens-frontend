@@ -8,6 +8,7 @@ import FormAuth from './common/form-auth';
 import Button from '../common/button';
 import GoBackLink from './common/go-back-link';
 import FormContainer from './common/form-container';
+import { LoadingButton } from '../common';
 
 export default function RequestPasswordReset() {
   const [formData, setFormData] = useState({
@@ -83,7 +84,7 @@ export default function RequestPasswordReset() {
           disabled={isLoading || !isFormValid}
           onClick={handleSubmit}
         >
-          Підтвердити
+          {isLoading ? <LoadingButton /> : '      Підтвердити'}
         </Button>
       </div>
     </FormContainer>
