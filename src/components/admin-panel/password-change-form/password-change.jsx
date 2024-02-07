@@ -4,7 +4,7 @@ import PasswordChangeForm from './password-change-form';
 export default function PasswordChange() {
   return (
     <div>
-      <AdminHeader title={'Зміна пароля'}></AdminHeader>
+      <AdminHeader title={'Змінити пароль'}></AdminHeader>
 
       <PasswordChangeForm />
     </div>
