@@ -1,6 +1,5 @@
 'use client';
 
-import { useCurrentLocale } from '@/hooks';
 import { useState } from 'react';
 
 import IconSearch from '@/assets/icons/common/search-icon.svg';
@@ -8,7 +7,7 @@ import AdminHeader from '@/components/admin-panel/common/admin-header';
 import { BasicModalWindows } from '@/components/common';
 import {
   useDeleteEventMutation,
-  useGetAllEventsByLocaleQuery,
+  useGetAllEventsByPageQuery,
 } from '@/redux/api/eventsApi';
 import AddEventButton from './add-event-button';
 import DisplayEventList from './display-event-list';
@@ -26,11 +25,12 @@ export default function EventList() {
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
 
-  const { localeForRequest } = useCurrentLocale();
-
-  const { data: eventList = [] } = useGetAllEventsByLocaleQuery({
-    locale: localeForRequest,
+  const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
+    page: currentPage,
   });
+
+  const serverTotalPage = serverDataByCurrentPage.totalPages;
+  const eventList = serverDataByCurrentPage?.events;
 
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
 
@@ -41,12 +41,16 @@ export default function EventList() {
 
       setStatusMessage('Подію видалено!');
       setIsShowSuccessMessage(true);
+
+      currentPage > serverTotalPage && setCurrentPage(prev => prev - 1 || 1);
     } catch (error) {
       if (error?.data?.error === 'Image not found') {
         setStatusMessage(
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
+
         setIsShowSuccessMessage(true);
+        currentPage > serverTotalPage && setCurrentPage(prev => prev - 1 || 1);
       } else {
         setStatusMessage('Сталася помилка. Спробуйте ще раз.');
         setIsShowErrorMessage(true);
@@ -127,7 +131,8 @@ export default function EventList() {
       {isConfirmationModalVisible && (
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}
-          title={'Дійсно вийти?'}
+          title={'Видалити подію'}
+          message={'Ви точно хочете видалити подію?'}
         >
           <div className="flex gap-[15px]">
             <button

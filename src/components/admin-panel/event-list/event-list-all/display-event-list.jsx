@@ -1,7 +1,7 @@
 'use client';
 
 import { Link } from '@/navigation';
-
+import { v4 as uuidv4 } from 'uuid';
 import { useCurrentLocale } from '@/hooks';
 
 import IconTrash from '@/assets/icons/admin-sidebar/trash-icon.svg';
@@ -17,16 +17,17 @@ export default function DisplayEventList({
 
   return (
     <div>
-      {eventsData.length === 0 && (
+      {eventsData && eventsData.length === 0 && (
         <div className="mx-auto mt-8 flex flex-col gap-y-3 text-center">
           <p>Тут нічого немає</p>
           <AddEventButton />
         </div>
       )}
-      {eventsData.length &&
+      {eventsData &&
+        eventsData.length &&
         eventsData.map(event => (
           <li
-            key={event.idIdentifier}
+            key={uuidv4()}
             className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
           hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center`}
           >

@@ -1,9 +1,13 @@
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import IconAdminPaginationArrow from '@/assets/icons/admin-sidebar/pagination-arrow-icon.svg';
+import { useGetAllEventsByPageQuery } from '@/redux/api/eventsApi';
 
-function EventPagination({ currentPage, onClick }) {
-  const [pagination, setPagination] = useState(5);
+export default function EventPagination({ currentPage, onClick }) {
+  const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
+    page: currentPage,
+  });
+
+  const pagination = serverDataByCurrentPage.totalPages;
   const arrayOfPageNumbers = Array.from(
     { length: pagination },
     (_, i) => i + 1
@@ -54,7 +58,7 @@ function EventPagination({ currentPage, onClick }) {
         <button
           className="group cursor-pointer disabled:cursor-default"
           onClick={handleChangePagination}
-          disabled={currentPage === pagination}
+          disabled={currentPage >= pagination}
           data-arrow-right
         >
           <IconAdminPaginationArrow
@@ -67,5 +71,3 @@ function EventPagination({ currentPage, onClick }) {
     </div>
   );
 }
-
-export default EventPagination;
