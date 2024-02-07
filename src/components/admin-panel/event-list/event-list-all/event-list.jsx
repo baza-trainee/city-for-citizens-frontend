@@ -1,25 +1,61 @@
 'use client';
 
-import { useState } from 'react';
 import { useCurrentLocale } from '@/hooks';
+import { useState } from 'react';
 
-import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
-import AddEventButton from './add-event-button';
-import AdminHeader from '@/components/admin-panel/common/admin-header';
-import DisplayEventList from './display-event-list';
 import IconSearch from '@/assets/icons/common/search-icon.svg';
+import AdminHeader from '@/components/admin-panel/common/admin-header';
+import { BasicModalWindows } from '@/components/common';
+import {
+  useDeleteEventMutation,
+  useGetAllEventsByLocaleQuery,
+} from '@/redux/api/eventsApi';
+import AddEventButton from './add-event-button';
+import DisplayEventList from './display-event-list';
 import EventPagination from './event-pagination';
-import ModalProcess from './modal-window/modal-process';
 
 export default function EventList() {
-  const { localeForRequest } = useCurrentLocale();
   const [inputValue, setInputValue] = useState('');
-  const [filteredEvents, setFilteredEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const [idDeleteEvent, setIdDeleteEvent] = useState(null);
+  const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
+  const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const { localeForRequest } = useCurrentLocale();
 
   const { data: eventList = [] } = useGetAllEventsByLocaleQuery({
     locale: localeForRequest,
   });
+
+  const [deleteEvent, { isLoading }] = useDeleteEventMutation();
+
+  async function handleConfirmDelete() {
+    setStatusMessage('');
+    try {
+      await deleteEvent(idDeleteEvent).unwrap();
+
+      setStatusMessage('Подію видалено!');
+      setIsShowSuccessMessage(true);
+    } catch (error) {
+      if (error?.data?.error === 'Image not found') {
+        setStatusMessage(
+          'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
+        );
+        setIsShowSuccessMessage(true);
+      } else {
+        setStatusMessage('Сталася помилка. Спробуйте ще раз.');
+        setIsShowErrorMessage(true);
+      }
+    } finally {
+      setIsConfirmationModalVisible(false);
+      setIdDeleteEvent(null);
+    }
+  }
 
   function handleChangeSearch(event) {
     const inputValue = event.target.value.trim();
@@ -55,18 +91,6 @@ export default function EventList() {
     );
   }
 
-  function TableBody() {
-    return (
-      <ol className="grid auto-rows-auto gap-y-3 font-exo_2 text-base">
-        {!inputValue ? (
-          <DisplayEventList eventsData={eventList} />
-        ) : (
-          <DisplayEventList eventsData={filteredEvents} />
-        )}
-      </ol>
-    );
-  }
-
   return (
     <div className="font-source_sans_3">
       <AdminHeader title="Всі події">
@@ -80,7 +104,7 @@ export default function EventList() {
               className="flex-grow rounded-md  bg-admin-light_1 p-2 pl-3.5 transition duration-200 placeholder:text-lg placeholder:text-admin-dark_2
           hover:bg-[#ffffff] focus:outline-none tablet:placeholder-shown:overflow-hidden tablet:placeholder-shown:text-ellipsis"
             />
-            <div className="flex h-full w-[2.9rem] items-center justify-center bg-admin-dark group-hover:bg-admin-darkgray">
+            <div className="flex h-full w-[2.9rem] items-center justify-center   bg-admin-dark group-hover:bg-admin-darkgray">
               <IconSearch width="25px" height="26px" />
             </div>
           </div>
@@ -88,13 +112,59 @@ export default function EventList() {
         </div>
       </AdminHeader>
       <div className="ml-5 grid grid-cols-1 grid-rows-[auto_auto] pb-4 tablet:mr-10 desktop:mr-20 ">
-        <div id="portal" />
-        <div id="message-portal" />
         <TableHeader />
-        <TableBody />
-        <ModalProcess />
+        <ol className="grid auto-rows-auto gap-y-3 font-exo_2 text-base">
+          <DisplayEventList
+            showConfirmationModal={eventId => {
+              setIsConfirmationModalVisible(true);
+              setIdDeleteEvent(eventId);
+            }}
+            eventsData={inputValue ? filteredEvents : eventList}
+          />
+        </ol>
       </div>
       <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
+      {isConfirmationModalVisible && (
+        <BasicModalWindows
+          onClose={() => setIsConfirmationModalVisible(false)}
+          title={'Дійсно вийти?'}
+        >
+          <div className="flex gap-[15px]">
+            <button
+              disabled={isLoading}
+              className="button-close"
+              onClick={() => setIsConfirmationModalVisible(false)}
+              type="button"
+            >
+              Скасувати
+            </button>
+            <button
+              disabled={isLoading}
+              className="button-confirm"
+              onClick={handleConfirmDelete}
+              type="button"
+            >
+              Підтвердити
+            </button>
+          </div>
+        </BasicModalWindows>
+      )}
+      {isShowSuccessMessage && (
+        <BasicModalWindows
+          onClose={() => setIsShowSuccessMessage(false)}
+          title={'Успішно'}
+          type="success"
+          message={statusMessage}
+        ></BasicModalWindows>
+      )}
+      {isShowErrorMessage && (
+        <BasicModalWindows
+          onClose={() => setIsShowErrorMessage(false)}
+          title={'Помилка'}
+          type={'error'}
+          message={statusMessage}
+        ></BasicModalWindows>
+      )}
     </div>
   );
 }

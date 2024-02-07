@@ -1,29 +1,22 @@
 'use client';
 
-import { v4 as uuidv4 } from 'uuid';
-import { useDispatch } from 'react-redux';
 import { Link } from '@/navigation';
 
 import { useCurrentLocale } from '@/hooks';
 
-import { startDeleteEvent } from '@/redux/slice/modalEventSlice';
 import IconTrash from '@/assets/icons/admin-sidebar/trash-icon.svg';
 import IconPencil from '@/assets/icons/admin-sidebar/pencil-icon.svg';
 
 import AddEventButton from './add-event-button';
 
-export default function DisplayEventList({ eventsData }) {
+export default function DisplayEventList({
+  eventsData,
+  showConfirmationModal,
+}) {
   const { localeForIntl } = useCurrentLocale();
 
-  const dispatch = useDispatch();
-
-  function handleDeleteEvent(eventId) {
-    console.log('need delete', eventId);
-    dispatch(startDeleteEvent(eventId));
-  }
-
   return (
-    <>
+    <div>
       {eventsData.length === 0 && (
         <div className="mx-auto mt-8 flex flex-col gap-y-3 text-center">
           <p>Тут нічого немає</p>
@@ -33,11 +26,10 @@ export default function DisplayEventList({ eventsData }) {
       {eventsData.length &&
         eventsData.map(event => (
           <li
-            key={uuidv4()}
+            key={event.idIdentifier}
             className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
           hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center`}
           >
-            {console.log('event.id = ', event.id)}
             <span>{event.eventTitle}</span>
             <span>{event.eventAddress.city}</span>
             <span>
@@ -66,7 +58,7 @@ export default function DisplayEventList({ eventsData }) {
                 />
               </Link>
               <button
-                onClick={() => handleDeleteEvent(event.id)}
+                onClick={() => showConfirmationModal(event.id)}
                 title="Видалити подію"
               >
                 <IconTrash
@@ -78,6 +70,6 @@ export default function DisplayEventList({ eventsData }) {
             </div>
           </li>
         ))}
-    </>
+    </div>
   );
 }
