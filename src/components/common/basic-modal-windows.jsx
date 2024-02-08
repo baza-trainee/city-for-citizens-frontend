@@ -10,12 +10,14 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
         className="fixed left-0 top-0 z-50  h-full  w-full bg-admin-backdrop"
       ></button>
       <div
-        className={`fixed left-1/2 top-1/2 z-50 inline-flex min-w-[427px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 rounded  bg-white px-6 py-8 ${clsx(
+        className={`fixed left-1/2 top-1/2 z-50 inline-flex -translate-x-1/2 -translate-y-1/2 
+        flex-col items-center justify-center rounded bg-white px-6 py-8 ${clsx(
           type === 'success' &&
-            'min-w-[322px] border-[3px] border-state-success',
+            'min-w-[322px] gap-3 border-[3px] border-state-success py-[44px]',
           type === 'error' &&
-            'min-w-[322px] border-[3px] border-state-error_main',
-          type === 'add-new-type' && 'px-10 pb-14 pt-11'
+            'min-w-[322px] gap-3 border-[3px] border-state-error_main pb-[34px] pt-[30px]',
+          type === 'add-new-type' && 'px-10 pb-14 pt-11',
+          type !== 'success' && type !== 'error' && 'min-w-[427px] gap-6'
         )}`}
       >
         <button
@@ -27,7 +29,7 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
         </button>
         {title && (
           <p
-            className={`text-center font-exo_2 text-2xl font-bold leading-8 text-admin-dark  ${clsx(
+            className={`text-center font-exo_2 text-2xl font-bold leading-[1.33]  text-admin-dark  ${clsx(
               type === 'success' && 'text-state-success',
               type === 'error' && 'text-state-error_main'
             )} `}
@@ -36,7 +38,7 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
           </p>
         )}
         {message && (
-          <p className="max-w-[323px] text-center font-source_sans_3 text-lg text-admin-dark">
+          <p className="max-w-[323px] text-center font-source_sans_3 text-lg leading-[1.35] text-admin-dark">
             {message}
           </p>
         )}

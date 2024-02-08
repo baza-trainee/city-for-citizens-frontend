@@ -31,7 +31,7 @@ export const validateInput = (name, value, setErrors) => {
 
 export const validateEmail = (email, setErrors) => {
   if (!email.trim()) {
-    setErrors(prev => ({ ...prev, email: "Це поле обов'язкове" }));
+    setErrors(prev => ({ ...prev, email: 'Введіть, будь ласка, ел. пошту' }));
   } else if (!isValidEmail(email)) {
     setErrors(prev => ({ ...prev, email: 'Введено невірну адресу ел. пошти' }));
   } else {
@@ -41,7 +41,7 @@ export const validateEmail = (email, setErrors) => {
 
 export const validatePassword = (password, name, setErrors) => {
   if (password.trim() === '') {
-    setErrors(prev => ({ ...prev, [name]: "Це поле обов'язкове" }));
+    setErrors(prev => ({ ...prev, [name]: 'Введіть, будь ласка, пароль' }));
   } else {
     const passwordValidationResult = isValidPassword(password);
 

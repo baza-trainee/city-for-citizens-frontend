@@ -9,11 +9,11 @@ export default function ButtonBack() {
 
   return (
     <button
-      className="button-common flex items-center justify-start gap-6  pl-6 text-admin-dark"
+      className="button-common flex h-[51px] w-[185px] items-center justify-start gap-[7px]  pl-8 text-admin-dark"
       type="button"
       onClick={() => router.back()}
     >
-      <BackIcon className={'h-6 w-6 scale-y-[-1] text-admin-dark'} />
+      <BackIcon className={'h-7 w-7 scale-y-[-1] text-admin-dark'} />
       Назад
     </button>
   );

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 8">
+  <path stroke="currentColor"  stroke-linejoin="miter-clip" stroke-width="0.6"  d="M15.467 8H16L8 0 0 8h.533L8 .533 15.467 8Z" />
+  <path fill="inherit" d="M15.467 8H.533L8 .533 15.467 8Z"/>
+</svg>

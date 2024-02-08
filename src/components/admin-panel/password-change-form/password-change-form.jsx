@@ -17,7 +17,14 @@ const defaultValues = {
 };
 
 const passwordChangeSchema = Yup.object().shape({
-  oldPassword: Yup.string().required("Старий пароль обов'язковий"),
+  oldPassword: Yup.string()
+    .required("Поточний пароль обов'язковий")
+    .min(8, 'Пароль повинен містити щонайменше 8 символів')
+    .max(32, 'Пароль не повинен перевищувати 32 символи')
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/,
+      'Пароль повинен містити принаймні одну цифру, одну маленьку та велику літеру'
+    ),
   newPassword: Yup.string()
     .required("Новий пароль обов'язковий")
     .min(8, 'Пароль повинен містити щонайменше 8 символів')
@@ -25,6 +32,10 @@ const passwordChangeSchema = Yup.object().shape({
     .matches(
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/,
       'Новий пароль повинен містити принаймні одну цифру, одну маленьку та велику літеру'
+    )
+    .notOneOf(
+      [Yup.ref('oldPassword')],
+      'Новий пароль не може бути таким самим, як поточний пароль'
     ),
   confirmPassword: Yup.string()
     .required("Новий пароль ще раз обов'язковий")
@@ -126,7 +137,7 @@ const PasswordChangeForm = () => {
           </Button>
           <Button
             type="button"
-            className="max-w-[252px]"
+            className="w-[252px]"
             disabled={
               isSubmitting || !isDirty || Object.keys(errors).length > 0
             }
@@ -155,10 +166,10 @@ const PasswordChangeForm = () => {
               </Button>
               <Button
                 type="submit"
-                className="text-nowrap"
+                className="max-w-[181px] text-nowrap"
                 disabled={isLoading}
               >
-                Змінити пароль
+                Підтвердити
               </Button>
             </div>
           </BasicModalWindows>
@@ -168,16 +179,16 @@ const PasswordChangeForm = () => {
       {isSuccessModalVisible && (
         <BasicModalWindows
           onClose={() => setIsSuccessModalVisible(false)}
-          title={'Успішно'}
+          title={'Успіх!'}
           type="success"
-          message={'Зміна паролю виконана успішно!'}
+          message={'Ваші зміни успішно збережено!'}
         ></BasicModalWindows>
       )}
       {isErrorModalVisible && (
         <BasicModalWindows
           onClose={() => setIsErrorModalVisible(false)}
           title={'Помилка'}
-          type={'error'}
+          type="error"
           message={errorMessage ? errorMessage : 'Помилка відправлення форми'}
         ></BasicModalWindows>
       )}

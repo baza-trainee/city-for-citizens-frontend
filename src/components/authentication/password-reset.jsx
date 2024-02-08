@@ -9,9 +9,11 @@ import { useEffect, useState } from 'react';
 
 import Input from './common/input';
 import FormContainer from './common/form-container';
+import FormTitles from './common/form-titles';
 import FormAuth from './common/form-auth';
-import AuthButton from './common/auth-button';
+import Button from '../common/button';
 import GoBackLink from './common/go-back-link';
+import { LoadingButton } from '../common';
 
 export default function PasswordReset() {
   const [formData, setFormData] = useState({
@@ -24,8 +26,6 @@ export default function PasswordReset() {
   });
   const [error, setError] = useState();
   const [successMessage, setSuccessMessage] = useState('');
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
 
   const router = useRouter();
   const searchParam = useSearchParams();
@@ -47,6 +47,10 @@ export default function PasswordReset() {
 
   const handleBlur = e => {
     const { value, name } = e.target;
+    if (name === 'password2' && formData.password1 !== value) {
+      setErrors(prev => ({ ...prev, [name]: 'Паролі не співпадають' }));
+      return;
+    }
     validateInput(name, value, setErrors);
   };
 
@@ -69,26 +73,16 @@ export default function PasswordReset() {
         }).unwrap();
 
         if (data) {
-          setSuccessMessage(
-            'Перейдіть за посиланням, відправленим у листі на Вашу пошту'
-          );
+          setSuccessMessage('Пароль успішно відновлено');
         }
-      } catch {
+      } catch (error) {
         setError(
-          'Сталася помилка, пороль не відновлено, спробуйте ще раз відправити запит на скидання пороля, і перейти по посиланню яку прийде на е-пошту'
+          'Сталася помилка, пороль не відновлено, спробуйте ще раз відправити запит на скидання пороля, і перейти за посиланням, яке прийде на е-пошту'
         );
       }
     }
   };
 
-  const togglePasswordVisibility = name => {
-    if (name === 'password1') {
-      setShowPassword1(prev => !prev);
-    }
-    if (name === 'password2') {
-      setShowPassword2(prev => !prev);
-    }
-  };
   const isFormValid =
     isValidPassword(formData.password1) === true &&
     isValidPassword(formData.password2) === true &&
@@ -98,22 +92,17 @@ export default function PasswordReset() {
 
   return (
     <FormContainer message={successMessage} error={error}>
-      <h2 className="text-[40px] font-bold leading-[1]">Відновити пароль</h2>
-      <h3 className="text-lg font-semibold leading-[1.35]">
-        Створіть новий пароль
-      </h3>
+      <FormTitles title="Відновити пароль" subtitle="Створіть новий пароль" />
       <FormAuth onSubmit={handleSubmit}>
         <Input
-          label="Новий"
+          label="Новий пароль"
           value={password1}
           onChange={handleChange}
           onBlur={handleBlur}
           name="password1"
-          type={showPassword1 ? 'text' : 'password'}
+          type="password"
           placeholder="Введіть пароль"
           errors={errors.password1}
-          showPassword={showPassword1}
-          togglePasswordVisibility={() => togglePasswordVisibility('password1')}
         />
         <Input
           label="Підтвердити пароль"
@@ -121,19 +110,21 @@ export default function PasswordReset() {
           onChange={handleChange}
           onBlur={handleBlur}
           name="password2"
-          type={showPassword2 ? 'text' : 'password'}
+          type="password"
           placeholder="Введіть пароль"
           errors={errors.password2}
-          showPassword={showPassword2}
-          togglePasswordVisibility={() => togglePasswordVisibility('password2')}
         />
         <div className="flex w-full justify-between">
           <GoBackLink />
-          <AuthButton
-            btnName="Зберегти"
-            isFormValid={isFormValid}
-            isLoading={isLoading}
-          />
+          <Button
+            type="button"
+            className="w-[182px]"
+            disabled={isLoading || !isFormValid}
+            onClick={handleSubmit}
+          >
+            {isLoading ? <LoadingButton /> : 'Зберегти'}
+
+          </Button>
         </div>
       </FormAuth>
     </FormContainer>
