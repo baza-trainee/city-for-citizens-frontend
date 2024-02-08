@@ -8,6 +8,10 @@ import EventForm from '@/components/admin-panel/event-list/event-form/event-form
 export default function EditEvent(/*{ eventId }*/) {
   // TODO: add function onSubmit
   // const { data: eventDataById } = useGetEventsByIdQuery(eventId);
+
+  function handleSubmit(formData) {
+    console.log('🚀 ~ formData:', formData);
+  }
   return (
     <div>
       <AdminHeader title={'Редагувати подію'}>
@@ -17,6 +21,7 @@ export default function EditEvent(/*{ eventId }*/) {
       <div className="pb-32 pl-5 pr-20">
         <EventForm
           // initialData={eventDataById}
+          onSubmit={handleSubmit}
           buttonNameSubmit={'Додати подію'}
           buttonNameReset={'Скасувати'}
         />

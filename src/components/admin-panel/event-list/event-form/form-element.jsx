@@ -1,4 +1,8 @@
+import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import clsx from 'clsx';
+import { useRef, useState } from 'react';
+
+import TriangleIcon from '@/assets/icons/common/triangle-icon.svg';
 
 export function FormElement({
   errorMessage,
@@ -10,16 +14,25 @@ export function FormElement({
   ...attr
 }) {
   const Tag = tag === 'input' ? 'input' : 'textarea';
-  const isErrorMessageLarge = errorMessage && errorMessage.length < 30;
+  const isErrorMessageLarge = errorMessage && errorMessage.length > 30;
+  const [showErrorModal, setShowErrorModal] = useState(true);
+
+  const wrapperRef = useRef(null);
+  useOnClickOutside(showErrorModal, wrapperRef, () => setShowErrorModal(false));
 
   return (
     <label className="relative w-full">
       <Tag
         type={type}
         {...attr}
+        onClick={() => {
+          if (isErrorMessageLarge) {
+            setShowErrorModal(p => !p);
+          }
+        }}
         autoComplete="off"
         placeholder={placeholder}
-        className={`border-admin-placeholder  placeholder:text-admin-placeholder block w-full rounded border bg-white px-[9px] py-3 font-source_sans_3 leading-snug text-admin-dark 
+        className={`block  w-full rounded border border-admin-placeholder bg-white px-[9px] py-3 font-source_sans_3 leading-snug text-admin-dark placeholder:text-admin-placeholder 
           ${clsx(
             tag === 'textarea' && 'max-h-[196px] resize-none',
             tag === 'input' && 'max-h-[48px]',
@@ -38,14 +51,23 @@ export function FormElement({
           role="alert"
         >
           {isErrorMessageLarge ? (
-            errorMessage
+            <div ref={wrapperRef}>
+              <details open={showErrorModal}>
+                <summary className="select-none">
+                  {` Натисніть щоб ${showErrorModal ? 'приховати' : 'відкрити'} деталі.`}
+                </summary>
+                <span className="relative block h-20 overflow-auto rounded border border-admin-side_bar bg-admin-light_3 p-2.5 text-admin-dark shadow-sm">
+                  {errorMessage}
+                </span>
+                <TriangleIcon
+                  className={
+                    'absolute right-[11.7%] top-[9.1px] z-10 w-4  fill-admin-light_3 text-admin-side_bar'
+                  }
+                />
+              </details>
+            </div>
           ) : (
-            <details>
-              <summary>Натисніть щоб відкрити деталі.</summary>
-              <span className=" block h-20 overflow-auto rounded bg-admin-light_3 p-2 text-admin-dark shadow-sm">
-                {errorMessage}
-              </span>
-            </details>
+            errorMessage
           )}
         </div>
       )}

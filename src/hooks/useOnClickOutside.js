@@ -18,9 +18,9 @@ export function useOnClickOutside(isVisible, ref, handler) {
     }
   }, [ref, handler, isVisible]);
 }
-
-// Usage
-/*
+/** 
+ * @Usage
+ * 
   function Component () {
       const [isVisible, setIsVisible] = useState(false);
       const wrapperRef = useRef(null);
@@ -37,4 +37,4 @@ export function useOnClickOutside(isVisible, ref, handler) {
       </>
       )
   }
-   */
+ */

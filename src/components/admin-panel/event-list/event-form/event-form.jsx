@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { getValidationScheme, inputsSettings } from './helpers';
 import InputEventType from './input-event-type/input-event-type';
 import { FormElement } from './form-element';
+import { FileDropzone } from './input-file-dropzone/input-file-dropzone';
 
 const initialFormData = {
   firstLocale: {
@@ -38,11 +39,10 @@ export default function EventForm({
   const {
     register,
     formState: { errors, isDirty, touchedFields },
-
     handleSubmit,
     setValue,
-    resetField,
     reset,
+    clearErrors,
     watch,
   } = useForm({
     defaultValues: initialData || initialFormData,
@@ -60,10 +60,20 @@ export default function EventForm({
     return Object.keys(obj).length === 0;
   }
 
+  const isPhotoFirstLocaleUpload = watch('firstLocale.eventImage');
+  const isPhotoSecundLocaleUpload = watch('secundLocale.eventImage');
+
+  const isSubmitButtonDisabled =
+    !isDirty &&
+    isEmpty(touchedFields) &&
+    !isPhotoFirstLocaleUpload &&
+    !isPhotoSecundLocaleUpload;
+
   return (
     <form
-      className=""
-      onSubmit={handleSubmit(formData => onSubmit(formData, resetForm))}
+      onSubmit={handleSubmit(formData => {
+        onSubmit(formData, resetForm);
+      })}
     >
       <div className="mb-[46px] flex flex-col gap-[30px]">
         {inputsSettings.firstGroup.map(
@@ -106,6 +116,7 @@ export default function EventForm({
             errorMessage={errors?.firstLocale?.eventType?.message}
             register={register('firstLocale.eventType')}
             clickResetForm={clickResetForm}
+            clearErrors={clearErrors}
           />
 
           <InputEventType
@@ -117,6 +128,7 @@ export default function EventForm({
             errorMessage={errors?.secundLocale?.eventType?.message}
             register={register('secundLocale.eventType')}
             clickResetForm={clickResetForm}
+            clearErrors={clearErrors}
           />
         </div>
       </div>
@@ -134,7 +146,32 @@ export default function EventForm({
         </button>
       </div>
 
-      <div className="mb-[50px] h-[323px] bg-admin-light_3"></div>
+      <div
+        className="mb-10 flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3
+  px-[109px] py-5 shadow-sm"
+      >
+        <p className="input-label">Зображення події</p>
+        <div className="flex w-full justify-between gap-10">
+          <FileDropzone
+            photo={initialData?.eventImage}
+            errorMessage={errors?.firstLocale?.eventImage?.message}
+            onChange={file => setValue('firstLocale.eventImage', file)}
+            locale={'українською'}
+            isResetForm={clickResetForm}
+          />
+          <FileDropzone
+            photo={initialData?.eventImage}
+            errorMessage={errors?.secundLocale?.eventImage?.message}
+            onChange={file => {
+              setValue('secundLocale.eventImage', file);
+            }}
+            locale={'англійською'}
+            isResetForm={clickResetForm}
+          />
+        </div>
+        <input hidden type="text" {...register(`firstLocale.eventImage`)} />
+        <input hidden type="text" {...register(`secundLocale.eventImage`)} />
+      </div>
 
       <div className="mb-[90px] flex gap-[27px]">
         {inputsSettings.secondGroup.map(
@@ -166,7 +203,7 @@ export default function EventForm({
         <input
           className={`button-confirm`}
           type="submit"
-          disabled={!isDirty && isEmpty(touchedFields)}
+          disabled={isSubmitButtonDisabled}
           value={buttonNameSubmit}
         />
       </div>
