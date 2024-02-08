@@ -140,7 +140,7 @@ export default function EventForm({
 
         <div className="flex justify-center">
           <button
-            className="input-label  button-common relative mb-[60px] h-[47px] bg-admin-light_3 p-[30px] text-admin-dark"
+            className="input-label  relative mb-[60px] h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
             type="button"
           >
             <span className="absolute left-0 top-1/2 -translate-x-full  -translate-y-1/2 pr-7 text-[18px]">
@@ -152,7 +152,7 @@ export default function EventForm({
         </div>
 
         <div
-          className="mb-10 flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3
+          className="mb-[50px] flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3
     px-[109px] py-5 shadow-sm"
         >
           <p className="input-label">Зображення події</p>
@@ -200,14 +200,14 @@ export default function EventForm({
 
         <div className="flex items-center justify-center gap-[25px] ">
           <input
-            className="button-close"
+            className="button-close h-[51px] w-[198px]"
             type="button"
             onClick={() => setIsConfirmationModalVisible(true)}
             value={buttonNameReset}
             disabled={isButtonDisabled}
           />
           <input
-            className={`button-confirm`}
+            className={`button-confirm h-[51px] w-[198px]`}
             type="submit"
             disabled={isButtonDisabled}
             value={buttonNameSubmit}
@@ -218,7 +218,7 @@ export default function EventForm({
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}
           title={'Скасувати зміни?'}
-          message={'Ви точно хочете скасувати зміни? Вони не будуть збережені'}
+          message="Ви точно хочете скасувати зміни? Вони не будуть збережені"
         >
           <div className="flex gap-[15px]">
             <button

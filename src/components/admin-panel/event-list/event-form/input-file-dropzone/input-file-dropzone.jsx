@@ -115,12 +115,12 @@ export function FileDropzone({
                 width={56}
                 height={56}
                 alt="picture-icon"
-                className="mb-[5px] h-[56px]"
+                className="h-[58px] w-[58px]"
               />
-              <p className="mb-2 w-[230px] text-center text-xl font-bold leading-tight text-admin-side_bar">
+              <p className="mb-[18px] w-[230px]  text-center text-xl font-bold leading-[1] text-admin-side_bar">
                 Завантажте зображення {locale}
               </p>
-              <p className="h-14 w-[215px] text-center text-sm leading-[1.35] text-admin-placeholder">
+              <p className="h-[52px] w-[215px] text-center text-sm leading-[1.35] text-admin-placeholder">
                 Формат зображення: JPG, PNG Максимальний розмір: 400 KB
               </p>
               <Image
@@ -128,7 +128,7 @@ export function FileDropzone({
                 width={18}
                 height={18}
                 alt="upload-file-icon"
-                className="h-[18px]"
+                className=" h-[18px]"
               />
             </>
           ) : (

@@ -54,10 +54,10 @@ input[type='time'] {
 /* button */
 
 .button-common {
-  @apply h-[49px] min-w-[181px]  cursor-pointer rounded-md border border-admin-dark font-exo_2 text-xl font-bold disabled:cursor-not-allowed;
+  @apply min-h-[49px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-exo_2 text-xl font-bold disabled:cursor-not-allowed;
 }
 .button-confirm {
-  @apply button-common disabled:border-state-disabled  disabled:bg-state-disabled bg-admin-dark text-white;
+  @apply button-common bg-admin-dark  text-white disabled:border-state-disabled disabled:bg-state-disabled;
 }
 .button-close {
   @apply button-common bg-admin-light_3 text-admin-dark;

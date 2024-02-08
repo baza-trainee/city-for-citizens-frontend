@@ -32,7 +32,7 @@ export function FormElement({
         }}
         autoComplete="off"
         placeholder={placeholder}
-        className={`block  w-full rounded border border-admin-placeholder bg-white px-[9px] py-3 font-source_sans_3 leading-snug text-admin-dark placeholder:text-admin-placeholder 
+        className={`block min-h-[48px] w-full rounded border border-admin-placeholder bg-white px-[9px] py-3 font-source_sans_3 leading-snug text-admin-dark placeholder:text-admin-placeholder 
           ${clsx(
             tag === 'textarea' && 'max-h-[196px] resize-none',
             tag === 'input' && 'max-h-[48px]',
