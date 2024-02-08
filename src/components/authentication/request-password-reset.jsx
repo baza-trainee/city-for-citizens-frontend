@@ -75,7 +75,7 @@ export default function RequestPasswordReset() {
           error={error}
         />
       </FormAuth>
-      <div className="mt-[30px] flex w-full justify-between">
+      <div className="flex w-full justify-between">
         <GoBackLink />
         <Button
           type="button"
