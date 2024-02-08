@@ -7,7 +7,7 @@ import { getValidationScheme, inputsSettings } from './helpers';
 import InputEventType from './input-event-type/input-event-type';
 import { FormElement } from './form-element';
 import { FileDropzone } from './input-file-dropzone/input-file-dropzone';
-import { BasicModalWindows } from '@/components/common';
+import { BasicModalWindows, LoadingButton } from '@/components/common';
 
 const initialFormData = {
   firstLocale: {
@@ -36,6 +36,7 @@ export default function EventForm({
   initialData,
   buttonNameSubmit,
   buttonNameReset,
+  isLoading,
 }) {
   const {
     register,
@@ -138,17 +139,18 @@ export default function EventForm({
           </div>
         </div>
 
-        <div className="flex justify-center">
-          <button
-            className="input-label  relative mb-[60px] h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
-            type="button"
-          >
-            <span className="absolute left-0 top-1/2 -translate-x-full  -translate-y-1/2 pr-7 text-[18px]">
+        <div className="mb-[60px] flex justify-center ">
+          <div className="relative">
+            <button
+              className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
+              type="button"
+            >
+              Додати новий тип події
+            </button>
+            <span className="input-label absolute -left-7 top-1/2 -translate-x-full -translate-y-1/2 text-[18px]">
               або
             </span>
-            {''}
-            Додати новий тип події
-          </button>
+          </div>
         </div>
 
         <div
@@ -204,14 +206,24 @@ export default function EventForm({
             type="button"
             onClick={() => setIsConfirmationModalVisible(true)}
             value={buttonNameReset}
-            disabled={isButtonDisabled}
+            disabled={isButtonDisabled || isLoading}
           />
-          <input
-            className={`button-confirm h-[51px] w-[198px]`}
-            type="submit"
-            disabled={isButtonDisabled}
-            value={buttonNameSubmit}
-          />
+          {isLoading ? (
+            <button
+              type="button"
+              disabled
+              className="button-confirm h-[51px] w-[198px]"
+            >
+              <LoadingButton />
+            </button>
+          ) : (
+            <input
+              className={`button-confirm h-[51px] w-[198px]`}
+              type="submit"
+              disabled={isButtonDisabled}
+              value={buttonNameSubmit || isLoading}
+            />
+          )}
         </div>
       </form>
       {isConfirmationModalVisible && (
