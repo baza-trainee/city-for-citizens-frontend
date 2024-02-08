@@ -20,11 +20,11 @@ setLocale({
 
 export function getValidationScheme() {
   const schemeToTwoLocale = {
-    eventTitle: yup.string().required().min(5).max(55),
-    city: yup.string().required().min(2).max(40),
-    street: yup.string().required().min(2).max(40),
-    description: yup.string().required().min(15).max(300),
-    notes: yup.string().max(180).notRequired(),
+    eventTitle: yup.string().trim().required().min(5).max(55),
+    city: yup.string().trim().required().min(2).max(40),
+    street: yup.string().trim().required().min(2).max(40),
+    description: yup.string().trim().required().min(15).max(300),
+    notes: yup.string().trim().max(180).notRequired(),
     eventType: yup.string().required(),
     eventImage: yup
       .mixed()
@@ -62,6 +62,7 @@ export function getValidationScheme() {
 
     coordinates: yup
       .string()
+      .trim()
       .required()
       .matches(
         /^(\+|-)?((\d((\.)|\.\d{1,20})?)|(0*?[0-8]\d((\.)|\.\d{1,20})?)|(0*?4?[1-9]|0)((\.)|\.0{1,20})?),\s*(\+|-)?((\d((\.)|\.\d{1,20})?)|(0*?\d\d((\.)|\.\d{1,20})?)|(0*?1[0-7]\d((\.)|\.\d{1,20})?)|(0*?1[0-7][0-9]|[1-8]\d|90)((\.)|\.0{1,20})?)$/,
