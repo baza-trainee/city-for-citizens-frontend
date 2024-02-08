@@ -20,6 +20,7 @@ module.exports = {
         darkblue: '#3D4756',
         dark: '#131313',
         menu: '#B0C1EF',
+        placeholder: '#7E8492',
         side_bar: '#6589E3',
         light_1: '#FBFAFA',
         light_2: '#FEFEFE',
@@ -39,6 +40,7 @@ module.exports = {
         error_primary: '#E11717',
         error_second: '#FFF0F0',
         non_focus: '#868686',
+        disabled: '#7E8492',
       },
 
       icon: '#767676',
@@ -103,6 +105,12 @@ module.exports = {
         DEFAULT: '16px',
         laptop: '26px',
         desktop: '240px',
+      },
+    },
+    extend: {
+      boxShadow: {
+        list: '7px 0px 2px 10px #FBFAFA, inset 0px 0px 2px 15px #FBFAFA',
+        main: '0px 0px 10px 1px',
       },
     },
   },
