@@ -7,7 +7,7 @@ export default function TypeList({
   toggleEventType,
 }) {
   return (
-    <div className="border-admin-placeholder absolute z-10 mt-1 max-h-[347px] w-full overflow-auto rounded border bg-white px-[9px] py-3.5 ">
+    <div className="absolute z-10 mt-1 max-h-[347px] w-full overflow-auto rounded border border-admin-placeholder bg-white px-[9px] py-3.5 ">
       <ul className="flex flex-col gap-[15px] pl-px">
         {eventTypesList.map(type => (
           <button
@@ -15,7 +15,7 @@ export default function TypeList({
             type="button"
             key={type}
           >
-            <li className="hover:shadow-list flex justify-between leading-snug text-admin-dark">
+            <li className="flex justify-between leading-snug text-admin-dark hover:shadow-list">
               <p>{type}</p>
 
               <div className="flex h-6 min-w-6  items-center justify-center rounded-[5px] border border-admin-dark">
