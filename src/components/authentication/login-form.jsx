@@ -19,6 +19,8 @@ import FormContainer from './common/form-container';
 import FormTitle from './common/form-titles';
 import FormAuth from './common/form-auth';
 import Button from '../common/button';
+import { LoadingButton } from '../common';
+
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -121,7 +123,7 @@ export default function LoginForm() {
           disabled={isLoading || !isFormValid}
           onClick={handleSubmit}
         >
-          Увійти
+          {isLoading ? <LoadingButton /> : 'Увійти'}
         </Button>
       </FormAuth>
     </FormContainer>
