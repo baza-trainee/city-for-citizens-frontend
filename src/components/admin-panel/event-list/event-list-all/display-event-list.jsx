@@ -7,8 +7,6 @@ import { useCurrentLocale } from '@/hooks';
 import IconTrash from '@/assets/icons/admin-sidebar/trash-icon.svg';
 import IconPencil from '@/assets/icons/admin-sidebar/pencil-icon.svg';
 
-import AddEventButton from './add-event-button';
-
 export default function DisplayEventList({
   eventsData,
   showConfirmationModal,
@@ -20,11 +18,10 @@ export default function DisplayEventList({
       {eventsData && eventsData.length === 0 && (
         <div className="mx-auto mt-8 flex flex-col gap-y-3 text-center">
           <p>Тут нічого немає</p>
-          <AddEventButton />
         </div>
       )}
       {eventsData &&
-        eventsData.length &&
+        eventsData.length > 0 &&
         eventsData.map(event => (
           <li
             key={uuidv4()}
@@ -48,7 +45,7 @@ export default function DisplayEventList({
                 .replace(',', '\u00A0\u00A0\u00A0')}
             </span>
             <div
-              className="inline-flex items-center justify-center gap-x-10 pr-2"
+              className="inline-flex items-center justify-center gap-x-7 pr-2"
               title="Відредагувати подію"
             >
               <Link href={`/admin/event/${event.id}`}>

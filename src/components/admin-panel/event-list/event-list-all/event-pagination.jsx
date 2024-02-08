@@ -27,7 +27,7 @@ export default function EventPagination({ currentPage, onClick }) {
   }
 
   return (
-    <div className="mb-12 mt-[6.7rem] flex justify-end gap-x-6 tablet:mr-10 desktop:mr-[5.8rem]">
+    <div className="mb-12 mt-[6.7rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-10 desktop:mr-[5.8rem]">
       <ol className="flex gap-x-6 font-oswald  text-2xl font-medium">
         {arrayOfPageNumbers.map(pageNumber => (
           <li

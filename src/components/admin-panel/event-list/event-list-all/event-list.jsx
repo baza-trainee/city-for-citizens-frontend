@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import IconSearch from '@/assets/icons/common/search-icon.svg';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
@@ -15,7 +15,7 @@ import EventPagination from './event-pagination';
 
 export default function EventList() {
   const [inputValue, setInputValue] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
@@ -25,14 +25,23 @@ export default function EventList() {
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
     page: currentPage,
   });
 
-  const serverTotalPage = serverDataByCurrentPage.totalPages;
   const eventList = serverDataByCurrentPage?.events;
 
+  const [totalItems, setTotalItems] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
+
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
+
+  useEffect(() => {
+    setTotalItems(serverDataByCurrentPage.totalItems);
+    setTotalPages(serverDataByCurrentPage.totalPages);
+  }, [serverDataByCurrentPage]);
 
   async function handleConfirmDelete() {
     setStatusMessage('');
@@ -40,17 +49,17 @@ export default function EventList() {
       await deleteEvent(idDeleteEvent).unwrap();
 
       setStatusMessage('Подію видалено!');
+      const maxPage = Math.ceil((totalItems - 1) / 10);
+      currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
       setIsShowSuccessMessage(true);
-
-      currentPage > serverTotalPage && setCurrentPage(prev => prev - 1 || 1);
     } catch (error) {
       if (error?.data?.error === 'Image not found') {
         setStatusMessage(
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
-
+        const maxPage = Math.ceil((totalItems - 1) / 10);
+        currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
         setIsShowSuccessMessage(true);
-        currentPage > serverTotalPage && setCurrentPage(prev => prev - 1 || 1);
       } else {
         setStatusMessage('Сталася помилка. Спробуйте ще раз.');
         setIsShowErrorMessage(true);
@@ -96,7 +105,7 @@ export default function EventList() {
   }
 
   return (
-    <div className="font-source_sans_3">
+    <div className="flex flex-col font-source_sans_3">
       <AdminHeader title="Всі події">
         <div className="flex gap-x-14">
           <div className="group flex h-[2.9rem] justify-between rounded-md border border-admin-dark_2 hover:border-admin-gray mobile:w-60 tablet:w-72 desktop:w-[28rem]">
@@ -127,7 +136,10 @@ export default function EventList() {
           />
         </ol>
       </div>
-      <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
+
+      {totalPages > 1 && (
+        <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
+      )}
       {isConfirmationModalVisible && (
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}
