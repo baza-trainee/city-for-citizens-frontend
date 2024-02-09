@@ -93,8 +93,8 @@ export default function EventList() {
   function TableHeader() {
     return (
       <div
-        className="text-dark mb-4 grid grid-cols-[4fr_2fr_3fr_2fr_1fr] justify-items-center
-          gap-x-3 bg-admin-menu py-3 font-source_sans_3 text-lg"
+        className="mb-[17px] grid grid-cols-[4fr_1.5fr_2fr_2fr_2fr] gap-x-3 bg-admin-menu
+          py-3 pl-[10px] font-source_sans_3 text-lg text-admin-dark"
       >
         <span className="">Назва</span>
         <span className="">Місто</span>
@@ -108,25 +108,26 @@ export default function EventList() {
     <div className="flex flex-col font-source_sans_3">
       <AdminHeader title="Всі події">
         <div className="flex gap-x-14">
-          <div className="group flex h-[2.9rem] justify-between rounded-md border border-admin-dark_2 hover:border-admin-gray mobile:w-60 tablet:w-72 desktop:w-[28rem]">
+          <div className="group flex h-[2.9rem] justify-between rounded-md border border-admin-gray_2  mobile:w-60 tablet:w-72 laptop:w-[28rem]">
             <input
               type="search"
               placeholder="Введіть ключове слово для пошуку"
               value={inputValue}
               onChange={handleChangeSearch}
-              className="flex-grow rounded-md  bg-admin-light_1 p-2 pl-3.5 transition duration-200 placeholder:text-lg placeholder:text-admin-dark_2
-          hover:bg-[#ffffff] focus:outline-none tablet:placeholder-shown:overflow-hidden tablet:placeholder-shown:text-ellipsis"
+              className="flex-grow rounded-md bg-admin-light_1 p-2 pl-3.5 font-source_sans_3 text-lg text-admin-dark transition 
+              duration-200 placeholder:text-lg placeholder:text-admin-gray_2 hover:bg-[#ffffff] focus:outline-none
+               focus:placeholder:text-admin-dark tablet:placeholder-shown:overflow-hidden tablet:placeholder-shown:text-ellipsis"
             />
-            <div className="flex h-full w-[2.9rem] items-center justify-center   bg-admin-dark group-hover:bg-admin-darkgray">
+            <div className="flex h-full w-[2.9rem] items-center justify-center   bg-admin-dark ">
               <IconSearch width="25px" height="26px" />
             </div>
           </div>
           <AddEventButton />
         </div>
       </AdminHeader>
-      <div className="ml-5 grid grid-cols-1 grid-rows-[auto_auto] pb-4 tablet:mr-10 desktop:mr-20 ">
+      <div className="ml-5 mt-2 grid grid-cols-1 grid-rows-[auto_auto]  pb-4 tablet:mr-10 laptop:mr-20 ">
         <TableHeader />
-        <ol className="grid auto-rows-auto gap-y-3 font-exo_2 text-base">
+        <ol className="grid auto-rows-auto font-exo_2 text-base">
           <DisplayEventList
             showConfirmationModal={eventId => {
               setIsConfirmationModalVisible(true);
@@ -137,9 +138,11 @@ export default function EventList() {
         </ol>
       </div>
 
-      {totalPages > 1 && (
+      {totalPages > 1 && !inputValue && (
         <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
       )}
+      {console.log('filtered Event ', filteredEvents)}
+      {console.log('eventList ', eventList)}
       {isConfirmationModalVisible && (
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}

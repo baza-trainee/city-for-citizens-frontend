@@ -27,8 +27,8 @@ export default function EventPagination({ currentPage, onClick }) {
   }
 
   return (
-    <div className="mb-12 mt-[6.7rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-10 desktop:mr-[5.8rem]">
-      <ol className="flex gap-x-6 font-oswald  text-2xl font-medium">
+    <div className="mb-12 mt-[6rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-10 laptop:mr-[5.8rem]">
+      <ol className="flex gap-x-6  text-2xl font-medium">
         {arrayOfPageNumbers.map(pageNumber => (
           <li
             key={uuidv4()}
@@ -36,7 +36,7 @@ export default function EventPagination({ currentPage, onClick }) {
             className={`text-admin-dark
             ${
               pageNumber === currentPage && 'bg-admin-gray'
-            } flex h-11 w-11 cursor-pointer items-center justify-center  rounded transition-colors`}
+            } flex h-11 w-11 cursor-pointer items-center justify-center rounded font-oswald   transition-colors`}
           >
             {pageNumber}
           </li>

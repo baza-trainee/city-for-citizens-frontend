@@ -4,7 +4,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import './globals.css';
 import { ReduxProvider } from '@/providers/redux-provider';
 import { locales } from '@/config';
-import { exo_2, roboto, source_sans_3, ubuntu } from '@/app/fonts';
+import { exo_2, roboto, source_sans_3, ubuntu, oswald } from '@/app/fonts';
 import NextThemeProvider from '@/providers/theme-providers';
 
 export function generateStaticParams() {
@@ -28,7 +28,7 @@ export default function LocaleLayout({ children, params: { locale } }) {
   return (
     <html
       lang={locale}
-      className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable}`}
+      className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable} ${oswald.variable}`}
     >
       <body className="bg-light-primary font-source_sans_3 text-light-head dark:bg-dark-primary dark:text-dark-head">
         <NextIntlClientProvider locale={locale} messages={messages}>
