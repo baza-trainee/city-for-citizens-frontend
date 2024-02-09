@@ -4,7 +4,7 @@ import BackIcon from '@/assets/icons/common/back-icon.svg';
 
 import { useRouter } from 'next/navigation';
 
-export default function ButtonBack({ setClickBack }) {
+export default function ButtonBack() {
   const router = useRouter();
 
   return (
@@ -12,7 +12,6 @@ export default function ButtonBack({ setClickBack }) {
       className="button-common flex h-[51px] w-[185px] items-center justify-start gap-[7px]  pl-8 text-admin-dark"
       type="button"
       onClick={() => {
-        setClickBack(true);
         router.back();
       }}
     >

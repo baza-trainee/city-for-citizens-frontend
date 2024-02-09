@@ -15,7 +15,7 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
           type === 'success' &&
             'min-w-[322px] gap-3 border-[3px] border-state-success py-[44px]',
           type === 'warn' &&
-            'border-state-warn_main min-w-[322px] gap-3 border-[3px] pb-[34px] pt-[30px]',
+            'min-w-[322px] gap-3 border-[3px] border-state-warn_main pb-[34px] pt-[30px]',
           type === 'error' &&
             'min-w-[322px] gap-3 border-[3px] border-state-error_main pb-[34px] pt-[30px]',
           type === 'add-new-type' && 'px-10 pb-14 pt-11',

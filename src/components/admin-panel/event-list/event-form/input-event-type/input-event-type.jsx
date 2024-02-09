@@ -38,7 +38,9 @@ export default function InputEventType({
   useEffect(() => {
     if (eventTypesSelected.length) clearErrors([inputName]);
 
-    setValue(inputName, eventTypesSelected.join(', '));
+    if (eventTypesSelected.join(', ')) {
+      setValue(inputName, eventTypesSelected.join(', '));
+    }
   }, [clearErrors, eventTypesSelected, inputName, setValue]);
 
   function toggleEventType(type) {

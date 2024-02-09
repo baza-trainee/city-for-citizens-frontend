@@ -24,8 +24,6 @@ import { BasicModalWindows } from '@/components/common';
 export default function AddEvent() {
   const [statusMessage, setStatusMessage] = useState('');
 
-  const [clickBack, setClickBack] = useState(false);
-
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isRefreshModalVisible, setIsRefreshModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
@@ -115,12 +113,11 @@ export default function AddEvent() {
   return (
     <div>
       <AdminHeader title={'Додати подію'}>
-        <ButtonBack setClickBack={setClickBack} />
+        <ButtonBack />
       </AdminHeader>
 
       <div className="pb-32 pl-5 pr-5 desktop:pr-20">
         <EventForm
-          clickBack={clickBack}
           isLoading={isLoading}
           onSubmit={handleSubmit}
           buttonNameSubmit={'Додати подію'}

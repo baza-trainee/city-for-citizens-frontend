@@ -42,7 +42,6 @@ export default function EventForm({
   buttonNameSubmit,
   buttonNameReset,
   isLoading,
-  clickBack,
 }) {
   const {
     register,
@@ -65,19 +64,20 @@ export default function EventForm({
   const eventFormData = useSelector(state => state.eventFormData);
 
   useEffect(() => {
-    reset(eventFormData, { keepDefaultValues: true });
-  }, [eventFormData, reset]);
-
-  useEffect(() => {
-    if (clickBack) {
+    // save input data during component unmount
+    return () => {
+      console.log('return effect');
       const currentValues = watch();
-
       currentValues.firstLocale.eventImage = '';
       currentValues.secundLocale.eventImage = '';
 
       dispatch(setEventFormData(currentValues));
-    }
-  }, [clickBack, dispatch, watch]);
+    };
+  }, [dispatch, watch]);
+
+  useEffect(() => {
+    reset(eventFormData, { keepDefaultValues: true });
+  }, [eventFormData, reset]);
 
   function resetForm() {
     setClickResetForm(prev => !prev);
@@ -102,7 +102,7 @@ export default function EventForm({
   function onSubmitHandle({ common, firstLocale, secundLocale }) {
     const ukFormData = { ...common, locale: 'uk_UA', ...firstLocale };
     const enFormData = { ...common, locale: 'en_US', ...secundLocale };
-    const formData = [ ukFormData, enFormData ];
+    const formData = [ukFormData, enFormData];
 
     onSubmit(formData, resetForm);
   }
