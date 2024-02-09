@@ -47,7 +47,9 @@ export default function Input({
         )}
       </div>
       {errors && (
-        <p className="absolute pt-[2px] text-state-error_main">{errors}</p>
+        <p className="absolute pt-[2px] text-sm text-state-error_main">
+          {errors}
+        </p>
       )}
     </label>
   );
