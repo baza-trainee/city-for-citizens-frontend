@@ -47,6 +47,10 @@ export default function PasswordReset() {
 
   const handleBlur = e => {
     const { value, name } = e.target;
+    if (name === 'password2' && formData.password1 !== value) {
+      setErrors(prev => ({ ...prev, [name]: 'Паролі не співпадають' }));
+      return;
+    }
     validateInput(name, value, setErrors);
   };
 
@@ -69,13 +73,11 @@ export default function PasswordReset() {
         }).unwrap();
 
         if (data) {
-          setSuccessMessage(
-            'Перейдіть за посиланням, відправленим у листі на Вашу пошту'
-          );
+          setSuccessMessage('Пароль успішно відновлено');
         }
       } catch (error) {
         setError(
-          'Сталася помилка, пороль не відновлено, спробуйте ще раз відправити запит на скидання пороля, і перейти по посиланню яку прийде на е-пошту'
+          'Сталася помилка, пороль не відновлено, спробуйте ще раз відправити запит на скидання пороля, і перейти за посиланням, яке прийде на е-пошту'
         );
       }
     }

@@ -30,15 +30,31 @@ export const eventsApi = createApi({
         return { url: queryStr, method: 'GET' };
       },
       providesTags: result => {
-        return result
+        return result.events
           ? [
-              ...result.map(({ id }) => ({ type: 'Events', id })),
+              ...result.events.map(({ id }) => ({ type: 'Events', id })),
+              { type: 'Events', id: 'LIST' },
+            ]
+          : [{ type: 'Events', id: 'LIST' }];
+      },
+      // transformResponse: res => res.events,
+    }),
+    //
+    getAllEventsByPage: builder.query({
+      query: page => {
+        const queryStr = generateQueryStr('events', page);
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: result => {
+        return result.events
+          ? [
+              ...result.events.map(({ id }) => ({ type: 'Events', id })),
               { type: 'Events', id: 'LIST' },
             ]
           : [{ type: 'Events', id: 'LIST' }];
       },
     }),
-
     //
     getEventsById: builder.query({
       query: () => {
@@ -103,6 +119,7 @@ export const eventsApi = createApi({
 export const {
   useGetAllEventsQuery,
   useGetAllEventsByLocaleQuery,
+  useGetAllEventsByPageQuery,
   useGetEventsBySearchParamsQuery,
   useGetEventsByIdQuery,
   useCreateEventMutation,
