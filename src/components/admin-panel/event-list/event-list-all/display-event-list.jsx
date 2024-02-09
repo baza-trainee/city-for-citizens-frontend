@@ -14,7 +14,7 @@ export default function DisplayEventList({
   const { localeForIntl } = useCurrentLocale();
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-4">
       {eventsData && eventsData.length === 0 && (
         <div className="mx-auto mt-8 flex flex-col gap-y-3 text-center">
           <p>Тут нічого немає</p>
@@ -25,10 +25,10 @@ export default function DisplayEventList({
         eventsData.map(event => (
           <li
             key={uuidv4()}
-            className={`grid grid-cols-[4fr_2fr_3fr_2fr_1fr] gap-x-3 bg-admin-light_3 py-3 transition duration-200
-          hover:bg-admin-menu tablet:justify-items-start desktop:justify-items-center`}
+            className={`grid grid-cols-[4fr_1.5fr_2fr_2fr_2fr] justify-items-start gap-x-3  bg-admin-light_3  py-3 font-exo_2 text-admin-dark
+          transition duration-200 hover:bg-admin-menu`}
           >
-            <span>{event.eventTitle}</span>
+            <span className="pl-[5px]">{event.eventTitle}</span>
             <span>{event.eventAddress.city}</span>
             <span>
               {event.eventTypes.map(({ eventType }) => eventType).join(', ')}
@@ -45,7 +45,7 @@ export default function DisplayEventList({
                 .replace(',', '\u00A0\u00A0\u00A0')}
             </span>
             <div
-              className="inline-flex items-center justify-center gap-x-7 pr-2"
+              className="inline-flex w-full items-center  gap-x-9 pl-8  pr-2 "
               title="Відредагувати подію"
             >
               <Link href={`/admin/event/${event.id}`}>
