@@ -2,12 +2,17 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getValidationScheme, inputsSettings } from './helpers';
 import InputEventType from './input-event-type/input-event-type';
 import { FormElement } from './form-element';
 import { FileDropzone } from './input-file-dropzone/input-file-dropzone';
-import { BasicModalWindows } from '@/components/common';
+import { BasicModalWindows, LoadingButton } from '@/components/common';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  resetEventFormData,
+  setEventFormData,
+} from '@/redux/slice/eventFormData';
 
 const initialFormData = {
   firstLocale: {
@@ -36,6 +41,7 @@ export default function EventForm({
   initialData,
   buttonNameSubmit,
   buttonNameReset,
+  isLoading,
 }) {
   const {
     register,
@@ -54,10 +60,30 @@ export default function EventForm({
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
 
+  const dispatch = useDispatch();
+  const eventFormData = useSelector(state => state.eventFormData);
+
+  useEffect(() => {
+    // save input data during component unmount
+    return () => {
+      console.log('return effect');
+      const currentValues = watch();
+      currentValues.firstLocale.eventImage = '';
+      currentValues.secundLocale.eventImage = '';
+
+      dispatch(setEventFormData(currentValues));
+    };
+  }, [dispatch, watch]);
+
+  useEffect(() => {
+    reset(eventFormData, { keepDefaultValues: true });
+  }, [eventFormData, reset]);
+
   function resetForm() {
     setClickResetForm(prev => !prev);
     reset();
     setIsConfirmationModalVisible(false);
+    dispatch(resetEventFormData());
   }
 
   function isEmpty(obj) {
@@ -73,19 +99,23 @@ export default function EventForm({
     !isPhotoFirstLocaleUpload &&
     !isPhotoSecundLocaleUpload;
 
+  function onSubmitHandle({ common, firstLocale, secundLocale }) {
+    const ukFormData = { ...common, locale: 'uk_UA', ...firstLocale };
+    const enFormData = { ...common, locale: 'en_US', ...secundLocale };
+    const formData = [ukFormData, enFormData];
+
+    onSubmit(formData, resetForm);
+  }
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit(formData => {
-          onSubmit(formData, resetForm);
-        })}
-      >
+      <form onSubmit={handleSubmit(onSubmitHandle)}>
         <div className="mb-[46px] flex flex-col gap-[30px]">
           {inputsSettings.firstGroup.map(
             ({ tag, inputLabel, inputName, placeholder, rows, type }) => (
               <div key={inputLabel} className={'input-wrapper'}>
                 <p className="input-label">{inputLabel}</p>
-                <div className="flex w-full justify-between gap-10 ">
+                <div className="flex w-full flex-col justify-between gap-10 laptop_xl:flex-row">
                   <FormElement
                     type={type}
                     rows={rows}
@@ -111,13 +141,16 @@ export default function EventForm({
 
         <div className="input-wrapper mb-10">
           <p className="input-label">Тип події</p>
-          <div className="flex w-full justify-between gap-10">
+          <div className="flex w-full flex-col justify-between gap-10 laptop_xl:flex-row">
             <InputEventType
               locale={'uk_UA'}
               setValue={setValue}
               placeholder="Виберіть тип події українською"
               inputName={'firstLocale.eventType'}
-              initialState={initialData?.firstLocale?.eventType}
+              initialState={
+                initialData?.firstLocale?.eventType ||
+                eventFormData?.firstLocale?.eventType
+              }
               errorMessage={errors?.firstLocale?.eventType?.message}
               register={register('firstLocale.eventType')}
               clickResetForm={clickResetForm}
@@ -129,7 +162,10 @@ export default function EventForm({
               setValue={setValue}
               placeholder="Виберіть тип події англійською"
               inputName={'secundLocale.eventType'}
-              initialState={initialData?.secundLocale?.eventType}
+              initialState={
+                initialData?.secundLocale?.eventType ||
+                eventFormData?.secundLocale?.eventType
+              }
               errorMessage={errors?.secundLocale?.eventType?.message}
               register={register('secundLocale.eventType')}
               clickResetForm={clickResetForm}
@@ -138,34 +174,35 @@ export default function EventForm({
           </div>
         </div>
 
-        <div className="flex justify-center">
-          <button
-            className="input-label  relative mb-[60px] h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
-            type="button"
-          >
-            <span className="absolute left-0 top-1/2 -translate-x-full  -translate-y-1/2 pr-7 text-[18px]">
+        <div className="mb-[60px] flex justify-center ">
+          <div className="relative">
+            <button
+              className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
+              type="button"
+            >
+              Додати новий тип події
+            </button>
+            <span className="input-label absolute -left-7 top-1/2 -translate-x-full -translate-y-1/2 text-[18px]">
               або
             </span>
-            {''}
-            Додати новий тип події
-          </button>
+          </div>
         </div>
 
         <div
-          className="mb-[50px] flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3
-    px-[109px] py-5 shadow-sm"
+          className="mb-[50px] flex flex-col items-center justify-center gap-5 rounded
+    bg-admin-light_3 px-2 py-5  shadow-sm desktop:px-[109px]"
         >
           <p className="input-label">Зображення події</p>
-          <div className="flex w-full justify-between gap-10">
+          <div className="flex w-full flex-col items-center justify-between gap-10 laptop_xl:flex-row">
             <FileDropzone
-              photo={initialData?.eventImage}
+              photo={initialData?.firstLocale?.eventType}
               errorMessage={errors?.firstLocale?.eventImage?.message}
               onChange={file => setValue('firstLocale.eventImage', file)}
               locale={'українською'}
               isResetForm={clickResetForm}
             />
             <FileDropzone
-              photo={initialData?.eventImage}
+              photo={initialData?.firstLocale?.eventType}
               errorMessage={errors?.secundLocale?.eventImage?.message}
               onChange={file => {
                 setValue('secundLocale.eventImage', file);
@@ -178,40 +215,52 @@ export default function EventForm({
           <input hidden type="text" {...register(`secundLocale.eventImage`)} />
         </div>
 
-        <div className="mb-[90px] flex gap-[27px]">
+        <div className="mb-[90px] flex flex-col gap-[27px] desktop:flex-row">
           {inputsSettings.secondGroup.map(
             ({ tag, inputLabel, inputName, placeholder, customIcon, type }) => {
               return (
-                <div key={inputLabel} className="input-wrapper w-full">
-                  <p className="input-label">{inputLabel}</p>
-                  <FormElement
-                    type={type}
-                    customIcon={customIcon}
-                    tag={tag}
-                    errorMessage={errors?.common?.[inputName]?.message}
-                    register={register(`common.${inputName}`)}
-                    placeholder={placeholder}
-                  />
+                <div key={inputLabel} className="input-wrapper w-full ">
+                  <p className="input-label  ">{inputLabel}</p>
+                  <div className="w-full max-w-[75%]">
+                    <FormElement
+                      type={type}
+                      customIcon={customIcon}
+                      tag={tag}
+                      errorMessage={errors?.common?.[inputName]?.message}
+                      register={register(`common.${inputName}`)}
+                      placeholder={placeholder}
+                    />
+                  </div>
                 </div>
               );
             }
           )}
         </div>
 
-        <div className="flex items-center justify-center gap-[25px] ">
+        <div className="flex flex-col items-center justify-center gap-[25px] tablet:flex-row ">
           <input
             className="button-close h-[51px] w-[198px]"
             type="button"
             onClick={() => setIsConfirmationModalVisible(true)}
             value={buttonNameReset}
-            disabled={isButtonDisabled}
+            disabled={isButtonDisabled || isLoading}
           />
-          <input
-            className={`button-confirm h-[51px] w-[198px]`}
-            type="submit"
-            disabled={isButtonDisabled}
-            value={buttonNameSubmit}
-          />
+          {isLoading ? (
+            <button
+              type="button"
+              disabled
+              className="button-confirm h-[51px] w-[198px]"
+            >
+              <LoadingButton />
+            </button>
+          ) : (
+            <input
+              className={`button-confirm h-[51px] w-[198px]`}
+              type="submit"
+              disabled={isButtonDisabled}
+              value={buttonNameSubmit || isLoading}
+            />
+          )}
         </div>
       </form>
       {isConfirmationModalVisible && (

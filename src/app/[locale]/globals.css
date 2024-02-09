@@ -11,6 +11,7 @@ input[type='time'] {
 
   &::-webkit-calendar-picker-indicator {
     opacity: 0;
+    cursor: pointer;
   }
   &:focus {
     background: rgba(0, 0, 0, 0);

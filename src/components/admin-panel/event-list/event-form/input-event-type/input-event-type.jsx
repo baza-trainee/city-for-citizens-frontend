@@ -17,6 +17,7 @@ export default function InputEventType({
   setValue,
   clickResetForm,
   clearErrors,
+  initialState,
 }) {
   const [isTypeListVisible, setIsTypeListVisible] = useState(false);
   const [eventTypesSelected, setEventTypesSelected] = useState([]);
@@ -29,9 +30,17 @@ export default function InputEventType({
   }, [clickResetForm]);
 
   useEffect(() => {
+    if (initialState) {
+      setEventTypesSelected(initialState.split(',').map(t => t.trim()));
+    }
+  }, [initialState]);
+
+  useEffect(() => {
     if (eventTypesSelected.length) clearErrors([inputName]);
 
-    setValue(inputName, eventTypesSelected.join(', '));
+    if (eventTypesSelected.join(', ')) {
+      setValue(inputName, eventTypesSelected.join(', '));
+    }
   }, [clearErrors, eventTypesSelected, inputName, setValue]);
 
   function toggleEventType(type) {
