@@ -92,7 +92,7 @@ export function FileDropzone({
     !uploadedFiles.length && !isDragActive && !photo && !fileRejections.length;
 
   return (
-    <div className="relative">
+    <div className="relative cursor-copy">
       <div {...getRootProps()}>
         <input {...getInputProps()} />
 

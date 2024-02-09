@@ -8,6 +8,7 @@ import { authApi } from './api/authApi';
 import { authSlice } from './slice/authSlice';
 import { appStatusSlice } from './slice/fetchStatesSlice';
 import { imageApi } from './api/imageApi';
+import { eventFormData } from './slice/eventFormData';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [imageApi.reducerPath]: imageApi.reducer,
     appStatusSlice: appStatusSlice.reducer,
+    eventFormData: eventFormData.reducer,
 
     authSlice: authSlice.reducer,
   },
