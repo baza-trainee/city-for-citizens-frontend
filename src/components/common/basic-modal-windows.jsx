@@ -14,6 +14,8 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
         flex-col items-center justify-center rounded bg-white px-6 py-8 ${clsx(
           type === 'success' &&
             'min-w-[322px] gap-3 border-[3px] border-state-success py-[44px]',
+          type === 'warn' &&
+            'border-state-warn_main min-w-[322px] gap-3 border-[3px] pb-[34px] pt-[30px]',
           type === 'error' &&
             'min-w-[322px] gap-3 border-[3px] border-state-error_main pb-[34px] pt-[30px]',
           type === 'add-new-type' && 'px-10 pb-14 pt-11',
@@ -31,6 +33,7 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
           <p
             className={`text-center font-exo_2 text-2xl font-bold leading-[1.33]  text-admin-dark  ${clsx(
               type === 'success' && 'text-state-success',
+              type === 'warn' && 'text-state-warn_main',
               type === 'error' && 'text-state-error_main'
             )} `}
           >

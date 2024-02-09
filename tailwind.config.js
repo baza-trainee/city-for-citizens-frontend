@@ -36,6 +36,7 @@ module.exports = {
 
       state: {
         success: '#2D982B',
+        warn_main: '#FFAB2D',
         error_main: '#E21B00',
         error_primary: '#E11717',
         error_second: '#FFF0F0',
@@ -94,9 +95,11 @@ module.exports = {
 
     screens: {
       mobile: '360px',
-      tablet: '738px',
+      tablet: '768px',
       laptop: '960px',
-      desktop: '1920px',
+      laptop_xl: '1024px',
+      desktop: '1280px',
+      desktop_xl: '1920px',
     },
 
     container: {
@@ -104,7 +107,7 @@ module.exports = {
       padding: {
         DEFAULT: '16px',
         laptop: '26px',
-        desktop: '240px',
+        desktop_xl: '240px',
       },
     },
     extend: {
