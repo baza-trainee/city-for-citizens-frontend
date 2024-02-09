@@ -141,8 +141,6 @@ export default function EventList() {
       {totalPages > 1 && !inputValue && (
         <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
       )}
-      {console.log('filtered Event ', filteredEvents)}
-      {console.log('eventList ', eventList)}
       {isConfirmationModalVisible && (
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}
