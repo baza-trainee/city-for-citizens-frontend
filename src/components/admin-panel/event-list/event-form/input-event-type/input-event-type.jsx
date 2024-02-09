@@ -17,6 +17,7 @@ export default function InputEventType({
   setValue,
   clickResetForm,
   clearErrors,
+  initialState,
 }) {
   const [isTypeListVisible, setIsTypeListVisible] = useState(false);
   const [eventTypesSelected, setEventTypesSelected] = useState([]);
@@ -27,6 +28,12 @@ export default function InputEventType({
   useEffect(() => {
     setEventTypesSelected([]);
   }, [clickResetForm]);
+
+  useEffect(() => {
+    if (initialState) {
+      setEventTypesSelected(initialState.split(',').map(t => t.trim()));
+    }
+  }, [initialState]);
 
   useEffect(() => {
     if (eventTypesSelected.length) clearErrors([inputName]);

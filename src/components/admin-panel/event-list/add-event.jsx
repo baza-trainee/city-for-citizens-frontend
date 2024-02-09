@@ -21,20 +21,6 @@ import { resetState, setCredentials } from '@/redux/slice/authSlice';
 import Cookies from 'js-cookie';
 import { BasicModalWindows } from '@/components/common';
 
-// async function uploadAndSetImageUrlsToFormData(file) {
-//   const formDataImage = new FormData();
-//   formDataImage.append('file', file);
-
-//   const imageName = await addImage(formDataImage).unwrap();
-//   tempNameImages.push(imageName);
-
-//   return imageName;
-// }
-
-// async function deleteData(dataToDelete) {
-//   Promise.all(dataToDelete.map(file => deleteImage(file)));
-// }
-
 export default function AddEvent() {
   const [statusMessage, setStatusMessage] = useState('');
 
@@ -66,48 +52,28 @@ export default function AddEvent() {
   const tempNameImages = [];
   const tempAddedEvents = [];
 
-  async function handleSubmit(
-    { common, firstLocale, secundLocale },
-    resetForm
-  ) {
+  async function handleSubmit(formData, resetForm) {
     const idIdentifier = uuidv4();
 
     try {
-      let formDataImageUk = new FormData();
-      let formDataImageEn = new FormData();
+      for (const data of formData) {
+        let formDataImage = new FormData();
+        formDataImage.append('file', data?.eventImage[0]);
 
-      formDataImageUk.append('file', firstLocale?.eventImage[0]);
-      formDataImageEn.append('file', secundLocale?.eventImage[0]);
+        const imageNameForRequest = await addImage(formDataImage).unwrap();
+        if (imageNameForRequest) tempNameImages.push(imageNameForRequest);
 
-      const imageNameForRequestUk = await addImage(formDataImageUk).unwrap();
-      if (imageNameForRequestUk) tempNameImages.push(imageNameForRequestUk);
+        const localeFormData = {
+          ...data,
+          idIdentifier,
+          eventUrl: 'https://TODO:_delete_this.line',
+          ...imageNameForRequest,
+        };
 
-      const imageNameForRequestEn = await addImage(formDataImageEn).unwrap();
-      if (imageNameForRequestEn) tempNameImages.push(imageNameForRequestEn);
+        const responseData = await addEvent(localeFormData).unwrap();
+        if (imageNameForRequest) tempAddedEvents.push(responseData);
+      }
 
-      const firstLocaleFormData = {
-        ...common,
-        ...firstLocale,
-        idIdentifier,
-        locale: 'uk_UA',
-        eventUrl: 'https://TODO:_delete_this.line',
-        ...imageNameForRequestUk,
-      };
-
-      const secundLocaleFormData = {
-        ...common,
-        ...secundLocale,
-        idIdentifier,
-        locale: 'en_US',
-        eventUrl: 'https://TODO:_delete_this.line',
-        ...imageNameForRequestEn,
-      };
-
-      const responseDataUk = await addEvent(firstLocaleFormData).unwrap();
-      if (imageNameForRequestUk) tempAddedEvents.push(responseDataUk);
-
-      const responseDataEn = await addEvent(secundLocaleFormData).unwrap();
-      if (imageNameForRequestUk) tempAddedEvents.push(responseDataEn);
       resetForm();
 
       setStatusMessage('Подію додано.');
@@ -138,13 +104,11 @@ export default function AddEvent() {
         setIsErrorModalVisible(true);
       }
 
-      for (const file of tempNameImages) {
-        await deleteImage(file);
-      }
+      await Promise.all(tempAddedEvents.map(file => deleteEvent(file.id)));
+      await Promise.all(tempNameImages.map(file => deleteImage(file)));
 
-      for (const file of tempAddedEvents) {
-        await deleteEvent(file.id);
-      }
+      tempNameImages.length = 0;
+      tempAddedEvents.length = 0;
     }
   }
 

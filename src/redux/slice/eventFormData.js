@@ -25,14 +25,11 @@ export const initialState = {
 export const eventFormData = createSlice({
   name: 'event_form_data',
   initialState,
+
   reducers: {
     setEventFormData: (_, { payload }) => payload,
     resetEventFormData: () => initialState,
   },
-  selectors: {
-    getEventFormData: state => state,
-  },
 });
 
 export const { setEventFormData, resetEventFormData } = eventFormData.actions;
-export const { getEventFormData } = eventFormData.selectors;

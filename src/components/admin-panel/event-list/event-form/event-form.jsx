@@ -71,6 +71,10 @@ export default function EventForm({
   useEffect(() => {
     if (clickBack) {
       const currentValues = watch();
+
+      currentValues.firstLocale.eventImage = '';
+      currentValues.secundLocale.eventImage = '';
+
       dispatch(setEventFormData(currentValues));
     }
   }, [clickBack, dispatch, watch]);
@@ -95,19 +99,23 @@ export default function EventForm({
     !isPhotoFirstLocaleUpload &&
     !isPhotoSecundLocaleUpload;
 
+  function onSubmitHandle({ common, firstLocale, secundLocale }) {
+    const ukFormData = { ...common, locale: 'uk_UA', ...firstLocale };
+    const enFormData = { ...common, locale: 'en_US', ...secundLocale };
+    const formData = [ ukFormData, enFormData ];
+
+    onSubmit(formData, resetForm);
+  }
+
   return (
     <>
-      <form
-        onSubmit={handleSubmit(formData => {
-          onSubmit(formData, resetForm);
-        })}
-      >
+      <form onSubmit={handleSubmit(onSubmitHandle)}>
         <div className="mb-[46px] flex flex-col gap-[30px]">
           {inputsSettings.firstGroup.map(
             ({ tag, inputLabel, inputName, placeholder, rows, type }) => (
               <div key={inputLabel} className={'input-wrapper'}>
                 <p className="input-label">{inputLabel}</p>
-                <div className="laptop_xl:flex-row flex w-full flex-col justify-between gap-10">
+                <div className="flex w-full flex-col justify-between gap-10 laptop_xl:flex-row">
                   <FormElement
                     type={type}
                     rows={rows}
@@ -133,13 +141,16 @@ export default function EventForm({
 
         <div className="input-wrapper mb-10">
           <p className="input-label">Тип події</p>
-          <div className="laptop_xl:flex-row flex w-full flex-col justify-between gap-10">
+          <div className="flex w-full flex-col justify-between gap-10 laptop_xl:flex-row">
             <InputEventType
               locale={'uk_UA'}
               setValue={setValue}
               placeholder="Виберіть тип події українською"
               inputName={'firstLocale.eventType'}
-              initialState={initialData?.firstLocale?.eventType}
+              initialState={
+                initialData?.firstLocale?.eventType ||
+                eventFormData?.firstLocale?.eventType
+              }
               errorMessage={errors?.firstLocale?.eventType?.message}
               register={register('firstLocale.eventType')}
               clickResetForm={clickResetForm}
@@ -151,7 +162,10 @@ export default function EventForm({
               setValue={setValue}
               placeholder="Виберіть тип події англійською"
               inputName={'secundLocale.eventType'}
-              initialState={initialData?.secundLocale?.eventType}
+              initialState={
+                initialData?.secundLocale?.eventType ||
+                eventFormData?.secundLocale?.eventType
+              }
               errorMessage={errors?.secundLocale?.eventType?.message}
               register={register('secundLocale.eventType')}
               clickResetForm={clickResetForm}
@@ -179,16 +193,16 @@ export default function EventForm({
     bg-admin-light_3 px-2 py-5  shadow-sm desktop:px-[109px]"
         >
           <p className="input-label">Зображення події</p>
-          <div className="laptop_xl:flex-row flex w-full flex-col items-center justify-between gap-10">
+          <div className="flex w-full flex-col items-center justify-between gap-10 laptop_xl:flex-row">
             <FileDropzone
-              photo={initialData?.eventImage}
+              photo={initialData?.firstLocale?.eventType}
               errorMessage={errors?.firstLocale?.eventImage?.message}
               onChange={file => setValue('firstLocale.eventImage', file)}
               locale={'українською'}
               isResetForm={clickResetForm}
             />
             <FileDropzone
-              photo={initialData?.eventImage}
+              photo={initialData?.firstLocale?.eventType}
               errorMessage={errors?.secundLocale?.eventImage?.message}
               onChange={file => {
                 setValue('secundLocale.eventImage', file);
