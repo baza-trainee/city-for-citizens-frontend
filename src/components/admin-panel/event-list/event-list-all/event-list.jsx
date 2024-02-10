@@ -127,7 +127,7 @@ export default function EventList() {
       </AdminHeader>
       <div className="ml-5 mt-2 grid grid-cols-1 grid-rows-[auto_auto]  pb-4 tablet:mr-10 laptop:mr-20 ">
         <TableHeader />
-        <ol className="grid auto-rows-auto font-exo_2 text-base">
+        <div className="grid auto-rows-auto font-exo_2 text-base">
           <DisplayEventList
             showConfirmationModal={eventId => {
               setIsConfirmationModalVisible(true);
@@ -135,7 +135,7 @@ export default function EventList() {
             }}
             eventsData={inputValue ? filteredEvents : eventList}
           />
-        </ol>
+        </div>
       </div>
 
       {totalPages > 1 && !inputValue && (
