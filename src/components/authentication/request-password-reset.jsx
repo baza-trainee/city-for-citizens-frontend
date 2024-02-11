@@ -74,6 +74,8 @@ export default function RequestPasswordReset() {
           placeholder="Введіть ел. пошту"
           errors={errors.email}
           error={error}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
         />
       </FormAuth>
       <div className="flex w-full justify-between">
@@ -85,7 +87,6 @@ export default function RequestPasswordReset() {
           onClick={handleSubmit}
         >
           {isLoading ? <LoadingButton /> : '      Підтвердити'}
-
         </Button>
       </div>
     </FormContainer>

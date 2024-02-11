@@ -21,7 +21,6 @@ import FormAuth from './common/form-auth';
 import Button from '../common/button';
 import { LoadingButton } from '../common';
 
-
 export default function LoginForm() {
   const [formData, setFormData] = useState({
     email: '',
@@ -38,8 +37,6 @@ export default function LoginForm() {
   const dispatch = useDispatch();
 
   const [login, { isLoading }] = useLoginMutation();
-  const [showPassword, setShowPassword] = useState(false);
-
   const router = useRouter();
 
   const handleChange = e => {
@@ -77,10 +74,6 @@ export default function LoginForm() {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(prev => !prev);
-  };
-
   const { email, password } = formData;
 
   return (
@@ -97,6 +90,8 @@ export default function LoginForm() {
           placeholder="Введіть ел. пошту"
           errors={errors.email}
           error={error}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
         />
         <Input
           label="Пароль"
@@ -108,8 +103,8 @@ export default function LoginForm() {
           placeholder="Введіть пароль"
           errors={errors.password}
           error={error}
-          showPassword={showPassword}
-          togglePasswordVisibility={togglePasswordVisibility}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
         />
         <Link
           className="ml-2 text-lg leading-[1.35] underline underline-offset-2 hover:opacity-80"
