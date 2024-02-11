@@ -3,10 +3,10 @@ import { useStyleMediaQuery } from '@/hooks';
 import IconPlus from '@/assets/icons/common/plus-icon.svg';
 
 export default function AddEventButton() {
-  const { matches: isMobile } = useStyleMediaQuery({
+  const { matches: isTablet } = useStyleMediaQuery({
     mixOrMax: 'max',
     widthOrHeight: 'width',
-    value: 768,
+    value: 960,
   });
 
   return (
@@ -18,7 +18,7 @@ export default function AddEventButton() {
       href={'/admin/event'}
     >
       <button type="button" title="Додати подію">
-        {!isMobile ? (
+        {!isTablet ? (
           'Додати подію'
         ) : (
           <IconPlus

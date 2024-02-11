@@ -1,32 +1,53 @@
 'use client';
 
 import { v4 as uuidv4 } from 'uuid';
-import { useCurrentLocale } from '@/hooks';
+// import { useCurrentLocale } from '@/hooks';
 
 import IconTrash from '@/assets/icons/common/trash-icon.svg';
 import IconPencil from '@/assets/icons/common/pencil-icon.svg';
 import { useRouter } from '@/navigation';
+import clsx from 'clsx';
+
+function getEventDate(eventDate) {
+  const date = new Date(eventDate);
+  let hours = date.getHours();
+  switch (hours) {
+    case 0:
+      hours = 22;
+      break;
+    case 1:
+      hours = 23;
+      break;
+    default:
+      hours = hours - 2;
+  }
+  return `${formatDate(date.getDate())}.${formatDate(date.getMonth() + 1)}.${date.getFullYear()} \u00A0\u00A0\u00A0 ${formatDate(null, hours)}:${formatDate(null, date.getMinutes())}`;
+}
+
+function formatDate(dateElStartZero, dateElEndZero) {
+  if (dateElStartZero) return String(dateElStartZero).padStart(2, '0');
+  return String(dateElEndZero).padStart(2, '0');
+}
 
 export default function DisplayEventList({
   eventsData,
   showConfirmationModal,
 }) {
-  const { localeForIntl } = useCurrentLocale();
+  // const { localeForIntl } = useCurrentLocale();
   const router = useRouter();
   return (
     <>
-      {eventsData && eventsData.length === 0 && (
-        <div className="mx-auto mt-8 flex flex-col gap-y-3 text-center">
-          <p>Тут нічого немає</p>
-        </div>
-      )}
       <table className=" -mt-[17px] w-full border-separate border-spacing-x-0 border-spacing-y-[17px]">
         <thead>
           <tr
             className="mb-[17px] bg-admin-menu
            font-source_sans_3 text-lg text-admin-dark"
           >
-            <td className="border border-admin-menu py-3 pl-[10px]">Назва</td>
+            <td
+              className={`border border-admin-menu py-3 pl-[10px] ${clsx(eventsData && eventsData.length === 0 && 'w-[31%]')}`}
+            >
+              Назва
+            </td>
             <td className="border border-admin-menu">Місто</td>
             <td className="border border-admin-menu">Тип події</td>
             <td className="border border-admin-menu">Дата та час</td>
@@ -34,6 +55,11 @@ export default function DisplayEventList({
           </tr>
         </thead>
         <tbody>
+          {eventsData && eventsData.length === 0 && (
+            <tr className="mx-auto mt-8 text-center">
+              <td colSpan={5}>Тут нічого немає</td>
+            </tr>
+          )}
           {eventsData &&
             eventsData.length > 0 &&
             eventsData.map(event => (
@@ -42,23 +68,31 @@ export default function DisplayEventList({
                 className={`h-max w-full justify-items-start break-words  bg-admin-light_3 
             font-exo_2 text-admin-dark transition duration-200 hover:bg-admin-menu`}
               >
-                <td className="py-3 pl-[5px]">{event.eventTitle}</td>
-                <td className="">{event.eventAddress.city}</td>
-                <td className="">
+                <td className="w-[31%] py-3 pl-[5px] pr-[5px]">
+                  {event.eventTitle}
+                </td>
+                <td className="pr-[5px]">{event.eventAddress.city}</td>
+                <td className="pr-[5px]">
                   {event.eventTypes
                     .map(({ eventType }) => eventType)
                     .join(', ')}
                 </td>
+                {console.log(
+                  'event.dateTime',
+                  event.eventTitle,
+                  event.dateTime
+                )}
                 <td className="">
-                  {new Date(event.dateTime)
-                    .toLocaleDateString(`${localeForIntl}`, {
+                  {/* {new Date(event.dateTime)
+                    .toLocaleDateString('uk', {
                       year: 'numeric',
                       month: '2-digit',
                       day: '2-digit',
                       hour: '2-digit',
                       minute: '2-digit',
                     })
-                    .replace(',', '\u00A0\u00A0\u00A0')}
+                    .replace(',', '\u00A0\u00A0\u00A0')} */}
+                  {getEventDate(event.dateTime)}
                 </td>
                 <td className="flex w-full items-center gap-x-9 py-3 pl-8 pr-2 tablet:flex-col laptop:flex-row ">
                   {/* <td className="inline-block  h-full w-full  items-center gap-x-9 py-3 pl-8 pr-2 "> */}

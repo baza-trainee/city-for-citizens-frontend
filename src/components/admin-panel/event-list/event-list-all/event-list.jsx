@@ -109,7 +109,7 @@ export default function EventList() {
   return (
     <div className="flex flex-col font-source_sans_3">
       <AdminHeader title="Всі події">
-        <div className="grid w-2/3 items-center tablet:grid-cols-[1.83fr_1fr] desktop:grid-cols-[auto_188px]">
+        <div className="grid w-2/3 items-center tablet:grid-cols-[auto_64px] laptop:grid-cols-[1.83fr_1fr] laptop_xl:grid-cols-[auto_188px]">
           <div className=" group flex h-[2.9rem]  w-full max-w-[449px] items-center justify-between  rounded-md border  border-admin-gray_2 desktop:mr-[57px] desktop:justify-self-end">
             <input
               type="search"
