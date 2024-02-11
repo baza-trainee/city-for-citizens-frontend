@@ -84,8 +84,9 @@ export function AdminSideBar() {
         <button
           ref={buttonRef}
           onClick={() => setIsConfirmationModalVisible(true)}
-          className="border--admin-dark mx-auto flex h-[52px] w-[213px]
-          items-center justify-center gap-2 rounded border bg-white px-8 text-xl font-bold leading-tight text-admin-dark"
+          className="border--admin-dark mx-auto flex h-[52px] items-center justify-center gap-2
+           rounded border bg-white px-8 text-xl font-bold leading-tight text-admin-dark
+           tablet:w-[160px] laptop:w-[213px]"
         >
           {<LogoutIcon className={'h-6 w-6'} />}
           {isLoading ? <LoadingButton /> : <span>Вийти</span>}
