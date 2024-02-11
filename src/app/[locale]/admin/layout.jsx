@@ -5,7 +5,7 @@ export default function AdminLayout({ children }) {
   return (
     <PrivateProvider>
       <div className="min-h-screen w-full bg-admin-light_1">
-        <div className="mx-auto grid max-w-[1440px] grid-cols-[298px_1fr]">
+        <div className="mx-auto grid max-w-[1920px] tablet:grid-cols-[225px_auto] laptop:grid-cols-[298px_auto]">
           <AdminSideBar />
           {children}
         </div>

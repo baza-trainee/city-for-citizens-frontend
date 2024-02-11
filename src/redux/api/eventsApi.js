@@ -56,6 +56,22 @@ export const eventsApi = createApi({
       },
     }),
     //
+    getEventsBySearchByPage: builder.query({
+      query: (page, search) => {
+        const queryStr = generateQueryStr('events', page, search);
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: result => {
+        return result.events
+          ? [
+              ...result.events.map(({ id }) => ({ type: 'Events', id })),
+              { type: 'Events', id: 'LIST' },
+            ]
+          : [{ type: 'Events', id: 'LIST' }];
+      },
+    }),
+    //
     getEventsById: builder.query({
       query: () => {
         return { url: 'events', method: 'GET' };
@@ -75,7 +91,6 @@ export const eventsApi = createApi({
       },
       transformResponse: groupEventsByCoordinates,
     }),
-
     //
     createEvent: builder.mutation({
       query: body => {
@@ -121,6 +136,7 @@ export const {
   useGetAllEventsByLocaleQuery,
   useGetAllEventsByPageQuery,
   useGetEventsBySearchParamsQuery,
+  useGetEventsBySearchByPageQuery,
   useGetEventsByIdQuery,
   useCreateEventMutation,
   useUpdateEventMutation,

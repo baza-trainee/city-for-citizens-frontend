@@ -1,13 +1,23 @@
 import { v4 as uuidv4 } from 'uuid';
 import IconAdminPaginationArrow from '@/assets/icons/admin-sidebar/pagination-arrow-icon.svg';
-import { useGetAllEventsByPageQuery } from '@/redux/api/eventsApi';
+import {
+  useGetAllEventsByPageQuery,
+  useGetEventsBySearchByPageQuery,
+} from '@/redux/api/eventsApi';
 
-export default function EventPagination({ currentPage, onClick }) {
+export default function EventPagination({ currentPage, inputValue, onClick }) {
   const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
     page: currentPage,
   });
+  const { data: filteredData = [] } = useGetEventsBySearchByPageQuery({
+    page: currentPage,
+    search: inputValue,
+  });
 
-  const pagination = serverDataByCurrentPage.totalPages;
+  const pagination = inputValue
+    ? filteredData.totalPages
+    : serverDataByCurrentPage.totalPages;
+
   const arrayOfPageNumbers = Array.from(
     { length: pagination },
     (_, i) => i + 1
@@ -27,8 +37,8 @@ export default function EventPagination({ currentPage, onClick }) {
   }
 
   return (
-    <div className="mb-12 mt-[6rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-10 laptop:mr-[5.8rem]">
-      <ol className="flex gap-x-6  text-2xl font-medium">
+    <div className="mb-12 mt-[5rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-5 desktop:mr-[5.8rem]">
+      <ol className="flex gap-x-6 font-medium tablet:text-xl laptop:text-2xl">
         {arrayOfPageNumbers.map(pageNumber => (
           <li
             key={uuidv4()}
@@ -36,7 +46,7 @@ export default function EventPagination({ currentPage, onClick }) {
             className={`text-admin-dark
             ${
               pageNumber === currentPage && 'bg-admin-gray'
-            } flex h-11 w-11 cursor-pointer items-center justify-center rounded font-oswald   transition-colors`}
+            } flex h-11 w-11 cursor-pointer items-center justify-center rounded font-oswald transition-colors`}
           >
             {pageNumber}
           </li>
