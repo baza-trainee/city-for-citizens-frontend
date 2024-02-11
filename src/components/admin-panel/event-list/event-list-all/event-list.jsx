@@ -9,6 +9,7 @@ import { BasicModalWindows } from '@/components/common';
 import {
   useDeleteEventMutation,
   useGetAllEventsByPageQuery,
+  useGetEventsBySearchByPageQuery,
 } from '@/redux/api/eventsApi';
 import AddEventButton from './add-event-button';
 import DisplayEventList from './display-event-list';
@@ -32,10 +33,17 @@ export default function EventList() {
     page: currentPage,
   });
 
+  const { data: filteredData = [] } = useGetEventsBySearchByPageQuery({
+    page: currentPage,
+    search: inputValue,
+  });
+
   const eventList = serverDataByCurrentPage?.events;
 
   const [totalItems, setTotalItems] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
+  const [totalSearchItems, setTotalSearchItems] = useState(null);
+  const [totalSearchPages, setTotalSearchPages] = useState(null);
 
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
 
@@ -44,22 +52,41 @@ export default function EventList() {
     setTotalPages(serverDataByCurrentPage.totalPages);
   }, [serverDataByCurrentPage]);
 
+  useEffect(() => {
+    if (inputValue) {
+      setFilteredEvents(filteredData.events);
+      setTotalSearchItems(filteredData.totalItems);
+      setTotalSearchPages(filteredData.totalPages);
+      setCurrentPage(filteredData.currentPage);
+    } else {
+      setCurrentPage(serverDataByCurrentPage.currentPage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue, filteredData]);
+
   async function handleConfirmDelete() {
     setStatusMessage('');
     try {
       await deleteEvent(idDeleteEvent).unwrap();
 
       setStatusMessage('Подію видалено!');
-      const maxPage = Math.ceil((totalItems - 1) / 10);
+      const maxPage = Math.ceil(
+        ((inputValue ? totalSearchItems : totalItems) - 1) / 10
+      );
       currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
+
       setIsShowSuccessMessage(true);
     } catch (error) {
       if (error?.data?.error === 'Image not found') {
         setStatusMessage(
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
-        const maxPage = Math.ceil((totalItems - 1) / 10);
+
+        const maxPage = Math.ceil(
+          ((inputValue ? totalSearchItems : totalItems) - 1) / 10
+        );
         currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
+
         setIsShowSuccessMessage(true);
       } else {
         setStatusMessage('Сталася помилка. Спробуйте ще раз.');
@@ -74,36 +101,10 @@ export default function EventList() {
   function handleChangeSearch(event) {
     const inputValue = event.target.value.trim();
     setInputValue(inputValue);
-    const filteredEvents = eventList.filter(
-      event =>
-        event.eventTitle.toLowerCase().includes(inputValue.toLowerCase()) ||
-        event.eventAddress.city
-          .toLowerCase()
-          .includes(inputValue.toLowerCase()) ||
-        new Date(event.dateTime)
-          .toLocaleDateString('uk', {
-            year: 'numeric',
-            month: 'long',
-            day: '2-digit',
-          })
-          .includes(inputValue.toLowerCase())
-    );
-    setFilteredEvents(filteredEvents);
   }
 
-  function TableHeader() {
-    return (
-      <div
-        className="mb-[17px] grid grid-cols-[4fr_1.5fr_2fr_2fr_2fr] bg-admin-menu
-          py-3 font-source_sans_3 text-lg text-admin-dark"
-      >
-        <span className="pl-[10px]">Назва</span>
-        <span className="">Місто</span>
-        <span className="">Тип події</span>
-        <span className="">Дата та час</span>
-        <span className=""></span>
-      </div>
-    );
+  function handleSetCurrentPage(newCurrentPage) {
+    setCurrentPage(newCurrentPage);
   }
 
   return (
@@ -128,7 +129,6 @@ export default function EventList() {
         </div>
       </AdminHeader>
       <div className="ml-5 mt-2 grid grid-cols-1 grid-rows-[auto_auto] pb-4 ">
-        {/* <TableHeader /> */}
         <div className="box-border grid auto-rows-auto font-exo_2 text-base tablet:mr-5 desktop:mr-20">
           <DisplayEventList
             showConfirmationModal={eventId => {
@@ -140,8 +140,13 @@ export default function EventList() {
         </div>
       </div>
 
-      {totalPages > 1 && !inputValue && (
-        <EventPagination currentPage={currentPage} onClick={setCurrentPage} />
+      {((totalPages > 1 && !inputValue) ||
+        (inputValue && totalSearchPages > 1)) && (
+        <EventPagination
+          currentPage={currentPage}
+          inputValue={inputValue}
+          onClick={handleSetCurrentPage}
+        />
       )}
       {isConfirmationModalVisible && (
         <BasicModalWindows

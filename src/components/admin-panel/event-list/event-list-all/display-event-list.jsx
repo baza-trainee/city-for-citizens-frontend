@@ -1,7 +1,6 @@
 'use client';
 
 import { v4 as uuidv4 } from 'uuid';
-// import { useCurrentLocale } from '@/hooks';
 
 import IconTrash from '@/assets/icons/common/trash-icon.svg';
 import IconPencil from '@/assets/icons/common/pencil-icon.svg';
@@ -33,7 +32,6 @@ export default function DisplayEventList({
   eventsData,
   showConfirmationModal,
 }) {
-  // const { localeForIntl } = useCurrentLocale();
   const router = useRouter();
   return (
     <>
@@ -77,25 +75,8 @@ export default function DisplayEventList({
                     .map(({ eventType }) => eventType)
                     .join(', ')}
                 </td>
-                {console.log(
-                  'event.dateTime',
-                  event.eventTitle,
-                  event.dateTime
-                )}
-                <td className="">
-                  {/* {new Date(event.dateTime)
-                    .toLocaleDateString('uk', {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })
-                    .replace(',', '\u00A0\u00A0\u00A0')} */}
-                  {getEventDate(event.dateTime)}
-                </td>
+                <td className="">{getEventDate(event.dateTime)}</td>
                 <td className="flex w-full items-center gap-x-9 py-3 pl-8 pr-2 tablet:flex-col laptop:flex-row ">
-                  {/* <td className="inline-block  h-full w-full  items-center gap-x-9 py-3 pl-8 pr-2 "> */}
                   <button
                     onClick={() => router.push(`/admin/event/${event.id}`)}
                     type="button"
