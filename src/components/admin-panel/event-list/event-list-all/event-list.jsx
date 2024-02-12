@@ -8,7 +8,6 @@ import { BasicModalWindows } from '@/components/common';
 
 import {
   useDeleteEventMutation,
-  useGetAllEventsByPageQuery,
   useGetEventsBySearchByPageQuery,
 } from '@/redux/api/eventsApi';
 import AddEventButton from './add-event-button';
@@ -17,8 +16,6 @@ import EventPagination from './event-pagination';
 
 export default function EventList() {
   const [inputValue, setInputValue] = useState('');
-
-  const [filteredEvents, setFilteredEvents] = useState([]);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
@@ -29,40 +26,24 @@ export default function EventList() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
-    page: currentPage,
-  });
-
-  const { data: filteredData = [] } = useGetEventsBySearchByPageQuery({
-    page: currentPage,
-    search: inputValue,
-  });
+  const { data: serverDataByCurrentPage = [] } =
+    useGetEventsBySearchByPageQuery({
+      page: currentPage,
+      search: inputValue,
+    });
 
   const eventList = serverDataByCurrentPage?.events;
 
   const [totalItems, setTotalItems] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
-  const [totalSearchItems, setTotalSearchItems] = useState(null);
-  const [totalSearchPages, setTotalSearchPages] = useState(null);
 
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
 
   useEffect(() => {
     setTotalItems(serverDataByCurrentPage.totalItems);
     setTotalPages(serverDataByCurrentPage.totalPages);
-  }, [serverDataByCurrentPage]);
-
-  useEffect(() => {
-    if (inputValue) {
-      setFilteredEvents(filteredData.events);
-      setTotalSearchItems(filteredData.totalItems);
-      setTotalSearchPages(filteredData.totalPages);
-      setCurrentPage(filteredData.currentPage);
-    } else {
-      setCurrentPage(serverDataByCurrentPage.currentPage);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue, filteredData]);
+    setCurrentPage(serverDataByCurrentPage.currentPage);
+  }, [serverDataByCurrentPage, inputValue]);
 
   async function handleConfirmDelete() {
     setStatusMessage('');
@@ -70,9 +51,7 @@ export default function EventList() {
       await deleteEvent(idDeleteEvent).unwrap();
 
       setStatusMessage('Подію видалено!');
-      const maxPage = Math.ceil(
-        ((inputValue ? totalSearchItems : totalItems) - 1) / 10
-      );
+      const maxPage = Math.ceil((totalItems - 1) / 10);
       currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
 
       setIsShowSuccessMessage(true);
@@ -82,9 +61,7 @@ export default function EventList() {
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
 
-        const maxPage = Math.ceil(
-          ((inputValue ? totalSearchItems : totalItems) - 1) / 10
-        );
+        const maxPage = Math.ceil((totalItems - 1) / 10);
         currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
 
         setIsShowSuccessMessage(true);
@@ -99,7 +76,7 @@ export default function EventList() {
   }
 
   function handleChangeSearch(event) {
-    const inputValue = event.target.value.trim();
+    const inputValue = event.target.value;
     setInputValue(inputValue);
   }
 
@@ -119,9 +96,9 @@ export default function EventList() {
               onChange={handleChangeSearch}
               className="flex-grow rounded-md bg-admin-light_1 p-2 pl-3.5 font-source_sans_3 text-lg text-admin-dark 
               transition duration-200 placeholder:text-lg placeholder:text-admin-gray_2 placeholder-shown:overflow-hidden
-               placeholder-shown:text-ellipsis hover:bg-[#ffffff] focus:outline-none focus:placeholder:text-admin-dark "
+               placeholder-shown:text-ellipsis hover:bg-[#ffffff] focus:outline-none "
             />
-            <div className="flex h-full w-[2.9rem] items-center justify-center   bg-admin-dark ">
+            <div className="flex h-full w-[2.9rem] items-center justify-center  bg-admin-dark ">
               <IconSearch width="25px" height="26px" />
             </div>
           </div>
@@ -136,16 +113,15 @@ export default function EventList() {
               setIdDeleteEvent(eventId);
             }}
             currentPage={currentPage}
-            eventsData={inputValue ? filteredEvents : eventList}
+            eventsData={eventList}
           />
         </div>
       </div>
 
-      {((totalPages > 1 && !inputValue) ||
-        (inputValue && totalSearchPages > 1)) && (
+      {totalPages > 1 && (
         <EventPagination
           currentPage={currentPage}
-          inputValue={inputValue}
+          totalPage={totalPages}
           onClick={handleSetCurrentPage}
         />
       )}
