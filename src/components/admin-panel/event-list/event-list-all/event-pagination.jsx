@@ -1,27 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import IconAdminPaginationArrow from '@/assets/icons/admin-sidebar/pagination-arrow-icon.svg';
-import {
-  useGetAllEventsByPageQuery,
-  useGetEventsBySearchByPageQuery,
-} from '@/redux/api/eventsApi';
+import IconAdminPaginationArrow from '@/assets/icons/common/totalPage-arrow-icon.svg';
 
-export default function EventPagination({ currentPage, inputValue, onClick }) {
-  const { data: serverDataByCurrentPage = [] } = useGetAllEventsByPageQuery({
-    page: currentPage,
-  });
-  const { data: filteredData = [] } = useGetEventsBySearchByPageQuery({
-    page: currentPage,
-    search: inputValue,
-  });
-
-  const pagination = inputValue
-    ? filteredData.totalPages
-    : serverDataByCurrentPage.totalPages;
-
-  const arrayOfPageNumbers = Array.from(
-    { length: pagination },
-    (_, i) => i + 1
-  );
+export default function EventPagination({ currentPage, totalPage, onClick }) {
+  const arrayOfPageNumbers = Array.from({ length: totalPage }, (_, i) => i + 1);
 
   function handleChangePagination(e) {
     const arrowButton = e.target.closest('button');
@@ -30,7 +11,7 @@ export default function EventPagination({ currentPage, inputValue, onClick }) {
     }
     if (
       arrowButton.hasAttribute('data-arrow-right') &&
-      currentPage < pagination
+      currentPage < totalPage
     ) {
       onClick(currentPage + 1);
     }
@@ -68,7 +49,7 @@ export default function EventPagination({ currentPage, inputValue, onClick }) {
         <button
           className="group cursor-pointer disabled:cursor-default"
           onClick={handleChangePagination}
-          disabled={currentPage >= pagination}
+          disabled={currentPage >= totalPage}
           data-arrow-right
         >
           <IconAdminPaginationArrow
