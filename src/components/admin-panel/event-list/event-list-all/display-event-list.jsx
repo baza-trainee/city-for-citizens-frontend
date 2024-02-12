@@ -31,6 +31,7 @@ function formatDate(dateElStartZero, dateElEndZero) {
 export default function DisplayEventList({
   eventsData,
   showConfirmationModal,
+  currentPage,
 }) {
   const router = useRouter();
   return (
@@ -78,7 +79,11 @@ export default function DisplayEventList({
                 <td className="">{getEventDate(event.dateTime)}</td>
                 <td className="flex w-full items-center gap-x-9 py-3 pl-8 pr-2 tablet:flex-col laptop:flex-row ">
                   <button
-                    onClick={() => router.push(`/admin/event/${event.id}`)}
+                    onClick={() =>
+                      router.push(
+                        `/admin/event/${event.id}?page=${currentPage}`
+                      )
+                    }
                     type="button"
                     title="Редагувати подію"
                     className=" text-admin-dark hover:text-admin-green"

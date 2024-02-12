@@ -50,7 +50,7 @@ export function Previews({ acceptedFiles, photo, isResetForm }) {
           className="object-cover"
           fill
           alt="preview"
-          src={`${IMAGE_BASE_URL}${photo.eventImage}`}
+          src={`${IMAGE_BASE_URL}${photo}`}
         />
       ) : (
         <>

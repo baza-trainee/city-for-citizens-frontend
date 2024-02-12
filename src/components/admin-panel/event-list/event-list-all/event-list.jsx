@@ -135,6 +135,7 @@ export default function EventList() {
               setIsConfirmationModalVisible(true);
               setIdDeleteEvent(eventId);
             }}
+            currentPage={currentPage}
             eventsData={inputValue ? filteredEvents : eventList}
           />
         </div>
