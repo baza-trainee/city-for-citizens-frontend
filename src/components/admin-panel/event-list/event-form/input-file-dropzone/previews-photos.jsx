@@ -65,14 +65,26 @@ export function Previews({ acceptedFiles, photo, isResetForm }) {
                   URL.revokeObjectURL(files[0].preview);
                 }}
               />
-              <p className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md p-1 text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100">
-                <span>{files[0].name}</span>
-                <span>{formatFileSize(files[0].size)}</span>
-              </p>
             </>
           )}
         </>
       )}
+      <p className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md p-1 text-center text-white opacity-0 backdrop-blur transition-all group-hover:opacity-100">
+        {photo && !files.length ? (
+          <span>
+            Натисніть або перетягніть сюди зображення, щоб замінити ...
+          </span>
+        ) : (
+          <>
+            {files[0] && (
+              <>
+                <span>{files[0].name}</span>
+                <span>{formatFileSize(files[0].size)}</span>
+              </>
+            )}
+          </>
+        )}
+      </p>
     </div>
   );
 }

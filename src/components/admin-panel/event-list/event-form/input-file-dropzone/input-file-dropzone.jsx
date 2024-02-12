@@ -25,7 +25,7 @@ function fileValidator(file) {
   }
 
   const isInvalidFormat =
-    file?.type && !validFileExtensions.includes(file.type.split('/')[1]);
+    file?.name && !validFileExtensions.includes(file.name.split('.').pop());
 
   if (isInvalidFormat) {
     errors.push({
@@ -50,12 +50,15 @@ export function FileDropzone({
 
   const onDrop = useCallback(
     (acceptedFiles, fileRejections) => {
-      setFileRejections(fileRejections);
+      const newFiles = [...acceptedFiles, ...uploadedFiles];
+      const lastTwoFiles = newFiles.slice(0, 1);
 
-      setUploadedFiles(acceptedFiles);
-      onChange(acceptedFiles);
+      setUploadedFiles(lastTwoFiles);
+      onChange(lastTwoFiles);
+
+      setFileRejections(fileRejections);
     },
-    [onChange]
+    [onChange, uploadedFiles]
   );
 
   const {
@@ -67,7 +70,6 @@ export function FileDropzone({
   } = useDropzone({
     validator: fileValidator,
     onDrop,
-    multiple: false,
     accept: {
       'image/png': [],
       'image/jpeg': [],
@@ -87,6 +89,12 @@ export function FileDropzone({
     // this effect will work only when the form reset button is pressed
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isResetForm]);
+
+  function removeImage() {
+    setFileRejections([]);
+    setUploadedFiles([]);
+    onChange(photo || '');
+  }
 
   const showPreviousText =
     !uploadedFiles.length && !isDragActive && !photo && !fileRejections.length;
@@ -169,10 +177,7 @@ export function FileDropzone({
       {uploadedFiles.length || fileRejections.length ? (
         <button
           className="absolute right-4 top-4 inline-flex items-center justify-center rounded bg-white p-[13px]"
-          onClick={() => {
-            setFileRejections([]);
-            setUploadedFiles([]);
-          }}
+          onClick={removeImage}
           type="button"
         >
           <CloseIcon className={'w-[15px]'} />

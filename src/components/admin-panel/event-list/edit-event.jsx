@@ -24,7 +24,7 @@ export default function EditEvent({ eventId }) {
   const [statusMessage, setStatusMessage] = useState('');
 
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
-  const [isRefreshModalVisible, setIsRefreshModalVisible] = useState(false);
+  const [isWarnModalVisible, setIsWarnModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
   const page = useSearchParams().get('page');
@@ -56,6 +56,11 @@ export default function EditEvent({ eventId }) {
   const tempNameImages = [];
 
   async function handleSubmit(formData) {
+    setStatusMessage('');
+    const firstLocale = eventDataById.firstLocale;
+
+    const secondLocale = eventDataById.secondLocale;
+
     try {
       for (const data of formData) {
         if (typeof data.eventImage === 'string') {
@@ -70,9 +75,6 @@ export default function EditEvent({ eventId }) {
             body: localeFormData,
             eventId: data.id,
           }).unwrap();
-
-          setStatusMessage('Подію оновлено.');
-          setIsSuccessModalVisible(true);
         } else if (Array.isArray(data.eventImage)) {
           let formDataImage = new FormData();
           formDataImage.append('file', data?.eventImage[0]);
@@ -93,10 +95,29 @@ export default function EditEvent({ eventId }) {
             eventId: data.id,
           }).unwrap();
 
-          setStatusMessage('Подію оновлено.');
-          setIsSuccessModalVisible(true);
+          try {
+            if (firstLocale.id === data.id) {
+              await deleteImage({
+                eventImage: firstLocale.eventImage,
+              }).unwrap();
+            }
+
+            if (secondLocale.id === data.id) {
+              await deleteImage({
+                eventImage: secondLocale.eventImage,
+              }).unwrap();
+            }
+            setStatusMessage('Подію оновлено.');
+          } catch (error) {
+            if (error?.data?.error === 'Image not found') {
+              setStatusMessage(
+                'Подію оновлено! і також оновлено картинку але з бази даних не видалено стару картинку, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
+              );
+            }
+          }
         }
       }
+      setIsSuccessModalVisible(true);
     } catch (error) {
       if (error.status === 401) {
         try {
@@ -106,9 +127,9 @@ export default function EditEvent({ eventId }) {
           }
 
           setStatusMessage(
-            "Час Вашої сесії сплив, тому нам довелось перевірити Ваші дані, спробуйте ще раз натиснути на кнопку 'Додати подію'."
+            "Час Вашої сесії сплив, тому нам довелось перевірити Ваші дані, спробуйте ще раз натиснути на кнопку 'Редагувати подію'."
           );
-          setIsRefreshModalVisible(true);
+          setIsWarnModalVisible(true);
         } catch {
           if (isErrorRefresh) {
             dispatch(resetState());
@@ -151,9 +172,9 @@ export default function EditEvent({ eventId }) {
           message={statusMessage}
         ></BasicModalWindows>
       )}
-      {isRefreshModalVisible && (
+      {isWarnModalVisible && (
         <BasicModalWindows
-          onClose={() => setIsRefreshModalVisible(false)}
+          onClose={() => setIsWarnModalVisible(false)}
           title={'Увага!'}
           type="warn"
           message={statusMessage}
