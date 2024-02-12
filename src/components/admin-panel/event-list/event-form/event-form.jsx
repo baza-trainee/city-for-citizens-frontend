@@ -13,6 +13,7 @@ import {
   resetEventFormData,
   setEventFormData,
 } from '@/redux/slice/eventFormData';
+import AddNewEventTypeForm from '../../event-type/add-new-event-type-form';
 
 const initialFormData = {
   firstLocale: {
@@ -59,6 +60,8 @@ export default function EventForm({
   const [clickResetForm, setClickResetForm] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
+  const [isAddNewTypesModalVisible, setIsAddNewTypesModalVisible] =
+    useState(false);
 
   const dispatch = useDispatch();
   const eventFormData = useSelector(state => state.eventFormData);
@@ -66,22 +69,25 @@ export default function EventForm({
   useEffect(() => {
     // save input data during component unmount
     return () => {
-      console.log('return effect');
+      if (initialData) return;
       const currentValues = watch();
       currentValues.firstLocale.eventImage = '';
       currentValues.secundLocale.eventImage = '';
 
       dispatch(setEventFormData(currentValues));
     };
-  }, [dispatch, watch]);
+  }, [dispatch, initialData, watch]);
 
   useEffect(() => {
+    if (initialData) return;
+
     reset(eventFormData, { keepDefaultValues: true });
-  }, [eventFormData, reset]);
+  }, [eventFormData, initialData, reset]);
 
   function resetForm() {
     setClickResetForm(prev => !prev);
-    reset();
+    if (initialData) reset(initialData, { keepDefaultValues: true });
+    else reset();
     setIsConfirmationModalVisible(false);
     dispatch(resetEventFormData());
   }
@@ -90,8 +96,11 @@ export default function EventForm({
     return Object.keys(obj).length === 0;
   }
 
-  const isPhotoFirstLocaleUpload = watch('firstLocale.eventImage');
-  const isPhotoSecundLocaleUpload = watch('secundLocale.eventImage');
+  const isPhotoFirstLocaleUpload =
+    typeof watch('firstLocale.eventImage') !== 'string';
+
+  const isPhotoSecundLocaleUpload =
+    typeof watch('secundLocale.eventImage') !== 'string';
 
   const isButtonDisabled =
     !isDirty &&
@@ -177,6 +186,7 @@ export default function EventForm({
         <div className="mb-[60px] flex justify-center ">
           <div className="relative">
             <button
+              onClick={() => setIsAddNewTypesModalVisible(true)}
               className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
               type="button"
             >
@@ -195,14 +205,14 @@ export default function EventForm({
           <p className="input-label">Зображення події</p>
           <div className="flex w-full flex-col items-center justify-between gap-10 laptop_xl:flex-row">
             <FileDropzone
-              photo={initialData?.firstLocale?.eventType}
+              photo={initialData?.firstLocale?.eventImage}
               errorMessage={errors?.firstLocale?.eventImage?.message}
               onChange={file => setValue('firstLocale.eventImage', file)}
               locale={'українською'}
               isResetForm={clickResetForm}
             />
             <FileDropzone
-              photo={initialData?.firstLocale?.eventType}
+              photo={initialData?.secundLocale?.eventImage}
               errorMessage={errors?.secundLocale?.eventImage?.message}
               onChange={file => {
                 setValue('secundLocale.eventImage', file);
@@ -286,6 +296,9 @@ export default function EventForm({
             </button>
           </div>
         </BasicModalWindows>
+      )}
+      {isAddNewTypesModalVisible && (
+        <AddNewEventTypeForm setIsModalVisible={setIsAddNewTypesModalVisible} />
       )}
     </>
   );

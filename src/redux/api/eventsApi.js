@@ -5,6 +5,8 @@ import { addTokenToHeaders } from './helpers/addTokenToHeaders';
 import { generateQueryStr } from './helpers/generateQueryStr';
 import { getLocalizedEventsByIdentifier } from './helpers/getLocalizedEventsByIdentifier';
 import { groupEventsByCoordinates } from './helpers/groupEventsByCoordinates';
+import setProvidesTagsForUpdateForm from './helpers/setProvidesTagsForUpdateForm';
+import getTransformsForUpdateForm from './helpers/getTransformsForUpdateForm';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
@@ -80,6 +82,16 @@ export const eventsApi = createApi({
       transformResponse: getLocalizedEventsByIdentifier,
     }),
 
+    getEventsByIdForUpdateForm: builder.query({
+      query: ({ page }) => {
+        const queryStr = generateQueryStr('events', { page });
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: setProvidesTagsForUpdateForm,
+      transformResponse: getTransformsForUpdateForm,
+    }),
+
     //
     getEventsBySearchParams: builder.query({
       query: ({ queryParams, locale }) => {
@@ -137,6 +149,7 @@ export const {
   useGetAllEventsByPageQuery,
   useGetEventsBySearchParamsQuery,
   useGetEventsBySearchByPageQuery,
+  useGetEventsByIdForUpdateFormQuery,
   useGetEventsByIdQuery,
   useCreateEventMutation,
   useUpdateEventMutation,
