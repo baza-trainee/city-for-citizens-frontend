@@ -13,6 +13,7 @@ import {
   resetEventFormData,
   setEventFormData,
 } from '@/redux/slice/eventFormData';
+import AddNewEventTypeForm from '../../event-type/add-new-event-type-form';
 
 const initialFormData = {
   firstLocale: {
@@ -58,6 +59,8 @@ export default function EventForm({
 
   const [clickResetForm, setClickResetForm] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const [isAddNewTypesModalVisible, setIsAddNewTypesModalVisible] =
     useState(false);
 
   const dispatch = useDispatch();
@@ -183,6 +186,7 @@ export default function EventForm({
         <div className="mb-[60px] flex justify-center ">
           <div className="relative">
             <button
+              onClick={() => setIsAddNewTypesModalVisible(true)}
               className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
               type="button"
             >
@@ -292,6 +296,9 @@ export default function EventForm({
             </button>
           </div>
         </BasicModalWindows>
+      )}
+      {isAddNewTypesModalVisible && (
+        <AddNewEventTypeForm setIsModalVisible={setIsAddNewTypesModalVisible} />
       )}
     </>
   );
