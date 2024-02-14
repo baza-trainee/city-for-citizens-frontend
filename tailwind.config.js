@@ -34,6 +34,17 @@ module.exports = {
         light_3: '#FFFFFF',
         green: '#2D982B',
         red: '#F00631',
+
+        button: {
+          hover: '#464646',
+          hover_outlined: '#EEE',
+          default: '#131313',
+          active: '#3D4756',
+          active_outlined: '#DCDCDC',
+          disabled: '#7E8492',
+          text: '#FFFFFF',
+          border: '#131313',
+        },
       },
 
       auth: {
