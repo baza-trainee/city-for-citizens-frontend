@@ -108,13 +108,14 @@ export default function EditEvent({ eventId }) {
             setStatusMessage('Подію оновлено.');
           } catch (error) {
             if (error?.data?.error === 'Image not found') {
-              setStatusMessage(
-                'Подію оновлено! і також оновлено картинку але з бази даних не видалено стару картинку, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
+              console.error(
+                'The old picture has not been deleted from the database, it may not have existed, but contact support to check the information.'
               );
             }
           }
         }
       }
+      setStatusMessage('Подію оновлено.');
       setIsSuccessModalVisible(true);
     } catch (error) {
       if (error.status === 401) {
