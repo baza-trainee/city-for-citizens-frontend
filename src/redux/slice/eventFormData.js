@@ -10,7 +10,7 @@ export const initialState = {
     eventType: '',
     eventImage: '',
   },
-  secundLocale: {
+  secondLocale: {
     eventTitle: '',
     city: '',
     street: '',

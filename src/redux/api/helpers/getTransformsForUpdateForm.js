@@ -9,11 +9,11 @@ export default function getTransformsForUpdateForm(data, _, { eventId }) {
 
   function sortByLocale(first, second) {
     return first.locale === 'uk_UA'
-      ? { firstLocale: first, secundLocale: second }
-      : { firstLocale: second, secundLocale: first };
+      ? { firstLocale: first, secondLocale: second }
+      : { firstLocale: second, secondLocale: first };
   }
 
-  const { firstLocale, secundLocale } = sortByLocale(eventFirst, eventSecond);
+  const { firstLocale, secondLocale } = sortByLocale(eventFirst, eventSecond);
 
   function getDataForLocale({
     id,
@@ -51,7 +51,7 @@ export default function getTransformsForUpdateForm(data, _, { eventId }) {
 
   const initialFormData = {
     firstLocale: getDataForLocale(firstLocale),
-    secundLocale: getDataForLocale(secundLocale),
+    secondLocale: getDataForLocale(secondLocale),
     common: getCommonData(firstLocale),
   };
 

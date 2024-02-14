@@ -25,7 +25,7 @@ const initialFormData = {
     eventType: '',
     eventImage: '',
   },
-  secundLocale: {
+  secondLocale: {
     eventTitle: '',
     city: '',
     street: '',
@@ -72,7 +72,7 @@ export default function EventForm({
       if (initialData) return;
       const currentValues = watch();
       currentValues.firstLocale.eventImage = '';
-      currentValues.secundLocale.eventImage = '';
+      currentValues.secondLocale.eventImage = '';
 
       dispatch(setEventFormData(currentValues));
     };
@@ -99,18 +99,18 @@ export default function EventForm({
   const isPhotoFirstLocaleUpload =
     typeof watch('firstLocale.eventImage') !== 'string';
 
-  const isPhotoSecundLocaleUpload =
-    typeof watch('secundLocale.eventImage') !== 'string';
+  const isPhotoSecondLocaleUpload =
+    typeof watch('secondLocale.eventImage') !== 'string';
 
   const isButtonDisabled =
     !isDirty &&
     isEmpty(touchedFields) &&
     !isPhotoFirstLocaleUpload &&
-    !isPhotoSecundLocaleUpload;
+    !isPhotoSecondLocaleUpload;
 
-  function onSubmitHandle({ common, firstLocale, secundLocale }) {
+  function onSubmitHandle({ common, firstLocale, secondLocale }) {
     const ukFormData = { ...common, locale: 'uk_UA', ...firstLocale };
-    const enFormData = { ...common, locale: 'en_US', ...secundLocale };
+    const enFormData = { ...common, locale: 'en_US', ...secondLocale };
     const formData = [ukFormData, enFormData];
 
     onSubmit(formData, resetForm);
@@ -139,8 +139,8 @@ export default function EventForm({
                     rows={rows}
                     placeholder={`${placeholder} ${'англійською'}`}
                     tag={tag}
-                    errorMessage={errors?.secundLocale?.[inputName]?.message}
-                    register={register(`secundLocale.${inputName}`)}
+                    errorMessage={errors?.secondLocale?.[inputName]?.message}
+                    register={register(`secondLocale.${inputName}`)}
                   />
                 </div>
               </div>
@@ -170,13 +170,13 @@ export default function EventForm({
               locale={'en_US'}
               setValue={setValue}
               placeholder="Виберіть тип події англійською"
-              inputName={'secundLocale.eventType'}
+              inputName={'secondLocale.eventType'}
               initialState={
-                initialData?.secundLocale?.eventType ||
-                eventFormData?.secundLocale?.eventType
+                initialData?.secondLocale?.eventType ||
+                eventFormData?.secondLocale?.eventType
               }
-              errorMessage={errors?.secundLocale?.eventType?.message}
-              register={register('secundLocale.eventType')}
+              errorMessage={errors?.secondLocale?.eventType?.message}
+              register={register('secondLocale.eventType')}
               clickResetForm={clickResetForm}
               clearErrors={clearErrors}
             />
@@ -212,17 +212,17 @@ export default function EventForm({
               isResetForm={clickResetForm}
             />
             <FileDropzone
-              photo={initialData?.secundLocale?.eventImage}
-              errorMessage={errors?.secundLocale?.eventImage?.message}
+              photo={initialData?.secondLocale?.eventImage}
+              errorMessage={errors?.secondLocale?.eventImage?.message}
               onChange={file => {
-                setValue('secundLocale.eventImage', file);
+                setValue('secondLocale.eventImage', file);
               }}
               locale={'англійською'}
               isResetForm={clickResetForm}
             />
           </div>
           <input hidden type="text" {...register(`firstLocale.eventImage`)} />
-          <input hidden type="text" {...register(`secundLocale.eventImage`)} />
+          <input hidden type="text" {...register(`secondLocale.eventImage`)} />
         </div>
 
         <div className="mb-[90px] flex flex-col gap-[27px] desktop:flex-row">
