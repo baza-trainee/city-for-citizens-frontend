@@ -64,7 +64,6 @@ export default function AddEvent() {
         const localeFormData = {
           ...data,
           idIdentifier,
-          eventUrl: 'https://TODO:_delete_this.line',
           ...imageNameForRequest,
         };
 

@@ -66,7 +66,6 @@ export default function EditEvent({ eventId }) {
         if (typeof data.eventImage === 'string') {
           const localeFormData = {
             ...data,
-            eventUrl: 'https://TODO:_delete_this.line',
           };
 
           delete localeFormData.id;
@@ -84,7 +83,6 @@ export default function EditEvent({ eventId }) {
 
           const localeFormData = {
             ...data,
-            eventUrl: 'https://TODO:_delete_this.line',
             ...imageNameForRequest,
           };
 
