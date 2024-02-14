@@ -13,6 +13,7 @@ import {
   resetEventFormData,
   setEventFormData,
 } from '@/redux/slice/eventFormData';
+import AddNewEventTypeForm from '../../event-type/add-new-event-type-form';
 
 const initialFormData = {
   firstLocale: {
@@ -24,7 +25,7 @@ const initialFormData = {
     eventType: '',
     eventImage: '',
   },
-  secundLocale: {
+  secondLocale: {
     eventTitle: '',
     city: '',
     street: '',
@@ -59,6 +60,8 @@ export default function EventForm({
   const [clickResetForm, setClickResetForm] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
+  const [isAddNewTypesModalVisible, setIsAddNewTypesModalVisible] =
+    useState(false);
 
   const dispatch = useDispatch();
   const eventFormData = useSelector(state => state.eventFormData);
@@ -66,22 +69,25 @@ export default function EventForm({
   useEffect(() => {
     // save input data during component unmount
     return () => {
-      console.log('return effect');
+      if (initialData) return;
       const currentValues = watch();
       currentValues.firstLocale.eventImage = '';
-      currentValues.secundLocale.eventImage = '';
+      currentValues.secondLocale.eventImage = '';
 
       dispatch(setEventFormData(currentValues));
     };
-  }, [dispatch, watch]);
+  }, [dispatch, initialData, watch]);
 
   useEffect(() => {
+    if (initialData) return;
+
     reset(eventFormData, { keepDefaultValues: true });
-  }, [eventFormData, reset]);
+  }, [eventFormData, initialData, reset]);
 
   function resetForm() {
     setClickResetForm(prev => !prev);
-    reset();
+    if (initialData) reset(initialData, { keepDefaultValues: true });
+    else reset();
     setIsConfirmationModalVisible(false);
     dispatch(resetEventFormData());
   }
@@ -90,18 +96,21 @@ export default function EventForm({
     return Object.keys(obj).length === 0;
   }
 
-  const isPhotoFirstLocaleUpload = watch('firstLocale.eventImage');
-  const isPhotoSecundLocaleUpload = watch('secundLocale.eventImage');
+  const isPhotoFirstLocaleUpload =
+    typeof watch('firstLocale.eventImage') !== 'string';
+
+  const isPhotoSecondLocaleUpload =
+    typeof watch('secondLocale.eventImage') !== 'string';
 
   const isButtonDisabled =
     !isDirty &&
     isEmpty(touchedFields) &&
     !isPhotoFirstLocaleUpload &&
-    !isPhotoSecundLocaleUpload;
+    !isPhotoSecondLocaleUpload;
 
-  function onSubmitHandle({ common, firstLocale, secundLocale }) {
+  function onSubmitHandle({ common, firstLocale, secondLocale }) {
     const ukFormData = { ...common, locale: 'uk_UA', ...firstLocale };
-    const enFormData = { ...common, locale: 'en_US', ...secundLocale };
+    const enFormData = { ...common, locale: 'en_US', ...secondLocale };
     const formData = [ukFormData, enFormData];
 
     onSubmit(formData, resetForm);
@@ -130,8 +139,8 @@ export default function EventForm({
                     rows={rows}
                     placeholder={`${placeholder} ${'англійською'}`}
                     tag={tag}
-                    errorMessage={errors?.secundLocale?.[inputName]?.message}
-                    register={register(`secundLocale.${inputName}`)}
+                    errorMessage={errors?.secondLocale?.[inputName]?.message}
+                    register={register(`secondLocale.${inputName}`)}
                   />
                 </div>
               </div>
@@ -161,13 +170,13 @@ export default function EventForm({
               locale={'en_US'}
               setValue={setValue}
               placeholder="Виберіть тип події англійською"
-              inputName={'secundLocale.eventType'}
+              inputName={'secondLocale.eventType'}
               initialState={
-                initialData?.secundLocale?.eventType ||
-                eventFormData?.secundLocale?.eventType
+                initialData?.secondLocale?.eventType ||
+                eventFormData?.secondLocale?.eventType
               }
-              errorMessage={errors?.secundLocale?.eventType?.message}
-              register={register('secundLocale.eventType')}
+              errorMessage={errors?.secondLocale?.eventType?.message}
+              register={register('secondLocale.eventType')}
               clickResetForm={clickResetForm}
               clearErrors={clearErrors}
             />
@@ -177,6 +186,7 @@ export default function EventForm({
         <div className="mb-[60px] flex justify-center ">
           <div className="relative">
             <button
+              onClick={() => setIsAddNewTypesModalVisible(true)}
               className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
               type="button"
             >
@@ -195,24 +205,24 @@ export default function EventForm({
           <p className="input-label">Зображення події</p>
           <div className="flex w-full flex-col items-center justify-between gap-10 laptop_xl:flex-row">
             <FileDropzone
-              photo={initialData?.firstLocale?.eventType}
+              photo={initialData?.firstLocale?.eventImage}
               errorMessage={errors?.firstLocale?.eventImage?.message}
               onChange={file => setValue('firstLocale.eventImage', file)}
               locale={'українською'}
               isResetForm={clickResetForm}
             />
             <FileDropzone
-              photo={initialData?.firstLocale?.eventType}
-              errorMessage={errors?.secundLocale?.eventImage?.message}
+              photo={initialData?.secondLocale?.eventImage}
+              errorMessage={errors?.secondLocale?.eventImage?.message}
               onChange={file => {
-                setValue('secundLocale.eventImage', file);
+                setValue('secondLocale.eventImage', file);
               }}
               locale={'англійською'}
               isResetForm={clickResetForm}
             />
           </div>
           <input hidden type="text" {...register(`firstLocale.eventImage`)} />
-          <input hidden type="text" {...register(`secundLocale.eventImage`)} />
+          <input hidden type="text" {...register(`secondLocale.eventImage`)} />
         </div>
 
         <div className="mb-[90px] flex flex-col gap-[27px] desktop:flex-row">
@@ -286,6 +296,9 @@ export default function EventForm({
             </button>
           </div>
         </BasicModalWindows>
+      )}
+      {isAddNewTypesModalVisible && (
+        <AddNewEventTypeForm setIsModalVisible={setIsAddNewTypesModalVisible} />
       )}
     </>
   );

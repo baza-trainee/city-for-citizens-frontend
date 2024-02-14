@@ -76,7 +76,7 @@ export function getValidationScheme() {
   const globalSchema = yup
     .object({
       firstLocale: yup.object(schemeToTwoLocale),
-      secundLocale: yup.object(schemeToTwoLocale),
+      secondLocale: yup.object(schemeToTwoLocale),
       common: yup.object(commonScheme),
     })
     .required();

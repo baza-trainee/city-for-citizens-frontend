@@ -5,6 +5,8 @@ import { addTokenToHeaders } from './helpers/addTokenToHeaders';
 import { generateQueryStr } from './helpers/generateQueryStr';
 import { getLocalizedEventsByIdentifier } from './helpers/getLocalizedEventsByIdentifier';
 import { groupEventsByCoordinates } from './helpers/groupEventsByCoordinates';
+import setProvidesTagsForUpdateForm from './helpers/setProvidesTagsForUpdateForm';
+import getTransformsForUpdateForm from './helpers/getTransformsForUpdateForm';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
@@ -56,12 +58,38 @@ export const eventsApi = createApi({
       },
     }),
     //
+    getEventsBySearchByPage: builder.query({
+      query: (page, search) => {
+        const queryStr = generateQueryStr('events', page, search);
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: result => {
+        return result.events
+          ? [
+              ...result.events.map(({ id }) => ({ type: 'Events', id })),
+              { type: 'Events', id: 'LIST' },
+            ]
+          : [{ type: 'Events', id: 'LIST' }];
+      },
+    }),
+    //
     getEventsById: builder.query({
       query: () => {
         return { url: 'events', method: 'GET' };
       },
 
       transformResponse: getLocalizedEventsByIdentifier,
+    }),
+
+    getEventsByIdForUpdateForm: builder.query({
+      query: ({ page }) => {
+        const queryStr = generateQueryStr('events', { page });
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: setProvidesTagsForUpdateForm,
+      transformResponse: getTransformsForUpdateForm,
     }),
 
     //
@@ -75,7 +103,6 @@ export const eventsApi = createApi({
       },
       transformResponse: groupEventsByCoordinates,
     }),
-
     //
     createEvent: builder.mutation({
       query: body => {
@@ -121,6 +148,8 @@ export const {
   useGetAllEventsByLocaleQuery,
   useGetAllEventsByPageQuery,
   useGetEventsBySearchParamsQuery,
+  useGetEventsBySearchByPageQuery,
+  useGetEventsByIdForUpdateFormQuery,
   useGetEventsByIdQuery,
   useCreateEventMutation,
   useUpdateEventMutation,

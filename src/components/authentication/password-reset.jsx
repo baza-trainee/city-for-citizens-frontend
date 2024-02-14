@@ -103,6 +103,8 @@ export default function PasswordReset() {
           type="password"
           placeholder="Введіть пароль"
           errors={errors.password1}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
         />
         <Input
           label="Підтвердити пароль"
@@ -113,6 +115,8 @@ export default function PasswordReset() {
           type="password"
           placeholder="Введіть пароль"
           errors={errors.password2}
+          handleSubmit={handleSubmit}
+          isFormValid={isFormValid}
         />
         <div className="flex w-full justify-between">
           <GoBackLink />
@@ -123,7 +127,6 @@ export default function PasswordReset() {
             onClick={handleSubmit}
           >
             {isLoading ? <LoadingButton /> : 'Зберегти'}
-
           </Button>
         </div>
       </FormAuth>

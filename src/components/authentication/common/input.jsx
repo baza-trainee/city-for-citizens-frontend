@@ -11,6 +11,8 @@ export default function Input({
   placeholder,
   errors,
   onBlur,
+  handleSubmit,
+  isFormValid,
 }) {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -33,6 +35,11 @@ export default function Input({
           onBlur={onBlur}
           name={name}
           type={isShowPassword ? 'text' : type}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && isFormValid) {
+              handleSubmit(e);
+            }
+          }}
           required
         />
         {type === 'password' && (
