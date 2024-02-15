@@ -111,7 +111,7 @@ export default function Contacts({ fetchedContacts, onContactsUpdate }) {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="mx-[20px] grid grid-cols-2 gap-y-[33px]"
+        className="mx-[20px] grid max-w-[1042px] grid-cols-2 gap-y-[36px]"
       >
         <Header text={'Перелік контактів'} />
         <Header text={'Дата оновлення'} />
@@ -142,7 +142,7 @@ export default function Contacts({ fetchedContacts, onContactsUpdate }) {
           defaultValue={defaultValues.email}
         />
         <SecondColumn date={defaultValues.updatedAt} />
-        <div className="col-span-2 mt-[45px] flex gap-4 pl-[58px]">
+        <div className="col-span-2 mt-[42px] flex gap-4 pl-[58px]">
           <Button
             type="button"
             variant="outlined"
