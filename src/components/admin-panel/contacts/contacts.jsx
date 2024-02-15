@@ -14,7 +14,7 @@ import { formatDateToDMY } from '@/helpers/formatDate';
 
 function Header(props) {
   return (
-    <div className="text-neutral-900 mb-[17px] w-full  bg-admin-side_bar bg-opacity-50 py-[15px] text-center text-lg font-normal">
+    <div className="text-neutral-900 mb-[17px] w-full  bg-admin-side_bar bg-opacity-50 py-[15px] text-center text-lg font-normal text-admin-dark">
       {props.text}
     </div>
   );
@@ -35,7 +35,7 @@ function FirstColumn(props) {
 
 function SecondColumn(props) {
   return (
-    <div className="flex items-center justify-center bg-white">
+    <div className="flex items-center justify-center bg-white text-admin-dark">
       {props.date}
     </div>
   );
