@@ -77,34 +77,36 @@ export default function DisplayEventList({
                     .join(', ')}
                 </td>
                 <td className="">{getEventDate(event.dateTime)}</td>
-                <td className="flex w-full items-center gap-x-9 py-3 pl-8 pr-2 tablet:flex-col laptop:flex-row ">
-                  <button
-                    onClick={() =>
-                      router.push(
-                        `/admin/event/${event.id}?page=${currentPage}`
-                      )
-                    }
-                    type="button"
-                    title="Редагувати подію"
-                    className=" text-admin-dark hover:text-admin-green"
-                  >
-                    <IconPencil
-                      width="22"
-                      height="20"
-                      className="w-[22px] transition duration-200"
-                    />
-                  </button>
-                  <button
-                    onClick={() => showConfirmationModal(event.id)}
-                    title="Видалити подію"
-                    type="button"
-                  >
-                    <IconTrash
-                      width="17"
-                      height="24"
-                      className="inline fill-admin-dark transition duration-200 hover:fill-[red]"
-                    />
-                  </button>
+                <td className="align-middle desktop:w-[17.5%]">
+                  <div className="flex items-center gap-x-10 pl-[2.4rem] tablet:flex-col tablet:py-1 tablet:pr-1 laptop:flex-row">
+                    <button
+                      onClick={() =>
+                        router.push(
+                          `/admin/event/${event.id}?page=${currentPage}`
+                        )
+                      }
+                      type="button"
+                      title="Редагувати подію"
+                      className="text-admin-dark hover:text-admin-green"
+                    >
+                      <IconPencil
+                        width="22"
+                        height="20"
+                        className="w-[22px] transition duration-200"
+                      />
+                    </button>
+                    <button
+                      onClick={() => showConfirmationModal(event.id)}
+                      title="Видалити подію"
+                      type="button"
+                    >
+                      <IconTrash
+                        width="17"
+                        height="24"
+                        className="inline fill-admin-dark transition duration-200 hover:fill-[red]"
+                      />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
