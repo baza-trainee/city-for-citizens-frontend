@@ -35,8 +35,8 @@ export default function Input({
           {...register(`${name}`)}
           id={inputId}
           aria-invalid={errors[name] ? 'true' : 'false'}
-          className={` w-full text-ellipsis rounded border
-        bg-admin-light_3 py-3 pl-2 pr-12 leading-[1.35] placeholder-auth-dark_10 focus:outline-none 
+          className={` w-full text-ellipsis rounded border bg-admin-light_3
+        py-3 pl-2 pr-12 leading-[1.35] text-admin-dark placeholder-auth-dark_10 focus:outline-none 
         ${errors[name] ? 'border-state-error_main' : 'border-auth-dark_10'}
      `}
           type={isShowPassword ? 'text' : type}
