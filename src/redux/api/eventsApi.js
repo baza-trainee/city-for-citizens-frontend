@@ -83,10 +83,8 @@ export const eventsApi = createApi({
     }),
 
     getEventsByIdForUpdateForm: builder.query({
-      query: ({ page }) => {
-        const queryStr = generateQueryStr('events', { page });
-
-        return { url: queryStr, method: 'GET' };
+      query: ({ eventId }) => {
+        return { url: `events/${eventId}`, method: 'GET' };
       },
       providesTags: setProvidesTagsForUpdateForm,
       transformResponse: getTransformsForUpdateForm,
