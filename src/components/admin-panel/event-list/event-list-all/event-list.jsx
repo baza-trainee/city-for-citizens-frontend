@@ -28,19 +28,19 @@ export default function EventList() {
 
   const { data: serverDataByCurrentPage = [] } =
     useGetEventsBySearchByPageQuery({
+      query: inputValue,
       page: currentPage,
-      search: inputValue,
     });
 
   const eventList = serverDataByCurrentPage?.events;
 
-  const [totalItems, setTotalItems] = useState(null);
+  const [totalEvents, setTotalEvents] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
 
   useEffect(() => {
-    setTotalItems(serverDataByCurrentPage.totalItems);
+    setTotalEvents(serverDataByCurrentPage.totalEvents);
     setTotalPages(serverDataByCurrentPage.totalPages);
     setCurrentPage(serverDataByCurrentPage.currentPage);
   }, [serverDataByCurrentPage, inputValue]);
@@ -51,7 +51,7 @@ export default function EventList() {
       await deleteEvent(idDeleteEvent).unwrap();
 
       setStatusMessage('Подію видалено!');
-      const maxPage = Math.ceil((totalItems - 1) / 10);
+      const maxPage = Math.ceil((totalEvents - 1) / 10);
       currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
 
       setIsShowSuccessMessage(true);
@@ -61,7 +61,7 @@ export default function EventList() {
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
 
-        const maxPage = Math.ceil((totalItems - 1) / 10);
+        const maxPage = Math.ceil((totalEvents - 1) / 10);
         currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
 
         setIsShowSuccessMessage(true);
@@ -80,8 +80,27 @@ export default function EventList() {
     setInputValue(inputValue);
   }
 
-  function handleSetCurrentPage(newCurrentPage) {
-    setCurrentPage(newCurrentPage);
+  function handleSetCurrentPage(
+    newCurrentPage,
+    prevPageNumber,
+    nextPageNumber
+  ) {
+    console.log(
+      'newCurrentPage',
+      newCurrentPage,
+      'prevPageNumber',
+      prevPageNumber,
+      'nextPageNumber',
+      nextPageNumber
+    );
+    if (newCurrentPage !== '...') {
+      setCurrentPage(newCurrentPage);
+      console.log('Condition works');
+      return;
+    }
+    const updateCurrentPage = Math.floor((prevPageNumber + nextPageNumber) / 2);
+    console.log('updateCurrentPage', updateCurrentPage);
+    setCurrentPage(updateCurrentPage);
   }
 
   return (
