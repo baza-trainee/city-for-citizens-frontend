@@ -10,12 +10,12 @@ export default function Button({
       className={` 
       ${
         variant === 'filled'
-          ? ' bg-auth-dark text-white disabled:border-auth-dark_10'
-          : ' bg-white text-admin-dark'
+          ? ' bg-admin-button-default disabled:bg-admin-button-disabled hover:bg-admin-button-hover active:bg-admin-button-active text-white disabled:border-auth-dark_10'
+          : ' active:bg-admin-button-active_outlined hover:bg-admin-button-hover_outlined bg-white text-admin-dark'
       } 
-      inline-flex h-[49px] w-[182px]  items-center justify-center rounded-[6px] 
-      border  border-admin-dark  pb-[10px] pt-[7px] text-[20px] font-bold leading-none
-      disabled:bg-auth-dark_10
+     border-admin-button-border inline-flex  h-[49px] w-[182px] cursor-pointer 
+      items-center  justify-center  rounded-[6px] border pb-[10px] pt-[7px] text-[20px]
+      font-bold leading-none
       ${className} `}
     >
       {children}

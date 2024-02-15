@@ -10,6 +10,7 @@ export default function Input({
   register,
   errors,
   type = 'text',
+  width = 'w-[351px]',
   ...props
 }) {
   const inputId = useId();
@@ -21,7 +22,7 @@ export default function Input({
   };
 
   return (
-    <label htmlFor={inputId} className="w-full pb-[32px] text-start">
+    <label htmlFor={inputId} className={`${width}  text-start`}>
       {label && (
         <span
           className={`mb-1 inline-block text-lg leading-none  ${errors[name] ? 'text-state-error_main' : 'text-admin-dark'}`}
