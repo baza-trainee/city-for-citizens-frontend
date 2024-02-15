@@ -59,8 +59,8 @@ export const eventsApi = createApi({
     }),
     //
     getEventsBySearchByPage: builder.query({
-      query: (page, search) => {
-        const queryStr = generateQueryStr('events', page, search);
+      query: (query, page) => {
+        const queryStr = generateQueryStr('events/search/find', query, page);
 
         return { url: queryStr, method: 'GET' };
       },
