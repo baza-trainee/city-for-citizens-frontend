@@ -26,11 +26,10 @@ export default function EventList() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: serverDataByCurrentPage = [] } =
-    useGetEventsBySearchByPageQuery({
-      query: inputValue,
-      page: currentPage,
-    });
+  const { data: serverDataByCurrentPage } = useGetEventsBySearchByPageQuery({
+    query: inputValue,
+    page: currentPage,
+  });
 
   const eventList = serverDataByCurrentPage?.events;
 
@@ -40,9 +39,11 @@ export default function EventList() {
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
 
   useEffect(() => {
-    setTotalEvents(serverDataByCurrentPage.totalEvents);
-    setTotalPages(serverDataByCurrentPage.totalPages);
-    setCurrentPage(serverDataByCurrentPage.currentPage);
+    if (serverDataByCurrentPage?.totalEvents) {
+      setTotalEvents(serverDataByCurrentPage.totalEvents);
+      setTotalPages(serverDataByCurrentPage.totalPages);
+      setCurrentPage(serverDataByCurrentPage.currentPage);
+    }
   }, [serverDataByCurrentPage, inputValue]);
 
   async function handleConfirmDelete() {
