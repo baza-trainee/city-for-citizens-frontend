@@ -1,11 +1,13 @@
 'use client';
-import { useTransition, useState } from 'react';
+import { useTransition, useState, useEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '@/navigation';
+import clsx from 'clsx';
 import IconFlagUa from '@/assets/icons/flags/flag-ua.svg';
 import IconFlagEn from '@/assets/icons/flags/flag-en.svg';
+import ChevronIcon from '@/assets/icons/common/chevron-icon.svg';
 
-export default function LanguageSwitcher({ icon }) {
+export default function LanguageSwitcher() {
   const iconFlagUa = <IconFlagUa />;
   const iconFlagEn = <IconFlagEn />;
 
@@ -19,6 +21,20 @@ export default function LanguageSwitcher({ icon }) {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleLanguageClick = value => {
     const nextLocale = value;
@@ -42,15 +58,23 @@ export default function LanguageSwitcher({ icon }) {
   };
 
   return (
-    <div className="relative w-[77px] leading-[1.4]">
-      <button className="text-gray/30 flex w-full" onClick={toggleMenu}>
+    <div ref={dropdownRef} className="relative w-[77px]">
+      <button
+        className="flex w-full  items-center items-center text-light-main"
+        onClick={toggleMenu}
+      >
         <span>{getLanguageIcon(locale)}</span>
-        <span className="ml-2 mr-1">{getLanguageName(locale)}</span>
-        <span className={`${isOpen ? 'rotate-180' : ''}`}>{icon}</span>
+        <span className="ml-2 mr-1 font-roboto text-sm leading-[1.3]">
+          {getLanguageName(locale)}
+        </span>
+        <ChevronIcon
+          className={`absolute right-[5px] top-1/2  h-6 w-6 -translate-y-1/2  transition-transform
+          ${clsx(isOpen && 'rotate-180')}`}
+        />
       </button>
       {isOpen && (
-        <div className="bg-gray/5 absolute right-0 mt-2 w-full origin-top-right rounded py-4 pl-4 pr-2">
-          <div className="flex flex-col gap-3 py-1">
+        <div className="absolute right-0 mt-2 w-full origin-top-right rounded bg-white py-4 pl-4 pr-2">
+          <div className="flex flex-col gap-3 ">
             {langs.map(langItem => (
               <button
                 key={langItem.value}
@@ -59,11 +83,11 @@ export default function LanguageSwitcher({ icon }) {
                 onClick={() => {
                   handleLanguageClick(langItem.value);
                 }}
-                className={`${
+                className={`flex gap-2 ${clsx(
                   langItem.value === locale
-                    ? 'border-gray/30 text-gray/30 border-b'
-                    : 'text-gray/80'
-                } flex gap-2`}
+                    ? 'border-border border-b text-light-main'
+                    : 'text-black'
+                )}`}
               >
                 <span>{langItem.icon}</span>
                 <span>{langItem.name}</span>
