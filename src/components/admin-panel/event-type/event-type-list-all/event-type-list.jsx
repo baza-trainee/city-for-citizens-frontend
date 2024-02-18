@@ -5,7 +5,7 @@ import {
   useDeleteTypeEventMutation,
 } from '@/redux/api/typesEventApi';
 import { useLazyGetTypesEventByIdForUpdateFormQuery } from '@/redux/api/typesEventApi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { BasicModalWindows } from '@/components/common';
 
