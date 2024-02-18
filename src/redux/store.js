@@ -9,6 +9,7 @@ import { authSlice } from './slice/authSlice';
 import { appStatusSlice } from './slice/fetchStatesSlice';
 import { imageApi } from './api/imageApi';
 import { contactsApi } from './api/contactsApi';
+import { documentsApi } from './api/documentsApi';
 import { eventFormData } from './slice/eventFormData';
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [imageApi.reducerPath]: imageApi.reducer,
     [contactsApi.reducerPath]: contactsApi.reducer,
+    [documentsApi.reducerPath]: documentsApi.reducer,
     appStatusSlice: appStatusSlice.reducer,
     eventFormData: eventFormData.reducer,
 
@@ -30,7 +32,8 @@ export const store = configureStore({
       eventsApi.middleware,
       authApi.middleware,
       imageApi.middleware,
-      contactsApi.middleware
+      contactsApi.middleware,
+      documentsApi.middleware
     ),
 });
 
