@@ -1,3 +1,9 @@
+import LanguageSwitcher from './language-swither';
+
 export default function Switchers() {
-  return <p>Switchers</p>;
+  return (
+    <div className="flex gap-4">
+      <LanguageSwitcher />
+    </div>
+  );
 }
