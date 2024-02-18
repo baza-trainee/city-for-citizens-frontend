@@ -126,7 +126,7 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: '16px',
-        laptop: '26px',
+        laptop: '40px',
         desktop_xl: '240px',
       },
     },
