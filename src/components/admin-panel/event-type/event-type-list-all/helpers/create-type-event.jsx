@@ -52,7 +52,7 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.ukTypeName && (
-              <div className="text-admin-modalForm-error pl-[15px]">
+              <div className="pl-[15px] text-admin-modalForm-error">
                 {errors.ukTypeName.message}
               </div>
             )}
@@ -67,7 +67,7 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.enTypeName && (
-              <div className="text-admin-modalForm-error  pl-[15px]">
+              <div className="pl-[15px]  text-admin-modalForm-error">
                 {errors.enTypeName.message}
               </div>
             )}
