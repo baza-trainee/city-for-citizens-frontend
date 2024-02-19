@@ -21,9 +21,8 @@ export const documentsApi = createApi({
     //
     updateDocuments: builder.mutation({
       query: ({ body, documentId }) => {
-        console.log('🚀 ~ documentId:', documentId);
         return {
-          url: `documents/${documentId}`, // Заменяем 'id' на 'documentId'
+          url: `documents/${documentId}`,
           method: 'PATCH',
           body,
           credentials: 'include',
