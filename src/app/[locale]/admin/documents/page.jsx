@@ -6,7 +6,6 @@ import { useGetDocumentsQuery } from '@/redux/api/documentsApi';
 
 export default function Page() {
   const { data: fetchedDocuments, isLoading, refetch } = useGetDocumentsQuery();
-  console.log('🚀 ~ Page ~ fetchedDocuments:', fetchedDocuments);
 
   const handleDocumentsUpdate = () => {
     refetch();
