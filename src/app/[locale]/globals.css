@@ -57,6 +57,9 @@ input[type='time'] {
 .button-common {
   @apply min-h-[49px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-exo_2 text-xl font-bold disabled:cursor-not-allowed;
 }
+.button-common-header {
+  @apply min-h-[47px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-source_sans_3 text-xl font-bold disabled:cursor-not-allowed;
+}
 .button-confirm {
   @apply button-common bg-admin-dark  text-white disabled:border-state-disabled disabled:bg-state-disabled;
 }

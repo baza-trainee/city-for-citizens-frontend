@@ -35,6 +35,10 @@ module.exports = {
         green: '#2D982B',
         red: '#F00631',
 
+        modalForm: {
+          error: '#E21B00',
+        },
+
         button: {
           hover: '#464646',
           hover_outlined: '#EEE',

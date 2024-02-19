@@ -19,7 +19,8 @@ export function BasicModalWindows({ onClose, message, children, title, type }) {
           type === 'error' &&
             'min-w-[322px] gap-3 border-[3px] border-state-error_main pb-[34px] pt-[30px]',
           type === 'add-new-type' && 'px-10 pb-14 pt-11',
-          type !== 'success' && type !== 'error' && 'min-w-[427px] gap-6'
+          type !== 'success' && type !== 'error' && 'min-w-[427px] gap-6',
+          type === 'form' && 'pt-[45px]'
         )}`}
       >
         <button
