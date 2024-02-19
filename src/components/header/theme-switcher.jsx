@@ -1,45 +1,26 @@
 import { useTheme } from 'next-themes';
-import { useTranslations } from 'next-intl';
+import IconSun from '@/assets/icons/theme-switchers/icon-sun.svg';
+import IconMoon from '@/assets/icons/theme-switchers/icon-moon.svg';
 
-const ThemeSwitcher = ({ buttonStyle, icon }) => {
-  const t = useTranslations('Header.ThemeSwitcher');
-
+export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
-  const themes = [
-    { name: t('switcherDark'), value: 'dark', id: 'dark-mode' },
-    { name: t('switcherLight'), value: 'light', id: 'light-mode' },
-  ];
-
-  const toggleDarkMode = e => {
-    const selectedTheme = themes.find(item => item.id === e.currentTarget.id);
-    if (selectedTheme) {
-      setTheme(selectedTheme.value);
-    }
-  };
-
   return (
-    <>
-      {themes.map(themeItem => (
-        <button
-          type="button"
-          key={themeItem.id}
-          id={themeItem.id}
-          className={`${buttonStyle} ${
-            theme === themeItem.value
-              ? 'desktop:border-active desktop:text-active desktop:border-b'
-              : ''
-          }`}
-          onClick={toggleDarkMode}
-        >
-          {themeItem.name}
-          <div className="border-gray/50 dark:border-gray/20 flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border-[1px] desktop:hidden">
-            {theme === themeItem.value ? icon : null}
-          </div>
-        </button>
-      ))}
-    </>
+    <div className="bg-gray/80 dark:bg-gray/5 flex h-4 w-8 items-center justify-between rounded-full p-[1px]">
+      <button
+        className="bg-gray/5 flex h-[13px] w-[13px] items-center justify-center rounded-full"
+        type="button"
+        onClick={() => setTheme('light')}
+      >
+        {theme === 'light' ? <IconSun width={8} height={8} /> : ''}
+      </button>
+      <button
+        className="bg-gray/80 flex h-[13px] w-[13px] items-center justify-center rounded-full"
+        type="button"
+        onClick={() => setTheme('dark')}
+      >
+        {theme === 'dark' ? <IconMoon width={8} height={8} /> : ''}
+      </button>
+    </div>
   );
-};
-
-export default ThemeSwitcher;
+}
