@@ -5,7 +5,7 @@ import AdminHeader from '@/components/admin-panel/common/admin-header';
 import { useGetDocumentsQuery } from '@/redux/api/documentsApi';
 
 export default function Page() {
-  const { data: fetchedDocuments, isLoading, refetch } = useGetDocumentsQuery();
+  const { data: fetchedDocuments, refetch } = useGetDocumentsQuery();
 
   const handleDocumentsUpdate = () => {
     refetch();

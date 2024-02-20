@@ -7,13 +7,14 @@ import { getValidationScheme, inputsSettings } from './helpers';
 import InputEventType from './input-event-type/input-event-type';
 import { FormElement } from './form-element';
 import { FileDropzone } from './input-file-dropzone/input-file-dropzone';
-import { BasicModalWindows, LoadingButton } from '@/components/common';
+import { BasicModalWindows, Button, LoadingButton } from '@/components/common';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   resetEventFormData,
   setEventFormData,
 } from '@/redux/slice/eventFormData';
-import AddNewEventTypeForm from '../../event-type/add-new-event-type-form';
+
+import CreateTypeEvent from '../../event-type/event-type-list-all/helpers/create-type-event';
 
 const initialFormData = {
   firstLocale: {
@@ -62,6 +63,10 @@ export default function EventForm({
     useState(false);
   const [isAddNewTypesModalVisible, setIsAddNewTypesModalVisible] =
     useState(false);
+
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
+  const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
 
   const dispatch = useDispatch();
   const eventFormData = useSelector(state => state.eventFormData);
@@ -185,13 +190,14 @@ export default function EventForm({
 
         <div className="mb-[60px] flex justify-center ">
           <div className="relative">
-            <button
+            <Button
               onClick={() => setIsAddNewTypesModalVisible(true)}
-              className="input-label h-[47px]  cursor-pointer rounded-md border border-admin-dark bg-admin-light_3 p-[30px] font-exo_2 text-xl font-bold text-admin-dark "
+              variant={'outlined'}
+              className="h-[47px] w-[276px] font-exo_2"
               type="button"
             >
               Додати новий тип події
-            </button>
+            </Button>
             <span className="input-label absolute -left-7 top-1/2 -translate-x-full -translate-y-1/2 text-[18px]">
               або
             </span>
@@ -248,29 +254,23 @@ export default function EventForm({
         </div>
 
         <div className="flex flex-col items-center justify-center gap-[25px] tablet:flex-row ">
-          <input
-            className="button-close h-[51px] w-[198px]"
+          <Button
+            variant={'outlined'}
+            className="h-[51px] w-[198px]"
             type="button"
             onClick={() => setIsConfirmationModalVisible(true)}
-            value={buttonNameReset}
             disabled={isButtonDisabled || isLoading}
-          />
-          {isLoading ? (
-            <button
-              type="button"
-              disabled
-              className="button-confirm h-[51px] w-[198px]"
-            >
-              <LoadingButton />
-            </button>
-          ) : (
-            <input
-              className={`button-confirm h-[51px] w-[198px]`}
-              type="submit"
-              disabled={isButtonDisabled}
-              value={buttonNameSubmit || isLoading}
-            />
-          )}
+          >
+            {buttonNameReset}
+          </Button>
+
+          <Button
+            className={`h-[51px] px-[31px]`}
+            type="submit"
+            disabled={isButtonDisabled}
+          >
+            {isLoading ? <LoadingButton /> : buttonNameSubmit}
+          </Button>
         </div>
       </form>
       {isConfirmationModalVisible && (
@@ -279,26 +279,52 @@ export default function EventForm({
           title={'Скасувати зміни?'}
           message="Ви точно хочете скасувати зміни? Вони не будуть збережені"
         >
-          <div className="flex gap-[15px]">
-            <button
-              className="button-close"
-              onClick={() => setIsConfirmationModalVisible(false)}
+          <div className="flex gap-[16px]">
+            <Button
+              variant={'outlined'}
               type="button"
+              onClick={() => setIsConfirmationModalVisible(false)}
             >
               Скасувати
-            </button>
-            <button
-              className="button-confirm"
-              onClick={resetForm}
+            </Button>
+            <Button
+              className={'max-w-[181px]'}
               type="button"
+              onClick={resetForm}
             >
               Підтвердити
-            </button>
+            </Button>
           </div>
         </BasicModalWindows>
       )}
       {isAddNewTypesModalVisible && (
-        <AddNewEventTypeForm setIsModalVisible={setIsAddNewTypesModalVisible} />
+        <CreateTypeEvent
+          success={() => {
+            setIsShowSuccessMessage(true);
+            setStatusMessage('Тип події успішно додано');
+          }}
+          error={() => {
+            setIsShowErrorMessage(true);
+            setStatusMessage('Щось пішло не так... Спробуйте пізніше');
+          }}
+          close={() => setIsAddNewTypesModalVisible(false)}
+        />
+      )}
+      {isShowSuccessMessage && (
+        <BasicModalWindows
+          onClose={() => setIsShowSuccessMessage(false)}
+          title={'Успіх!'}
+          type="success"
+          message={statusMessage}
+        ></BasicModalWindows>
+      )}
+      {isShowErrorMessage && (
+        <BasicModalWindows
+          onClose={() => setIsShowErrorMessage(false)}
+          title={'Помилка'}
+          type={'error'}
+          message={statusMessage}
+        ></BasicModalWindows>
       )}
     </>
   );

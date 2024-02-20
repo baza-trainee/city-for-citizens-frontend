@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { BASE_URL } from '@/helpers/constants';
 import { addTokenToHeaders } from './helpers/addTokenToHeaders';
+import { generateQueryStr } from './helpers/generateQueryStr';
 
 export const typesEventApi = createApi({
   reducerPath: 'typesEventApi',
@@ -29,6 +30,30 @@ export const typesEventApi = createApi({
           : [{ type: 'TypesEvent', id: 'LIST' }];
       },
     }),
+
+    //
+    getTypesEventByLocale: builder.query({
+      query: ({ locale }) => {
+        const queryStr = generateQueryStr('event-types', { locale });
+
+        return { url: queryStr, method: 'GET' };
+      },
+
+      providesTags: result => {
+        return result
+          ? [
+              ...result.map(({ id }) => ({
+                type: 'TypesEvent',
+                id,
+              })),
+              { type: 'TypesEvent', id: 'LIST' },
+            ]
+          : [{ type: 'TypesEvent', id: 'LIST' }];
+      },
+
+      transformResponse: ({ eventTypes }) => eventTypes,
+    }),
+
     //
     getTypesEventByIdForUpdateForm: builder.query({
       query: typeEventId => {
@@ -84,4 +109,5 @@ export const {
   useCreateTypeEventMutation,
   useUpdateTypesEventMutation,
   useDeleteTypeEventMutation,
+  useGetTypesEventByLocaleQuery,
 } = typesEventApi;

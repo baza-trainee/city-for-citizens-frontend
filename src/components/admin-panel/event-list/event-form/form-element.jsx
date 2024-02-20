@@ -11,6 +11,7 @@ export function FormElement({
   tag,
   customIcon: Icon,
   type,
+  className,
   ...attr
 }) {
   const Tag = tag === 'input' ? 'input' : 'textarea';
@@ -36,6 +37,7 @@ export function FormElement({
           ${clsx(
             tag === 'textarea' && 'max-h-[196px] resize-none',
             tag === 'input' && 'max-h-[48px]',
+            className,
             errorMessage && '!border-state-error_main'
           )}`}
         {...register}
