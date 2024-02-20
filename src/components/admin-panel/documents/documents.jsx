@@ -5,14 +5,6 @@ import { BasicModalWindows } from '@/components/common';
 import { useUpdateDocumentsMutation } from '@/redux/api/documentsApi';
 import ListItem from './list-item';
 
-function Header(props) {
-  return (
-    <div className="text-neutral-900 w-full bg-admin-side_bar bg-opacity-50 py-[15px] text-center text-lg font-normal text-admin-dark">
-      {props.text}
-    </div>
-  );
-}
-
 export default function Documents({ fetchedDocuments, onDocumentsUpdate }) {
   const [updateDocuments, { isLoading }] = useUpdateDocumentsMutation();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -66,10 +58,12 @@ export default function Documents({ fetchedDocuments, onDocumentsUpdate }) {
 
   return (
     <>
-      <form className="mx-[20px] grid max-w-[1042px] grid-cols-3 gap-y-[14px]">
-        <Header text={'Назва документу'} />
-        <Header text={'Дата оновлення'} />
-        <Header text={'Редагування'} />
+      <form className="mx-[20px] flex max-w-[1042px] flex-col gap-y-[16px]">
+        <div className="text-neutral-900  flex w-full items-center justify-between gap-x-[14px] bg-admin-side_bar bg-opacity-50 py-[20px] pl-[45px] pr-[52px] text-center text-lg font-normal leading-none text-admin-dark laptop_xl:pl-[75px] laptop_xl:pr-[101px]">
+          <span>Назва документу</span>
+          <span className="laptop_xl:mr-[90px]">Дата оновлення</span>
+          <span>Редагування</span>
+        </div>
 
         {fetchedDocuments?.map(document => (
           <ListItem
@@ -87,7 +81,7 @@ export default function Documents({ fetchedDocuments, onDocumentsUpdate }) {
           />
         ))}
         {Object.keys(selectedFiles).length > 0 && (
-          <div className="col-span-3 mt-[66px] flex gap-4 ">
+          <div className="mt-[66px] flex gap-4 ">
             <Button
               type="button"
               variant="outlined"

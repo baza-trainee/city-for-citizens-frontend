@@ -37,26 +37,26 @@ export default function ListItem({
 
   return (
     <div
-      className={`col-span-3 flex justify-stretch ${clsx(selectedFiles[document.id] && 'border border-admin-button-border')}`}
+      className={`flex justify-stretch  bg-white ${clsx(selectedFiles[document.id] && 'border border-admin-button-border')}`}
     >
-      <div className="flex w-full flex-col items-start justify-center bg-white py-[24px] pl-[45px] align-top">
+      <div className="flex w-full flex-col items-start justify-center py-[24px] pl-[45px] align-top text-[16px] text-admin-dark">
         {selectedFiles[document.id]
           ? selectedFiles[document.id].name
           : document.name}
         {errors[document.id] && (
-          <div className="mt-1 text-state-error_main">
+          <div className="mt-1 text-[14px] text-state-error_main">
             {errors[document.id]}
           </div>
         )}
       </div>
-      <div className="flex w-full items-center justify-center bg-white py-[24px] text-admin-dark">
+      <div className="flex w-full items-center justify-center py-[24px]  text-admin-dark laptop_xl:mr-[90px]">
         {formatDateToDMY(document.updatedAt)}
       </div>
-      <div className="flex w-full flex-col items-end justify-center bg-white py-[24px] pr-[52px]">
+      <div className="flex w-full flex-col items-end justify-center  py-[24px] pr-[52px]">
         <div
           {...getRootProps()}
-          className="inline-flex min-h-[47px] min-w-[199px] cursor-pointer items-center
-            justify-center rounded-[6px] border border-admin-button-border bg-white px-[30px] py-[10px]
+          className="inline-flex  cursor-pointer items-center justify-center
+            rounded-[6px] border border-admin-button-border px-[30px]  py-[12px] text-center
             text-[20px] font-bold leading-none text-admin-dark hover:bg-admin-button-hover_outlined active:bg-admin-button-active_outlined"
         >
           <input {...getInputProps()} />
