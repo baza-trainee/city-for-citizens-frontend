@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { usePathname, useRouter } from '@/navigation';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import { NAVIGATION } from '@/helpers/constants';
 import { useLogoutMutation } from '@/redux/api/authApi';
 import { resetState } from '@/redux/slice/authSlice';
-import { BasicModalWindows, LoadingButton } from '@/components/common';
+import { BasicModalWindows, Button, LoadingButton } from '@/components/common';
 
 import logotype from '@/assets/icons/common/logotype.svg?url';
 import LogoutIcon from '@/assets/icons/common/logout-icon.svg';
@@ -21,8 +21,6 @@ export function AdminSideBar() {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const buttonRef = useRef(null);
 
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
@@ -48,7 +46,7 @@ export function AdminSideBar() {
   }
 
   return (
-    <aside className="flex max-h-[1025px] flex-col gap-[77px] bg-admin-side_bar p-[14px] pb-10">
+    <aside className="flex h-screen max-h-[1025px] min-h-[736px] flex-col gap-[77px] bg-admin-side_bar p-[14px] pb-10">
       <Link
         href={'/'}
         className="flex items-center justify-center gap-2 rounded bg-admin-light_3 py-11 font-roboto text-lg font-black uppercase leading-6 text-black"
@@ -63,11 +61,11 @@ export function AdminSideBar() {
             {adminNavigation.map(({ href, name, icon: Icon }) => (
               <Link href={href} key={href}>
                 <li
-                  className={`flex items-center gap-3 rounded px-1.5 py-[9px] 
+                  className={`flex items-center gap-3 rounded px-1.5 py-[9px] transition-colors
                     ${clsx(
                       isActivePage(href) && 'bg-admin-light_3 text-admin-dark',
                       !isActivePage(href) &&
-                        'bg-[transparent] text-admin-light_3'
+                        'bg-[transparent] text-admin-light_3 hover:bg-admin-light_3/15'
                     )}`}
                 >
                   <Icon className={'h-8'} />
@@ -81,16 +79,15 @@ export function AdminSideBar() {
           </ul>
         </nav>
 
-        <button
-          ref={buttonRef}
+        <Button
+          type="button"
+          variant={'outlined'}
           onClick={() => setIsConfirmationModalVisible(true)}
-          className="mx-auto flex h-[52px] items-center justify-center gap-2 rounded
-           border border-admin-dark bg-white px-8 text-xl font-bold leading-tight text-admin-dark
-           tablet:w-[160px] laptop:w-[213px]"
+          className="mx-auto h-[52px] gap-2 rounded px-8 tablet:w-[160px] laptop:w-[213px]"
         >
           {<LogoutIcon className={'h-6 w-6'} />}
           {isLoading ? <LoadingButton /> : <span>Вийти</span>}
-        </button>
+        </Button>
 
         {isConfirmationModalVisible && (
           <BasicModalWindows
@@ -98,22 +95,17 @@ export function AdminSideBar() {
             title={'Дійсно вийти?'}
           >
             <div className="flex gap-[15px]">
-              <button
-                disabled={isLoading}
-                className="button-close"
-                onClick={() => setIsConfirmationModalVisible(false)}
+              <Button
                 type="button"
+                disabled={isLoading}
+                variant={'outlined'}
+                onClick={() => setIsConfirmationModalVisible(false)}
               >
                 Скасувати
-              </button>
-              <button
-                disabled={isLoading}
-                className="button-confirm"
-                onClick={handleLogout}
-                type="button"
-              >
+              </Button>
+              <Button type="button" disabled={isLoading} onClick={handleLogout}>
                 Підтвердити
-              </button>
+              </Button>
             </div>
           </BasicModalWindows>
         )}

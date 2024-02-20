@@ -9,7 +9,7 @@ export default function TypeList({
   return (
     <div className="absolute z-10 mt-1 max-h-[347px] w-full overflow-auto rounded border border-admin-placeholder bg-white px-[9px] py-3.5 ">
       <ul className="flex flex-col gap-[15px] pl-px">
-        {eventTypesList.map(type => (
+        {eventTypesList.map(({ eventType: type }) => (
           <button
             onClick={() => toggleEventType(type)}
             type="button"

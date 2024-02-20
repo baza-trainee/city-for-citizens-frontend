@@ -50,7 +50,7 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
             />
           </div>
           {errors.typeName && (
-            <div className="text-admin-modal-error absolute  -bottom-6 pl-[15px]">
+            <div className="absolute -bottom-6  pl-[15px] text-admin-modal-error">
               {errors.typeName.message}
             </div>
           )}
