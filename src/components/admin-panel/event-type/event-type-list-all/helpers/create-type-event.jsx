@@ -52,12 +52,12 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.ukTypeName && (
-              <div className="pl-[15px] text-admin-modalForm-error">
+              <div className="text-admin-modal-error absolute pl-[15px]">
                 {errors.ukTypeName.message}
               </div>
             )}
           </div>
-          <div className="flex flex-col">
+          <div className="relative flex flex-col">
             <div className="mx-4 flex h-12 w-[407px] items-center rounded border border-admin-darkgray focus-within:border-admin-dark">
               <input
                 {...register('enTypeName')}
@@ -67,7 +67,7 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.enTypeName && (
-              <div className="pl-[15px]  text-admin-modalForm-error">
+              <div className="text-admin-modal-error absolute -bottom-1 pl-[15px]">
                 {errors.enTypeName.message}
               </div>
             )}
@@ -76,7 +76,7 @@ export default function CreateTypeEvent({ close, success, error }) {
         <div className="mb-[25px] mt-2  flex gap-[10px]">
           <button
             disabled={isLoadingAddTypeEvent}
-            className="button-close  w-[198px]"
+            className="button-close-hover w-[198px] pb-3 pt-2"
             onClick={close}
             type="button"
           >
@@ -84,7 +84,7 @@ export default function CreateTypeEvent({ close, success, error }) {
           </button>
           <button
             disabled={isLoadingAddTypeEvent}
-            className="button-confirm  w-[198px] "
+            className="button-confirm-hover w-[198px] pb-3 pt-2"
             type="submit"
           >
             Додати

@@ -63,7 +63,7 @@ export default function EventTypeList() {
       <AdminHeader title={'Типи подій'}>
         <button
           onClick={() => setIsCreateTypeModalVisible(true)}
-          className="button-common-header bg-admin-dark px-[27px] py-[10px] font-source_sans_3 text-white laptop:text-base desktop:text-xl"
+          className="button-common-hover-dark min-h-[47px] min-w-[182px] bg-admin-dark px-[27px] py-2.5  font-source_sans_3 text-white  laptop:text-base desktop:text-xl"
         >
           Додати новий тип подій
         </button>
@@ -93,21 +93,18 @@ export default function EventTypeList() {
         />
       )}
       {isEditTypeModalVisible && (
-        <>
-          {console.log('handle editTypeData to editTypeEvent', editTypeData)}
-          <EditTypeEvent
-            typeEvent={editTypeData}
-            close={() => setIsEditTypeModalVisible(false)}
-            success={() => {
-              setIsShowSuccessMessage(true);
-              setStatusMessage('Тип події успішно відредаговано');
-            }}
-            error={() => {
-              setIsShowErrorMessage(true);
-              setStatusMessage('Щось пішло не так... Спробуйте піздніше');
-            }}
-          />
-        </>
+        <EditTypeEvent
+          typeEvent={editTypeData}
+          close={() => setIsEditTypeModalVisible(false)}
+          success={() => {
+            setIsShowSuccessMessage(true);
+            setStatusMessage('Тип події успішно відредаговано');
+          }}
+          error={() => {
+            setIsShowErrorMessage(true);
+            setStatusMessage('Щось пішло не так... Спробуйте піздніше');
+          }}
+        />
       )}
       {isConfirmationModalVisible && (
         <BasicModalWindows

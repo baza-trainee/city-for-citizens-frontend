@@ -11,7 +11,7 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -40,7 +40,7 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-y-[25px]"
       >
-        <div className="flex flex-col">
+        <div className="relative flex flex-col">
           <div className="mx-4 flex h-12 w-[407px] items-center rounded border border-admin-darkgray focus-within:border-admin-dark">
             <input
               {...register('typeName')}
@@ -50,7 +50,7 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
             />
           </div>
           {errors.typeName && (
-            <div className="pl-[15px] text-admin-modalForm-error">
+            <div className="absolute -bottom-6  pl-[15px] text-admin-modal-error">
               {errors.typeName.message}
             </div>
           )}
@@ -59,18 +59,18 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
         <div className="mb-[25px] mt-2  flex gap-[10px]">
           <button
             disabled={isLoadingEditTypeEvent}
-            className="button-close  w-[198px]"
+            className="button-close-hover w-[198px] pb-3 pt-2"
             onClick={close}
             type="button"
           >
             Скасувати
           </button>
           <button
-            disabled={isLoadingEditTypeEvent}
-            className="button-confirm  w-[198px] "
+            disabled={isLoadingEditTypeEvent || !isDirty || !isValid}
+            className="button-confirm-hover w-[198px] pb-3 pt-2"
             type="submit"
           >
-            Додати
+            Редагувати
           </button>
         </div>
       </form>

@@ -58,15 +58,25 @@ input[type='time'] {
   @apply min-h-[49px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-exo_2 text-xl font-bold disabled:cursor-not-allowed;
 }
 .button-common-header {
-  @apply min-h-[47px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-source_sans_3 text-xl font-bold disabled:cursor-not-allowed;
+  @apply cursor-pointer rounded-md border border-admin-dark  text-xl font-bold disabled:cursor-not-allowed;
+}
+.button-common-hover-dark {
+  @apply button-common-header transition duration-200 hover:border-light-button-hover hover:bg-light-button-hover hover:text-[#ffffff] active:border-admin-darkblue
+           active:bg-admin-darkblue;
 }
 .button-confirm {
   @apply button-common bg-admin-dark  text-white disabled:border-state-disabled disabled:bg-state-disabled;
 }
+.button-confirm-hover {
+  @apply button-confirm transition duration-200 hover:border-light-button-hover hover:bg-light-button-hover hover:text-[#ffffff] active:border-admin-darkblue
+           active:bg-admin-darkblue;
+}
 .button-close {
   @apply button-common bg-admin-light_3 text-admin-dark;
 }
-
+.button-close-hover {
+  @apply button-close transition duration-200  hover:bg-admin-button-hover_outlined active:bg-admin-button-active_outlined;
+}
 .input-wrapper {
   @apply flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3 px-2.5 py-5
   shadow-sm;

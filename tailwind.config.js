@@ -35,7 +35,7 @@ module.exports = {
         green: '#2D982B',
         red: '#F00631',
 
-        modalForm: {
+        modal: {
           error: '#E21B00',
         },
 
