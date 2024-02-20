@@ -1,4 +1,3 @@
-import { useGetTypesEventsQuery } from '@/redux/api/filtersApi';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 
@@ -7,6 +6,7 @@ import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import DropdownIcon from '@/assets/icons/common/dropdown-icon.svg';
 import TypeList from './type-list';
 import { FormElement } from '../form-element';
+import { useGetTypesEventByLocaleQuery } from '@/redux/api/typesEventApi';
 
 export default function InputEventType({
   locale,
@@ -23,7 +23,7 @@ export default function InputEventType({
   const [eventTypesSelected, setEventTypesSelected] = useState([]);
   const typeListRef = useRef(null);
 
-  const { data: eventTypesList } = useGetTypesEventsQuery({ locale });
+  const { data: eventTypesList } = useGetTypesEventByLocaleQuery({ locale });
 
   useEffect(() => {
     setEventTypesSelected([]);
@@ -76,6 +76,7 @@ export default function InputEventType({
           readOnly={true}
           placeholder={placeholder}
           register={register}
+          className={'pr-10'}
         />
         <DropdownIcon
           className={`absolute right-[15px] top-1/2 h-2 w-[14px] -translate-y-1/2 transition-transform
