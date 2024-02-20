@@ -1,5 +1,4 @@
 'use client';
-
 import NextThemeProvider from '@/providers/theme-providers';
 import Error from 'next/error';
 import { LOCALE } from '@/helpers/constants';

@@ -31,11 +31,11 @@ export default function LocaleLayout({ children, params: { locale } }) {
       className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable} ${oswald.variable}`}
     >
       <body className="bg-light-primary font-source_sans_3 text-light-head dark:bg-dark-primary dark:text-dark-head">
-        <NextThemeProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <NextThemeProvider>
             <ReduxProvider>{children}</ReduxProvider>
-          </NextIntlClientProvider>
-        </NextThemeProvider>
+          </NextThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

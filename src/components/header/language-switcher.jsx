@@ -60,7 +60,7 @@ export default function LanguageSwitcher() {
   return (
     <div ref={dropdownRef} className="relative w-[77px]">
       <button
-        className="flex w-full  items-center items-center text-light-main"
+        className="flex w-full  items-center items-center text-light-main dark:text-dark-main"
         onClick={toggleMenu}
       >
         <span>{getLanguageIcon(locale)}</span>
@@ -73,7 +73,7 @@ export default function LanguageSwitcher() {
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-full origin-top-right rounded bg-white py-4 pl-4 pr-2">
+        <div className="absolute right-0 mt-2 w-full origin-top-right rounded bg-white py-4 pl-4 pr-2 dark:bg-dark-border">
           <div className="flex flex-col gap-3 ">
             {langs.map(langItem => (
               <button
@@ -85,8 +85,8 @@ export default function LanguageSwitcher() {
                 }}
                 className={`flex gap-2 ${clsx(
                   langItem.value === locale
-                    ? 'border-border border-b text-light-main'
-                    : 'text-black'
+                    ? 'border-b border-light-border text-light-main dark:border-dark-main dark:text-dark-main'
+                    : 'text-black dark:text-white'
                 )}`}
               >
                 <span>{langItem.icon}</span>

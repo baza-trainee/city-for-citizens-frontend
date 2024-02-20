@@ -6,20 +6,24 @@ export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="bg-gray/80 dark:bg-gray/5 flex h-4 w-8 items-center justify-between rounded-full p-[1px]">
+    <div className="flex h-4 w-8 items-center justify-between rounded-full bg-light-button-switch p-[1px] dark:bg-dark-button-switch">
       <button
-        className="bg-gray/5 flex h-[13px] w-[13px] items-center justify-center rounded-full"
+        className="flex h-[13px] w-[13px] items-center justify-center rounded-full bg-dark-button-switch"
         type="button"
         onClick={() => setTheme('light')}
       >
-        {theme === 'light' ? <IconSun width={8} height={8} /> : ''}
+        {/* {theme === 'light' ? */}
+        <IconSun width={8} height={8} />
+        {/* : ''} */}
       </button>
       <button
-        className="bg-gray/80 flex h-[13px] w-[13px] items-center justify-center rounded-full"
+        className="flex h-[13px] w-[13px] items-center justify-center rounded-full bg-light-button-switch"
         type="button"
-        onClick={() => setTheme('dark')}
+        // onClick={() => setTheme('dark')}
       >
-        {theme === 'dark' ? <IconMoon width={8} height={8} /> : ''}
+        {/* {theme === 'dark' ? */}
+        <IconMoon width={8} height={8} />
+        {/* : ''} */}
       </button>
     </div>
   );

@@ -87,6 +87,7 @@ module.exports = {
           default: '#000000',
           pressed: '#222222',
           text: '#FFFFFF',
+          switch: '#222A30',
         },
       },
 
@@ -109,6 +110,7 @@ module.exports = {
           default: '#FFD646',
           pressed: '#E1B828',
           text: '#000000',
+          switch: '#F3F3F3',
         },
       },
     },
