@@ -86,21 +86,11 @@ export default function EventList() {
     prevPageNumber,
     nextPageNumber
   ) {
-    console.log(
-      'newCurrentPage',
-      newCurrentPage,
-      'prevPageNumber',
-      prevPageNumber,
-      'nextPageNumber',
-      nextPageNumber
-    );
     if (newCurrentPage !== '...') {
       setCurrentPage(newCurrentPage);
-      console.log('Condition works');
       return;
     }
     const updateCurrentPage = Math.floor((prevPageNumber + nextPageNumber) / 2);
-    console.log('updateCurrentPage', updateCurrentPage);
     setCurrentPage(updateCurrentPage);
   }
 

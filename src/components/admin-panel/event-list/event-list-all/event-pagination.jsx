@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import IconAdminPaginationArrow from '@/assets/icons/common/totalPage-arrow-icon.svg';
 
 export default function EventPagination({ currentPage, totalPage, onClick }) {
-  console.log('currentPage', currentPage, 'totalPage', totalPage);
   const maxPagePosition = 7;
   const arrayOfPageNumbers = Array.from(
     { length: maxPagePosition },
@@ -36,7 +35,6 @@ export default function EventPagination({ currentPage, totalPage, onClick }) {
     pageArr[2] = currentPage - 1;
     pageArr[3] = currentPage;
     pageArr[4] = currentPage + 1;
-    console.log('pageArr', pageArr);
     return pageArr;
   }
 
