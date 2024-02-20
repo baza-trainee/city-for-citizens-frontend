@@ -42,7 +42,7 @@ export default function CreateTypeEvent({ close, success, error }) {
         className="flex flex-col items-center gap-y-[25px]"
       >
         <div className="-mt-1 flex flex-col gap-y-8">
-          <div className="flex flex-col">
+          <div className="relative flex flex-col">
             <div className="mx-4 flex h-12 w-[407px] items-center rounded border border-admin-darkgray focus-within:border-admin-dark">
               <input
                 {...register('ukTypeName')}
@@ -52,7 +52,7 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.ukTypeName && (
-              <div className="text-admin-modal-error absolute pl-[15px]">
+              <div className="absolute -bottom-6 pl-[15px] text-admin-modal-error">
                 {errors.ukTypeName.message}
               </div>
             )}
@@ -67,7 +67,7 @@ export default function CreateTypeEvent({ close, success, error }) {
               />
             </div>
             {errors.enTypeName && (
-              <div className="text-admin-modal-error absolute -bottom-1 pl-[15px]">
+              <div className="absolute -bottom-6 pl-[15px] text-admin-modal-error">
                 {errors.enTypeName.message}
               </div>
             )}
