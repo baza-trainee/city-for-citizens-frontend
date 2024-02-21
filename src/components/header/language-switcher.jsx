@@ -73,7 +73,7 @@ export default function LanguageSwitcher() {
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-full origin-top-right rounded bg-white py-4 pl-4 pr-2 dark:bg-dark-border">
+        <div className="absolute right-0 mt-2 w-full origin-top-right rounded bg-white py-4 pl-4 pr-2 transition-opacity dark:bg-dark-border">
           <div className="flex flex-col gap-3 ">
             {langs.map(langItem => (
               <button

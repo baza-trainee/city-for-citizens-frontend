@@ -1,6 +1,6 @@
-import MenuNavigation from '../header/menu-navigation';
-import Switchers from '../header/switchers';
-import Logo from './logo';
+import MenuNavigation from './menu-navigation';
+import Switchers from './switchers';
+import Logo from '../common/logo';
 
 export function Header() {
   return (
