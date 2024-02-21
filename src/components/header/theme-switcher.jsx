@@ -6,7 +6,7 @@ import IconMoon from '@/assets/icons/theme-switchers/icon-moon.svg';
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
-
+  
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
