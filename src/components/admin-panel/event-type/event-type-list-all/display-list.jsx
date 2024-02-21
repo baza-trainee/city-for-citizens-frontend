@@ -31,9 +31,9 @@ export default function DisplayList({
               <span className="tablet:pr-4 laptop:pr-[93px]">
                 <ControlSection
                   deleteOnClick={() =>
-                    showConfirmationModal(type.id, type.eventType)
+                    showConfirmationModal(type.idIdentifier, type.eventType)
                   }
-                  editOnClick={() => edit(type.id)}
+                  editOnClick={() => edit(type.idIdentifier)}
                 />
               </span>
             </li>

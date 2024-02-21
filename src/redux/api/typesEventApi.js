@@ -57,10 +57,10 @@ export const typesEventApi = createApi({
     //
     getTypesEventByIdForUpdateForm: builder.query({
       query: typeEventId => {
-        return { url: `event-types?id=${typeEventId}`, method: 'GET' };
+        return { url: `event-types/${typeEventId}`, method: 'GET' };
       },
       providesTags: [{ type: 'TypesEvent', id: 'LIST' }],
-      transformResponse: res => res.eventTypes[0],
+      transformResponse: res => res.eventTypes,
     }),
     //
     createTypeEvent: builder.mutation({
@@ -78,7 +78,6 @@ export const typesEventApi = createApi({
     //
     updateTypesEvent: builder.mutation({
       query: ({ body, typeEventId }) => {
-        console.log('typeEventId in RTK query', typeEventId);
         return {
           url: `event-types/${typeEventId}`,
           method: 'PATCH',
