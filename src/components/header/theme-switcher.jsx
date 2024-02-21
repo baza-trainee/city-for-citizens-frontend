@@ -17,7 +17,6 @@ export default function ThemeSwitcher() {
     >
       <div
         className="flex h-[13px] w-[13px] items-center justify-center rounded-full bg-dark-button-switch"
-        type="button"
       >
         {theme === 'light' ? <IconSun width={8} height={8} /> : ''}
       </div>
