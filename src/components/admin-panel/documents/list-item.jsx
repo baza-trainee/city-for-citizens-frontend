@@ -39,7 +39,7 @@ export default function ListItem({
     <div
       className={`flex justify-stretch  bg-white ${clsx(selectedFiles[document.id] && 'border border-admin-button-border')}`}
     >
-      <div className="flex w-full flex-col items-start justify-center py-[24px] pl-[45px] align-top text-[16px] text-admin-dark">
+      <div className="flex w-full flex-col items-start justify-center py-[24px] pl-[45px] align-top font-exo_2 text-[16px] text-base font-normal leading-loose text-admin-dark">
         {selectedFiles[document.id]
           ? selectedFiles[document.id].name
           : document.name}
