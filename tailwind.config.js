@@ -133,7 +133,7 @@ module.exports = {
       padding: {
         DEFAULT: '16px',
         laptop: '40px',
-        desktop_xl: '240px',
+        desktop: '240px',
       },
     },
     extend: {

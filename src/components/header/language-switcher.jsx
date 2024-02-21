@@ -58,15 +58,16 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-[77px]">
+    <div
+      ref={dropdownRef}
+      className="relative w-[77px] font-roboto  text-sm leading-[1.3]"
+    >
       <button
         className="flex w-full  items-center items-center text-light-main dark:text-dark-main"
         onClick={toggleMenu}
       >
         <span>{getLanguageIcon(locale)}</span>
-        <span className="ml-2 mr-1 font-roboto text-sm leading-[1.3]">
-          {getLanguageName(locale)}
-        </span>
+        <span className="ml-2 mr-1  ">{getLanguageName(locale)}</span>
         <ChevronIcon
           className={`absolute right-[5px] top-1/2  h-6 w-6 -translate-y-1/2  transition-transform
           ${clsx(isOpen && 'rotate-180')}`}

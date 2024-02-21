@@ -13,7 +13,7 @@ export default function MenuNavigation() {
   ];
 
   return (
-    <nav className="max-[769px]:hidden">
+    <nav className="max-laptop:hidden">
       <ul className="flex gap-8 font-roboto leading-[1.4] text-light-main dark:text-dark-main">
         {menuItems.map(item => (
           <li
