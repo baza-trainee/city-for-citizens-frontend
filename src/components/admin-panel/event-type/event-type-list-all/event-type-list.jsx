@@ -1,17 +1,19 @@
 'use client';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
 import {
-  useGetTypesEventQuery,
+  useGetAllTypeEventsByPageQuery,
   useDeleteTypeEventMutation,
 } from '@/redux/api/typesEventApi';
 import { useLazyGetTypesEventByIdForUpdateFormQuery } from '@/redux/api/typesEventApi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { BasicModalWindows } from '@/components/common';
 
 import DisplayList from './display-list';
 import CreateTypeEvent from './helpers/create-type-event';
 import EditTypeEvent from './helpers/edit-type-event';
+import Pagination from '@/components/admin-panel/common/pagination';
+import clsx from 'clsx';
 
 export default function EventTypeList() {
   const [idDeleteTypeEvent, setIdDeleteTypeEvent] = useState(null);
@@ -25,11 +27,36 @@ export default function EventTypeList() {
   const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const [deleteType, setDeleteType] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalTypeEvents, setTotalTypeEvents] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
   const [deleteTypeEvent, { isLoading }] = useDeleteTypeEventMutation();
-  const { data: serverData } = useGetTypesEventQuery();
+  const limit = 10;
+  const { data: serverDataByCurrentPage } = useGetAllTypeEventsByPageQuery({
+    limit,
+    page: currentPage,
+  });
   const [getTypesEventById] = useLazyGetTypesEventByIdForUpdateFormQuery();
 
-  const typesList = serverData?.eventTypes;
+  const typesList = serverDataByCurrentPage?.eventTypes;
+  useEffect(() => {
+    if (serverDataByCurrentPage?.totalEventTypes) {
+      setTotalTypeEvents(serverDataByCurrentPage.totalEventTypes);
+      setTotalPages(serverDataByCurrentPage.totalPages);
+    }
+  }, [serverDataByCurrentPage]);
+  function handleSetCurrentPage(
+    newCurrentPage,
+    prevPageNumber,
+    nextPageNumber
+  ) {
+    if (newCurrentPage !== '...') {
+      setCurrentPage(newCurrentPage);
+      return;
+    }
+    const updateCurrentPage = Math.floor((prevPageNumber + nextPageNumber) / 2);
+    setCurrentPage(updateCurrentPage);
+  }
 
   async function handleConfirmDelete() {
     setDeleteType(null);
@@ -39,7 +66,8 @@ export default function EventTypeList() {
       await deleteTypeEvent(idDeleteTypeEvent).unwrap();
 
       setStatusMessage('Тип події видалено');
-
+      const maxPage = Math.ceil((totalTypeEvents - 1) / 10);
+      currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
       setIsShowSuccessMessage(true);
     } catch (error) {
       setStatusMessage('Сталася помилка. Спробуйте ще раз.');
@@ -63,21 +91,30 @@ export default function EventTypeList() {
       <AdminHeader title={'Типи подій'}>
         <button
           onClick={() => setIsCreateTypeModalVisible(true)}
-          className="button-common-hover-dark min-h-[47px] min-w-[182px] bg-admin-dark px-[27px] py-2.5  font-source_sans_3 text-white  laptop:text-base desktop:text-xl"
+          className="button-common-hover-dark min-h-[47px] min-w-[182px] bg-admin-dark px-[27px] py-2.5  font-source_sans_3 text-white  tablet:text-base desktop:text-xl"
         >
           Додати новий тип подій
         </button>
       </AdminHeader>
-      <div className="ml-5 tablet:mr-5 desktop:mr-20">
-        <DisplayList
-          showConfirmationModal={(eventTypeId, typeName) => {
-            setIsConfirmationModalVisible(true);
-            setIdDeleteTypeEvent(eventTypeId);
-            setDeleteType(typeName);
-          }}
-          edit={id => handleEdit(id)}
-          typesData={typesList}
-        />
+      <div className="flex  min-h-[986px] flex-col justify-between pb-4">
+        <div className="ml-5 tablet:mr-5 desktop:mr-20">
+          <DisplayList
+            showConfirmationModal={(eventTypeId, typeName) => {
+              setIsConfirmationModalVisible(true);
+              setIdDeleteTypeEvent(eventTypeId);
+              setDeleteType(typeName);
+            }}
+            edit={id => handleEdit(id)}
+            typesData={typesList}
+          />
+        </div>
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPage={totalPages}
+            onClick={handleSetCurrentPage}
+          />
+        )}
       </div>
       {isCreateTypeModalVisible && (
         <CreateTypeEvent

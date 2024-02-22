@@ -12,7 +12,7 @@ import {
 } from '@/redux/api/eventsApi';
 import AddEventButton from './add-event-button';
 import DisplayEventList from './display-event-list';
-import EventPagination from './event-pagination';
+import Pagination from '../../common/pagination';
 
 export default function EventList() {
   const [inputValue, setInputValue] = useState('');
@@ -115,7 +115,8 @@ export default function EventList() {
           <AddEventButton />
         </div>
       </AdminHeader>
-      <div className="ml-5 mt-2 grid grid-cols-1 grid-rows-[auto_auto] pb-4 ">
+      {/* <div className="ml-5 mt-2 grid  grid-cols-1 grid-rows-[auto_auto] pb-4"> */}
+      <div className="ml-5 mt-2 flex  min-h-[914px] flex-col justify-between pb-4">
         <div className="box-border grid auto-rows-auto font-exo_2 text-base tablet:mr-5 desktop:mr-20">
           <DisplayEventList
             showConfirmationModal={eventId => {
@@ -126,15 +127,15 @@ export default function EventList() {
             eventsData={eventList}
           />
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPage={totalPages}
+            onClick={handleSetCurrentPage}
+          />
+        )}
       </div>
 
-      {totalPages > 1 && (
-        <EventPagination
-          currentPage={currentPage}
-          totalPage={totalPages}
-          onClick={handleSetCurrentPage}
-        />
-      )}
       {isConfirmationModalVisible && (
         <BasicModalWindows
           onClose={() => setIsConfirmationModalVisible(false)}

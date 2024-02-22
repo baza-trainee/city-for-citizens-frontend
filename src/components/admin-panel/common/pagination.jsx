@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import IconAdminPaginationArrow from '@/assets/icons/common/totalPage-arrow-icon.svg';
 
-export default function EventPagination({ currentPage, totalPage, onClick }) {
-  const maxPagePosition = 7;
+export default function Pagination({ currentPage, totalPage, onClick }) {
+  const maxPagePosition = totalPage > 6 ? 7 : totalPage;
   const arrayOfPageNumbers = Array.from(
     { length: maxPagePosition },
     (_, i) => i + 1

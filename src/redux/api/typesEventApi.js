@@ -55,6 +55,26 @@ export const typesEventApi = createApi({
     }),
 
     //
+    getAllTypeEventsByPage: builder.query({
+      query: (limit, page) => {
+        const queryStr = generateQueryStr('event-types', limit, page);
+
+        return { url: queryStr, method: 'GET' };
+      },
+      providesTags: result => {
+        return result.events
+          ? [
+              ...result.map(({ id }) => ({
+                type: 'TypesEvent',
+                id,
+              })),
+              { type: 'TypesEvent', id: 'LIST' },
+            ]
+          : [{ type: 'TypesEvent', id: 'LIST' }];
+      },
+    }),
+
+    //
     getTypesEventByIdForUpdateForm: builder.query({
       query: typeEventId => {
         return { url: `event-types/${typeEventId}`, method: 'GET' };
@@ -104,6 +124,7 @@ export const typesEventApi = createApi({
 export const {
   useGetTypesEventQuery,
   useGetTypesEventByIdForUpdateFormQuery,
+  useGetAllTypeEventsByPageQuery,
   useLazyGetTypesEventByIdForUpdateFormQuery,
   useCreateTypeEventMutation,
   useUpdateTypesEventMutation,
