@@ -13,7 +13,6 @@ import DisplayList from './display-list';
 import CreateTypeEvent from './helpers/create-type-event';
 import EditTypeEvent from './helpers/edit-type-event';
 import Pagination from '@/components/admin-panel/common/pagination';
-import clsx from 'clsx';
 
 export default function EventTypeList() {
   const [idDeleteTypeEvent, setIdDeleteTypeEvent] = useState(null);
