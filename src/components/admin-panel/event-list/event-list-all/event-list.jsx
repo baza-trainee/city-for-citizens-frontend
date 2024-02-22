@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import IconSearch from '@/assets/icons/common/search-icon.svg';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
 import { BasicModalWindows } from '@/components/common';
-
+import { useCreatePagination } from '@/hooks';
 import {
   useDeleteEventMutation,
   useGetEventsBySearchByPageQuery,
@@ -30,18 +30,25 @@ export default function EventList() {
     query: inputValue,
     page: currentPage,
   });
+  const [
+    newCurrentPage,
+    totalPages,
+    handleSetCurrentPage,
+    checkCurrentPageAfterDelete,
+  ] = useCreatePagination({
+    serverTotalItems: serverDataByCurrentPage?.totalEvents,
+    serverTotalPages: serverDataByCurrentPage?.totalPages,
+  });
 
   const eventList = serverDataByCurrentPage?.events;
 
-  const [totalEvents, setTotalEvents] = useState(null);
-  const [totalPages, setTotalPages] = useState(null);
-
   const [deleteEvent, { isLoading }] = useDeleteEventMutation();
+  useEffect(() => {
+    setCurrentPage(newCurrentPage);
+  }, [newCurrentPage]);
 
   useEffect(() => {
     if (serverDataByCurrentPage?.totalEvents) {
-      setTotalEvents(serverDataByCurrentPage.totalEvents);
-      setTotalPages(serverDataByCurrentPage.totalPages);
       setCurrentPage(serverDataByCurrentPage.currentPage);
     }
   }, [serverDataByCurrentPage, inputValue]);
@@ -52,8 +59,8 @@ export default function EventList() {
       await deleteEvent(idDeleteEvent).unwrap();
 
       setStatusMessage('Подію видалено!');
-      const maxPage = Math.ceil((totalEvents - 1) / 10);
-      currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
+
+      checkCurrentPageAfterDelete();
 
       setIsShowSuccessMessage(true);
     } catch (error) {
@@ -61,10 +68,7 @@ export default function EventList() {
         setStatusMessage(
           'Подію видалено! але не видалено стару картинку з бази даних, можливо її і не було, але зверніться у підтримку для перевірки інформації.'
         );
-
-        const maxPage = Math.ceil((totalEvents - 1) / 10);
-        currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
-
+        checkCurrentPageAfterDelete();
         setIsShowSuccessMessage(true);
       } else {
         setStatusMessage('Сталася помилка. Спробуйте ще раз.');
@@ -79,19 +83,6 @@ export default function EventList() {
   function handleChangeSearch(event) {
     const inputValue = event.target.value;
     setInputValue(inputValue);
-  }
-
-  function handleSetCurrentPage(
-    newCurrentPage,
-    prevPageNumber,
-    nextPageNumber
-  ) {
-    if (newCurrentPage !== '...') {
-      setCurrentPage(newCurrentPage);
-      return;
-    }
-    const updateCurrentPage = Math.floor((prevPageNumber + nextPageNumber) / 2);
-    setCurrentPage(updateCurrentPage);
   }
 
   return (
@@ -115,7 +106,6 @@ export default function EventList() {
           <AddEventButton />
         </div>
       </AdminHeader>
-      {/* <div className="ml-5 mt-2 grid  grid-cols-1 grid-rows-[auto_auto] pb-4"> */}
       <div className="ml-5 mt-2 flex  min-h-[914px] flex-col justify-between pb-4">
         <div className="box-border grid auto-rows-auto font-exo_2 text-base tablet:mr-5 desktop:mr-20">
           <DisplayEventList

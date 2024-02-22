@@ -8,7 +8,7 @@ import { useLazyGetTypesEventByIdForUpdateFormQuery } from '@/redux/api/typesEve
 import { useState, useEffect } from 'react';
 
 import { BasicModalWindows } from '@/components/common';
-
+import { useCreatePagination } from '@/hooks';
 import DisplayList from './display-list';
 import CreateTypeEvent from './helpers/create-type-event';
 import EditTypeEvent from './helpers/edit-type-event';
@@ -27,35 +27,29 @@ export default function EventTypeList() {
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const [deleteType, setDeleteType] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalTypeEvents, setTotalTypeEvents] = useState(null);
-  const [totalPages, setTotalPages] = useState(null);
+
   const [deleteTypeEvent, { isLoading }] = useDeleteTypeEventMutation();
+
   const limit = 10;
   const { data: serverDataByCurrentPage } = useGetAllTypeEventsByPageQuery({
     limit,
     page: currentPage,
   });
+  const [
+    newCurrentPage,
+    totalPages,
+    handleSetCurrentPage,
+    checkCurrentPageAfterDelete,
+  ] = useCreatePagination({
+    serverTotalItems: serverDataByCurrentPage?.totalEventTypes,
+    serverTotalPages: serverDataByCurrentPage?.totalPages,
+  });
   const [getTypesEventById] = useLazyGetTypesEventByIdForUpdateFormQuery();
 
   const typesList = serverDataByCurrentPage?.eventTypes;
   useEffect(() => {
-    if (serverDataByCurrentPage?.totalEventTypes) {
-      setTotalTypeEvents(serverDataByCurrentPage.totalEventTypes);
-      setTotalPages(serverDataByCurrentPage.totalPages);
-    }
-  }, [serverDataByCurrentPage]);
-  function handleSetCurrentPage(
-    newCurrentPage,
-    prevPageNumber,
-    nextPageNumber
-  ) {
-    if (newCurrentPage !== '...') {
-      setCurrentPage(newCurrentPage);
-      return;
-    }
-    const updateCurrentPage = Math.floor((prevPageNumber + nextPageNumber) / 2);
-    setCurrentPage(updateCurrentPage);
-  }
+    setCurrentPage(newCurrentPage);
+  }, [newCurrentPage]);
 
   async function handleConfirmDelete() {
     setDeleteType(null);
@@ -65,8 +59,7 @@ export default function EventTypeList() {
       await deleteTypeEvent(idDeleteTypeEvent).unwrap();
 
       setStatusMessage('Тип події видалено');
-      const maxPage = Math.ceil((totalTypeEvents - 1) / 10);
-      currentPage > maxPage && setCurrentPage(prev => prev - 1 || 1);
+      checkCurrentPageAfterDelete();
       setIsShowSuccessMessage(true);
     } catch (error) {
       setStatusMessage('Сталася помилка. Спробуйте ще раз.');
