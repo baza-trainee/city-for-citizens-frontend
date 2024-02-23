@@ -1,4 +1,4 @@
-import ControlSection from './control-section';
+import ControlSection from '@/components/admin-panel/common/control-section';
 
 export default function DisplayList({
   showConfirmationModal,
