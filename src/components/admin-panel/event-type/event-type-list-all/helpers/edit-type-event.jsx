@@ -47,6 +47,7 @@ export default function EditTypeEvent({ typeEvent, close, success, error }) {
       >
         <CommonModalForm
           register={register}
+          close={close}
           errors={errors}
           isValid={isValid}
           isLoading={isLoadingEditTypeEvent}

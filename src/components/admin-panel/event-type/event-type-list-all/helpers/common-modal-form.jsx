@@ -4,6 +4,7 @@ export default function CommonModalForm({
   isValid,
   isLoading,
   nameButton,
+  close,
 }) {
   return (
     <>
