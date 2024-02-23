@@ -5,6 +5,7 @@ import { useHandleFormDataImage } from './useHandleFormDataImage';
 import { useCopyToClipboard } from './useCopyToClipboard';
 
 import { useStyleMediaQuery } from './useStyleMediaQuery';
+import { useCreatePagination } from './useCreatePagination';
 
 export {
   useQueryParam,
@@ -13,4 +14,5 @@ export {
   useHandleFormDataImage,
   useCopyToClipboard,
   useStyleMediaQuery,
+  useCreatePagination,
 };

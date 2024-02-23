@@ -1,17 +1,18 @@
 'use client';
 import AdminHeader from '@/components/admin-panel/common/admin-header';
 import {
-  useGetTypesEventQuery,
+  useGetAllTypeEventsByPageQuery,
   useDeleteTypeEventMutation,
 } from '@/redux/api/typesEventApi';
 import { useLazyGetTypesEventByIdForUpdateFormQuery } from '@/redux/api/typesEventApi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { BasicModalWindows } from '@/components/common';
-
+import { useCreatePagination } from '@/hooks';
 import DisplayList from './display-list';
 import CreateTypeEvent from './helpers/create-type-event';
 import EditTypeEvent from './helpers/edit-type-event';
+import Pagination from '@/components/admin-panel/common/pagination';
 
 export default function EventTypeList() {
   const [idDeleteTypeEvent, setIdDeleteTypeEvent] = useState(null);
@@ -25,11 +26,30 @@ export default function EventTypeList() {
   const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
   const [deleteType, setDeleteType] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [deleteTypeEvent, { isLoading }] = useDeleteTypeEventMutation();
-  const { data: serverData } = useGetTypesEventQuery();
+
+  const limit = 10;
+  const { data: serverDataByCurrentPage } = useGetAllTypeEventsByPageQuery({
+    limit,
+    page: currentPage,
+  });
+  const [
+    newCurrentPage,
+    totalPages,
+    handleSetCurrentPage,
+    checkCurrentPageAfterDelete,
+  ] = useCreatePagination({
+    serverTotalItems: serverDataByCurrentPage?.totalEventTypes,
+    serverTotalPages: serverDataByCurrentPage?.totalPages,
+  });
   const [getTypesEventById] = useLazyGetTypesEventByIdForUpdateFormQuery();
 
-  const typesList = serverData?.eventTypes;
+  const typesList = serverDataByCurrentPage?.eventTypes;
+  useEffect(() => {
+    setCurrentPage(newCurrentPage);
+  }, [newCurrentPage]);
 
   async function handleConfirmDelete() {
     setDeleteType(null);
@@ -39,7 +59,7 @@ export default function EventTypeList() {
       await deleteTypeEvent(idDeleteTypeEvent).unwrap();
 
       setStatusMessage('Тип події видалено');
-
+      checkCurrentPageAfterDelete();
       setIsShowSuccessMessage(true);
     } catch (error) {
       setStatusMessage('Сталася помилка. Спробуйте ще раз.');
@@ -63,21 +83,30 @@ export default function EventTypeList() {
       <AdminHeader title={'Типи подій'}>
         <button
           onClick={() => setIsCreateTypeModalVisible(true)}
-          className="button-common-hover-dark min-h-[47px] min-w-[182px] bg-admin-dark px-[27px] py-2.5  font-source_sans_3 text-white  laptop:text-base desktop:text-xl"
+          className="button-common-hover-dark min-h-[47px] min-w-[182px] bg-admin-dark px-[27px] py-2.5  font-source_sans_3 text-white  tablet:text-base desktop:text-xl"
         >
           Додати новий тип подій
         </button>
       </AdminHeader>
-      <div className="ml-5 tablet:mr-5 desktop:mr-20">
-        <DisplayList
-          showConfirmationModal={(eventTypeId, typeName) => {
-            setIsConfirmationModalVisible(true);
-            setIdDeleteTypeEvent(eventTypeId);
-            setDeleteType(typeName);
-          }}
-          edit={id => handleEdit(id)}
-          typesData={typesList}
-        />
+      <div className="flex  min-h-[986px] flex-col justify-between pb-4">
+        <div className="ml-5 tablet:mr-5 desktop:mr-20">
+          <DisplayList
+            showConfirmationModal={(eventTypeId, typeName) => {
+              setIsConfirmationModalVisible(true);
+              setIdDeleteTypeEvent(eventTypeId);
+              setDeleteType(typeName);
+            }}
+            edit={id => handleEdit(id)}
+            typesData={typesList}
+          />
+        </div>
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPage={totalPages}
+            onClick={handleSetCurrentPage}
+          />
+        )}
       </div>
       {isCreateTypeModalVisible && (
         <CreateTypeEvent

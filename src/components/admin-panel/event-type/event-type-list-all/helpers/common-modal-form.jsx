@@ -1,6 +1,5 @@
 export default function CommonModalForm({
   register,
-
   errors,
   isValid,
   isLoading,

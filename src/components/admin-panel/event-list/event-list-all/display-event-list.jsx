@@ -36,7 +36,7 @@ export default function DisplayEventList({
   const router = useRouter();
   return (
     <>
-      <table className=" -mt-[17px] w-full border-separate border-spacing-x-0 border-spacing-y-[17px]">
+      <table className=" -mt-[24px] w-full border-separate border-spacing-x-0 border-spacing-y-[17px]">
         <thead>
           <tr
             className="mb-[17px] bg-admin-menu
@@ -76,7 +76,9 @@ export default function DisplayEventList({
                     .map(({ eventType }) => eventType)
                     .join(', ')}
                 </td>
-                <td className="">{getEventDate(event.dateTime)}</td>
+                <td className="font-source_sans_3">
+                  {getEventDate(event.dateTime)}
+                </td>
                 <td className="align-middle desktop:w-[17.5%]">
                   <div className="flex items-center gap-x-10 pl-[2.4rem] tablet:flex-col tablet:py-1 tablet:pr-1 laptop:flex-row">
                     <button
