@@ -5,7 +5,6 @@ import './globals.css';
 import { ReduxProvider } from '@/providers/redux-provider';
 import { locales } from '@/config';
 import { exo_2, roboto, source_sans_3, ubuntu, oswald } from '@/app/fonts';
-import NextThemeProvider from '@/providers/theme-providers';
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
@@ -30,11 +29,9 @@ export default function LocaleLayout({ children, params: { locale } }) {
       lang={locale}
       className={` ${roboto.variable} ${ubuntu.variable} ${exo_2.variable} ${source_sans_3.variable} ${oswald.variable}`}
     >
-      <body className="bg-light-primary font-source_sans_3 text-light-head dark:bg-dark-primary dark:text-dark-head">
+      <body className="bg-light-primary font-source_sans_3 text-light-head">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <NextThemeProvider>
-            <ReduxProvider>{children}</ReduxProvider>
-          </NextThemeProvider>
+          <ReduxProvider>{children}</ReduxProvider>
         </NextIntlClientProvider>
       </body>
     </html>

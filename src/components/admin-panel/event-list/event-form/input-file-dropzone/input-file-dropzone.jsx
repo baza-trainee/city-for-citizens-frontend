@@ -108,7 +108,7 @@ export function FileDropzone({
           className={`relative flex h-[216px] w-[305px] flex-col items-center justify-center `}
         >
           <BorderDashed
-            className={`absolute left-0 top-0 h-[216px] w-[305px] transition-all 
+            className={`absolute left-0 top-0 h-[216px] w-[305px] text-admin-darkgray transition-all 
           ${clsx(
             isDragAccept &&
               'text-state-success shadow-main shadow-state-success/30',
@@ -180,7 +180,7 @@ export function FileDropzone({
           onClick={removeImage}
           type="button"
         >
-          <CloseIcon className={'w-[15px]'} />
+          <CloseIcon className={'w-[15px] text-admin-dark'} />
         </button>
       ) : null}
     </div>
