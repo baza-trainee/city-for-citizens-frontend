@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { BASE_URL } from '@/helpers/constants';
 import { addTokenToHeaders } from './helpers/addTokenToHeaders';
-//import { generateQueryStr } from './helpers/generateQueryStr';
 
 export const partnersApi = createApi({
   reducerPath: 'partnersApi',
@@ -34,9 +33,10 @@ export const partnersApi = createApi({
     //
     getPartnersByIdForUpdateForm: builder.query({
       query: partnerId => {
-        return { url: `partners/${partnerId}`, method: 'GET' };
+        return { url: `partners?id=${partnerId}`, method: 'GET' };
       },
       providesTags: [{ type: 'Partners', id: 'LIST' }],
+      transformResponse: res => res[0],
     }),
     //
     createPartner: builder.mutation({
@@ -54,6 +54,7 @@ export const partnersApi = createApi({
     //
     updatePartner: builder.mutation({
       query: ({ body, partnerId }) => {
+        console.log('partnerId', partnerId);
         return {
           url: `partners/${partnerId}`,
           method: 'PATCH',
@@ -66,6 +67,7 @@ export const partnersApi = createApi({
     //
     deletePartner: builder.mutation({
       query: partnerId => {
+        console.log('partnerId', partnerId);
         return {
           url: `partners/${partnerId}`,
           method: 'DELETE',

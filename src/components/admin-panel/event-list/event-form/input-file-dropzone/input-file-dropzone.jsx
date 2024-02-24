@@ -44,6 +44,7 @@ export function FileDropzone({
   errorMessage,
   locale,
   isResetForm,
+  isPartners = false,
 }) {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [fileRejections, setFileRejections] = useState([]);
@@ -146,6 +147,7 @@ export function FileDropzone({
                   photo={photo}
                   acceptedFiles={uploadedFiles}
                   isResetForm={isResetForm}
+                  isPartners={isPartners}
                 />
               )}
             </>

@@ -3,29 +3,25 @@ import AdminHeader from '@/components/admin-panel/common/admin-header';
 import PartnerForm from '@/components/admin-panel/partners/partner-form';
 import { useState } from 'react';
 import { useCreatePartnerMutation } from '@/redux/api/partnersApi';
-import { useCreateImageMutation } from '@/redux/api/imageApi';
 import { BasicModalWindows } from '@/components/common';
+import { useRouter } from '@/navigation';
 
 export default function AddPartner() {
   const [addPartner] = useCreatePartnerMutation();
   const [statusMessage, setStatusMessage] = useState('');
   const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
-  const [addImage, { isLoading: isLoadingAddImage }] = useCreateImageMutation();
-  async function handleSubmit(data) {
+  const router = useRouter();
+
+  async function handleSubmit(data, resetForm) {
     try {
       let formDataImage = new FormData();
-      formDataImage.append('file', data?.partnerImage[0]);
+      formDataImage.append('image', data?.image[0]);
+      formDataImage.append('name', data.name);
+      formDataImage.append('link', data.link);
 
-      const imageNameForRequest = await addImage(formDataImage).unwrap();
-      console.log('image name for request', imageNameForRequest);
-      const localeFormData = {
-        name: data.partnerName,
-        link: data.partnerLink,
-        image: imageNameForRequest.eventImage,
-      };
-      console.log('formDataToSend', localeFormData);
-      await addPartner(localeFormData).unwrap();
+      await addPartner(formDataImage).unwrap();
+      resetForm();
       setStatusMessage('Партнера успішно додано');
       setIsShowSuccessMessage(true);
     } catch (err) {
@@ -43,6 +39,7 @@ export default function AddPartner() {
       <div className="">
         <PartnerForm
           onSubmit={handleSubmit}
+          onClose={() => router.back()}
           isLoading={false}
           nameButtonSubmit="Додати"
         />

@@ -1,32 +1,11 @@
 'use client';
 
 import { v4 as uuidv4 } from 'uuid';
-
 import IconTrash from '@/assets/icons/common/trash-icon.svg';
 import IconPencil from '@/assets/icons/common/pencil-icon.svg';
 import { useRouter } from '@/navigation';
+import getDate from '@/components/admin-panel/common/getDate';
 import clsx from 'clsx';
-
-function getEventDate(eventDate) {
-  const date = new Date(eventDate);
-  let hours = date.getHours();
-  switch (hours) {
-    case 0:
-      hours = 22;
-      break;
-    case 1:
-      hours = 23;
-      break;
-    default:
-      hours = hours - 2;
-  }
-  return `${formatDate(date.getDate())}.${formatDate(date.getMonth() + 1)}.${date.getFullYear()} \u00A0\u00A0\u00A0 ${formatDate(null, hours)}:${formatDate(null, date.getMinutes())}`;
-}
-
-function formatDate(dateElStartZero, dateElEndZero) {
-  if (dateElStartZero) return String(dateElStartZero).padStart(2, '0');
-  return String(dateElEndZero).padStart(2, '0');
-}
 
 export default function DisplayEventList({
   eventsData,
@@ -77,7 +56,7 @@ export default function DisplayEventList({
                     .join(', ')}
                 </td>
                 <td className="font-source_sans_3">
-                  {getEventDate(event.dateTime)}
+                  {getDate(event.dateTime)}
                 </td>
                 <td className="align-middle desktop:w-[17.5%]">
                   <div className="flex items-center gap-x-10 pl-[2.4rem] tablet:flex-col tablet:py-1 tablet:pr-1 laptop:flex-row">

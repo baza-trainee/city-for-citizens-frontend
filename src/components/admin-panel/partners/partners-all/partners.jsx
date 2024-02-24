@@ -20,6 +20,7 @@ export default function Partners() {
   const [deletePartner, { isLoading }] = useDeletePartnerMutation();
 
   const { data: serverData } = useGetPartnersQuery();
+  console.log('data', serverData);
 
   async function handleConfirmDelete() {
     setDeletePartnerName(null);
@@ -39,7 +40,7 @@ export default function Partners() {
       setIdDeletePartner(null);
     }
   }
-  function handleEdit(id) {}
+
   return (
     <div>
       <AdminHeader title={'Партнери'}>
@@ -58,7 +59,6 @@ export default function Partners() {
             setIdDeletePartner(partnerId);
             setDeletePartnerName(partnerName);
           }}
-          edit={id => handleEdit(id)}
           serverData={serverData}
         />
       </div>
