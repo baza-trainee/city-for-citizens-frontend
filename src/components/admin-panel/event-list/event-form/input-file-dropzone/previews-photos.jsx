@@ -60,17 +60,15 @@ export function Previews({
       ) : (
         <>
           {files[0]?.preview && (
-            <>
-              <Image
-                className="object-cover"
-                fill
-                alt="preview"
-                src={files[0].preview}
-                onLoad={() => {
-                  URL.revokeObjectURL(files[0].preview);
-                }}
-              />
-            </>
+            <Image
+              className="object-cover"
+              fill
+              alt="preview"
+              src={files[0].preview}
+              onLoad={() => {
+                URL.revokeObjectURL(files[0].preview);
+              }}
+            />
           )}
         </>
       )}

@@ -24,7 +24,9 @@ export default function getTransformsForUpdateForm(data) {
       street,
       description,
       notes,
-      eventType: eventTypes.map(({ eventType }) => eventType.trim()).join(', '),
+      eventTypeId: eventTypes
+        .map(({ eventType }) => eventType.trim())
+        .join(', '),
       eventImage,
     };
   }

@@ -23,7 +23,7 @@ const initialFormData = {
     street: '',
     description: '',
     notes: '',
-    eventType: '',
+    eventTypeId: '',
     eventImage: '',
   },
   secondLocale: {
@@ -32,7 +32,7 @@ const initialFormData = {
     street: '',
     description: '',
     notes: '',
-    eventType: '',
+    eventTypeId: '',
     eventImage: '',
   },
   common: { time: '', date: '', coordinates: '' },
@@ -51,6 +51,7 @@ export default function EventForm({
     handleSubmit,
     setValue,
     reset,
+    resetField,
     clearErrors,
     watch,
   } = useForm({
@@ -160,13 +161,14 @@ export default function EventForm({
               locale={'uk_UA'}
               setValue={setValue}
               placeholder="Виберіть тип події українською"
-              inputName={'firstLocale.eventType'}
+              inputName={'firstLocale.eventTypeId'}
               initialState={
-                initialData?.firstLocale?.eventType ||
-                eventFormData?.firstLocale?.eventType
+                initialData?.firstLocale?.eventTypeId ||
+                eventFormData?.firstLocale?.eventTypeId
               }
-              errorMessage={errors?.firstLocale?.eventType?.message}
-              register={register('firstLocale.eventType')}
+              resetField={resetField}
+              errorMessage={errors?.firstLocale?.eventTypeId?.message}
+              register={register('firstLocale.eventTypeId')}
               clickResetForm={clickResetForm}
               clearErrors={clearErrors}
             />
@@ -175,13 +177,14 @@ export default function EventForm({
               locale={'en_US'}
               setValue={setValue}
               placeholder="Виберіть тип події англійською"
-              inputName={'secondLocale.eventType'}
+              inputName={'secondLocale.eventTypeId'}
               initialState={
-                initialData?.secondLocale?.eventType ||
-                eventFormData?.secondLocale?.eventType
+                initialData?.secondLocale?.eventTypeId ||
+                eventFormData?.secondLocale?.eventTypeId
               }
-              errorMessage={errors?.secondLocale?.eventType?.message}
-              register={register('secondLocale.eventType')}
+              resetField={resetField}
+              errorMessage={errors?.secondLocale?.eventTypeId?.message}
+              register={register('secondLocale.eventTypeId')}
               clickResetForm={clickResetForm}
               clearErrors={clearErrors}
             />
