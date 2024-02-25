@@ -7,7 +7,7 @@ export const initialState = {
     street: '',
     description: '',
     notes: '',
-    eventType: '',
+    eventTypeId: '',
     eventImage: '',
   },
   secondLocale: {
@@ -16,7 +16,7 @@ export const initialState = {
     street: '',
     description: '',
     notes: '',
-    eventType: '',
+    eventTypeId: '',
     eventImage: '',
   },
   common: { time: '', date: '', coordinates: '' },

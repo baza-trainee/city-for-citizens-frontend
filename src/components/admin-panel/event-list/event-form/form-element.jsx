@@ -12,6 +12,7 @@ export function FormElement({
   customIcon: Icon,
   type,
   className,
+  altTextValue,
   ...attr
 }) {
   const Tag = tag === 'input' ? 'input' : 'textarea';
@@ -34,12 +35,14 @@ export function FormElement({
         autoComplete="off"
         placeholder={placeholder}
         className={`block min-h-[48px] w-full cursor-text rounded border border-admin-placeholder bg-white px-[9px] py-3 font-source_sans_3 leading-snug text-admin-dark placeholder:text-admin-placeholder 
-          ${clsx(
-            tag === 'textarea' && 'max-h-[196px] resize-none',
-            tag === 'input' && 'max-h-[48px]',
-            className,
-            errorMessage && '!border-state-error_main'
-          )}`}
+            ${clsx(
+              altTextValue &&
+                '!placeholder:text-admin-placeholder select-none  !text-[transparent]',
+              tag === 'textarea' && 'max-h-[196px] resize-none',
+              tag === 'input' && 'max-h-[48px]',
+              className,
+              errorMessage && '!border-state-error_main'
+            )}`}
         {...register}
       />
       {Icon && (

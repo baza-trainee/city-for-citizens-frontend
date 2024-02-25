@@ -25,7 +25,7 @@ export function getValidationScheme() {
     street: yup.string().trim().required().min(2).max(40),
     description: yup.string().trim().required().min(15).max(300),
     notes: yup.string().trim().max(180).notRequired(),
-    eventType: yup.string().required(),
+    eventTypeId: yup.string().required(),
     eventImage: yup
       .mixed()
       .test('is-file', 'Завантажте, будь ласка, зображення', value => {
