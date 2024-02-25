@@ -10,7 +10,7 @@ export default function DisplayList({ showConfirmationModal, serverData }) {
         className="mb-[14px] flex h-[57px] items-center  bg-admin-menu 
            py-3 font-source_sans_3 text-lg text-admin-dark"
       >
-        <span className="desktop_m:w-[648px] pl-[43px] tablet:w-[178px] laptop:w-[300px] desktop:w-[550px]">
+        <span className="pl-[43px] tablet:w-[178px] laptop:w-[300px] desktop:w-[550px] desktop_m:w-[648px]">
           Назва
         </span>
         <span className="">Дата додавання</span>
@@ -30,7 +30,7 @@ export default function DisplayList({ showConfirmationModal, serverData }) {
               bg-admin-light_3 font-exo_2 text-admin-dark
             transition duration-200 hover:bg-admin-menu "
             >
-              <span className="desktop_m:w-[648px] py-[10px] pl-[43px] pr-[5px] tablet:w-[178px] laptop:w-[300px] desktop:w-[550px]">
+              <span className="py-[10px] pl-[43px] pr-[5px] tablet:w-[178px] laptop:w-[300px] desktop:w-[550px] desktop_m:w-[648px]">
                 {data.name}
               </span>
               <span className="py-[10px] pr-[5px] font-source_sans_3">

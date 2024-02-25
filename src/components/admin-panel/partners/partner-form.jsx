@@ -49,7 +49,7 @@ export default function PartnerForm({
       <div className="flex  gap-x-[67px] gap-y-[30px] tablet:mb-[30px] tablet:flex-col desktop:mb-0 desktop:flex-row">
         <div className="flex flex-col gap-9">
           <div className="relative flex flex-col">
-            <div className="desktop_m:w-[643px] flex h-12 items-center rounded border border-admin-darkgray focus-within:border-admin-dark tablet:w-4/5 laptop:w-[550px]">
+            <div className="flex h-12 items-center rounded border border-admin-darkgray focus-within:border-admin-dark tablet:w-4/5 laptop:w-[550px] desktop_m:w-[643px]">
               <input
                 {...register('name')}
                 type="text"
@@ -65,7 +65,7 @@ export default function PartnerForm({
           </div>
 
           <div className="relative flex flex-col">
-            <div className="desktop_m:w-[643px] flex h-12 items-center rounded border border-admin-darkgray focus-within:border-admin-dark tablet:w-4/5 laptop:w-[550px]">
+            <div className="flex h-12 items-center rounded border border-admin-darkgray focus-within:border-admin-dark tablet:w-4/5 laptop:w-[550px] desktop_m:w-[643px]">
               <input
                 {...register('link')}
                 type="url"
