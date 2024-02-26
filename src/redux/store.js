@@ -12,6 +12,7 @@ import { contactsApi } from './api/contactsApi';
 import { documentsApi } from './api/documentsApi';
 import { typesEventApi } from './api/typesEventApi';
 import { eventFormData } from './slice/eventFormData';
+import { partnersApi } from './api/partnersApi';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     [contactsApi.reducerPath]: contactsApi.reducer,
     [documentsApi.reducerPath]: documentsApi.reducer,
     [typesEventApi.reducerPath]: typesEventApi.reducer,
+    [partnersApi.reducerPath]: partnersApi.reducer,
     appStatusSlice: appStatusSlice.reducer,
     eventFormData: eventFormData.reducer,
 
@@ -36,7 +38,8 @@ export const store = configureStore({
       imageApi.middleware,
       contactsApi.middleware,
       documentsApi.middleware,
-      typesEventApi.middleware
+      typesEventApi.middleware,
+      partnersApi.middleware
     ),
 });
 

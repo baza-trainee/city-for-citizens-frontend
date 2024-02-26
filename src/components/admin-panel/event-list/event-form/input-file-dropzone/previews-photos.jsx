@@ -2,9 +2,14 @@ import Image from 'next/image';
 
 import { useEffect, useState } from 'react';
 import { formatFileSize } from '../helpers/format-file-size';
-import { IMAGE_BASE_URL } from '@/helpers/constants';
+import { IMAGE_BASE_URL, IMAGE_PARTNERS_URL } from '@/helpers/constants';
 
-export function Previews({ acceptedFiles, photo, isResetForm }) {
+export function Previews({
+  acceptedFiles,
+  photo,
+  isResetForm,
+  isPartners = false,
+}) {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -50,7 +55,7 @@ export function Previews({ acceptedFiles, photo, isResetForm }) {
           className="object-cover"
           fill
           alt="preview"
-          src={`${IMAGE_BASE_URL}${photo}`}
+          src={`${isPartners ? IMAGE_PARTNERS_URL : IMAGE_BASE_URL}${photo}`}
         />
       ) : (
         <>

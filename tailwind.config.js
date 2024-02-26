@@ -125,6 +125,7 @@ module.exports = {
       laptop: '960px',
       laptop_xl: '1024px',
       desktop: '1280px',
+      desktop_m: '1440px',
       desktop_xl: '1920px',
     },
 
