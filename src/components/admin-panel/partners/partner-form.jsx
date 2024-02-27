@@ -10,8 +10,8 @@ export default function PartnerForm({
   onClose,
   initialData,
 }) {
-  const [formData, setFormData] = useState(null);
-  console.log('initialData', initialData);
+  const [clickResetForm, setClickResetForm] = useState(false);
+
   const initialFormData = {
     name: '',
     link: '',
@@ -41,12 +41,12 @@ export default function PartnerForm({
   }
   const isButtonDisabled = !isDirty && isEmpty(touchedFields);
   function resetForm() {
-    if (initialData) reset(formData, { keepDefaultValues: false });
+    setClickResetForm(prev => !prev);
+    if (initialData) reset(initialData, { keepDefaultValues: false });
     else reset();
   }
   function onSubmitHandle(formData) {
-    onSubmit(formData, reset);
-    setFormData(formData);
+    onSubmit(formData, resetForm);
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)} className="flex flex-col ">
@@ -90,7 +90,7 @@ export default function PartnerForm({
             errorMessage={errors?.image?.message}
             onChange={file => setValue('image', file)}
             locale={''}
-            isResetForm={() => resetForm()}
+            isResetForm={clickResetForm}
             isPartners={true}
           />
         </div>

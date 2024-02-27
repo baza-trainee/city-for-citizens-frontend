@@ -35,7 +35,7 @@ export default function EditPartner({ partnerId }) {
       }));
     }
   }, [serverData]);
-  async function handleSubmit(data, resetForm) {
+  async function handleSubmit(data) {
     try {
       let formData = new FormData();
       formData.append('image', data?.image[0]);
@@ -43,7 +43,7 @@ export default function EditPartner({ partnerId }) {
       formData.append('link', data.link);
 
       await editPartner({ body: formData, partnerId }).unwrap();
-      resetForm();
+
       setStatusMessage('Ваші зміни успішно збережено');
       setIsShowSuccessMessage(true);
     } catch (err) {
