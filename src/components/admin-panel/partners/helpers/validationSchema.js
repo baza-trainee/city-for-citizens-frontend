@@ -6,13 +6,18 @@ export function getValidationSchema() {
         .string('')
         .trim()
         .required('Заповніть, будь ласка, поле')
-        .min(5, 'Назва типу події має бути не менше 5 літер')
-        .max(55, 'Назва типу події має бути не більше 55 літер'),
+        .min(2, 'Введіть мінімум 2 символа')
+        .max(55, 'Назва партнера має бути не більше 55 символів'),
 
       link: yup
         .string('')
         .url('Посилання має бути типу http://partner.ua')
         .nullable(),
+      image: yup
+        .mixed()
+        .test('is-file', 'Завантажте, будь ласка, зображення', value => {
+          return Boolean(value);
+        }),
     })
     .required();
 }
