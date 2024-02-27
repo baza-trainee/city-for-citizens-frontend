@@ -22,7 +22,8 @@ export default function PartnerForm({
     handleSubmit,
     reset,
     setValue,
-    formState: { errors, isValid },
+
+    formState: { errors, isDirty, touchedFields },
   } = useForm({
     mode: 'all',
     defaultValues: initialData || initialFormData,
@@ -35,7 +36,10 @@ export default function PartnerForm({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
-
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+  const isButtonDisabled = !isDirty && isEmpty(touchedFields);
   function resetForm() {
     if (initialData) reset(formData, { keepDefaultValues: false });
     else reset();
@@ -94,15 +98,15 @@ export default function PartnerForm({
       <div className="mb-[25px] flex gap-x-4 desktop:-mt-3">
         <button
           disabled={isLoading}
-          className="button-close-hover px-[40px] pb-[10px] pt-[7px]"
+          className="button-close-hover px-[40px] pb-[10px] pt-[7px] leading-8"
           onClick={onClose}
           type="button"
         >
           Скасувати
         </button>
         <button
-          disabled={isLoading || !isValid}
-          className="button-confirm-hover px-[54px] pb-[10px] pt-[7px]"
+          disabled={isLoading || isButtonDisabled}
+          className="button-confirm-hover px-[54px] pb-[10px] pt-[7px] leading-8 disabled:bg-admin-button-disabled"
           type="submit"
         >
           {nameButtonSubmit}
