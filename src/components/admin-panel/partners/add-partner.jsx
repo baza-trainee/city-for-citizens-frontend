@@ -30,6 +30,11 @@ export default function AddPartner() {
       console.log(err);
     }
   }
+  const initialFormData = {
+    name: '',
+    link: '',
+    image: '',
+  };
 
   return (
     <div className="ml-[42px]">
@@ -41,7 +46,9 @@ export default function AddPartner() {
           onSubmit={handleSubmit}
           onClose={() => router.back()}
           isLoading={false}
+          initialData={initialFormData}
           nameButtonSubmit="Додати"
+          type="add"
         />
       </div>
       {isShowSuccessMessage && (
