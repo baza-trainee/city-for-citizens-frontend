@@ -4,10 +4,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/grid';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 import './slider.css';
 import IconLocation from '@/assets/icons/gallery/location.svg';
+import ArrowLeftIcon from '@/assets/icons/gallery/arrow-left.svg';
+import ArrowRightIcon from '@/assets/icons/gallery/arrow-right.svg';
 
 import data from '../common/data.json';
 
@@ -36,12 +37,21 @@ export function ImageGallery() {
       pagination={{
         clickable: true,
       }}
-      navigation={{ clickable: true }}
+      navigation={{
+        prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next',
+      }}
       mousewheel={true}
       keyboard={true}
       modules={[Grid, Pagination, Navigation]}
-      className="mySwiper"
+      className="mySwiper relative"
     >
+      <div className="swiper-button-prev relative h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50">
+        <ArrowLeftIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
+      </div>
+      <div className="swiper-button-next relative h-12 w-12 rounded-[40px] bg-light-button-default opacity-50">
+        <ArrowRightIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
+      </div>
       {data?.map((item, index) => (
         <SwiperSlide
           key={index}
