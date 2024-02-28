@@ -12,24 +12,28 @@ export default function PartnerForm({
   type,
 }) {
   const [clickResetForm, setClickResetForm] = useState(false);
-
+  const [isImageChange, setIsImageChange] = useState(false);
+  const [isNameChange, setIsNameChange] = useState(false);
+  const [isLinkChange, setIsLinkChange] = useState(false);
+  const [formData, setFormData] = useState(initialData);
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-
-    formState: { errors, isDirty, touchedFields },
+    formState: { errors },
   } = useForm({
     mode: 'all',
-    defaultValues: initialData,
+    defaultValues: formData,
     resolver: yupResolver(getValidationSchema()),
   });
+
   useEffect(() => {
     reset(initialData, { keepDefaultValues: true });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
+
   useEffect(() => {
     return document.addEventListener('keypress', function (e) {
       if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter') {
@@ -39,19 +43,35 @@ export default function PartnerForm({
     });
   });
 
-  function isEmpty(obj) {
-    return Object.keys(obj).length === 0;
-  }
-  const isButtonDisabled =
-    type === 'edit' ? !isDirty : !isDirty && isEmpty(touchedFields);
+  const isFieldWasChanged =
+    type === 'edit'
+      ? isNameChange || isLinkChange || isImageChange
+      : isNameChange || isLinkChange || isImageChange;
 
   function resetForm() {
     setClickResetForm(prev => !prev);
-    if (initialData) reset(initialData, { keepDefaultValues: false });
-    else reset();
+    if (type === 'edit') {
+      reset(formData, { keepDefaultValues: true });
+    } else reset();
   }
-  function onSubmitHandle(formData) {
-    onSubmit(formData, resetForm);
+
+  function onSubmitHandle(filledFormData) {
+    setFormData(filledFormData);
+    onSubmit(filledFormData, resetForm);
+    setIsImageChange(false);
+    setIsNameChange(false);
+    setIsLinkChange(false);
+  }
+
+  function handleOnChange(event) {
+    if (event.target.name == 'name') {
+      event.target.value != initialData.name && setIsNameChange(true);
+      event.target.value == initialData.name && setIsNameChange(false);
+    }
+    if (event.target.name == 'link') {
+      event.target.value != initialData.link && setIsLinkChange(true);
+      event.target.value == initialData.link && setIsLinkChange(false);
+    }
   }
   return (
     <form onSubmit={handleSubmit(onSubmitHandle)} className="flex flex-col ">
@@ -64,6 +84,7 @@ export default function PartnerForm({
                 type="text"
                 placeholder="Введіть назву партнера"
                 className="w-full pl-2 text-admin-dark outline-none"
+                onChange={handleOnChange}
               />
             </div>
             {errors.name && (
@@ -80,6 +101,7 @@ export default function PartnerForm({
                 type="url"
                 placeholder="Введіть посилання"
                 className="w-full pl-2 text-admin-dark outline-none"
+                onChange={handleOnChange}
               />
             </div>
             {errors.link && (
@@ -93,7 +115,10 @@ export default function PartnerForm({
           <FileDropzone
             photo={initialData?.image}
             errorMessage={errors?.image?.message}
-            onChange={file => setValue('image', file)}
+            onChange={file => {
+              setValue('image', file);
+              setIsImageChange(true);
+            }}
             locale={''}
             isResetForm={clickResetForm}
             isPartners={true}
@@ -104,13 +129,13 @@ export default function PartnerForm({
         <button
           disabled={isLoading}
           className="button-close-hover px-[40px] pb-[10px] pt-[7px] leading-8"
-          onClick={onClose}
+          onClick={() => onClose(isFieldWasChanged)}
           type="button"
         >
           Скасувати
         </button>
         <button
-          disabled={isLoading || isButtonDisabled}
+          disabled={isLoading || !isFieldWasChanged}
           className="button-confirm-hover px-[54px] pb-[10px] pt-[7px] leading-8 disabled:bg-admin-button-disabled"
           type="submit"
         >

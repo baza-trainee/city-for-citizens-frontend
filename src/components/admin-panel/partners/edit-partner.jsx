@@ -29,10 +29,20 @@ export default function EditPartner({ partnerId }) {
       }));
     }
   }, [serverData]);
+
+  function handleClose(isDirty) {
+    if (!isDirty) router.back();
+    else {
+      setIsConfirmationModalVisible(true);
+    }
+  }
+
   async function handleSubmit(data) {
     try {
       let formData = new FormData();
-      formData.append('image', data?.image[0]);
+      data?.image[0] && data?.image[0] !== 'p'
+        ? formData.append('image', data?.image[0])
+        : formData.delete('image');
       formData.append('name', data.name);
       formData.append('link', data.link);
 
@@ -58,7 +68,7 @@ export default function EditPartner({ partnerId }) {
             onSubmit={handleSubmit}
             isLoading={false}
             nameButtonSubmit="Зберегти"
-            onClose={() => setIsConfirmationModalVisible(true)}
+            onClose={handleClose}
             initialData={initialData}
             type="edit"
           />
@@ -74,14 +84,14 @@ export default function EditPartner({ partnerId }) {
           </div>
           <div className="flex gap-[15px]">
             <button
-              className="button-close"
+              className="button-close-hover  pb-[10px] pt-[7px] leading-8"
               onClick={() => setIsConfirmationModalVisible(false)}
               type="button"
             >
               Скасувати
             </button>
             <button
-              className="button-confirm"
+              className="button-confirm-hover  pb-[10px] pt-[7px] leading-8"
               onClick={() => router.back()}
               type="button"
             >
