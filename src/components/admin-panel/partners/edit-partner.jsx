@@ -10,7 +10,6 @@ import {
 import { BasicModalWindows } from '@/components/common';
 
 export default function EditPartner({ partnerId }) {
-  console.log('id', partnerId);
   const [editPartner] = useUpdatePartnerMutation();
   const [statusMessage, setStatusMessage] = useState('');
   const [isShowSuccessMessage, setIsShowSuccessMessage] = useState(false);
@@ -19,14 +18,9 @@ export default function EditPartner({ partnerId }) {
     useState(false);
   const { data: serverData } = useGetPartnersByIdForUpdateFormQuery(partnerId);
   const router = useRouter();
-  const defaultValue = {
-    name: '',
-    link: '',
-    image: '',
-  };
-  const [initialData, setInitialData] = useState(defaultValue);
+
+  const [initialData, setInitialData] = useState(null);
   useEffect(() => {
-    console.log('serverData', serverData);
     if (serverData) {
       setInitialData(() => ({
         name: serverData.name,
@@ -66,6 +60,7 @@ export default function EditPartner({ partnerId }) {
             nameButtonSubmit="Зберегти"
             onClose={() => setIsConfirmationModalVisible(true)}
             initialData={initialData}
+            type="edit"
           />
         )}
       </div>

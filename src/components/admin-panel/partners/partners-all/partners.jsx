@@ -20,7 +20,6 @@ export default function Partners() {
   const [deletePartner, { isLoading }] = useDeletePartnerMutation();
 
   const { data: serverData } = useGetPartnersQuery();
-  console.log('data', serverData);
 
   async function handleConfirmDelete() {
     setDeletePartnerName(null);

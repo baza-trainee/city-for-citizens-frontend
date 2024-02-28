@@ -54,7 +54,6 @@ export const partnersApi = createApi({
     //
     updatePartner: builder.mutation({
       query: ({ body, partnerId }) => {
-        console.log('partnerId', partnerId);
         return {
           url: `partners/${partnerId}`,
           method: 'PATCH',
@@ -67,7 +66,6 @@ export const partnersApi = createApi({
     //
     deletePartner: builder.mutation({
       query: partnerId => {
-        console.log('partnerId', partnerId);
         return {
           url: `partners/${partnerId}`,
           method: 'DELETE',

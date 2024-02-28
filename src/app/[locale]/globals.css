@@ -47,6 +47,10 @@ input[type='time'] {
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: #485058;
 }
+input[type='search']::-webkit-search-decoration:hover,
+input[type='search']::-webkit-search-cancel-button:hover {
+  cursor: pointer;
+}
 
 /* --- admin --- */
 

@@ -9,14 +9,10 @@ export default function PartnerForm({
   nameButtonSubmit,
   onClose,
   initialData,
+  type,
 }) {
   const [clickResetForm, setClickResetForm] = useState(false);
 
-  const initialFormData = {
-    name: '',
-    link: '',
-    image: '',
-  };
   const {
     register,
     handleSubmit,
@@ -26,20 +22,29 @@ export default function PartnerForm({
     formState: { errors, isDirty, touchedFields },
   } = useForm({
     mode: 'all',
-    defaultValues: initialData || initialFormData,
+    defaultValues: initialData,
     resolver: yupResolver(getValidationSchema()),
   });
   useEffect(() => {
-    if (initialData) {
-      reset(initialData, { keepDefaultValues: true });
-    }
+    reset(initialData, { keepDefaultValues: true });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
+  useEffect(() => {
+    return document.addEventListener('keypress', function (e) {
+      if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter') {
+        e.preventDefault();
+        return false;
+      }
+    });
+  });
+
   function isEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
-  const isButtonDisabled = !isDirty && isEmpty(touchedFields);
+  const isButtonDisabled =
+    type === 'edit' ? !isDirty : !isDirty && isEmpty(touchedFields);
+
   function resetForm() {
     setClickResetForm(prev => !prev);
     if (initialData) reset(initialData, { keepDefaultValues: false });
