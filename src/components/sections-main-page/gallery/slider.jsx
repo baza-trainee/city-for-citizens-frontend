@@ -46,10 +46,10 @@ export function ImageGallery() {
       modules={[Grid, Pagination, Navigation]}
       className="mySwiper relative"
     >
-      <div className="swiper-button-prev relative h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50">
+      <div className="swiper-button-prev absolute bottom-[53%] z-10 h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50">
         <ArrowLeftIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
-      <div className="swiper-button-next relative h-12 w-12 rounded-[40px] bg-light-button-default opacity-50">
+      <div className="swiper-button-next absolute bottom-[53%] right-0 z-10 h-12 w-12 rounded-[40px] bg-light-button-default opacity-50">
         <ArrowRightIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
       {data?.map((item, index) => (
