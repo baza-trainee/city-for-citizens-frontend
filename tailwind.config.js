@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
+  groupHover: true,
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -123,6 +124,7 @@ module.exports = {
       boxShadow: {
         list: '7px 0px 2px 10px #FBFAFA, inset 0px 0px 2px 15px #FBFAFA',
         main: '0px 0px 10px 1px',
+        gallery: '0px 5px 12px 0px rgba(115, 115, 115, 0.10);',
       },
     },
   },
