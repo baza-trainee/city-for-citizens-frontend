@@ -3,24 +3,27 @@
   height: 710px;
   padding-bottom: 80px;
   margin-top: 30px;
-
-  @media (max-width: 767px) {
-    height: 300px;
-  }
 }
 
 .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
-  height: calc((100% - 30px) / 2) !important;
+  height: calc((100% - 30px) / 2);
   border-radius: 8px;
-  /* margin-top: 0 !important; */
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 767px) {
+}
+
+@media (max-width: 767px) {
+  .swiper-slide {
+    width: 328px;
+    max-width: 328px;
     height: 300px;
+  }
+  .swiper {
+    height: 380px;
   }
 }
 

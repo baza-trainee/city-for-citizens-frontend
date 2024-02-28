@@ -28,28 +28,34 @@ export function ImageGallery() {
 
   return (
     <Swiper
-      slidesPerView={'auto'}
       grid={{
-        rows: 2,
         fill: 'row',
       }}
+      slidesPerView={'auto'}
       spaceBetween={30}
       pagination={{
         clickable: true,
       }}
-      navigation={{
-        prevEl: '.swiper-button-prev',
-        nextEl: '.swiper-button-next',
-      }}
       mousewheel={true}
       keyboard={true}
       modules={[Grid, Pagination, Navigation]}
+      breakpoints={{
+        768: {
+          navigation: {
+            prevEl: '.swiper-button-prev',
+            nextEl: '.swiper-button-next',
+          },
+          grid: {
+            rows: 2,
+          },
+        },
+      }}
       className="mySwiper relative"
     >
-      <div className="swiper-button-prev absolute bottom-[53%] z-10 h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50">
+      <div className="swiper-button-prev absolute bottom-[53%]  z-10 h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50 mobile:hidden tablet:left-4 tablet:block laptop:left-10 desktop_xl:left-[10px]">
         <ArrowLeftIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
-      <div className="swiper-button-next absolute bottom-[53%] right-0 z-10 h-12 w-12 rounded-[40px] bg-light-button-default opacity-50">
+      <div className="swiper-button-next absolute bottom-[53%] z-10 h-12 w-12 rounded-[40px] bg-light-button-default opacity-50 mobile:hidden  tablet:right-4 tablet:block laptop:right-10 desktop_xl:right-[10px]">
         <ArrowRightIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
       {data?.map((item, index) => (
@@ -63,7 +69,7 @@ export function ImageGallery() {
             alt={item.title}
             width={400}
             height={300}
-            objectFit="cover"
+            // objectFit="cover"
             className="h-full w-full rounded-lg object-cover"
           ></Image>
           <div className="shadow-gallery absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-lg bg-light-secondary p-4 text-start text-white opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
