@@ -135,7 +135,7 @@ export default function EventList() {
           <div className="flex gap-[15px]">
             <button
               disabled={isLoading}
-              className="button-close"
+              className="button-close-hover pb-[10px] pt-[7px] leading-8"
               onClick={() => setIsConfirmationModalVisible(false)}
               type="button"
             >
@@ -143,7 +143,7 @@ export default function EventList() {
             </button>
             <button
               disabled={isLoading}
-              className="button-confirm"
+              className="button-confirm-hover pb-[10px] pt-[7px] leading-8"
               onClick={handleConfirmDelete}
               type="button"
             >
