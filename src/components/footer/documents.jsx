@@ -16,7 +16,7 @@ export default async function Documents() {
   }
   return (
     <div className="flex w-full flex-col  items-center gap-3 text-center text-[15px] font-normal leading-tight text-light-main dark:text-dark-main desktop:mt-[32px] desktop:inline-flex desktop:flex-row desktop:content-between desktop:justify-between">
-      {documentsData.map((document, index) => (
+      {documentsData?.map((document, index) => (
         <a
           key={document.id}
           href={document.file}
