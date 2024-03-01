@@ -1,12 +1,12 @@
-import { Footer, Header } from '@/components/common';
+// import { Footer, Header } from '@/components/common';
 import {
-  AnalyticsBar,
-  Filters,
+  // AnalyticsBar,
+  // Filters,
   Gallery,
-  Hero,
-  Partners,
-  InteractiveMap,
-  ProposalForm,
+  // Hero,
+  // Partners,
+  // InteractiveMap,
+  // ProposalForm,
 } from '@/components/sections-main-page';
 
 import { unstable_setRequestLocale } from 'next-intl/server';
@@ -16,17 +16,17 @@ export default async function IndexPage({ params: { locale } }) {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
-        <Hero />
+        {/* <Hero />
         <AnalyticsBar />
         <Filters />
-        <InteractiveMap />
+        <InteractiveMap /> */}
         <Gallery />
-        <Partners />
-        <ProposalForm />
+        {/* <Partners />
+        <ProposalForm /> */}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
