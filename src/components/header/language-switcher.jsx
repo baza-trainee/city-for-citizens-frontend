@@ -84,7 +84,7 @@ export default function LanguageSwitcher() {
                 onClick={() => {
                   handleLanguageClick(langItem.value);
                 }}
-                className={`flex gap-2 ${clsx(
+                className={`flex gap-2 pb-1 ${clsx(
                   langItem.value === locale
                     ? 'border-b border-light-border text-light-main dark:border-dark-main dark:text-dark-main'
                     : 'text-black dark:text-white'
