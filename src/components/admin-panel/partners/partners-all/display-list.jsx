@@ -37,7 +37,6 @@ export default function DisplayList({ showConfirmationModal, serverData }) {
                 {getDate(data.createdAt, true)}
               </span>
               <span className="ml-auto tablet:pr-4 laptop:pr-[65px]">
-                {console.log('data.id', data.id)}
                 <ControlSection
                   deleteOnClick={() =>
                     showConfirmationModal(data.id, data.name)
