@@ -20,14 +20,14 @@ export default async function Documents() {
         <a
           key={document.id}
           href={document.file}
-          className={`flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-${document.id}  ${index === 0 ? 'desktop:ml-[294px] desktop:mr-auto' : ''}`}
+          className={`flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent   ${index === 0 ? 'desktop:ml-[294px] desktop:mr-auto' : ''}`}
         >
           {document.name}
         </a>
       ))}
       <a
         href="https://baza-trainee.tech"
-        className="desktop:order-0 cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
+        className="cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-[-1]"
       >
         Розробка Baza Trainee Ukraine 2024 © Усі права захищені
       </a>
