@@ -35,6 +35,21 @@ module.exports = {
         light_3: '#FFFFFF',
         green: '#2D982B',
         red: '#F00631',
+
+        modal: {
+          error: '#E21B00',
+        },
+
+        button: {
+          hover: '#464646',
+          hover_outlined: '#EEE',
+          default: '#131313',
+          active: '#3D4756',
+          active_outlined: '#DCDCDC',
+          disabled: '#7E8492',
+          text: '#FFFFFF',
+          border: '#131313',
+        },
       },
 
       auth: {
@@ -77,6 +92,7 @@ module.exports = {
           default: '#000000',
           pressed: '#222222',
           text: '#FFFFFF',
+          switch: '#222A30',
         },
       },
 
@@ -99,6 +115,7 @@ module.exports = {
           default: '#FFD646',
           pressed: '#E1B828',
           text: '#000000',
+          switch: '#F3F3F3',
         },
       },
     },
@@ -109,6 +126,7 @@ module.exports = {
       laptop: '960px',
       laptop_xl: '1024px',
       desktop: '1280px',
+      desktop_m: '1440px',
       desktop_xl: '1920px',
     },
 
@@ -116,8 +134,8 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: '16px',
-        laptop: '26px',
-        desktop_xl: '240px',
+        laptop: '40px',
+        desktop: '240px',
       },
     },
     extend: {

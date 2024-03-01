@@ -96,9 +96,9 @@ const PasswordChangeForm = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="px-[58px] pt-[48px]"
+        className="pl-[58px] pt-[48px]"
       >
-        <div className="flex max-w-[351px] flex-col items-start gap-8">
+        <div className="flex max-w-[351px] flex-col items-start gap-[64px]">
           <Input
             type="password"
             name="oldPassword"

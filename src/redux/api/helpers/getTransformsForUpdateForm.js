@@ -1,19 +1,13 @@
 import { formatDateSeparatorDash, formatDateToTime } from '@/helpers';
 
-export default function getTransformsForUpdateForm(data, _, { eventId }) {
-  const eventFirst = data.events.find(({ id }) => id === Number(eventId));
-  const eventSecond = data.events.find(
-    ({ idIdentifier, id }) =>
-      idIdentifier === eventFirst.idIdentifier && id !== Number(eventId)
-  );
-
-  function sortByLocale(first, second) {
+export default function getTransformsForUpdateForm(data) {
+  function sortByLocale([first, second]) {
     return first.locale === 'uk_UA'
       ? { firstLocale: first, secondLocale: second }
       : { firstLocale: second, secondLocale: first };
   }
 
-  const { firstLocale, secondLocale } = sortByLocale(eventFirst, eventSecond);
+  const { firstLocale, secondLocale } = sortByLocale(data);
 
   function getDataForLocale({
     id,
@@ -30,7 +24,9 @@ export default function getTransformsForUpdateForm(data, _, { eventId }) {
       street,
       description,
       notes,
-      eventType: eventTypes.map(({ eventType }) => eventType.trim()).join(', '),
+      eventTypeId: eventTypes
+        .map(({ eventType }) => eventType.trim())
+        .join(', '),
       eventImage,
     };
   }

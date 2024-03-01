@@ -1,8 +1,42 @@
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
 import IconAdminPaginationArrow from '@/assets/icons/common/totalPage-arrow-icon.svg';
 
-export default function EventPagination({ currentPage, totalPage, onClick }) {
-  const arrayOfPageNumbers = Array.from({ length: totalPage }, (_, i) => i + 1);
+export default function Pagination({ currentPage, totalPage, onClick }) {
+  const maxPagePosition = totalPage > 6 ? 7 : totalPage;
+  const arrayOfPageNumbers = Array.from(
+    { length: maxPagePosition },
+    (_, i) => i + 1
+  );
+  const [pages, setPages] = useState(createPagesArray(arrayOfPageNumbers));
+
+  useEffect(() => {
+    setPages(createPagesArray(arrayOfPageNumbers));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
+  function createPagesArray([...pageArr]) {
+    if (totalPage <= maxPagePosition) return arrayOfPageNumbers;
+    pageArr[maxPagePosition - 1] = totalPage;
+    if (currentPage <= 4) {
+      pageArr[maxPagePosition - 2] = '...';
+      return pageArr;
+    }
+    if (currentPage >= totalPage - 3) {
+      pageArr[1] = '...';
+      let counter = 0;
+      for (let i = totalPage; i >= totalPage - 4; i--) {
+        pageArr[maxPagePosition - 1 - counter] = totalPage - counter;
+        counter++;
+      }
+      return pageArr;
+    }
+    pageArr[1] = '...';
+    pageArr[maxPagePosition - 2] = '...';
+    pageArr[2] = currentPage - 1;
+    pageArr[3] = currentPage;
+    pageArr[4] = currentPage + 1;
+    return pageArr;
+  }
 
   function handleChangePagination(e) {
     const arrowButton = e.target.closest('button');
@@ -20,10 +54,10 @@ export default function EventPagination({ currentPage, totalPage, onClick }) {
   return (
     <div className="mb-12 mt-[5rem] flex flex-grow items-end justify-end gap-x-6 tablet:mr-5 desktop:mr-[5.8rem]">
       <ol className="flex gap-x-6 font-medium tablet:text-xl laptop:text-2xl">
-        {arrayOfPageNumbers.map(pageNumber => (
+        {pages.map((pageNumber, i, arr) => (
           <li
             key={uuidv4()}
-            onClick={() => onClick(pageNumber)}
+            onClick={() => onClick(pageNumber, arr[i - 1], arr[i + 1])}
             className={`text-admin-dark
             ${
               pageNumber === currentPage && 'bg-admin-gray'

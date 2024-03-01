@@ -114,7 +114,7 @@ export default function LoginForm() {
         </Link>
         <Button
           type="button"
-          className="mx-auto"
+          className="mx-auto min-w-[124px] font-source_sans_3 leading-none"
           disabled={isLoading || !isFormValid}
           onClick={handleSubmit}
         >

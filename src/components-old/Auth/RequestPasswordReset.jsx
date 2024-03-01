@@ -57,7 +57,7 @@ const RequestPasswordReset = () => {
         >
           {isLoading ? <LoadingButton /> : t('buttonName')}
         </button>
-        {error && <p className="font-bold tracking-wide text-error">{error}</p>}
+        {error && <p className="text-error font-bold tracking-wide">{error}</p>}
       </form>
     </div>
   );

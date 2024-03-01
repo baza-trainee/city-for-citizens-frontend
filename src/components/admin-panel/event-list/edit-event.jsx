@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from '@/navigation';
 import { useLazyRefreshQuery } from '@/redux/api/authApi';
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+
 import { resetState, setCredentials } from '@/redux/slice/authSlice';
 import Cookies from 'js-cookie';
 import { BasicModalWindows } from '@/components/common';
@@ -27,11 +27,8 @@ export default function EditEvent({ eventId }) {
   const [isWarnModalVisible, setIsWarnModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
-  const page = useSearchParams().get('page');
-
   const { data: eventDataById } = useGetEventsByIdForUpdateFormQuery({
     eventId,
-    page: page || 1,
   });
 
   const [updateEvent, { isLoading: isLoadingUpdateEvent }] =

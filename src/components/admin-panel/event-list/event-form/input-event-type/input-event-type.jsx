@@ -1,4 +1,3 @@
-import { useGetTypesEventsQuery } from '@/redux/api/filtersApi';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 
@@ -7,6 +6,7 @@ import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import DropdownIcon from '@/assets/icons/common/dropdown-icon.svg';
 import TypeList from './type-list';
 import { FormElement } from '../form-element';
+import { useGetTypesEventByLocaleQuery } from '@/redux/api/typesEventApi';
 
 export default function InputEventType({
   locale,
@@ -18,30 +18,46 @@ export default function InputEventType({
   clickResetForm,
   clearErrors,
   initialState,
+  resetField,
 }) {
   const [isTypeListVisible, setIsTypeListVisible] = useState(false);
   const [eventTypesSelected, setEventTypesSelected] = useState([]);
+
+  const [eventTypesSelectedText, setEventTypesSelectedText] = useState('');
   const typeListRef = useRef(null);
 
-  const { data: eventTypesList } = useGetTypesEventsQuery({ locale });
+  const { data: eventTypesList } = useGetTypesEventByLocaleQuery({ locale });
 
   useEffect(() => {
     setEventTypesSelected([]);
+    setEventTypesSelectedText('');
   }, [clickResetForm]);
 
   useEffect(() => {
-    if (initialState) {
-      setEventTypesSelected(initialState.split(',').map(t => t.trim()));
+    if (initialState && eventTypesList) {
+      const currentTypes = initialState
+        .split(', ')
+        .map(type =>
+          eventTypesList.find(({ eventType }) => eventType === type.trim())
+        );
+
+      setEventTypesSelected(currentTypes);
     }
-  }, [initialState]);
+  }, [eventTypesList, initialState]);
 
   useEffect(() => {
     if (eventTypesSelected.length) clearErrors([inputName]);
 
-    if (eventTypesSelected.join(', ')) {
-      setValue(inputName, eventTypesSelected.join(', '));
+    if (eventTypesSelected.length !== 0) {
+      setValue(inputName, eventTypesSelected.map(({ id }) => id).join(','));
+      setEventTypesSelectedText(
+        eventTypesSelected.map(({ eventType }) => eventType).join(', ')
+      );
+    } else {
+      resetField(inputName);
+      setEventTypesSelectedText('');
     }
-  }, [clearErrors, eventTypesSelected, inputName, setValue]);
+  }, [clearErrors, eventTypesSelected, inputName, resetField, setValue]);
 
   function toggleEventType(type) {
     setEventTypesSelected(prev => {
@@ -69,6 +85,7 @@ export default function InputEventType({
         }}
       >
         <FormElement
+          altTextValue
           errorMessage={errorMessage}
           type={'text'}
           tag={'textarea'}
@@ -76,7 +93,13 @@ export default function InputEventType({
           readOnly={true}
           placeholder={placeholder}
           register={register}
+          className={'pr-10'}
         />
+        {
+          <p className="absolute top-1/2 -translate-y-1/2 px-[9px]">
+            {eventTypesSelectedText}
+          </p>
+        }
         <DropdownIcon
           className={`absolute right-[15px] top-1/2 h-2 w-[14px] -translate-y-1/2 transition-transform
           ${clsx(isTypeListVisible && 'rotate-180')}`}
