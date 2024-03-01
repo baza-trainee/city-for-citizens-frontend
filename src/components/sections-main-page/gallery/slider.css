@@ -45,12 +45,25 @@
 .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
+  background-color: #060606;
+  opacity: 0.1;
+}
+
+.dark .swiper-pagination-bullet {
+  background-color: #f2f2f2;
+  opacity: 0.3;
 }
 
 .swiper-pagination-bullet-active {
   width: 16px;
   height: 16px;
   background-color: #000;
+  opacity: 1;
+}
+
+.dark .swiper-pagination-bullet-active {
+  background-color: #ffd646;
+  opacity: 1;
 }
 
 .swiper-pagination-bullets.swiper-pagination-horizontal {

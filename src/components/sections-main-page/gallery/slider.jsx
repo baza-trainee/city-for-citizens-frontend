@@ -79,15 +79,15 @@ export function ImageGallery() {
             alt={item.title}
             width={400}
             height={300}
-            className="h-full w-full rounded-lg object-cover"
+            className="h-full w-full object-cover"
           ></Image>
           <div className="shadow-gallery absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-lg bg-light-secondary p-4 text-start opacity-0 transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:opacity-100 dark:bg-dark-secondary">
-            <p className="font-ubuntu text-xl font-medium leading-[22px] text-light-head">
+            <p className="dark:text-li font-ubuntu text-xl font-medium leading-[22px] text-light-head dark:text-dark-head">
               {item.title}
             </p>
             <div className="flex items-center  gap-2 text-start">
               <IconLocation width="24px" height="24px" />
-              <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head">
+              <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
                 {item.address}
               </p>
             </div>
