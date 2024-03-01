@@ -27,7 +27,7 @@ export default async function Documents() {
       ))}
       <a
         href="https://baza-trainee.tech"
-        className="cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-[-1]"
+        className="flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-[-1]"
       >
         Розробка Baza Trainee Ukraine 2024 © Усі права захищені
       </a>
