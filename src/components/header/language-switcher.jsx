@@ -39,7 +39,7 @@ export default function LanguageSwitcher() {
   const handleLanguageClick = value => {
     const nextLocale = value;
     startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
+      router.replace(pathname, { locale: nextLocale, scroll: false });
     });
   };
 
