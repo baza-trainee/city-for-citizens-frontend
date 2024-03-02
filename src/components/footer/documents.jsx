@@ -16,18 +16,18 @@ export default async function Documents() {
   }
   return (
     <div className="flex w-full flex-col  items-center gap-3 text-center text-[15px] font-normal leading-tight text-light-main dark:text-dark-main desktop:mt-[32px] desktop:inline-flex desktop:flex-row desktop:content-between desktop:justify-between">
-      {documentsData.map((document, index) => (
+      {documentsData?.map((document, index) => (
         <a
           key={document.id}
           href={document.file}
-          className={`flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-${document.id}  ${index === 0 ? 'desktop:ml-[294px] desktop:mr-auto' : ''}`}
+          className={`flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent   ${index === 0 ? 'desktop:ml-[294px] desktop:mr-auto' : ''}`}
         >
           {document.name}
         </a>
       ))}
       <a
         href="https://baza-trainee.tech"
-        className="desktop:order-0 cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
+        className="flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent desktop:order-[-1]"
       >
         Розробка Baza Trainee Ukraine 2024 © Усі права захищені
       </a>
