@@ -31,6 +31,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'city-backend-45go.onrender.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'kyivcity.gov.ua',
+      },
     ],
   },
 };
