@@ -1,71 +1,82 @@
-.swiper {
+.gallery-swiper.swiper {
   width: 100%;
   height: 380px;
-  padding-bottom: 80px;
   margin-top: 32px;
+  padding-bottom: 80px;
 }
 
-.swiper-slide {
-  height: 300px;
+.gallery-swiper.swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 300px;
+  border-radius: 8px;
   text-align: center;
   font-size: 18px;
   background: #fff;
-  border-radius: 8px;
 }
 
 @media (min-width: 768px) {
-  .swiper {
+  .gallery-swiper.swiper {
     height: 696px;
     margin-top: 60px;
   }
-  .swiper-slide {
+  .gallery-swiper.swiper-slide {
     height: calc((100% - 16px) / 2) !important;
   }
 }
 
 @media (min-width: 960px) {
-  .swiper {
+  .gallery-swiper.swiper {
     height: 710px;
   }
-  .swiper-slide {
+  .gallery-swiper.swiper-slide {
     height: calc((100% - 30px) / 2) !important;
   }
 }
 
 @media (max-width: 767px) {
-  .swiper-slide {
+  .gallery-swiper.swiper-slide {
     width: 100%;
     max-width: 328px;
   }
 }
 
-.swiper-pagination-bullet {
+.gallery-swiper .swiper-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-  background-color: #060606;
   opacity: 0.1;
+  background-color: #060606;
 }
 
-.dark .swiper-pagination-bullet {
-  background-color: #f2f2f2;
+.dark .gallery-swiper .swiper-pagination-bullet {
   opacity: 0.3;
+  background-color: #f2f2f2;
 }
 
-.swiper-pagination-bullet-active {
+.gallery-swiper .swiper-pagination-bullet-active {
   width: 16px;
   height: 16px;
+  opacity: 1;
   background-color: #000;
-  opacity: 1;
 }
 
-.dark .swiper-pagination-bullet-active {
+.dark .gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
   background-color: #ffd646;
-  opacity: 1;
 }
 
-.swiper-pagination-bullets.swiper-pagination-horizontal {
+.gallery-swiper .swiper-pagination-bullets.swiper-pagination-horizontal {
   margin-bottom: 32px;
+}
+
+.gallery-swiper-swiper-button-next,
+.gallery-swiper-swiper-button-prev {
+  cursor: pointer;
 }
