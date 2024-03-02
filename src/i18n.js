@@ -19,6 +19,7 @@ export default getRequestConfig(async ({ locale }) => {
       ...(await import(`../messages/${locale}/Admin.json`)).default,
       ...(await import(`../messages/${locale}/EventForm.json`)).default,
       ...(await import(`../messages/${locale}/Common.json`)).default,
+      ...(await import(`../messages/${locale}/DocumentsFooter.json`)).default,
     },
   };
 });
