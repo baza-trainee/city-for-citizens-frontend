@@ -3,7 +3,9 @@ import MailIcon from '@/assets/icons/common/mail-icon.svg';
 import { BASE_URL } from '@/helpers/constants';
 
 async function getContacts() {
-  const res = await fetch(`${BASE_URL}/contacts`);
+  const res = await fetch(`${BASE_URL}/contacts`, {
+    next: { revalidate: 10 },
+  });
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -60,7 +62,7 @@ export default async function Contacts() {
       {email && (
         <li
           key="email"
-          className="cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
+          className="cursor-pointer pl-[7px] hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
         >
           <a href={`mailto:${email}`} className=" inline-flex gap-2">
             <span className="inline-flex items-baseline">
