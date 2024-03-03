@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     fontFamily: {
       roboto: ['var(--font-roboto)'],
-      ubuntu: ['var(--font-font-ubuntu)'],
+      ubuntu: ['var(--font-ubuntu)'],
       exo_2: ['var(--font-exo-2)'],
       source_sans_3: ['var(--font-source-sans-3)'],
       oswald: ['var(--font-oswald)'],
