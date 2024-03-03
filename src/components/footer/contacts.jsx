@@ -32,7 +32,7 @@ export default async function Contacts() {
   }
 
   return (
-    <ul className="flex flex-col items-center gap-[3px] font-roboto text-base font-normal leading-snug text-light-main dark:text-dark-main desktop:mr-[247px]">
+    <ul className="flex flex-col gap-[3px] font-roboto text-base font-normal leading-snug text-light-main dark:text-dark-main max-desktop:mx-auto desktop:mr-[247px]">
       {firstPhone && (
         <li
           key="firstPhone"
@@ -62,7 +62,7 @@ export default async function Contacts() {
       {email && (
         <li
           key="email"
-          className="cursor-pointer pl-[7px] hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
+          className="cursor-pointer  hover:text-light-accent hover:transition-all dark:hover:text-dark-accent"
         >
           <a href={`mailto:${email}`} className=" inline-flex gap-2">
             <span className="inline-flex items-baseline">
