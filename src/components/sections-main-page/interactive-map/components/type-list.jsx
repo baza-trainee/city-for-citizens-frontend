@@ -8,7 +8,7 @@ export function TypeList({ eventTypes, className }) {
           className="rounded-lg border border-light-border px-2 py-1 dark:border-dark-border"
           key={id + idIdentifier}
         >
-          <p className="text-light-main dark:text-dark-main">{eventType}</p>
+          <div className="text-light-main dark:text-dark-main">{eventType}</div>
         </li>
       ))}
     </ul>
