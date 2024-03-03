@@ -20,7 +20,6 @@ export default function Partners() {
   const [deletePartner, { isLoading }] = useDeletePartnerMutation();
 
   const { data: serverData } = useGetPartnersQuery();
-  console.log('data', serverData);
 
   async function handleConfirmDelete() {
     setDeletePartnerName(null);
@@ -69,12 +68,12 @@ export default function Partners() {
             setDeletePartnerName(null);
           }}
           title={`Видалити ${deletePartnerName}`}
+          message="Ви точно хочете видалити партнера?"
         >
-          <div>Ви точно хочете видалити цей тип подій?</div>
           <div className="flex gap-[15px]">
             <button
               disabled={isLoading}
-              className="button-close"
+              className="button-close-hover pb-[10px] pt-[7px] leading-8"
               onClick={() => {
                 setIsConfirmationModalVisible(false);
                 setDeletePartnerName(null);
@@ -85,7 +84,7 @@ export default function Partners() {
             </button>
             <button
               disabled={isLoading}
-              className="button-confirm"
+              className="button-confirm-hover pb-[10px] pt-[7px] leading-8"
               onClick={handleConfirmDelete}
               type="button"
             >

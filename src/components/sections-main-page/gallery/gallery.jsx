@@ -1,10 +1,17 @@
+'use client';
+import { Title } from '../common/title';
+import { ImageGallery } from './slider';
+
 export function Gallery() {
   return (
     <section
       id="gallery"
-      className="flex h-[1137px] items-center justify-center bg-black/30"
+      className="flex items-center justify-center text-center"
     >
-      <div>Gallery</div>
+      <div className=" w-full bg-light-primary px-4 dark:bg-dark-primary  mobile:pb-20 tablet:px-0 tablet:pb-40 desktop:w-full desktop:px-[30px] desktop_xl:w-[1920px]">
+        <Title text={'Галерея'} />
+        <ImageGallery />
+      </div>
     </section>
   );
 }

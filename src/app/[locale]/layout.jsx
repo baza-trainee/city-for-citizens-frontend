@@ -16,6 +16,18 @@ export async function generateMetadata({ params: { locale } }) {
   return {
     title: t('title'),
     description: t('description'),
+    icons: {
+      icon: [
+        {
+          url: '/light-icon.svg',
+          media: '(prefers-color-scheme: light)',
+        },
+        {
+          url: '/dark-icon.svg',
+          media: '(prefers-color-scheme: dark)',
+        },
+      ],
+    },
   };
 }
 
