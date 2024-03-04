@@ -86,8 +86,6 @@ export default function HeroSlider() {
         renderCustom: (swiper, current, total) =>
           customPagination(swiper, current, total),
       }}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={swiper => console.log(swiper)}
     >
       {heroContent.map(content => {
         return (

@@ -93,7 +93,7 @@ export const eventsApi = createApi({
     //
     getEventsBySearchParams: builder.query({
       query: ({ queryParams, locale }) => {
-        if (Object.keys(queryParams).length === 0) return {};
+        // if (Object.keys(queryParams).length === 0) return {};
 
         const queryStr = generateQueryStr('events', { ...queryParams, locale });
 

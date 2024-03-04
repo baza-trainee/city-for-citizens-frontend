@@ -1,5 +1,5 @@
 {
   "EventCard": {
-    "buttonName": "Go to the event website"
+    "city": "{name} city"
   }
 }
