@@ -1,10 +1,28 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { BASE_URL } from '@/helpers/constants';
 import ButtonMainPage from './button-main-page';
+
+async function getPolicyDocument() {
+  const res = await fetch(`${BASE_URL}/documents`);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch policy document');
+  }
+  const documents = await res.json();
+  const policyDocument = documents.find(document =>
+    document.name.includes('Політика конфіденційності')
+  );
+  if (!policyDocument) {
+    throw new Error('Policy document not found');
+  }
+  return policyDocument;
+}
 
 export default function ModalCookies() {
   const [isVisible, setIsVisible] = useState(false);
+  const [policyDocument, setPolicyDocument] = useState(null);
   const t = useTranslations('ModalCookies');
 
   const isWordCookie = text => {
@@ -17,6 +35,17 @@ export default function ModalCookies() {
     if (!acceptedCookies) {
       setIsVisible(true);
     }
+
+    const fetchPolicyDocument = async () => {
+      try {
+        const document = await getPolicyDocument();
+        setPolicyDocument(document);
+      } catch (error) {
+        console.error('Failed to fetch policy document:', error);
+      }
+    };
+
+    fetchPolicyDocument();
   }, []);
 
   const handleAcceptCookies = () => {
@@ -42,8 +71,9 @@ export default function ModalCookies() {
             );
           })}
         <a
-          className="text-light-head hover:text-dark-button-pressed hover:transition-all dark:text-dark-accent dark:hover:text-dark-button-hover"
-          href=""
+          className="cursor-pointer text-light-head hover:text-dark-button-pressed hover:transition-all dark:text-dark-accent dark:hover:text-dark-button-hover"
+          id={policyDocument?.id}
+          href={policyDocument?.file}
         >
           {t('learnMore')}
         </a>
