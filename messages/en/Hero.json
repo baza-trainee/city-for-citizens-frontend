@@ -1,7 +1,15 @@
 {
   "Hero": {
-    "title": "Experience the Ukrainian Fest Spirit: Find All Events in One Place!",
-    "subtitle": "Unite the Fest: Your Gateway to Live Ukrainian Festival Information!",
+    "title": {
+      "slide-1": "Experience Ukrainian Fests: All Events Here!",
+      "slide-2": "Celebrate Ukrainian Fests! Get Real-Time Updates!",
+      "slide-3": "Join Ukrainian Fests: Live Info!"
+    },
+    "subtitle": {
+      "slide-1": "Unite the Fest: Your Gateway to Live Ukrainian Festival Information!",
+      "slide-2": "Stay up-to-date with all the latest Ukrainian festivals! Get real-time information about events with our service.",
+      "slide-3": "Discover the world of Ukrainian festivals! Our service provides access to information about all current events in real time."
+    },
     "button": "View Current Events"
   }
 }
