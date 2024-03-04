@@ -89,7 +89,7 @@ function EventItem({ event }) {
     eventImage,
     dateTime,
   } = event;
-  const { city, street } = eventAddress;
+  const { city, street, notes } = eventAddress;
 
   const [isImageError, setIsImageError] = useState(false);
 
@@ -131,9 +131,14 @@ function EventItem({ event }) {
       </div>
 
       <div className={'mb-2 flex items-center gap-2'}>
-        <LocationIcon className="size-6" />
-        <address className="not-italic">
-          {t('city', { name: city })}, {street}
+        <div className="min-w-6">
+          <LocationIcon className="size-6" />
+        </div>
+        <address className="max-h-[44px] overflow-auto not-italic">
+          <span className="mb-1">
+            {t('city', { name: city })}, {street}
+          </span>
+          {notes && <div>* {notes}</div>}
         </address>
       </div>
       <div className={'mb-2 flex items-center gap-2'}>

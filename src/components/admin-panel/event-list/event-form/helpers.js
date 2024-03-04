@@ -23,7 +23,7 @@ export function getValidationScheme() {
     eventTitle: yup.string().trim().required().min(5).max(55),
     city: yup.string().trim().required().min(2).max(40),
     street: yup.string().trim().required().min(2).max(40),
-    description: yup.string().trim().required().min(15).max(300),
+    description: yup.string().trim().required().min(15).max(1300),
     notes: yup.string().trim().max(180).notRequired(),
     eventTypeId: yup.string().required(),
     eventImage: yup
