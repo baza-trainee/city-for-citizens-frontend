@@ -35,6 +35,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'kyivcity.gov.ua',
       },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
     ],
   },
 };
