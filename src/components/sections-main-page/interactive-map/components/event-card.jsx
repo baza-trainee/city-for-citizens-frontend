@@ -13,6 +13,7 @@ import IconNavigationArrow from '@/assets/icons/event-card/icon-navigation-arrow
 
 import { TypeList } from './type-list';
 import { Popup, useMap } from 'react-leaflet';
+import { useTranslations } from 'next-intl';
 
 export function EventCard({ event, isClicked }) {
   return (
@@ -101,9 +102,10 @@ function EventItem({ event }) {
   function onClose() {
     map.closePopup();
   }
+  const t = useTranslations('EventCard');
 
   return (
-    <div className="shadow-eventCard flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
+    <div className="flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head shadow-eventCard dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
       <CloseIcon
         onClick={onClose}
         className="mb-2.5 ml-auto size-6 cursor-pointer text-icon transition-colors hover:text-light-head hover:dark:text-dark-head"
@@ -124,14 +126,14 @@ function EventItem({ event }) {
         {eventTitle}
       </h3>
 
-      <div className="mb-4 h-[124px] overflow-auto text-[16px] text-light-main dark:text-dark-main">
+      <div className="mb-4 max-h-[124px] overflow-auto text-[16px] text-light-main dark:text-dark-main">
         {description}
       </div>
 
       <div className={'mb-2 flex items-center gap-2'}>
         <LocationIcon className="size-6" />
         <address className="not-italic">
-          м. {city}, вул. {street}
+          {t('city', { name: city })}, {street}
         </address>
       </div>
       <div className={'mb-2 flex items-center gap-2'}>

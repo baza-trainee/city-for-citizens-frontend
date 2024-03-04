@@ -9,7 +9,7 @@ export function MapMarker({ event }) {
   const [isClicked, setIsClicked] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
-  const map = useMap();
+  const map_leaflet = useMap();
 
   useEffect(() => {
     function handlePopupclose() {
@@ -23,15 +23,15 @@ export function MapMarker({ event }) {
     function handleTooltipClose() {
       setIsTooltipOpen(false);
     }
-    map.on('popupclose', handlePopupclose);
-    map.on('tooltipopen', handleTooltipopen);
-    map.on('tooltipclose', handleTooltipClose);
+    map_leaflet.on('popupclose', handlePopupclose);
+    map_leaflet.on('tooltipopen', handleTooltipopen);
+    map_leaflet.on('tooltipclose', handleTooltipClose);
     return () => {
-      map.off('popupclose', handlePopupclose);
-      map.off('tooltipopen', handleTooltipopen);
-      map.off('tooltipclose', handleTooltipClose);
+      map_leaflet.off('popupclose', handlePopupclose);
+      map_leaflet.off('tooltipopen', handleTooltipopen);
+      map_leaflet.off('tooltipclose', handleTooltipClose);
     };
-  }, [map]);
+  }, [map_leaflet]);
 
   const customIconDiv = Leaflet.divIcon({
     html: createSvgMarker(isClicked),
@@ -51,7 +51,7 @@ export function MapMarker({ event }) {
           },
         }}
         icon={customIconDiv}
-        position={event.eventAddress.coordinates.split(', ')}
+        position={event.eventAddress.coordinates.split(',')}
       >
         <div className={`transition-opacity ${isTooltipOpen && 'opacity-80'}`}>
           <EventCard event={event} isClicked={isClicked} />
@@ -62,4 +62,3 @@ export function MapMarker({ event }) {
     </div>
   );
 }
-

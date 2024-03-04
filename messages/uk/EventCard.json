@@ -1,5 +1,5 @@
 {
   "EventCard": {
-    "buttonName": "Перейдіть на сайт заходу"
+    "city": "м. {name}"
   }
 }

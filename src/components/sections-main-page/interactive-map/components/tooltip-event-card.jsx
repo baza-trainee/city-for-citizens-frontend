@@ -3,6 +3,7 @@ import CalendarIcon from '@/assets/icons/event-card/calendar-icon.svg';
 import ClockIcon from '@/assets/icons/event-card/clock-icon.svg';
 import LocationIcon from '@/assets/icons/event-card/location-icon.svg';
 import { formatDateSeparatorDot, formatDateToTime } from '@/helpers';
+import { useTranslations } from 'next-intl';
 import { Tooltip } from 'react-leaflet';
 
 export function TooltipEventCard({ event }) {
@@ -34,8 +35,10 @@ function TooltipEventCardItem({ event }) {
   const { eventTitle, eventAddress, eventTypes, dateTime } = event;
   const { city, street } = eventAddress;
 
+  const t = useTranslations('EventCard');
+
   return (
-    <div className="shadow-eventCard flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
+    <div className="flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head shadow-eventCard dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
       <TypeList className={'mb-4'} eventTypes={eventTypes} />
       <h3 className="mb-4 w-full text-wrap font-ubuntu text-[24px]/[1.1] font-medium">
         {eventTitle}
@@ -43,7 +46,7 @@ function TooltipEventCardItem({ event }) {
       <div className={'mb-2 flex items-center gap-2'}>
         <LocationIcon className="size-6" />
         <address className="not-italic">
-          м. {city}, {street}
+          {t('city', { name: city })}, {street}
         </address>
       </div>
 

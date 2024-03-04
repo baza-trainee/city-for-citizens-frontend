@@ -3,18 +3,30 @@
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import React, { useEffect } from 'react';
 
-import { mockEvent } from './components/mock-event';
+import { useGetEventsBySearchParamsQuery } from '@/redux/api/eventsApi';
 
 import 'leaflet/dist/leaflet.css';
 import './reset-leaflet.css';
 import { MapMarker } from './components/map-marker';
+import { useCurrentLocale } from '@/hooks';
+import { useSelector } from 'react-redux';
+import { selectFilters } from '@/redux/slice/filters';
 
 export default function InteractiveMap() {
-  const markers = mockEvent;
+  const { localeForRequest } = useCurrentLocale();
+
+  const filters = useSelector(selectFilters);
+
+  const { data: markers } = useGetEventsBySearchParamsQuery({
+    locale: localeForRequest,
+    queryParams: filters,
+  });
+
+  if (!markers) return null;
 
   return (
     <section
-      className="interactive-map-marker  h-[630px] w-screen  pb-20  tablet:h-[657px] tablet:pb-[160px] laptop:h-[745px]"
+      className="interactive-map-marker  mb-20 h-[630px]  w-screen  tablet:mb-[160px] tablet:h-[657px] laptop:h-[745px]"
       id="map"
     >
       <MapContainer
@@ -44,16 +56,16 @@ export default function InteractiveMap() {
 }
 
 function SetScrollWheelZoom() {
-  const map = useMap();
+  const map_leaflet = useMap();
 
   useEffect(() => {
     function handleKeydown(e) {
       if (e.key === 'Control' || e.key === 'Meta') {
-        map.scrollWheelZoom.enable();
+        map_leaflet.scrollWheelZoom.enable();
       }
     }
     function handleKeyup() {
-      map.scrollWheelZoom.disable();
+      map_leaflet.scrollWheelZoom.disable();
     }
     document.addEventListener('keydown', handleKeydown);
     document.addEventListener('keyup', handleKeyup);
@@ -61,6 +73,6 @@ function SetScrollWheelZoom() {
       document.removeEventListener('keydown', handleKeydown);
       document.removeEventListener('keyup', handleKeydown);
     };
-  }, [map.scrollWheelZoom]);
+  }, [map_leaflet.scrollWheelZoom]);
   return <React.Fragment />;
 }

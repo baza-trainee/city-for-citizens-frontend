@@ -13,6 +13,7 @@ import { documentsApi } from './api/documentsApi';
 import { typesEventApi } from './api/typesEventApi';
 import { eventFormData } from './slice/eventFormData';
 import { partnersApi } from './api/partnersApi';
+import { filtersSlice } from './slice/filters';
 
 export const store = configureStore({
   reducer: {
@@ -26,7 +27,7 @@ export const store = configureStore({
     [partnersApi.reducerPath]: partnersApi.reducer,
     appStatusSlice: appStatusSlice.reducer,
     eventFormData: eventFormData.reducer,
-
+    filtersSlice: filtersSlice.reducer,
     authSlice: authSlice.reducer,
   },
 

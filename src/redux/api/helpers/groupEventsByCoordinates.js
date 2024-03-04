@@ -1,6 +1,6 @@
 export const groupEventsByCoordinates = response => {
   const result = Object.values(
-    response.reduce((acc, obj) => {
+    response.events.reduce((acc, obj) => {
       const key = obj.eventAddress.coordinates
         .split(',')
         .map(item => parseFloat(item).toFixed(5))
@@ -8,6 +8,7 @@ export const groupEventsByCoordinates = response => {
 
       if (!acc[key]) {
         acc[key] = {
+          id: obj.id,
           idIdentifier: obj.idIdentifier + 'abc',
           eventAddress: { coordinates: key },
           sameAddress: [obj],
