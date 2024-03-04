@@ -59,10 +59,10 @@ export default function HeroSlider() {
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
-      autoplay={{
-        delay: 7000,
-        disableOnInteraction: false,
-      }}
+      // autoplay={{
+      //   delay: 7000,
+      //   disableOnInteraction: false,
+      // }}
       centeredSlides={true}
       loop={true}
       navigation={{

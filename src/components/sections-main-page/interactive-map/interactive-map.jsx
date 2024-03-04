@@ -8,8 +8,8 @@ export function InteractiveMap() {
       className="flex h-[745px] items-center justify-center gap-4 bg-black/40"
     >
       <div>InteractiveMap</div>
-      <HoverEventCard />
-      <EventCard />
+      {/* <HoverEventCard />
+      <EventCard /> */}
     </section>
   );
 }

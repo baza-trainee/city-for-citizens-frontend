@@ -1,8 +1,7 @@
 {
   "ModalCookies": {
-    "title": "This website uses Cookies",
-    "privacy": "View Privacy Policy",
-    "accept": "Accept",
-    "reject": "Reject"
+    "title": "By continuing to use this website, you agree to the use of cookies in accordance with our ",
+    "learnMore": "Cookie Policy",
+    "accept": "Agree"
   }
 }
