@@ -5,12 +5,21 @@ import {
   Gallery,
   Hero,
   Partners,
-  InteractiveMap,
   ProposalForm,
 } from '@/components/sections-main-page';
 import NextThemeProvider from '@/providers/theme-providers';
 
 import { unstable_setRequestLocale } from 'next-intl/server';
+
+import dynamic from 'next/dynamic';
+
+const InteractiveMap = dynamic(
+  () =>
+    import('@/components/sections-main-page/interactive-map/interactive-map'),
+  {
+    ssr: false,
+  }
+);
 
 export default async function IndexPage({ params: { locale } }) {
   unstable_setRequestLocale(locale);
