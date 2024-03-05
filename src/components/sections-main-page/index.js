@@ -4,4 +4,4 @@ export * from './filters/filters';
 export * from './interactive-map/interactive-map';
 export * from './gallery/gallery';
 export * from './partners/partners';
-export * from './proposal-form/proposal-form';
+export * from './propose-event/propose-event';

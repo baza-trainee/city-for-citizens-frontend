@@ -5,7 +5,7 @@ import {
   Gallery,
   Hero,
   Partners,
-  ProposalForm,
+  ProposeEvent,
 } from '@/components/sections-main-page';
 import NextThemeProvider from '@/providers/theme-providers';
 
@@ -35,7 +35,7 @@ export default async function IndexPage({ params: { locale } }) {
           <InteractiveMap />
           <Gallery />
           <Partners />
-          <ProposalForm />
+          <ProposeEvent />
         </main>
         <Footer />
       </div>

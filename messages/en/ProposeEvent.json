@@ -1,0 +1,12 @@
+{
+  "ProposeEvent": {
+    "name": "Name",
+    "namePlaceholder": "John Doe",
+    "email": "E-mail",
+    "phone": "Phone",
+    "messenger": "Messenger",
+    "messengerPlaceholder": "Link or nick on Telegram",
+    "eventDescription": "About event",
+    "eventDescriptionPlaceholder": "On June 10-11 in Vinnytsia on the banks of the Southern Bug River, the «Strange People» active recreation festival will take place."
+  }
+}
