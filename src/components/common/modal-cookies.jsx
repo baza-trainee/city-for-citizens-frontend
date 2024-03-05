@@ -55,7 +55,7 @@ export default function ModalCookies() {
 
   return (
     <div
-      className={`modal-mobile fixed bottom-4 left-[50%] z-50 flex -translate-x-1/2 items-center justify-between gap-4 rounded-lg bg-light-secondary p-4 font-roboto text-sm leading-[1.4] dark:bg-dark-secondary  max-tablet:flex-wrap desktop:w-full desktop:max-w-[1200px] ${isVisible ? '' : 'hidden'}`}
+      className={`modal-mobile fixed bottom-4 left-[50%] z-[1001] flex -translate-x-1/2 items-center justify-between gap-4 rounded-lg bg-light-secondary p-4 font-roboto text-sm leading-[1.4] dark:bg-dark-secondary  max-tablet:flex-wrap desktop:w-full desktop:max-w-[1200px] ${isVisible ? '' : 'hidden'}`}
     >
       <p>
         {t('title')
