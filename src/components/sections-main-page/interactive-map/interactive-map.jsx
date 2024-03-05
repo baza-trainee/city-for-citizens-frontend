@@ -58,6 +58,8 @@ export default function InteractiveMap() {
         minZoom={3}
         maxZoom={18}
         scrollWheelZoom={false}
+        touchZoom={true}
+        tapHold={true}
       >
         <TileLayer {...mapThemes[theme]} />
         <SetScrollWheelZoom />

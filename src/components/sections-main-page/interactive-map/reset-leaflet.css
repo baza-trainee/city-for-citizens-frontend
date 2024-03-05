@@ -27,7 +27,3 @@
 .interactive-map-marker .leaflet-popup-tip-container {
   display: none !important;
 }
-
-.interactive-map-marker .leaflet-grab {
-  cursor: auto !important;
-}
