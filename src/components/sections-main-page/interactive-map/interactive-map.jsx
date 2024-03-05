@@ -24,7 +24,7 @@ const mapThemes = {
   light: {
     attribution:
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}',
+    url: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.{ext}',
     ext: 'png',
   },
 };
@@ -44,13 +44,11 @@ export default function InteractiveMap() {
 
   return (
     <section
-      className="interactive-map-marker  mb-20 h-[630px]  w-screen  tablet:mb-[160px] tablet:h-[657px] desktop:h-[745px]"
+      className="interactive-map-marker mb-20 h-[630px] w-full tablet:mb-[160px] tablet:h-[745px]"
       id="map"
     >
       <MapContainer
         inertia
-        // tapHold
-        // dragging={false}
         style={{
           height: '100%',
           width: '100%',
@@ -60,7 +58,6 @@ export default function InteractiveMap() {
         minZoom={3}
         maxZoom={18}
         scrollWheelZoom={false}
-        // touchZoom
       >
         <TileLayer {...mapThemes[theme]} />
         <SetScrollWheelZoom />

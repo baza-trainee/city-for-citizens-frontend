@@ -17,6 +17,7 @@
   border-radius: 8px !important;
   background-color: transparent !important;
   box-shadow: none;
+  white-space: normal !important;
 }
 
 .interactive-map-marker .leaflet-tooltip::before {
@@ -25,4 +26,8 @@
 
 .interactive-map-marker .leaflet-popup-tip-container {
   display: none !important;
+}
+
+.interactive-map-marker .leaflet-grab {
+  cursor: auto !important;
 }
