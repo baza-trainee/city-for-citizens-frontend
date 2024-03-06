@@ -104,7 +104,7 @@ function EventItem({ event }) {
   const t = useTranslations('EventCard');
 
   return (
-    <div className=" flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head shadow-eventCard dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
+    <div className="flex w-[300px] cursor-auto flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head shadow-eventCard dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
       <CloseIcon
         onClick={onClose}
         className="mb-2.5 ml-auto size-6 cursor-pointer text-icon transition-colors hover:text-light-head hover:dark:text-dark-head"
