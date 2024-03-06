@@ -25,8 +25,8 @@ export default function ModalCookies() {
   const [policyDocument, setPolicyDocument] = useState(null);
   const t = useTranslations('ModalCookies');
 
-  const isWordCookie = text => {
-    const regex = /\bcookie(s)?\b/gi;
+  const isWordHighlighted = text => {
+    const regex = /(cookies|OK|натисніть|click)/i;
     return regex.test(text);
   };
 
@@ -55,7 +55,7 @@ export default function ModalCookies() {
 
   return (
     <div
-      className={`modal-mobile fixed bottom-4 left-[50%] z-[1001] flex -translate-x-1/2 items-center justify-between gap-4 rounded-lg bg-light-secondary p-4 font-roboto text-sm leading-[1.4] dark:bg-dark-secondary  max-tablet:flex-wrap desktop:w-full desktop:max-w-[1200px] ${isVisible ? '' : 'hidden'}`}
+      className={`modal-mobile fixed bottom-4 left-[50%] z-[1001] flex -translate-x-1/2 items-center justify-between gap-4 rounded-lg bg-light-secondary p-4 font-roboto leading-[1.4] dark:bg-dark-secondary max-tablet:flex-wrap  tablet:bottom-[40px] desktop:w-full desktop:max-w-[1200px] ${isVisible ? '' : 'hidden'}`}
     >
       <p>
         {t('title')
@@ -64,14 +64,14 @@ export default function ModalCookies() {
             return (
               <span
                 key={index}
-                className={` ${isWordCookie(word) ? 'text-black dark:text-white' : 'dark:text:dark-main text-light-main'}`}
+                className={` ${isWordHighlighted(word) ? 'font-semibold text-black dark:text-white' : 'dark:text:dark-main text-light-main'}`}
               >
                 {word} {index !== 0 && ' '}
               </span>
             );
           })}
         <a
-          className="cursor-pointer text-light-head hover:text-dark-button-pressed hover:transition-all dark:text-dark-accent dark:hover:text-dark-button-hover"
+          className="cursor-pointer text-light-head underline underline-offset-2 hover:text-dark-button-pressed hover:transition-all dark:text-dark-accent dark:hover:text-dark-button-hover	"
           id={policyDocument?.id}
           href={policyDocument?.file}
         >
@@ -83,7 +83,7 @@ export default function ModalCookies() {
         className="w-full tablet:w-[240px]"
         onClick={handleAcceptCookies}
       >
-        {t('accept')}
+        Ok
       </ButtonMainPage>
     </div>
   );
