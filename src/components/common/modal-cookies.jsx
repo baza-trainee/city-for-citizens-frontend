@@ -64,7 +64,7 @@ export default function ModalCookies() {
             return (
               <span
                 key={index}
-                className={` ${isWordHighlighted(word) ? 'font-semibold text-black dark:text-white' : 'dark:text:dark-main text-light-main'}`}
+                className={` ${isWordHighlighted(word) ? 'font-semibold text-black dark:text-white' : 'text-light-main dark:text-dark-main'}`}
               >
                 {word} {index !== 0 && ' '}
               </span>
