@@ -14,6 +14,12 @@ import { selectFilters } from '@/redux/slice/filters';
 import { useTheme } from 'next-themes';
 
 const mapThemes = {
+  default: {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  },
   dark: {
     url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}',
 
@@ -21,6 +27,7 @@ const mapThemes = {
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     ext: 'png',
   },
+
   light: {
     attribution:
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -31,7 +38,7 @@ const mapThemes = {
 
 export default function InteractiveMap() {
   const { localeForRequest } = useCurrentLocale();
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
 
   const filters = useSelector(selectFilters);
 
@@ -61,7 +68,7 @@ export default function InteractiveMap() {
         touchZoom={true}
         tapHold={true}
       >
-        <TileLayer {...mapThemes[theme]} />
+        <TileLayer {...mapThemes.default} />
         <SetScrollWheelZoom />
 
         {markers.map(event => (
