@@ -44,32 +44,18 @@ export function ImageGallery() {
     };
   }, []);
 
-  const prevArrow = document.querySelector(
-    '.gallery-swiper-swiper-button-prev'
-  );
-  const nextArrow = document.querySelector(
-    '.gallery-swiper-swiper-button-next'
-  );
-
   function handleSlideClick(image) {
     setSelectedImage(image);
     if (windowWidth >= 768) {
       setIsModalOpen(true);
     }
-    if (prevArrow && nextArrow) {
-      prevArrow.style.display = 'none';
-      nextArrow.style.display = 'none';
-    }
+
     document.body.classList.add('overflow-hidden');
   }
 
   function handleModalClose() {
     setSelectedImage(null);
     setIsModalOpen(false);
-    if (prevArrow && nextArrow) {
-      prevArrow.style.display = 'block';
-      nextArrow.style.display = 'block';
-    }
     document.body.classList.remove('overflow-hidden');
   }
 
