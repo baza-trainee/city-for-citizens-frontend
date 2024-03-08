@@ -134,7 +134,7 @@ export default function EventForm({
                   <FormElement
                     type={type}
                     rows={rows}
-                    placeholder={`${placeholder} ${'українською'}`}
+                    placeholder={`${placeholder} ${inputName === 'notes' ? "українською *(не обов'язково)" : 'українською'}`}
                     tag={tag}
                     errorMessage={errors?.firstLocale?.[inputName]?.message}
                     register={register(`firstLocale.${inputName}`)}
@@ -143,7 +143,7 @@ export default function EventForm({
                   <FormElement
                     type={type}
                     rows={rows}
-                    placeholder={`${placeholder} ${'англійською'}`}
+                    placeholder={` ${placeholder} ${inputName === 'notes' ? "англійською *(не обов'язково)" : 'англійською'}`}
                     tag={tag}
                     errorMessage={errors?.secondLocale?.[inputName]?.message}
                     register={register(`secondLocale.${inputName}`)}

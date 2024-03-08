@@ -17,6 +17,7 @@
   border-radius: 8px !important;
   background-color: transparent !important;
   box-shadow: none;
+  white-space: normal !important;
 }
 
 .interactive-map-marker .leaflet-tooltip::before {
@@ -25,11 +26,4 @@
 
 .interactive-map-marker .leaflet-popup-tip-container {
   display: none !important;
-}
-
-.dark .leaflet-layer,
-.dark .leaflet-control-zoom-in,
-.dark .leaflet-control-zoom-out,
-.dark .leaflet-control-attribution {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }

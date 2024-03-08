@@ -4,8 +4,10 @@ import { createSvgMarker } from './create-svg-marker';
 import { EventCard } from './event-card';
 import { TooltipEventCard } from './tooltip-event-card';
 import Leaflet from 'leaflet';
+import { useMedia } from 'react-use';
 
 export function MapMarker({ event }) {
+  const isTablet = useMedia('(min-width: 768px)');
   const [isClicked, setIsClicked] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
@@ -57,7 +59,7 @@ export function MapMarker({ event }) {
           <EventCard event={event} isClicked={isClicked} />
         </div>
 
-        {!isClicked && <TooltipEventCard event={event} />}
+        {!isClicked && isTablet && <TooltipEventCard event={event} />}
       </Marker>
     </div>
   );

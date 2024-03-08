@@ -40,7 +40,7 @@ function TooltipEventCardItem({ event }) {
   return (
     <div className="flex w-[300px] flex-col rounded-lg bg-light-secondary p-4 font-roboto text-[14px]/[1.4] text-light-head shadow-eventCard dark:bg-dark-secondary dark:text-dark-head tablet:w-[400px]">
       <TypeList className={'mb-4'} eventTypes={eventTypes} />
-      <h3 className="mb-4 w-full text-wrap font-ubuntu text-[24px]/[1.1] font-medium">
+      <h3 className="mb-4 font-ubuntu text-[24px]/[1.1] font-medium">
         {eventTitle}
       </h3>
       <div className={'mb-2 flex items-center gap-2'}>
