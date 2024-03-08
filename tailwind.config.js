@@ -94,6 +94,17 @@ module.exports = {
           text: '#FFFFFF',
           switch: '#222A30',
         },
+        input: {
+          placeholder: 'rgba(0, 0, 0, 0.3)',
+          default: 'rgba(0, 0, 0, 0.3)',
+          hover: 'rgba(0, 0, 0, 0.3)',
+          focus: '#000000',
+          error: '#E11717',
+        },
+        checkbox: {
+          check: '#000000',
+          non_check: '#b0b0b0',
+        },
       },
 
       // dark
@@ -116,6 +127,17 @@ module.exports = {
           pressed: '#E1B828',
           text: '#000000',
           switch: '#F3F3F3',
+        },
+        input: {
+          placeholder: 'rgba(255, 255, 255, 0.3)',
+          default: 'rgba(255, 255, 255, 0.3)',
+          hover: '#C7C7C7',
+          focus: '#FFFFFF',
+          error: '#E11717',
+        },
+        checkbox: {
+          check: '#FFD646',
+          non_check: '#483c17',
         },
       },
     },

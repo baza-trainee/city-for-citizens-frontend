@@ -44,7 +44,7 @@ export default function InteractiveMap() {
 
   return (
     <section
-      className="interactive-map-marker  mb-20 h-[630px]  w-screen  tablet:mb-[160px] tablet:h-[657px] laptop:h-[745px]"
+      className="interactive-map-marker relative z-0 mb-20 h-[630px]  w-screen  tablet:mb-[160px] tablet:h-[657px] laptop:h-[745px]"
       id="map"
     >
       <MapContainer
