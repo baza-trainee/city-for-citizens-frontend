@@ -33,7 +33,7 @@ export function ModalGallery({ selectedImage, modalClose }) {
 
   return (
     <div
-      className="backdrop bg- bg-light-backdrop fixed left-0 top-0 z-[1005] flex h-screen w-screen items-center justify-center"
+      className="backdrop fixed left-0 top-0 z-[1005] flex h-screen w-screen items-center justify-center bg-light-backdrop"
       onClick={handleBackdropClick}
     >
       <div className="gallery-swiper-button-prev absolute bottom-[50%] left-[50px]  z-[1201] hidden h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed tablet:left-4 tablet:block laptop:left-10 desktop:left-[10px]">
@@ -74,10 +74,10 @@ export function ModalGallery({ selectedImage, modalClose }) {
                 className="h-full w-full overflow-hidden object-cover"
               />
               <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-lg bg-light-secondary p-4 text-start  shadow-gallery dark:bg-dark-secondary">
-                <p className="dark:text-li font-ubuntu text-xl font-medium leading-[22px] text-light-head dark:text-dark-head">
+                <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
                   {item.title}
                 </p>
-                <div className="flex items-center  gap-2 text-start">
+                <div className="flex items-center gap-2 text-start">
                   <IconLocation width="24px" height="24px" />
                   <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
                     {item.address}

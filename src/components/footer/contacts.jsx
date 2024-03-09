@@ -13,12 +13,12 @@ async function getContacts() {
 }
 
 export default async function Contacts() {
-  const [contactsData] = await getContacts();
+  const contactsData = await getContacts();
 
   if (!contactsData) {
     return null;
   }
-  const { firstPhone, secondPhone, email } = contactsData;
+  const { firstPhone, secondPhone, email } = contactsData[0];
 
   function formatPhoneNumber(phoneNumber) {
     phoneNumber = phoneNumber.replace(/\D/g, '');
