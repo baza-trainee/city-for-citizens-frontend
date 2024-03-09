@@ -74,10 +74,10 @@ export function ModalGallery({ selectedImage, modalClose }) {
                 className="h-full w-full overflow-hidden object-cover"
               />
               <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-lg bg-light-secondary p-4 text-start  shadow-gallery dark:bg-dark-secondary">
-                <p className="dark:text-li font-ubuntu text-xl font-medium leading-[22px] text-light-head dark:text-dark-head">
+                <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
                   {item.title}
                 </p>
-                <div className="flex items-center  gap-2 text-start">
+                <div className="flex items-center gap-2 text-start">
                   <IconLocation width="24px" height="24px" />
                   <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
                     {item.address}
