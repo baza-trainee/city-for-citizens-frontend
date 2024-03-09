@@ -33,7 +33,7 @@ export function ModalGallery({ selectedImage, modalClose }) {
 
   return (
     <div
-      className="backdrop bg- bg-light-backdrop fixed left-0 top-0 z-[1005] flex h-screen w-screen items-center justify-center"
+      className="backdrop fixed left-0 top-0 z-[1005] flex h-screen w-screen items-center justify-center bg-light-backdrop"
       onClick={handleBackdropClick}
     >
       <div className="gallery-swiper-button-prev absolute bottom-[50%] left-[50px]  z-[1201] hidden h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed tablet:left-4 tablet:block laptop:left-10 desktop:left-[10px]">
