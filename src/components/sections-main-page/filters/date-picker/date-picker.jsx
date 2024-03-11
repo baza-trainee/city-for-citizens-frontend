@@ -10,24 +10,24 @@ import FilterInputWrapper from '../filter-input-wrapper';
 import { formatDateSeparatorDash, generateDateRange } from '@/helpers';
 import { customStylesDatePicker } from './custom-styles-date-picker';
 import { customComponents } from './custom-components';
-import { useQueryParam } from '@/hooks';
 import { useLocale, useTranslations } from 'next-intl';
+import { useDispatch } from 'react-redux';
+import { setFilters } from '@/redux/slice/filters';
 
 export const DatePicker = ({ filtersEventDates }) => {
   const [range, setRange] = useState({});
   const [inputText, setInputText] = useState([]);
-  //const [dateToFilter, setDateToFilter] = useQueryParam('date');
   const [dateToFilter, setDateToFilter] = useState([]);
-
+  const dispatch = useDispatch();
   const t = useTranslations('Filters.DatePicker');
   const locale = useLocale();
 
   useEffect(() => {
-    if (range == undefined) {
-      setDateToFilter([]);
-      setInputText([]);
-      return;
-    }
+    dateToFilter && dispatch(setFilters({ data: dateToFilter.join(',') }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateToFilter]);
+
+  useEffect(() => {
     if (dateToFilter.length === 0) {
       setInputText([]);
       if (range?.from) {
@@ -38,7 +38,11 @@ export const DatePicker = ({ filtersEventDates }) => {
     if (range?.from) {
       return;
     }
-
+    if (range === undefined) {
+      setDateToFilter([]);
+      setInputText([]);
+      return;
+    }
     setRange({
       from: new Date(dateToFilter[0]),
       to:
@@ -55,22 +59,26 @@ export const DatePicker = ({ filtersEventDates }) => {
 
       if (!to) {
         setDateToFilter([from]);
-        setInputText([from]);
+        setInputText([formatDate(from)]);
       } else {
         const dateRange = generateDateRange(from, to, filtersEventDates);
 
         setDateToFilter(dateRange);
 
-        setInputText([from, to]);
+        setInputText([formatDate(from), formatDate(to)]);
       }
     }
   }, [filtersEventDates, range, setDateToFilter]);
 
+  function formatDate(date) {
+    const dateEl = date.split('-').reverse();
+    return dateEl.join('.');
+  }
   const isDateActive = (date, activeDates = []) =>
     activeDates.includes(formatDateSeparatorDash(date));
 
   return (
-    <div className="w-full">
+    <div className=" w-full">
       <FilterInputWrapper
         inputLabel={t('label')}
         inputTextDefault={inputText.length !== 0 ? '' : t('defaultValue')}
@@ -78,19 +86,22 @@ export const DatePicker = ({ filtersEventDates }) => {
         inputTextSecond={inputText[1]}
         iconSelect={IconSelectArrow}
         inputIcon={IconInputCalendar}
+        type={'date'}
       >
-        <DayPicker
-          components={customComponents}
-          locale={locale === 'uk' ? uk : enUS}
-          mode="range"
-          max={61}
-          weekStartsOn={1}
-          showOutsideDays
-          disabled={date => !isDateActive(date, filtersEventDates)}
-          selected={range}
-          onSelect={setRange}
-          classNames={customStylesDatePicker}
-        />
+        <div className="h-[323px] w-[312px]">
+          <DayPicker
+            components={customComponents}
+            locale={locale === 'uk' ? uk : enUS}
+            mode="range"
+            max={61}
+            weekStartsOn={1}
+            showOutsideDays
+            disabled={date => !isDateActive(date, filtersEventDates)}
+            selected={range}
+            onSelect={setRange}
+            classNames={customStylesDatePicker}
+          />
+        </div>
       </FilterInputWrapper>
     </div>
   );

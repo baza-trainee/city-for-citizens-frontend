@@ -68,7 +68,15 @@ module.exports = {
         non_focus: '#868686',
         disabled: '#7E8492',
       },
-
+      calendar: {
+        hover: '#FFF464',
+        selected: 'rgba(255, 214, 70, 0.5)',
+        point: '#FFD646',
+        default_light: '#000000',
+        default_dark: '#FFFFFF',
+        disabled_light: 'rgba(0, 0, 0, 0.5)',
+        disabled_dark: 'rgba(255, 255, 255, 0.5)',
+      },
       icon: '#767676',
       black: '#000000',
       white: '#FFFFFF',
@@ -149,6 +157,7 @@ module.exports = {
       laptop_xl: '1024px',
       desktop: '1280px',
       desktop_m: '1440px',
+      desktop_l: '1520px',
       desktop_xl: '1920px',
     },
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const FilterInputWrapper = ({
   inputLabel,
@@ -10,13 +10,20 @@ const FilterInputWrapper = ({
   inputTextSecond,
   iconSelect: IconSelect,
   inputIcon: InputIcon,
+  type,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
 
-  const selectedInputText = [inputTextDefault, inputTextFirst, inputTextSecond]
-    .filter(Boolean)
-    .join(', ');
+  const selectedInputText = [
+    inputTextDefault,
+    inputTextFirst,
+    inputTextSecond,
+  ].filter(Boolean);
+  const formatSelectInputText =
+    type === 'date'
+      ? selectedInputText.join(' - ')
+      : selectedInputText.join(', ');
 
   const handleInputClick = () => {
     if (hasFocus) {
@@ -52,7 +59,7 @@ const FilterInputWrapper = ({
   };
 
   return (
-    <div className="relative flex w-full flex-col">
+    <div className=" relative flex w-full  flex-col">
       <p className="mb-1 font-roboto text-sm text-light-main dark:text-dark-main">
         {inputLabel}
       </p>
@@ -62,7 +69,7 @@ const FilterInputWrapper = ({
         <div
           onClick={handleInputClick}
           className="flex h-[48px]  items-center justify-between rounded-lg bg-light-secondary
-        p-[10px] leading-[22.4px]
+        p-[12px_12px_12px_16px] leading-[22.4px]
         shadow-[0_5px_12px_rgba(115,115,115,0.1)]  transition-all 
           dark:border dark:border-dark-border
          dark:bg-dark-secondary dark:text-dark-input-default
@@ -75,7 +82,7 @@ const FilterInputWrapper = ({
               contentEditable={false}
               className={`${commonStyles.text} max-w-[calc(100vw-32px-16px-12px-24px-24px-8px)] grow overflow-clip pr-2 text-left  desktop:max-w-[376px]`}
             >
-              {selectedInputText}
+              {formatSelectInputText}
             </span>
           </div>
           <IconSelect
@@ -86,11 +93,12 @@ const FilterInputWrapper = ({
         </div>
 
         <div
-          className={`absolute mt-[15px] w-full rounded-lg bg-light-secondary 
+          className={`absolute mt-[15px] rounded-lg bg-light-secondary 
           shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border 
-          dark:border-dark-border dark:bg-dark-secondary dark:shadow-none ${
-            isVisible ? 'visible opacity-100' : 'invisible opacity-0'
-          }`}
+          dark:border-dark-border  dark:bg-dark-secondary dark:shadow-none 
+           ${type == 'date' ? 'inset-x-0 mx-auto w-fit' : 'w-full'}
+           ${isVisible ? 'visible opacity-100' : 'invisible opacity-0'}         
+           `}
         >
           {children}
         </div>

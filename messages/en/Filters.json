@@ -1,5 +1,6 @@
 {
   "Filters": {
+    "header": "Choose location, time and type of event",
     "ChooseCity": {
       "label": "Choose a cities",
       "defaultValue": "City",

@@ -1,25 +1,26 @@
 'use client';
+
 import IconSelectArrow from '@/assets/icons/filters/drop-down-icon.svg';
 import IconInputCity from '@/assets/icons/filters/location_input-icon.svg';
-//import { useQueryParam } from '@/hooks';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setFilters } from '@/redux/slice/filters';
 
-function ChooseCity({ filtersEventCities }) {
+export default function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
-  const [isInputTyping, setIsInputTyping] = useState(false);
+  //const [isInputTyping, setIsInputTyping] = useState(false);
   const [displayedCities, setDisplayedCities] = useState([]);
-  //const [selectedCities, setSelectedCities] = useQueryParam('city');
   const [selectedCities, setSelectedCities] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
   const [inputReadOnly, setInputReadOnly] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [hasFocusInput, setHasFocusInput] = useState(false);
   const [hasFocusList, setHasFocusList] = useState(false);
-  //const [isOpenList, setIsOpenList] = useState(false);
-
+  const [hasFocusArrow, setHasFocusArrow] = useState(false);
+  const dispatch = useDispatch();
   const t = useTranslations('Filters.ChooseCity');
   const pathname = usePathname();
   const locale = pathname.split('/')[1];
@@ -31,6 +32,7 @@ function ChooseCity({ filtersEventCities }) {
   useEffect(() => {
     selectedCities && setInputValue(selectedCities.join(', '));
     setDisplayedCities(filtersEventCities);
+    selectedCities && dispatch(setFilters({ city: selectedCities.join(',') }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCities]);
 
@@ -39,8 +41,6 @@ function ChooseCity({ filtersEventCities }) {
     !isListVisible &&
       selectedCities &&
       setInputValue(selectedCities.join(', '));
-    //!isListVisible && setIsOpenList(false);
-    //console.log('isListVisible change', isListVisible);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isListVisible]);
 
@@ -58,37 +58,6 @@ function ChooseCity({ filtersEventCities }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadingData]);
 
-  useEffect(() => {
-    //Last change add setIsOpenList(true)
-    // console.log('hasFocusInput', hasFocusInput);
-    // console.log('hasFocusList', hasFocusList);
-    // console.log(
-    //   '!hasFocusInput + !hasFocusList == isListVisible false, else true'
-    // );
-    !hasFocusInput && !hasFocusList && setIsListVisible(false);
-    // !hasFocusInput && !hasFocusList && setIsOpenList(false);
-    hasFocusInput && !hasFocusList && setIsListVisible(true);
-    !hasFocusInput && hasFocusList && setIsListVisible(true);
-  }, [hasFocusInput, hasFocusList]);
-
-  // useEffect(() => {
-  //   // if (isOpenList) {
-  //   //   //setIsListVisible(true);
-  //   //   console.log('OpenList true');
-  //   //   console.log('FocusInput set true');
-  //   //   setHasFocusInput(true);
-  //   // }
-  //   // if (!isOpenList) {
-  //   //   //setIsListVisible(false);
-  //   //   console.log('OpenList false');
-  //   //   console.log('FocusInput set false');
-  //   //   console.log('FocusList set false');
-  //   //   setHasFocusInput(false);
-  //   //   setHasFocusList(false);
-  //   // }
-  //   console.log('***isOpenList', isOpenList);
-  // }, [isOpenList]);
-
   function handleInputChange(event) {
     const value = event.target.value.trim();
     setInputValue(value);
@@ -96,7 +65,7 @@ function ChooseCity({ filtersEventCities }) {
     if (value) {
       setValidationMessage('');
       if (isInputValueValid(value)) {
-        setIsInputTyping(true);
+        //setIsInputTyping(true);
         const filteredCities = filteredCityByInputValue(value);
         setDisplayedCities(filteredCities);
       } else {
@@ -111,8 +80,7 @@ function ChooseCity({ filtersEventCities }) {
       setValidationMessage('');
       setDisplayedCities(filtersEventCities);
     }
-    //setIsListVisible(true);
-    setHasFocusInput(true);
+    setIsListVisible(true);
   }
 
   function isInputValueValid(value, currLocale = locale) {
@@ -162,6 +130,7 @@ function ChooseCity({ filtersEventCities }) {
     setInputReadOnly(false);
     setInputValue('');
     setDisplayedCities(filtersEventCities);
+    setIsListVisible(true);
   }
 
   function filteredCityByInputValue(value = inputValue) {
@@ -187,53 +156,65 @@ function ChooseCity({ filtersEventCities }) {
           )
       );
   }
+
   function handleListFocus() {
-    console.log('=>focus list true');
     setHasFocusList(true);
     setHasFocusInput(false);
+    setIsListVisible(true);
   }
 
   function handleInputLostFocus() {
     setInputReadOnly(false);
-    console.log('=>focus input false');
     setHasFocusInput(false);
+
+    if (!hasFocusList && !hasFocusArrow) {
+      setIsListVisible(false);
+    }
   }
 
   function handleListLostFocus() {
-    console.log('=>focus list false');
     setHasFocusList(false);
+
+    if (!hasFocusInput && !hasFocusArrow) {
+      setIsListVisible(false);
+    }
   }
 
   function handleInputFocus() {
-    console.log('=>focus input true');
     setHasFocusInput(true);
+    setIsListVisible(true);
     setHasFocusList(false);
   }
+
   function handleControlList() {
+    setHasFocusArrow(true);
+
     if (!isListVisible) {
       setIsListVisible(true);
-      console.log('OpenList true');
-      console.log('FocusInput set true');
-      setHasFocusInput(true);
     }
+
     if (isListVisible) {
-      setIsListVisible(false);
-      console.log('OpenList false');
-      console.log('FocusInput set false');
-      console.log('FocusList set false');
-      setHasFocusInput(false);
-      setHasFocusList(false);
+      resetState();
     }
-    console.log('handleControlList isListVisible', isListVisible);
-    // isListVisible && setIsOpenList(false);
-    // !isListVisible && setIsOpenList(true);
+  }
+
+  function resetState() {
+    setHasFocusInput(false);
+    setHasFocusList(false);
+    setHasFocusList(false);
+    setIsListVisible(false);
+  }
+
+  function handleArrowLostFocus() {
+    setHasFocusArrow(false);
+    if (!hasFocusList && !hasFocusInput) {
+      setIsListVisible(false);
+    }
   }
 
   const setColor = () => {
     if (isListVisible) {
-      return !isInputTyping
-        ? `text-light-input-default dark:text-dark-input-default`
-        : `text-light-input-focus dark:text-dark-input-focus`;
+      return `text-light-input-focus dark:text-dark-input-focus`;
     }
     return `text-light-input-default dark:text-dark-input-default`;
   };
@@ -254,10 +235,8 @@ function ChooseCity({ filtersEventCities }) {
       </label>
 
       <div
-        tabIndex="0"
-        onBlur={handleInputLostFocus}
         className="flex h-[48px] items-center justify-between rounded-lg bg-light-secondary
-        p-[10px] leading-[22.4px]
+        p-[12px_12px_12px_16px] leading-[22.4px]
         shadow-[0_5px_12px_rgba(115,115,115,0.1)]  transition-all 
           dark:border dark:border-dark-border
          dark:bg-dark-secondary dark:text-dark-input-default
@@ -265,8 +244,9 @@ function ChooseCity({ filtersEventCities }) {
       >
         <div
           tabIndex="0"
+          onBlur={handleInputLostFocus}
           onFocus={handleInputFocus}
-          className="flex grow gap-x-2"
+          className="flex grow gap-x-2 "
         >
           <IconInputCity width={24} height={24} />
           <input
@@ -279,33 +259,44 @@ function ChooseCity({ filtersEventCities }) {
             onClick={handleOnclick}
             readOnly={inputReadOnly}
             autoComplete="off"
-            className={`${commonStyles.text} grow select-none  bg-light-secondary pr-2
+            className={`${commonStyles.text} grow  bg-light-secondary pr-2
             font-roboto   placeholder:text-light-input-placeholder
              focus:outline-none dark:bg-dark-secondary dark:text-dark-input-default dark:placeholder:text-dark-input-placeholder `}
           />
         </div>
-        <IconSelectArrow
-          width={24}
-          height={24}
-          onClick={handleControlList}
-          className={`${isListVisible ? '-rotate-180' : ''}`}
-        />
+        <div
+          tabIndex="0"
+          onBlur={handleArrowLostFocus}
+          onMouseEnter={() => {
+            setHasFocusArrow(true);
+          }}
+          onTouchStart={() => {
+            setHasFocusArrow(true);
+          }}
+        >
+          <IconSelectArrow
+            width={24}
+            height={24}
+            onClick={handleControlList}
+            className={`outline-none ${isListVisible ? 'open rotate-180' : ''}`}
+          />
+        </div>
       </div>
       <div tabIndex="0" onBlur={handleListLostFocus} onFocus={handleListFocus}>
         <ul
-          className={`absolute top-[87px]  w-full rounded-lg bg-light-secondary 
+          className={`absolute top-[87px] flex w-full flex-col gap-3 rounded-lg bg-light-secondary px-4 py-3
           shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border 
           dark:border-dark-border dark:bg-dark-secondary dark:shadow-none ${
             isListVisible ? 'visible opacity-100' : 'invisible opacity-0'
           }`}
         >
           {isLoadingData && (
-            <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px] text-light-input-default dark:text-dark-input-default">
+            <p className="text-[16px] leading-[1.5] -tracking-[0.176px] text-light-input-default dark:text-dark-input-default">
               {t('loading')}
             </p>
           )}
           {validationMessage ? (
-            <p className="p-[10px] text-[16px] leading-[1.5] -tracking-[0.176px]   text-light-input-error">
+            <p className=" text-[16px] leading-[1.5] -tracking-[0.176px]   text-light-input-error">
               {t(validationMessage)}
             </p>
           ) : (
@@ -313,7 +304,7 @@ function ChooseCity({ filtersEventCities }) {
               <li
                 key={city}
                 onClick={() => toggleCheck(city)}
-                className={`flex h-11 list-none items-center justify-between
+                className={`flex list-none items-center justify-between
           px-2 py-0 ${
             selectedCities.includes(city)
               ? 'border-light-checkbox-check text-light-input-focus dark:border-dark-checkbox-check dark:text-dark-input-focus'
@@ -338,4 +329,3 @@ function ChooseCity({ filtersEventCities }) {
     </div>
   );
 }
-export default ChooseCity;

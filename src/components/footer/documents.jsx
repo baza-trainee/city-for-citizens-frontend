@@ -4,8 +4,7 @@ import { useTranslations } from 'next-intl';
 async function getDocuments() {
   const res = await fetch(`${BASE_URL}/documents`);
   if (!res.ok) {
-    // throw new Error('Failed to fetch data');
-    return;
+    throw new Error('Failed to fetch data');
   }
   return res.json();
 }

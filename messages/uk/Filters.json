@@ -1,5 +1,6 @@
 {
   "Filters": {
+    "header": "Оберіть локацію, час та тип події",
     "ChooseCity": {
       "label": "Оберіть міста",
       "defaultValue": "Місто",
