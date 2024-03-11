@@ -80,3 +80,8 @@
 .gallery-swiper-swiper-button-prev {
   cursor: pointer;
 }
+
+.gallery-swiper-button-next,
+.gallery-swiper-button-prev {
+  cursor: pointer;
+}

@@ -94,6 +94,7 @@ module.exports = {
         primary: '#FFFFFF',
         secondary: '#F2F2F2',
         border: '#AEAEAE',
+        backdrop: '#00000080',
 
         button: {
           hover: '#464646',
