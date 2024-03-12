@@ -36,22 +36,34 @@ const mapThemes = {
   },
 };
 
+function areAllFieldsEmpty(obj) {
+  return !Object.values(obj).some(value => value.trim() !== '');
+}
+
 export default function InteractiveMap() {
   const { localeForRequest } = useCurrentLocale();
   // const { theme } = useTheme();
 
   const filters = useSelector(selectFilters);
 
-  const { data: markers } = useGetEventsBySearchParamsQuery({
-    locale: localeForRequest,
-    queryParams: filters,
-  });
+  const {
+    data: markers,
+    isLoading,
+    isFetching,
+  } = useGetEventsBySearchParamsQuery(
+    {
+      locale: localeForRequest,
+      queryParams: filters,
+    },
 
-  if (!markers) return null;
+    {
+      skip: areAllFieldsEmpty(filters),
+    }
+  );
 
   return (
     <section
-      className="interactive-map-marker mb-20 h-[630px] w-full tablet:mb-[160px] tablet:h-[745px]"
+      className="interactive-map-marker relative z-0 mb-20 h-[630px] w-full tablet:mb-[160px] tablet:h-[745px]"
       id="map"
     >
       <MapContainer
@@ -71,9 +83,11 @@ export default function InteractiveMap() {
         <TileLayer {...mapThemes.default} />
         <SetScrollWheelZoom />
 
-        {markers.map(event => (
-          <MapMarker key={event.id} event={event} />
-        ))}
+        {markers &&
+          !isLoading &&
+          !isFetching &&
+          !areAllFieldsEmpty(filters) &&
+          markers.map(event => <MapMarker key={event.id} event={event} />)}
       </MapContainer>
     </section>
   );
