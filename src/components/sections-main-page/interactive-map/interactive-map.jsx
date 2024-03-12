@@ -1,7 +1,7 @@
 'use client';
 
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
-import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, GeoJSON, Rectangle } from 'react-leaflet';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGetEventsBySearchParamsQuery } from '@/redux/api/eventsApi';
 
@@ -11,35 +11,14 @@ import { MapMarker } from './components/map-marker';
 import { useCurrentLocale } from '@/hooks';
 import { useSelector } from 'react-redux';
 import { selectFilters } from '@/redux/slice/filters';
-import { useTheme } from 'next-themes';
 
-const mapThemes = {
-  default: {
-    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  },
-  dark: {
-    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}',
-
-    attribution:
-      '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    ext: 'png',
-  },
-
-  light: {
-    attribution:
-      '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    url: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.{ext}',
-    ext: 'png',
-  },
-};
+import borderOfUkraine from './geoBoundaries-UKR-ADM0.json';
+import bordersOfUkrainianCities from './geoBoundaries-UKR-ADM1.json';
 
 export default function InteractiveMap() {
-  const { localeForRequest } = useCurrentLocale();
-  // const { theme } = useTheme();
+  const [map, setMap] = useState(null);
 
+  const { localeForRequest } = useCurrentLocale();
   const filters = useSelector(selectFilters);
 
   const { data: markers } = useGetEventsBySearchParamsQuery({
@@ -47,63 +26,156 @@ export default function InteractiveMap() {
     queryParams: filters,
   });
 
-  if (!markers) return null;
+  const onClickResetZoom = useMemo(
+    () => () => {
+      map.flyToBounds([
+        [52.4, 40.2],
+        [44.2, 22.1],
+      ]);
+    },
+    [map]
+  );
 
-  return (
-    <section
-      className="interactive-map-marker mb-20 h-[630px] w-full tablet:mb-[160px] tablet:h-[745px]"
-      id="map"
-    >
+  const displayMap = useMemo(
+    () => (
       <MapContainer
-        inertia
+        center={[49.1, 31.4]}
+        scrollWheelZoom={false}
+        ref={setMap}
         style={{
           height: '100%',
           width: '100%',
         }}
-        center={[49.04761451133044, 31.387372519412626]}
+        maxBounds={[
+          [62, 45],
+          [44, 15],
+        ]}
         zoom={6}
-        minZoom={3}
+        minZoom={5}
         maxZoom={18}
-        scrollWheelZoom={false}
+        zoomSnap={0.5}
+        zoomDelta={0.5}
         touchZoom={true}
-        tapHold={true}
       >
-        <TileLayer {...mapThemes.default} />
-        <SetScrollWheelZoom />
-
-        {markers.map(event => (
-          <MapMarker key={event.id} event={event} />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          // url="https://tile.openstreetmap.org.ua/styles/osm-bright/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        />
+        <GeoJSON
+          data={borderOfUkraine}
+          style={{
+            color: 'black',
+            weight: 4,
+          }}
+        />
+        {bordersOfUkrainianCities.features.map(feature => (
+          <GeoJSON
+            data={feature}
+            style={{
+              fillColor: 'transparent',
+              weight: 1,
+              opacity: 0.5,
+              color: 'currentColor',
+            }}
+            key={feature.properties.shapeID}
+          />
         ))}
+        <Rectangle
+          bounds={[
+            [180, 180],
+            [-180, -180],
+          ]}
+          pathOptions={{ fillColor: 'black', fillOpacity: 0.5 }}
+        />
+        {markers &&
+          markers.map(event => (
+            <MapMarker map={map} key={event.id} event={event} />
+          ))}
       </MapContainer>
+    ),
+    [map, markers]
+  );
+
+  return (
+    <section
+      className="interactive-map-marker relative mx-auto mb-20 h-[630px] max-h-[calc(100vh-80px)] w-full max-w-[1920px] tablet:mb-[160px] tablet:h-screen"
+      id="map"
+    >
+      {displayMap}
+      {map && <HandleKey map={map} />}
+
+      <button
+        onClick={onClickResetZoom}
+        className="absolute bottom-[40px] left-[40px] z-[1000] rounded-lg bg-yellow px-6 py-3"
+      >
+        Показати всю карту
+      </button>
     </section>
   );
 }
 
-function SetScrollWheelZoom() {
-  const map_leaflet = useMap();
+function GeoJSONCityItem({ feature, map }) {
+  const styleCity = {
+    fillColor: 'transparent',
+
+    weight: 1,
+    opacity: 0.5,
+    color: 'currentColor',
+  };
+
+  const zoomToFeature = useCallback(
+    ({ target }) => {
+      map.flyToBounds(target.getBounds());
+    },
+    [map]
+  );
+
+  const innerHandlers = useMemo(
+    () => ({
+      click: zoomToFeature,
+    }),
+    [zoomToFeature]
+  );
+  return (
+    <GeoJSON
+      data={feature}
+      className={'geo-json-city-item'}
+      style={styleCity}
+      eventHandlers={innerHandlers}
+    />
+  );
+}
+
+function HandleKey({ map }) {
+  const handleKeydown = useCallback(
+    evt => {
+      if (evt.key === 'Control' || evt.key === 'Meta') {
+        map.scrollWheelZoom.enable();
+      }
+    },
+    [map]
+  );
+
+  const handleKeyup = useCallback(() => {
+    map.scrollWheelZoom.disable();
+  }, [map]);
+
+  const handleTouchend = useCallback(() => {
+    map.dragging.disable();
+  }, [map]);
 
   useEffect(() => {
-    function handleKeydown(e) {
-      if (e.key === 'Control' || e.key === 'Meta') {
-        map_leaflet.scrollWheelZoom.enable();
-      }
-    }
-    function handleKeyup() {
-      map_leaflet.scrollWheelZoom.disable();
-    }
-
-    function handleTouchend() {
-      map_leaflet.dragging.disable();
-    }
-
     document.addEventListener('touchend', handleTouchend);
     document.addEventListener('keydown', handleKeydown);
     document.addEventListener('keyup', handleKeyup);
+
     return () => {
-      document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('keyup', handleKeydown);
       document.removeEventListener('touchend', handleTouchend);
+      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('keyup', handleKeyup);
     };
-  }, [map_leaflet.dragging, map_leaflet.scrollWheelZoom]);
-  return <React.Fragment />;
+  }, [handleKeydown, handleKeyup, handleTouchend]);
+
+  return null;
 }
