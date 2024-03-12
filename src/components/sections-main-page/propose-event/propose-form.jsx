@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import TextField from './propose-form-text-field';
@@ -20,28 +19,38 @@ const defaultValues = {
 export default function ProposeForm() {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const {
     register,
     handleSubmit,
     reset,
-    trigger,
     formState: { isSubmitting, errors, isDirty },
   } = useForm({
     mode: 'all',
+    criteriaMode: 'all',
     defaultValues,
     resolver: yupResolver(validationSchema),
   });
-  console.log('🚀 ~ ProposeForm ~ errors:', errors);
 
   const onSubmit = async formValues => {
     try {
-      setIsSuccessModalVisible(true);
-      reset();
-      console.log(formValues);
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      const data = await response.json();
+      if (data?.success) {
+        setIsSuccessModalVisible(true);
+        reset();
+      } else if (data?.success == false) {
+        setIsErrorModalVisible(true);
+      }
     } catch (error) {
-      console.error(error.message);
+      console.error('Error sending email:', error);
     }
   };
 
@@ -50,38 +59,53 @@ export default function ProposeForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="inline-flex  w-full max-w-[600px] flex-col items-center justify-start gap-6 rounded-lg bg-white p-6"
+        className="inline-flex w-full max-w-[600px] flex-col items-center justify-start gap-6
+        rounded-lg bg-light-primary p-6 text-light-main dark:bg-dark-primary dark:text-dark-main"
       >
+        <h2
+          className="text-center font-ubuntu text-3xl font-bold leading-[1.1] 
+        text-light-head dark:text-dark-accent"
+        >
+          Запропонувати подію
+        </h2>
+        <p
+          className="text-pretty text-center font-roboto text-base font-normal 
+        leading-snug text-light-main dark:text-dark-main"
+        >
+          Організовуєте фестиваль, виставу чи інший захід і хочете, щоб про це
+          дізналося більше людей? Заповніть форму, і ми з вами зв&#39;яжемося.
+          Розміщення подій абсолютно безкоштовне!
+        </p>
         <TextField
-          label="Ім'я:"
+          label="Введіть ваше ім'я"
           name="name"
           placeholder="Олег Вікторович"
           register={register}
           errors={errors}
         />
         <TextField
-          label="email'я:"
+          label="Електронна пошта"
           name="email"
           placeholder="exemple@gmail.com"
           register={register}
           errors={errors}
         />
         <TextField
-          label="phone"
+          label="Номер телефону"
           name="phone"
           placeholder="+380"
           register={register}
           errors={errors}
         />
         <TextField
-          label="messenger"
+          label="Месенджер"
           name="messenger"
           placeholder="Посилання або нік в телеграм"
           register={register}
           errors={errors}
         />
         <TextField
-          label="eventDescription"
+          label="Про подію"
           name="eventDescription"
           placeholder="10-11 червня у Вінниці на березі річки Південний Буг відбудеться фестиваль активного відпочинку «Дивні люди»"
           register={register}
@@ -109,7 +133,7 @@ export default function ProposeForm() {
           onClose={() => setIsErrorModalVisible(false)}
           title={'Помилка'}
           type="error"
-          message={errorMessage ? errorMessage : 'Помилка відправлення форми'}
+          message={'Помилка відправлення форми'}
         ></BasicModalWindows>
       )}
       {0 && (
