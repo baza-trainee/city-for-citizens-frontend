@@ -42,6 +42,17 @@ export default function Input({
           type={isShowPassword ? 'text' : type}
           {...props}
         />
+        {type === 'password' && (
+          <span
+            role="switch"
+            aria-checked={isShowPassword}
+            onClick={togglePasswordVisibility}
+            className={`bg-gray/5 absolute right-3 top-1/2 flex h-[24px] w-[24px] -translate-y-1/2 cursor-pointer
+          items-center justify-center`}
+          >
+            {isShowPassword ? <IconEyeOpen /> : <IconEyeClose />}
+          </span>
+        )}
       </div>
       {errors[name] && (
         <p
