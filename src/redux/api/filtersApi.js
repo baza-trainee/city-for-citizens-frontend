@@ -28,7 +28,20 @@ export const filtersApi = createApi({
       },
       transformResponse: ({ eventTypes }) => eventTypes,
     }),
+    //
+    getAllFiltersByLocale: builder.query({
+      query: locale => {
+        const queryStr = generateQueryStr('filters', locale);
+
+        return { url: queryStr };
+      },
+      //transformResponse: ({ eventTypes }) => eventTypes,
+    }),
   }),
 });
 
-export const { useGetAllFiltersQuery, useGetTypesEventsQuery } = filtersApi;
+export const {
+  useGetAllFiltersQuery,
+  useGetTypesEventsQuery,
+  useGetAllFiltersByLocaleQuery,
+} = filtersApi;

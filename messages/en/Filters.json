@@ -1,19 +1,20 @@
 {
   "Filters": {
+    "header": "Choose location, time and type of event",
     "ChooseCity": {
-      "label": "Choose a city",
+      "label": "Choose a cities",
       "defaultValue": "City",
       "textIsEmpty": "There is nothing here...",
       "noValid": "Please, enter valid data",
-      "switchLayout": "it seems you need to switch keyboard layout",
-      "loading": "Wait..."
+      "switchLayout": "It seems you need to switch keyboard layout",
+      "loading": "Please, wait..."
     },
     "DatePicker": {
-      "label": "Choose date: from - to",
+      "label": "Date from to",
       "defaultValue": "Time"
     },
     "ChooseEventType": {
-      "label": "Choose type of event",
+      "label": "Types of events",
       "defaultValue": "Event",
       "textIsEmpty": "There is nothing here..."
     }
