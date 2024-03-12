@@ -68,7 +68,15 @@ module.exports = {
         non_focus: '#868686',
         disabled: '#7E8492',
       },
-
+      calendar: {
+        hover: '#FFF464',
+        selected: 'rgba(255, 214, 70, 0.5)',
+        point: '#FFD646',
+        default_light: '#000000',
+        default_dark: '#FFFFFF',
+        disabled_light: 'rgba(0, 0, 0, 0.5)',
+        disabled_dark: 'rgba(255, 255, 255, 0.5)',
+      },
       icon: '#767676',
       black: '#000000',
       white: '#FFFFFF',
@@ -86,6 +94,7 @@ module.exports = {
         primary: '#FFFFFF',
         secondary: '#F2F2F2',
         border: '#AEAEAE',
+        backdrop: '#00000080',
 
         button: {
           hover: '#464646',
@@ -93,6 +102,17 @@ module.exports = {
           pressed: '#222222',
           text: '#FFFFFF',
           switch: '#222A30',
+        },
+        input: {
+          placeholder: 'rgba(0, 0, 0, 0.3)',
+          default: 'rgba(0, 0, 0, 0.3)',
+          hover: 'rgba(0, 0, 0, 0.3)',
+          focus: '#000000',
+          error: '#E11717',
+        },
+        checkbox: {
+          check: '#000000',
+          non_check: '#b0b0b0',
         },
       },
 
@@ -117,6 +137,17 @@ module.exports = {
           text: '#000000',
           switch: '#F3F3F3',
         },
+        input: {
+          placeholder: 'rgba(255, 255, 255, 0.3)',
+          default: 'rgba(255, 255, 255, 0.3)',
+          hover: '#C7C7C7',
+          focus: '#FFFFFF',
+          error: '#E11717',
+        },
+        checkbox: {
+          check: '#FFD646',
+          non_check: '#483c17',
+        },
       },
     },
 
@@ -127,6 +158,7 @@ module.exports = {
       laptop_xl: '1024px',
       desktop: '1280px',
       desktop_m: '1440px',
+      desktop_l: '1520px',
       desktop_xl: '1920px',
     },
 

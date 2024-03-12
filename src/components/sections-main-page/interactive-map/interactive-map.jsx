@@ -14,6 +14,12 @@ import { selectFilters } from '@/redux/slice/filters';
 import { useTheme } from 'next-themes';
 
 const mapThemes = {
+  default: {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  },
   dark: {
     url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}',
 
@@ -21,36 +27,47 @@ const mapThemes = {
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     ext: 'png',
   },
+
   light: {
     attribution:
       '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}',
+    url: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.{ext}',
     ext: 'png',
   },
 };
 
+function areAllFieldsEmpty(obj) {
+  return !Object.values(obj).some(value => value.trim() !== '');
+}
+
 export default function InteractiveMap() {
   const { localeForRequest } = useCurrentLocale();
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
 
   const filters = useSelector(selectFilters);
 
-  const { data: markers } = useGetEventsBySearchParamsQuery({
-    locale: localeForRequest,
-    queryParams: filters,
-  });
+  const {
+    data: markers,
+    isLoading,
+    isFetching,
+  } = useGetEventsBySearchParamsQuery(
+    {
+      locale: localeForRequest,
+      queryParams: filters,
+    },
 
-  if (!markers) return null;
+    {
+      skip: areAllFieldsEmpty(filters),
+    }
+  );
 
   return (
     <section
-      className="interactive-map-marker  mb-20 h-[630px]  w-screen  tablet:mb-[160px] tablet:h-[657px] laptop:h-[745px]"
+      className="interactive-map-marker relative z-0 mb-20 h-[630px] w-full tablet:mb-[160px] tablet:h-[745px]"
       id="map"
     >
       <MapContainer
         inertia
-        // tapHold
-        // dragging={false}
         style={{
           height: '100%',
           width: '100%',
@@ -60,14 +77,17 @@ export default function InteractiveMap() {
         minZoom={3}
         maxZoom={18}
         scrollWheelZoom={false}
-        // touchZoom
+        touchZoom={true}
+        tapHold={true}
       >
-        <TileLayer {...mapThemes[theme]} />
+        <TileLayer {...mapThemes.default} />
         <SetScrollWheelZoom />
 
-        {markers.map(event => (
-          <MapMarker key={event.id} event={event} />
-        ))}
+        {markers &&
+          !isLoading &&
+          !isFetching &&
+          !areAllFieldsEmpty(filters) &&
+          markers.map(event => <MapMarker key={event.id} event={event} />)}
       </MapContainer>
     </section>
   );

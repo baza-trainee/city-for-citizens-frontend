@@ -1,4 +1,5 @@
 import { Footer, Header } from '@/components/common';
+import ModalCookies from '@/components/common/modal-cookies';
 import {
   AnalyticsBar,
   Filters,
@@ -36,6 +37,7 @@ export default async function IndexPage({ params: { locale } }) {
           <Gallery />
           <Partners />
           <ProposeEvent />
+          <ModalCookies />
         </main>
         <Footer />
       </div>

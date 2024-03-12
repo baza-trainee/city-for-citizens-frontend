@@ -112,7 +112,7 @@ export const inputsSettings = {
       inputLabel: 'Примітки',
       inputName: 'notes',
       type: 'text',
-      rows: 1,
+      rows: 2,
       placeholder: 'Опишіть детально про місце',
     },
     {
