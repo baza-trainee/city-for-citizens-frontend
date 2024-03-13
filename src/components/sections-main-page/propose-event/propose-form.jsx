@@ -5,9 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import TextField from './propose-form-text-field';
-import { BasicModalWindows } from '@/components/common';
 import Loader from '@/components-old/UI/Loader';
 import validationSchema from './validationSchema';
+import { ProposeEventModal } from './propose-event-modal';
 
 const defaultValues = {
   name: '',
@@ -126,20 +126,20 @@ export default function ProposeForm() {
         </button>
       </form>
       {isSuccessModalVisible && (
-        <BasicModalWindows
+        <ProposeEventModal
           onClose={() => setIsSuccessModalVisible(false)}
           title={t('modalTitleSuccess')}
           type="success"
           message={t('modalSuccess')}
-        ></BasicModalWindows>
+        ></ProposeEventModal>
       )}
       {isErrorModalVisible && (
-        <BasicModalWindows
+        <ProposeEventModal
           onClose={() => setIsErrorModalVisible(false)}
           title={t('modalTitleError')}
           type="error"
           message={t('modalError')}
-        ></BasicModalWindows>
+        ></ProposeEventModal>
       )}
       {isSending && (
         <div className="bg-primary/0/20 fixed left-0 top-0 flex h-full w-full items-center justify-center backdrop-blur-[1px] transition-all">
