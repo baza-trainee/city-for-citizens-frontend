@@ -119,7 +119,7 @@ export default function ProposeForm() {
         />
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-black px-6 py-3 font-roboto text-base font-medium leading-tight text-white shadow disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-button-default dark:text-dark-button-text"
+          className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-black px-6 py-3 font-roboto text-base font-medium leading-tight text-white shadow hover:bg-light-button-hover disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-button-default dark:text-dark-button-text dark:hover:bg-dark-button-hover"
           disabled={isSubmitting || !isDirty || Object.keys(errors).length > 0}
         >
           {t('submit')}
