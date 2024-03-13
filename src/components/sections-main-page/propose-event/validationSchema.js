@@ -8,6 +8,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Мінімальна кількість символів 2')
     .max(55, 'Максимальна кількість символів 55')
+    .matches(/^[A-Za-z\s-]*$/, "Ім'я може містити тільки букви")
     .required("Це поле є обов'язковим"),
 
   email: Yup.string()
