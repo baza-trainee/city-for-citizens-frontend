@@ -1,8 +1,6 @@
 import * as Yup from 'yup';
 
 const phoneRegExp = /^\+\d{1,12}$/;
-const telegramUsernameOrLinkRegex =
-  /^(?:(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]{5,32})|@?([a-zA-Z0-9_]{5,32}))$/;
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -53,7 +51,7 @@ const validationSchema = Yup.object().shape({
   messenger: Yup.string()
     .optional()
     .matches(
-      telegramUsernameOrLinkRegex,
+      /^(?:\s*|(?:(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]{5,32})|@?([a-zA-Z0-9_]{5,32})))$/,
       'Некоректний нікнейм або посилання Telegram'
     ),
 
