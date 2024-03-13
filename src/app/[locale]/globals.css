@@ -135,6 +135,15 @@ input[type='search']::-webkit-search-cancel-button:hover {
     width: calc(100% - 80px);
   }
 }
+
+.marquee {
+  width: 100%;
+}
+
+.marquee .swiper-wrapper {
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+}
 /* filter inputs */
 .filter {
   @apply relative z-10
