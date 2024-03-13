@@ -47,7 +47,7 @@ const TextField = ({
             justify-start gap-2 rounded-lg border-light-border bg-light-secondary px-4 py-3 font-roboto 
             text-base font-normal leading-snug text-black shadow-[0_5px_12px_rgba(115,115,115,0.1)] placeholder:text-light-head 
              placeholder:opacity-30 focus:outline-none dark:border dark:border-dark-border
-             dark:bg-dark-secondary dark:text-dark-main dark:shadow-none dark:placeholder:text-dark-head"
+             dark:bg-dark-secondary dark:text-dark-head dark:shadow-none dark:placeholder:text-dark-head"
             onChange={handleChange}
             onReset={() => setCharCount(0)}
             maxLength={CHARACTER_LIMIT}
@@ -69,8 +69,8 @@ const TextField = ({
           justify-start gap-2 rounded-lg border-light-border bg-light-secondary px-4 
           py-3 font-roboto text-base font-normal leading-snug text-black shadow-[0_5px_12px_rgba(115,115,115,0.1)] 
           placeholder:text-light-head  placeholder:opacity-30
-          focus:outline-none dark:border dark:border-dark-border dark:text-dark-main
-          dark:bg-dark-secondary dark:shadow-none dark:placeholder:text-dark-head"
+          focus:outline-none dark:border dark:border-dark-border dark:bg-dark-secondary
+          dark:text-dark-head dark:shadow-none dark:placeholder:text-dark-head"
         />
       )}
       {errors[name] && (
