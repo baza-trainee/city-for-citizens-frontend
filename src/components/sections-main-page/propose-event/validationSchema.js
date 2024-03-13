@@ -6,12 +6,16 @@ const telegramUsernameOrLinkRegex =
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Мінімальна кількість символів 3')
+    .min(2, 'Мінімальна кількість символів 2')
     .max(55, 'Максимальна кількість символів 55')
     .required("Це поле є обов'язковим"),
 
   email: Yup.string()
     .email('Введіть дійсну електронну адресу')
+    .matches(
+      /^[^@]+@[^.@]+\.[^.@]+$/,
+      'Email повинен містити крапку перед доменом'
+    )
     .max(55, 'Максимальна кількість символів 55')
     .required("Це поле є обов'язковим"),
 
@@ -28,17 +32,17 @@ const validationSchema = Yup.object().shape({
           });
         if (!value.startsWith('+380'))
           return this.createError({
-            message: 'Номер телефону має починатися з +380XXXXXXXXX',
+            message: 'Номер має починатися з +380XXXXXXXXX',
             path: this.path,
           });
         if (!phoneRegExp.test(value))
           return this.createError({
-            message: 'Введіть коректний номер телефону у форматі +380XXXXXXXXX',
+            message: 'Введіть у форматі +380XXXXXXXXX',
             path: this.path,
           });
         if (value.length !== 13)
           return this.createError({
-            message: 'Введіть коректний номер телефону у форматі +380XXXXXXXXX',
+            message: 'Введіть у форматі +380XXXXXXXXX',
             path: this.path,
           });
         return true;

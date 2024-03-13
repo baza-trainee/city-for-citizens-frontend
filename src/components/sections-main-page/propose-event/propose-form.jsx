@@ -61,17 +61,17 @@ export default function ProposeForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="inline-flex w-full max-w-[600px] flex-col items-center justify-start gap-6
+        className="flex w-full max-w-[600px] flex-col items-center justify-start gap-[16px]
         rounded-lg bg-light-primary p-6 text-light-main dark:bg-dark-primary dark:text-dark-main"
       >
         <h2
-          className="text-center font-ubuntu text-3xl font-bold leading-[1.1] 
-        text-light-head dark:text-dark-accent"
+          className="text-center  font-ubuntu text-[30px] font-bold leading-[1.1] text-light-head 
+        dark:text-dark-accent tablet:text-[43px]"
         >
           {t('title')}
         </h2>
         <p
-          className="text-pretty text-center font-roboto text-base font-normal 
+          className="mb-[4px] mt-[-4px] text-pretty text-center font-roboto text-base font-normal 
         leading-snug text-light-main dark:text-dark-main"
         >
           {t('lead')}
@@ -114,7 +114,7 @@ export default function ProposeForm() {
         />
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-black px-6 py-3 font-roboto text-base font-medium leading-tight text-white shadow disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-black px-6 py-3 font-roboto text-base font-medium leading-tight text-white shadow disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-button-default dark:text-dark-button-text"
           disabled={isSubmitting || !isDirty || Object.keys(errors).length > 0}
         >
           {t('submit')}
@@ -123,17 +123,17 @@ export default function ProposeForm() {
       {isSuccessModalVisible && (
         <BasicModalWindows
           onClose={() => setIsSuccessModalVisible(false)}
-          title={'Дякуємо вам!'}
+          title={t('modalTitleSuccess')}
           type="success"
-          message={'Ваш запит прийнято. Ми зв’яжемося з вами впродовж тижня.'}
+          message={t('modalSuccess')}
         ></BasicModalWindows>
       )}
       {isErrorModalVisible && (
         <BasicModalWindows
           onClose={() => setIsErrorModalVisible(false)}
-          title={'Помилка'}
+          title={t('modalTitleError')}
           type="error"
-          message={'Помилка відправлення форми'}
+          message={t('modalError')}
         ></BasicModalWindows>
       )}
       {0 && (

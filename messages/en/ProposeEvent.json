@@ -12,6 +12,11 @@
     "messengerPlaceholder": "Link or nick on Telegram",
     "eventDescription": "About event",
     "eventDescriptionPlaceholder": "Example: On June 10-11 in Vinnytsia on the banks of the Southern Bug River, the «Strange People» active recreation festival will take place.",
-    "submit": "Send your request"
+    "submit": "Send your request",
+    "characters": "characters",
+    "modalSuccess": "Your request has been accepted. We will contact you within a week.",
+    "modalError": "Error submitting the form.",
+    "modalTitleSuccess": "Thank you!",
+    "modalTitleError": "Error!"
   }
 }
