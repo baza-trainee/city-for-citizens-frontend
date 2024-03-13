@@ -1,0 +1,17 @@
+{
+  "ProposeEvent": {
+    "title": "Propose an event",
+    "lead": "Are you organizing a festival, performance, or other event and want more people to know about it? Fill out the form and we will contact you. Event placement is absolutely free!",
+    "name": "Your name",
+    "namePlaceholder": "John Doe",
+    "email": "E-mail",
+    "emailPlaceholder": "my-email@gmail.com",
+    "phone": "Phone",
+    "phonePlaceholder": "+380",
+    "messenger": "Messenger",
+    "messengerPlaceholder": "Link or nick on Telegram",
+    "eventDescription": "About event",
+    "eventDescriptionPlaceholder": "Example: On June 10-11 in Vinnytsia on the banks of the Southern Bug River, the «Strange People» active recreation festival will take place.",
+    "submit": "Send your request"
+  }
+}
