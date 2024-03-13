@@ -21,6 +21,7 @@ export default function ProposeForm() {
   const t = useTranslations('ProposeEvent');
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const {
     register,
@@ -36,6 +37,7 @@ export default function ProposeForm() {
 
   const onSubmit = async formValues => {
     try {
+      setIsSending(true);
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
@@ -45,6 +47,7 @@ export default function ProposeForm() {
       });
 
       const data = await response.json();
+
       if (data?.success) {
         setIsSuccessModalVisible(true);
         reset();
@@ -53,6 +56,8 @@ export default function ProposeForm() {
       }
     } catch (error) {
       console.error('Error sending email:', error);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -136,9 +141,9 @@ export default function ProposeForm() {
           message={t('modalError')}
         ></BasicModalWindows>
       )}
-      {0 && (
-        <div className="bg-primary/0/20 fixed flex h-full w-full items-center justify-center backdrop-blur-[1px]">
-          <Loader />
+      {isSending && (
+        <div className="bg-primary/0/20 fixed left-0 top-0 flex h-full w-full items-center justify-center backdrop-blur-[1px] transition-all">
+          <Loader text="Sending ..." />
         </div>
       )}
     </>
