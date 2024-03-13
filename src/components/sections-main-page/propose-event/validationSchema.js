@@ -49,10 +49,12 @@ const validationSchema = Yup.object().shape({
       }
     ),
 
-  messenger: Yup.string().matches(
-    telegramUsernameOrLinkRegex,
-    'Некоректний нікнейм або посилання Telegram'
-  ),
+  messenger: Yup.string()
+    .optional()
+    .matches(
+      telegramUsernameOrLinkRegex,
+      'Некоректний нікнейм або посилання Telegram'
+    ),
 
   eventDescription: Yup.string()
     .max(300, 'Опис події повинен містити не більше 300 символів')
