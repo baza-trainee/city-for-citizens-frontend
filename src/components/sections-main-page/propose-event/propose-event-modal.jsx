@@ -11,7 +11,8 @@ export function ProposeEventModal({ onClose, message, children, title, type }) {
       ></button>
       <div
         className={`fixed left-1/2 top-1/2 z-50  inline-flex w-5/6 max-w-[600px]
-        -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded bg-white p-6 dark:bg-dark-primary`}
+        -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded bg-white p-6 
+        dark:bg-dark-primary`}
       >
         <button
           className={'absolute right-0 top-0 hidden p-4'}
@@ -30,7 +31,7 @@ export function ProposeEventModal({ onClose, message, children, title, type }) {
         )}
         {message && (
           <p
-            className="text-center font-roboto text-[16px] leading-[1.35] text-light-head dark:text-dark-main 
+            className="text-center font-roboto text-[16px] leading-[1.35] text-light-main dark:text-dark-main 
           tablet:w-[552px]"
           >
             {message}
