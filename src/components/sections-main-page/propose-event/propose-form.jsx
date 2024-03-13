@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import TextField from './propose-form-text-field';
 import { BasicModalWindows } from '@/components/common';
 import Loader from '@/components-old/UI/Loader';
@@ -17,6 +18,7 @@ const defaultValues = {
 };
 
 export default function ProposeForm() {
+  const t = useTranslations('ProposeEvent');
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
@@ -46,7 +48,7 @@ export default function ProposeForm() {
       if (data?.success) {
         setIsSuccessModalVisible(true);
         reset();
-      } else if (data?.success == false) {
+      } else if (!data?.success) {
         setIsErrorModalVisible(true);
       }
     } catch (error) {
@@ -66,48 +68,46 @@ export default function ProposeForm() {
           className="text-center font-ubuntu text-3xl font-bold leading-[1.1] 
         text-light-head dark:text-dark-accent"
         >
-          Запропонувати подію
+          {t('title')}
         </h2>
         <p
           className="text-pretty text-center font-roboto text-base font-normal 
         leading-snug text-light-main dark:text-dark-main"
         >
-          Організовуєте фестиваль, виставу чи інший захід і хочете, щоб про це
-          дізналося більше людей? Заповніть форму, і ми з вами зв&#39;яжемося.
-          Розміщення подій абсолютно безкоштовне!
+          {t('lead')}
         </p>
         <TextField
-          label="Введіть ваше ім'я"
+          label={t('name')}
           name="name"
-          placeholder="Олег Вікторович"
+          placeholder={t('namePlaceholder')}
           register={register}
           errors={errors}
         />
         <TextField
-          label="Електронна пошта"
+          label={t('email')}
           name="email"
-          placeholder="exemple@gmail.com"
+          placeholder={t('emailPlaceholder')}
           register={register}
           errors={errors}
         />
         <TextField
-          label="Номер телефону"
+          label={t('phone')}
           name="phone"
-          placeholder="+380"
+          placeholder={t('phonePlaceholder')}
           register={register}
           errors={errors}
         />
         <TextField
-          label="Месенджер"
+          label={t('messenger')}
           name="messenger"
-          placeholder="Посилання або нік в телеграм"
+          placeholder={t('messengerPlaceholder')}
           register={register}
           errors={errors}
         />
         <TextField
-          label="Про подію"
+          label={t('eventDescription')}
           name="eventDescription"
-          placeholder="10-11 червня у Вінниці на березі річки Південний Буг відбудеться фестиваль активного відпочинку «Дивні люди»"
+          placeholder={t('eventDescriptionPlaceholder')}
           register={register}
           errors={errors}
           type="textarea"
@@ -117,7 +117,7 @@ export default function ProposeForm() {
           className="inline-flex w-full items-center justify-center gap-2.5 rounded-lg bg-black px-6 py-3 font-roboto text-base font-medium leading-tight text-white shadow disabled:cursor-not-allowed disabled:opacity-50"
           disabled={isSubmitting || !isDirty || Object.keys(errors).length > 0}
         >
-          Відправити запит
+          {t('submit')}
         </button>
       </form>
       {isSuccessModalVisible && (
