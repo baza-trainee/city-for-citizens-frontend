@@ -12,7 +12,6 @@ import { setFilters } from '@/redux/slice/filters';
 export default function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
-  //const [isInputTyping, setIsInputTyping] = useState(false);
   const [displayedCities, setDisplayedCities] = useState([]);
   const [selectedCities, setSelectedCities] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
