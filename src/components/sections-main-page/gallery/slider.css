@@ -13,7 +13,6 @@
   border-radius: 8px;
   text-align: center;
   font-size: 18px;
-  background: #fff;
 }
 
 @media (min-width: 768px) {
@@ -81,7 +80,28 @@
   cursor: pointer;
 }
 
-.gallery-swiper-button-next,
-.gallery-swiper-button-prev {
-  cursor: pointer;
+.gallery-swiper .swiper-slide:hover {
+  -webkit-box-shadow: 3px 8px 16px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 8px 16px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 8px 16px 0px rgba(0, 0, 0, 0.75);
+}
+.dark .gallery-swiper .swiper-slide:hover {
+  -webkit-box-shadow: 2px 1px 16px 0px rgba(242, 242, 242, 0.6);
+  -moz-box-shadow: 2px 1px 16px 0px rgba(242, 242, 242, 0.6);
+  box-shadow: 2px 1px 16px 0px rgba(242, 242, 242, 0.6);
+}
+
+.gallery-swiper-swiper-button-prev.disabled,
+.gallery-swiper-swiper-button-next.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.gallery-swiper-swiper-button-prev.disabled:hover,
+.gallery-swiper-swiper-button-next.disabled:hover,
+.gallery-swiper-swiper-button-prev.disabled:focus,
+.gallery-swiper-swiper-button-next.disabled:focus {
+  opacity: 0.3;
+  background-color: #ffd646;
+  cursor: not-allowed;
 }
