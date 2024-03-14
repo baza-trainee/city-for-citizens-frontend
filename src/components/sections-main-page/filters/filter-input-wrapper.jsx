@@ -50,7 +50,9 @@ const FilterInputWrapper = ({
         ? `text-light-input-default dark:text-dark-input-default`
         : `text-light-input-focus dark:text-dark-input-focus`;
     }
-    return `text-light-input-default dark:text-dark-input-default`;
+    return inputTextDefault
+      ? `text-light-input-default dark:text-dark-input-default`
+      : `text-light-input-focus dark:text-dark-input-focus`;
   };
 
   const commonStyles = {

@@ -216,7 +216,7 @@ export default function ChooseCity({ filtersEventCities }) {
     if (isListVisible) {
       return `text-light-input-focus dark:text-dark-input-focus`;
     }
-    return `text-light-input-default dark:text-dark-input-default`;
+    return `text-light-input-focus dark:text-dark-input-focus`;
   };
 
   const commonStyles = {
@@ -227,9 +227,9 @@ export default function ChooseCity({ filtersEventCities }) {
 
   return (
     <div className="relative flex w-full flex-col ">
-      <label className="mb-1 block font-roboto text-sm text-light-main dark:text-dark-main">
+      <span className="mb-1 block font-roboto text-sm text-light-main dark:text-dark-main">
         {t('label')}
-      </label>
+      </span>
 
       <div
         className="flex h-[48px] items-center justify-between rounded-lg bg-light-secondary
