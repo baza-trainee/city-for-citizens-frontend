@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -9,10 +8,10 @@ import ArrowRightIcon from '@/assets/icons/gallery/arrow-right.svg';
 import IconLocation from '@/assets/icons/gallery/location.svg';
 import CloseIcon from '@/assets/icons/gallery/close.svg';
 
-import data from '../common/data.json';
 import './slider.css';
+import { SlideImage } from './image-slide';
 
-export function ModalGallery({ selectedImage, modalClose }) {
+export function ModalGallery({ selectedImage, modalClose, events }) {
   const handleBackdropClick = e => {
     if (e.target === e.currentTarget) {
       modalClose();
@@ -56,31 +55,28 @@ export function ModalGallery({ selectedImage, modalClose }) {
         </button>
         <Swiper
           className="gallery-modal  transparent h-full w-full "
-          initialSlide={data.findIndex(item => item.url === selectedImage.url)}
+          initialSlide={events.findIndex(
+            event => event.id === selectedImage.id
+          )}
           modules={[Navigation]}
           spaceBetween={20}
+          loop={true}
           navigation={{
             prevEl: '.gallery-swiper-button-prev',
             nextEl: '.gallery-swiper-button-next',
           }}
         >
-          {data?.map((item, index) => (
+          {events?.map((event, index) => (
             <SwiperSlide key={index} className="overflow-hidden rounded-lg">
-              <Image
-                src={item.url}
-                alt={item.title}
-                width={400}
-                height={300}
-                className="h-full w-full overflow-hidden object-cover"
-              />
+              <SlideImage event={event} />
               <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-lg bg-light-secondary p-4 text-start  shadow-gallery dark:bg-dark-secondary">
                 <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
-                  {item.title}
+                  {event.eventTitle}
                 </p>
                 <div className="flex items-center gap-2 text-start">
                   <IconLocation width="24px" height="24px" />
                   <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
-                    {item.address}
+                    {event.eventAddress.city} {event.eventAddress.street}
                   </p>
                 </div>
               </div>
