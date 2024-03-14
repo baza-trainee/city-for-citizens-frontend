@@ -2,6 +2,7 @@
 
 import IconSelectArrow from '@/assets/icons/filters/drop-down-icon.svg';
 import IconInputCity from '@/assets/icons/filters/location_input-icon.svg';
+import IconCheckbox from '@/assets/icons/filters/checkbox-icon.svg';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -59,13 +60,12 @@ export default function ChooseCity({ filtersEventCities }) {
   }, [isLoadingData]);
 
   function handleInputChange(event) {
-    const value = event.target.value.trim();
+    const value = event.target.value.replace(/^\s/, '');
     setInputValue(value);
 
     if (value) {
       setValidationMessage('');
       if (isInputValueValid(value)) {
-        //setIsInputTyping(true);
         const filteredCities = filteredCityByInputValue(value);
         setDisplayedCities(filteredCities);
       } else {
@@ -102,19 +102,11 @@ export default function ChooseCity({ filtersEventCities }) {
   }
 
   function englishLayout(char) {
-    return (
-      (char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= 90) ||
-      (char.charCodeAt(0) >= 97 && char.charCodeAt(0) <= 122)
-    );
+    return char.match(/^[a-z\s-]+$/i);
   }
 
   function ukrainanLayout(char) {
-    return (
-      (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1103) ||
-      char.charCodeAt(0) === 1108 ||
-      char.charCodeAt(0) === 1110 ||
-      char.charCodeAt(0) === 1111
-    );
+    return char.match(/^((?![эъ])[а-яіїє'\-\s])+$/i);
   }
 
   function toggleCheck(city) {
@@ -314,10 +306,20 @@ export default function ChooseCity({ filtersEventCities }) {
                   className={`flex  h-6 w-6  select-none
                        items-center justify-center rounded border-[2px] transition-all ${
                          selectedCities.includes(city)
-                           ? 'border-light-checkbox-check dark:border-dark-checkbox-check'
+                           ? 'border-light-checkbox-check bg-light-checkbox-check dark:border-dark-checkbox-check dark:bg-dark-checkbox-check'
                            : 'border-light-checkbox-non_check dark:border-dark-checkbox-non_check'
                        }`}
-                ></div>
+                >
+                  <IconCheckbox
+                    width={16}
+                    height={12}
+                    className={`fill-light-primary transition-all dark:fill-dark-secondary ${
+                      selectedCities.includes(city)
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    }`}
+                  />
+                </div>
               </li>
             ))
           )}
