@@ -27,13 +27,13 @@ export function AnalyticsBar() {
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
         }}
-        speed={2000}
+        speed={6000}
         loop={true}
         allowTouchMove={false}
       >
-        {analyticsBarItemsNew.map(item => {
+        {analyticsBarItemsNew.map((item, index) => {
           return (
-            <SwiperSlide key={item.id} style={{ width: 'auto' }}>
+            <SwiperSlide key={`${item.id}${index}`} style={{ width: 'auto' }}>
               <div className="flex cursor-pointer items-center gap-3">
                 <span className="text-[57px] font-bold">{`${item.amount}+`}</span>
                 <span className="pr-[120px] text-2xl font-medium">

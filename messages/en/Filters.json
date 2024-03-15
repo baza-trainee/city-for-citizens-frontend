@@ -11,11 +11,11 @@
     },
     "DatePicker": {
       "label": "Date from to",
-      "defaultValue": "Time"
+      "defaultValue": "Date"
     },
     "ChooseEventType": {
       "label": "Types of events",
-      "defaultValue": "Event",
+      "defaultValue": "Types of events",
       "textIsEmpty": "There is nothing here..."
     }
   }
