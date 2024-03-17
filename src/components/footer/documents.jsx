@@ -29,22 +29,19 @@ export default async function Documents() {
     return null;
   }
   return (
-    <div className="flex w-full flex-col items-center gap-3 text-center font-roboto text-sm font-normal leading-tight text-light-main dark:text-dark-main desktop:mt-[32px] desktop:inline-flex desktop:flex-row desktop:content-between desktop:justify-between">
+    <div
+      className=" flex flex-col gap-3 font-roboto text-sm font-normal 
+    leading-tight text-light-main dark:text-dark-main "
+    >
       {documentsData?.map((document, index) => (
         <a
           key={document.id}
           href={document.file}
-          className={`flex cursor-pointer hover:text-light-accent hover:transition-all dark:hover:text-dark-accent   ${index === 0 ? 'desktop:ml-[290px] desktop:mr-auto' : ''}`}
+          className={`block w-full cursor-pointer text-center hover:text-light-accent  hover:transition-all dark:hover:text-dark-accent tablet:text-right   `}
         >
           {DocumentsFooter[index].label}
         </a>
       ))}
-      <span
-        href="https://baza-trainee.tech"
-        className="flex  desktop:order-[-1]"
-      >
-        {DocumentsFooter[DocumentsFooter.length - 1].label}
-      </span>
     </div>
   );
 }
