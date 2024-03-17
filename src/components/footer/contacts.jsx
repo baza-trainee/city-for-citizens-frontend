@@ -6,9 +6,14 @@ async function getContacts() {
   const res = await fetch(`${BASE_URL}/contacts`, {
     next: { revalidate: 10 },
   });
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
+  try {
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+  } catch (error) {
+    console.error(error);
   }
+
   return res.json();
 }
 

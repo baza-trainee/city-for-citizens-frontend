@@ -12,23 +12,18 @@ import { useState } from 'react';
 import IconNavigationArrow from '@/assets/icons/event-card/icon-navigation-arrow.svg';
 
 import { TypeList } from './type-list';
-import { Popup, useMap } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import { useTranslations } from 'next-intl';
 
-export function EventCard({ event, isClicked }) {
+export function EventCard({ event }) {
   return (
-    <Popup
-      maxWidth={400}
-      closeButton={false}
-      pane="tooltipPane"
-      autoPan={!isClicked}
-    >
+    <>
       {event.sameAddress ? (
         <EventCardSlider events={event.sameAddress} />
       ) : (
         <EventItem event={event} />
       )}
-    </Popup>
+    </>
   );
 }
 
