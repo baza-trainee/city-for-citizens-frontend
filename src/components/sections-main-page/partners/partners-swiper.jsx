@@ -23,7 +23,7 @@ export default function PartnersSwiper({ partners }) {
         loop={true}
         allowTouchMove={true}
       >
-        {partners.map((partner, index) => {
+        {partners?.map((partner, index) => {
           return (
             <SwiperSlide
               key={`${partner.id}${index}`}
