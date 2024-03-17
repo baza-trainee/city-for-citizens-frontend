@@ -21,6 +21,8 @@ function areAllFieldsEmpty(obj) {
 }
 export default function InteractiveMap() {
   const [map, setMap] = useState(null);
+  const [showFullMap, setShowFullMap] = useState(true);
+
   const t = useTranslations('InteractiveMap.buttons');
   const { localeForRequest } = useCurrentLocale();
   const filters = useSelector(selectFilters);
@@ -34,16 +36,26 @@ export default function InteractiveMap() {
       skip: areAllFieldsEmpty(filters),
     }
   );
+  const onMove = useCallback(() => {
+    setShowFullMap(true);
+  }, []);
 
-  const onClickResetZoom = useMemo(
-    () => () => {
-      map.flyToBounds([
-        [52.4, 40.2],
-        [44.2, 22.1],
-      ]);
-    },
-    [map]
-  );
+  const onClickResetZoom = useCallback(() => {
+    map.flyToBounds([
+      [52.4, 40.2],
+      [44.2, 22.1],
+    ]);
+    setShowFullMap(false);
+  }, [map]);
+  useEffect(() => {
+    if (!map) return;
+
+    map.on('movestart', onMove);
+
+    return () => {
+      map.off('movestart', onMove);
+    };
+  }, [map, onMove]);
 
   const displayMap = useMemo(
     () => (
@@ -73,6 +85,7 @@ export default function InteractiveMap() {
         <GeoJSON
           data={borderOfUkraine}
           style={{
+            fillColor: 'transparent',
             color: 'black',
             weight: 4,
           }}
@@ -97,20 +110,21 @@ export default function InteractiveMap() {
 
   return (
     <section
-      className="interactive-map-marker relative z-0 mx-auto mb-20 h-[630px] max-h-[calc(100vh-80px)] w-full max-w-[1920px] tablet:mb-[160px] tablet:h-screen"
+      className="interactive-map-marker relative z-0 mx-auto mb-20 h-[630px]  max-h-[calc(100vh-80px)] w-full max-w-[1920px] tablet:mb-[160px] tablet:h-screen"
       id="map"
     >
       {displayMap}
       {map && <HandleKey map={map} />}
 
       <button
+        disabled={!showFullMap}
         onClick={onClickResetZoom}
-        className="absolute bottom-[40px] left-[40px] z-[1000] flex gap-2 rounded-lg bg-yellow px-11 py-3.5"
+        className="absolute bottom-[40px] left-[40px] z-[1000] flex items-center gap-2 rounded-lg bg-yellow px-10 py-3 transition-colors hover:bg-dark-button-hover active:bg-dark-button-pressed disabled:cursor-not-allowed disabled:bg-yellow/30"
       >
-        <p className="text-[16px]/[1.2] font-medium text-black">
+        <p className="font-roboto text-[16px]/[1.2] font-medium text-black">
           {t('showMap')}
         </p>
-        <UkraineIcon className={'size-[22.5px]'} />
+        <UkraineIcon className={'size-6'} />
       </button>
     </section>
   );
