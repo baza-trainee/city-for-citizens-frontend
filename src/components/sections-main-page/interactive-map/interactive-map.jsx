@@ -119,7 +119,7 @@ export default function InteractiveMap() {
       <button
         disabled={!showFullMap}
         onClick={onClickResetZoom}
-        className="absolute bottom-[40px] left-[40px] z-[1000] flex items-center gap-2 rounded-lg bg-yellow px-10 py-3 transition-colors hover:bg-dark-button-hover active:bg-dark-button-pressed disabled:cursor-not-allowed disabled:bg-yellow/30"
+        className="absolute bottom-[40px] left-[40px] z-[1000] flex items-center gap-2 rounded-full bg-yellow p-3 transition-colors hover:bg-dark-button-hover active:bg-dark-button-pressed disabled:cursor-not-allowed disabled:bg-yellow/30 tablet:rounded-lg tablet:px-10 tablet:py-3"
       >
         <p className="hidden font-roboto text-[16px]/[1.2]  font-medium text-black tablet:block">
           {t('showMap')}
