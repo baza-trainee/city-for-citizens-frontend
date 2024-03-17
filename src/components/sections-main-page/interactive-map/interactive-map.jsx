@@ -121,7 +121,7 @@ export default function InteractiveMap() {
         onClick={onClickResetZoom}
         className="absolute bottom-[40px] left-[40px] z-[1000] flex items-center gap-2 rounded-lg bg-yellow px-10 py-3 transition-colors hover:bg-dark-button-hover active:bg-dark-button-pressed disabled:cursor-not-allowed disabled:bg-yellow/30"
       >
-        <p className="font-roboto text-[16px]/[1.2] font-medium text-black">
+        <p className="hidden font-roboto text-[16px]/[1.2]  font-medium text-black tablet:block">
           {t('showMap')}
         </p>
         <UkraineIcon className={'size-6'} />
