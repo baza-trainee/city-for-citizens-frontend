@@ -1,3 +1,4 @@
+'use client';
 import { formatDateSeparatorDash, formatDateToTime } from '@/helpers';
 import { useEffect, useState } from 'react';
 

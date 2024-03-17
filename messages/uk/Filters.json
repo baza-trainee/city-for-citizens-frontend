@@ -1,7 +1,8 @@
 {
   "Filters": {
+    "header": "Оберіть локацію, час та тип події",
     "ChooseCity": {
-      "label": "Оберіть місто",
+      "label": "Оберіть міста",
       "defaultValue": "Місто",
       "textIsEmpty": "Тут порожньо...",
       "noValid": "Введіть валідні дані ",
@@ -9,12 +10,12 @@
       "loading": "Зачекайте..."
     },
     "DatePicker": {
-      "label": "Оберіть дату : від - до",
-      "defaultValue": "Час"
+      "label": "Дату від і до",
+      "defaultValue": "Дата"
     },
     "ChooseEventType": {
-      "label": "Оберіть тип події",
-      "defaultValue": "Подія",
+      "label": "Типи подій",
+      "defaultValue": "Типи подій",
       "textIsEmpty": "Тут порожньо..."
     }
   }

@@ -15,16 +15,27 @@ import { selectFilters } from '@/redux/slice/filters';
 import borderOfUkraine from './geoBoundaries-UKR-ADM0.json';
 import bordersOfUkrainianCities from './geoBoundaries-UKR-ADM1.json';
 
+function areAllFieldsEmpty(obj) {
+  return !Object.values(obj).some(value => value.trim() !== '');
+}
 export default function InteractiveMap() {
   const [map, setMap] = useState(null);
 
   const { localeForRequest } = useCurrentLocale();
   const filters = useSelector(selectFilters);
 
-  const { data: markers } = useGetEventsBySearchParamsQuery({
-    locale: localeForRequest,
-    queryParams: filters,
-  });
+  const {
+    data: markers,
+    isLoading,
+    isFetching,
+  } = useGetEventsBySearchParamsQuery(
+    {
+      locale: localeForRequest,
+      queryParams: filters,
+    },   {
+      skip: areAllFieldsEmpty(filters),
+    }
+  );
 
   const onClickResetZoom = useMemo(
     () => () => {
@@ -99,7 +110,7 @@ export default function InteractiveMap() {
 
   return (
     <section
-      className="interactive-map-marker relative mx-auto mb-20 h-[630px] max-h-[calc(100vh-80px)] w-full max-w-[1920px] tablet:mb-[160px] tablet:h-screen"
+      className="interactive-map-marker relative z-0 mx-auto mb-20 h-[630px] max-h-[calc(100vh-80px)] w-full max-w-[1920px] tablet:mb-[160px] tablet:h-screen"
       id="map"
     >
       {displayMap}
