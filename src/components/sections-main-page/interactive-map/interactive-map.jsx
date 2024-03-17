@@ -1,8 +1,8 @@
 'use client';
 
-import { MapContainer, TileLayer, GeoJSON, Rectangle } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-
+import UkraineIcon from '@/assets/icons/common/ukraine-icon.svg';
 import { useGetEventsBySearchParamsQuery } from '@/redux/api/eventsApi';
 
 import 'leaflet/dist/leaflet.css';
@@ -14,25 +14,23 @@ import { selectFilters } from '@/redux/slice/filters';
 
 import borderOfUkraine from './geoBoundaries-UKR-ADM0.json';
 import bordersOfUkrainianCities from './geoBoundaries-UKR-ADM1.json';
+import { useTranslations } from 'next-intl';
 
 function areAllFieldsEmpty(obj) {
   return !Object.values(obj).some(value => value.trim() !== '');
 }
 export default function InteractiveMap() {
   const [map, setMap] = useState(null);
-
+  const t = useTranslations('InteractiveMap.buttons');
   const { localeForRequest } = useCurrentLocale();
   const filters = useSelector(selectFilters);
 
-  const {
-    data: markers,
-    isLoading,
-    isFetching,
-  } = useGetEventsBySearchParamsQuery(
+  const { data: markers } = useGetEventsBySearchParamsQuery(
     {
       locale: localeForRequest,
       queryParams: filters,
-    },   {
+    },
+    {
       skip: areAllFieldsEmpty(filters),
     }
   );
@@ -58,8 +56,8 @@ export default function InteractiveMap() {
           width: '100%',
         }}
         maxBounds={[
-          [62, 45],
-          [44, 15],
+          [62, 47],
+          [34, 15],
         ]}
         zoom={6}
         minZoom={5}
@@ -70,7 +68,6 @@ export default function InteractiveMap() {
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          // url="https://tile.openstreetmap.org.ua/styles/osm-bright/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
         <GeoJSON
@@ -81,31 +78,21 @@ export default function InteractiveMap() {
           }}
         />
         {bordersOfUkrainianCities.features.map(feature => (
-          <GeoJSON
-            data={feature}
-            style={{
-              fillColor: 'transparent',
-              weight: 1,
-              opacity: 0.5,
-              color: 'currentColor',
-            }}
+          <GeoJSONCityItem
+            feature={feature}
+            map={map}
             key={feature.properties.shapeID}
           />
         ))}
-        <Rectangle
-          bounds={[
-            [180, 180],
-            [-180, -180],
-          ]}
-          pathOptions={{ fillColor: 'black', fillOpacity: 0.5 }}
-        />
+
         {markers &&
+          !areAllFieldsEmpty(filters) &&
           markers.map(event => (
             <MapMarker map={map} key={event.id} event={event} />
           ))}
       </MapContainer>
     ),
-    [map, markers]
+    [filters, map, markers]
   );
 
   return (
@@ -118,9 +105,12 @@ export default function InteractiveMap() {
 
       <button
         onClick={onClickResetZoom}
-        className="absolute bottom-[40px] left-[40px] z-[1000] rounded-lg bg-yellow px-6 py-3"
+        className="absolute bottom-[40px] left-[40px] z-[1000] flex gap-2 rounded-lg bg-yellow px-11 py-3.5"
       >
-        Показати всю карту
+        <p className="text-[16px]/[1.2] font-medium text-black">
+          {t('showMap')}
+        </p>
+        <UkraineIcon className={'size-[22.5px]'} />
       </button>
     </section>
   );
@@ -129,14 +119,17 @@ export default function InteractiveMap() {
 function GeoJSONCityItem({ feature, map }) {
   const styleCity = {
     fillColor: 'transparent',
-
     weight: 1,
     opacity: 0.5,
-    color: 'currentColor',
+    color: 'black',
   };
 
   const zoomToFeature = useCallback(
     ({ target }) => {
+      if (map.getZoom() > 9.5) {
+        return;
+      }
+
       map.flyToBounds(target.getBounds());
     },
     [map]
