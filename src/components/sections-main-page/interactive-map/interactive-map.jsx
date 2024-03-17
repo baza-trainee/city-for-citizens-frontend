@@ -68,8 +68,8 @@ export default function InteractiveMap() {
           width: '100%',
         }}
         maxBounds={[
-          [62, 47],
-          [34, 15],
+          [62, 60],
+          [34, 5],
         ]}
         zoom={6}
         minZoom={5}
