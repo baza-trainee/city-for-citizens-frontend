@@ -4,17 +4,16 @@ import ClockIcon from '@/assets/icons/event-card/clock-icon.svg';
 import LocationIcon from '@/assets/icons/event-card/location-icon.svg';
 import { formatDateSeparatorDot, formatDateToTime } from '@/helpers';
 import { useTranslations } from 'next-intl';
-import { Tooltip } from 'react-leaflet';
 
 export function TooltipEventCard({ event }) {
   return (
-    <Tooltip opacity="1" direction="top" pane="popupPane">
+    <>
       {event.sameAddress ? (
         <ModalOnHoverSlider events={event.sameAddress} />
       ) : (
         <TooltipEventCardItem event={event} />
       )}
-    </Tooltip>
+    </>
   );
 }
 
