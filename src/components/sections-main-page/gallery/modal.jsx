@@ -35,10 +35,10 @@ export function ModalGallery({ selectedImage, modalClose, events }) {
       className="backdrop fixed left-0 top-0 z-[1005] flex h-screen w-screen items-center justify-center bg-light-backdrop"
       onClick={handleBackdropClick}
     >
-      <div className="gallery-swiper-button-prev absolute bottom-[50%] left-[50px]  z-[1201] hidden h-12 w-12 rounded-[40px] bg-light-button-default text-center opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed tablet:left-4 tablet:block laptop:left-10 desktop:left-[10px]">
+      <div className="gallery-swiper-button-prev absolute bottom-[50%] left-[50px]  z-[1201] hidden h-12 w-12 cursor-pointer rounded-[40px] bg-light-button-default text-center opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed tablet:left-4 tablet:block laptop:left-10 desktop:left-[10px]">
         <ArrowLeftIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
-      <div className="gallery-swiper-button-next absolute bottom-[50%] right-[50px] z-[1201] h-12 w-12 rounded-[40px] bg-light-button-default opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed mobile:hidden  tablet:right-4 tablet:block laptop:right-10 desktop:right-[10px]">
+      <div className="gallery-swiper-button-next absolute bottom-[50%] right-[50px] z-[1201] h-12 w-12 cursor-pointer rounded-[40px] bg-light-button-default opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:hover:opacity-100 dark:active:bg-dark-button-pressed  mobile:hidden tablet:right-4 tablet:block laptop:right-10 desktop:right-[10px]">
         <ArrowRightIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
       <div className="relative z-[1200] tablet:h-[394px] tablet:w-[700px] desktop:h-[563px] desktop:w-[1000px] desktop_xl:h-[720px] desktop_xl:w-[1280px]">
