@@ -18,9 +18,8 @@ export default async function Documents() {
   const t = useTranslations('DocumentsFooter');
 
   const DocumentsFooter = [
-    { id: 'policy', label: t('policy') },
     { id: 'rules', label: t('rules') },
-    { id: 'developed', label: t('developed') },
+    { id: 'policy', label: t('policy') },
   ];
 
   const documentsData = await getDocuments();
@@ -30,14 +29,15 @@ export default async function Documents() {
   }
   return (
     <div
-      className=" flex flex-col gap-3 font-roboto text-sm font-normal 
+      className=" flex flex-col gap-3 font-roboto text-[16px] font-normal 
     leading-tight text-light-main dark:text-dark-main "
     >
-      {documentsData?.map((document, index) => (
+      {documentsData?.reverse().map((document, index) => (
         <a
           key={document.id}
           href={document.file}
-          className={`block w-full cursor-pointer text-center hover:text-light-accent  hover:transition-all dark:hover:text-dark-accent tablet:text-right   `}
+          className={`block w-full cursor-pointer text-center hover:text-light-accent  hover:transition-all
+           dark:hover:text-dark-accent tablet:text-left`}
         >
           {DocumentsFooter[index].label}
         </a>
