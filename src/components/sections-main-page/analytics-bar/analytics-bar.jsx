@@ -25,15 +25,14 @@ export function AnalyticsBar() {
           disableOnInteraction: true,
           pauseOnMouseEnter: true,
         }}
-        speed={2000}
+        speed={6000}
         loop={true}
         allowTouchMove={false}
-      >
+
         {eventsType?.map(event => {
           const eventTypeStatistics =
             eventTypesStatistics &&
             eventTypesStatistics.find(item => item.eventTypeId === event.id);
-
           if (!eventTypeStatistics) {
             return null;
           }
@@ -42,6 +41,7 @@ export function AnalyticsBar() {
 
           return (
             <SwiperSlide key={event.id} style={{ width: 'auto' }}>
+
               <div className="flex cursor-pointer items-center gap-3">
                 <span className="text-[57px] font-bold">{`${count}+`}</span>
                 <span className="pr-[120px] text-2xl font-medium">

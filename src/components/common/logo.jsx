@@ -10,7 +10,7 @@ export default function Logo({ isFooter = false }) {
   return (
     <Link
       href="/"
-      className={`flex items-center justify-center gap-2 rounded ${isFooter ? 'py-0 desktop:self-start' : 'py-11'} font-roboto text-lg font-black uppercase leading-6 text-black`}
+      className={`flex items-center justify-center gap-2 rounded ${isFooter ? 'py-0 desktop:self-start' : 'py-0'} font-roboto text-lg font-black uppercase leading-6 text-black`}
     >
       {theme === 'dark' ? (
         <LogotypeDark alt="Logo MistoFest" width="40" height="40" />

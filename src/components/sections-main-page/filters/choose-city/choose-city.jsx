@@ -2,6 +2,7 @@
 
 import IconSelectArrow from '@/assets/icons/filters/drop-down-icon.svg';
 import IconInputCity from '@/assets/icons/filters/location_input-icon.svg';
+import IconCheckbox from '@/assets/icons/filters/checkbox-icon.svg';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -11,7 +12,6 @@ import { setFilters } from '@/redux/slice/filters';
 export default function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
-  //const [isInputTyping, setIsInputTyping] = useState(false);
   const [displayedCities, setDisplayedCities] = useState([]);
   const [selectedCities, setSelectedCities] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
@@ -59,13 +59,12 @@ export default function ChooseCity({ filtersEventCities }) {
   }, [isLoadingData]);
 
   function handleInputChange(event) {
-    const value = event.target.value.trim();
+    const value = event.target.value.replace(/^\s/, '');
     setInputValue(value);
 
     if (value) {
       setValidationMessage('');
       if (isInputValueValid(value)) {
-        //setIsInputTyping(true);
         const filteredCities = filteredCityByInputValue(value);
         setDisplayedCities(filteredCities);
       } else {
@@ -102,19 +101,11 @@ export default function ChooseCity({ filtersEventCities }) {
   }
 
   function englishLayout(char) {
-    return (
-      (char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= 90) ||
-      (char.charCodeAt(0) >= 97 && char.charCodeAt(0) <= 122)
-    );
+    return char.match(/^[a-z\s-]+$/i);
   }
 
   function ukrainanLayout(char) {
-    return (
-      (char.charCodeAt(0) >= 1040 && char.charCodeAt(0) <= 1103) ||
-      char.charCodeAt(0) === 1108 ||
-      char.charCodeAt(0) === 1110 ||
-      char.charCodeAt(0) === 1111
-    );
+    return char.match(/^((?![эъ])[а-яіїє'\-\s])+$/i);
   }
 
   function toggleCheck(city) {
@@ -216,7 +207,7 @@ export default function ChooseCity({ filtersEventCities }) {
     if (isListVisible) {
       return `text-light-input-focus dark:text-dark-input-focus`;
     }
-    return `text-light-input-default dark:text-dark-input-default`;
+    return `text-light-input-focus dark:text-dark-input-focus`;
   };
 
   const commonStyles = {
@@ -227,12 +218,9 @@ export default function ChooseCity({ filtersEventCities }) {
 
   return (
     <div className="relative flex w-full flex-col ">
-      <label
-        htmlFor="city"
-        className="mb-1 block font-roboto text-sm text-light-main dark:text-dark-main"
-      >
+      <span className="mb-1 block font-roboto text-sm text-light-main dark:text-dark-main">
         {t('label')}
-      </label>
+      </span>
 
       <div
         className="flex h-[48px] items-center justify-between rounded-lg bg-light-secondary
@@ -278,14 +266,14 @@ export default function ChooseCity({ filtersEventCities }) {
             width={24}
             height={24}
             onClick={handleControlList}
-            className={`outline-none ${isListVisible ? 'open rotate-180' : ''}`}
+            className={`${commonStyles.icon} outline-none ${isListVisible ? 'open rotate-180' : ''}`}
           />
         </div>
       </div>
       <div tabIndex="0" onBlur={handleListLostFocus} onFocus={handleListFocus}>
         <ul
           className={`absolute top-[87px] flex w-full flex-col gap-3 rounded-lg bg-light-secondary px-4 py-3
-          shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border 
+          font-roboto shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border
           dark:border-dark-border dark:bg-dark-secondary dark:shadow-none ${
             isListVisible ? 'visible opacity-100' : 'invisible opacity-0'
           }`}
@@ -304,8 +292,8 @@ export default function ChooseCity({ filtersEventCities }) {
               <li
                 key={city}
                 onClick={() => toggleCheck(city)}
-                className={`flex list-none items-center justify-between
-          px-2 py-0 ${
+                className={`flex cursor-pointer list-none items-center
+          justify-between px-2 py-0 ${
             selectedCities.includes(city)
               ? 'border-light-checkbox-check text-light-input-focus dark:border-dark-checkbox-check dark:text-dark-input-focus'
               : 'text-light-input-default dark:text-dark-input-default'
@@ -314,13 +302,23 @@ export default function ChooseCity({ filtersEventCities }) {
                 {city}
                 <div
                   data-city={city}
-                  className={`flex  h-6 w-6 select-none
+                  className={`flex  h-6 w-6  select-none
                        items-center justify-center rounded border-[2px] transition-all ${
                          selectedCities.includes(city)
-                           ? 'border-light-checkbox-check dark:border-dark-checkbox-check'
+                           ? 'border-light-checkbox-check bg-light-checkbox-check dark:border-dark-checkbox-check dark:bg-dark-checkbox-check'
                            : 'border-light-checkbox-non_check dark:border-dark-checkbox-non_check'
                        }`}
-                ></div>
+                >
+                  <IconCheckbox
+                    width={16}
+                    height={12}
+                    className={`fill-light-primary transition-all dark:fill-dark-secondary ${
+                      selectedCities.includes(city)
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    }`}
+                  />
+                </div>
               </li>
             ))
           )}

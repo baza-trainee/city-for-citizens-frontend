@@ -50,7 +50,9 @@ const FilterInputWrapper = ({
         ? `text-light-input-default dark:text-dark-input-default`
         : `text-light-input-focus dark:text-dark-input-focus`;
     }
-    return `text-light-input-default dark:text-dark-input-default`;
+    return inputTextDefault
+      ? `text-light-input-default dark:text-dark-input-default`
+      : `text-light-input-focus dark:text-dark-input-focus`;
   };
 
   const commonStyles = {
@@ -76,11 +78,16 @@ const FilterInputWrapper = ({
           dark:shadow-none "
         >
           {/* Inner input space */}
-          <div className="flex w-full gap-x-2 ">
+          <div className="flex w-full cursor-pointer gap-x-2">
             <InputIcon width={24} height={24} />
             <span
               contentEditable={false}
-              className={`${commonStyles.text} max-w-[calc(100vw-32px-16px-12px-24px-24px-8px)] grow overflow-clip pr-2 text-left  desktop:max-w-[376px]`}
+              className={`${commonStyles.text} font-roboto
+              ${
+                type === 'type'
+                  ? 'w-[calc(100vw-32px-16px-12px-24px-24px-16px)] laptop:w-[calc(100vw-80px-16px-12px-24px-24px-16px)]'
+                  : 'w-[calc(100%--16px-12px-24px-24px-16px)]'
+              }  grow overflow-clip pr-2 text-left desktop:w-[calc((100vw-112px)/3-92px)]  desktop:max-w-[376px]`}
             >
               {formatSelectInputText}
             </span>
@@ -93,7 +100,7 @@ const FilterInputWrapper = ({
         </div>
 
         <div
-          className={`absolute mt-[15px] rounded-lg bg-light-secondary 
+          className={`absolute mt-[15px] rounded-lg bg-light-secondary font-roboto
           shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border 
           dark:border-dark-border  dark:bg-dark-secondary dark:shadow-none 
            ${type == 'date' ? 'inset-x-0 mx-auto w-fit' : 'w-full'}

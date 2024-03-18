@@ -13,7 +13,10 @@ export default function FooterNav() {
 
   return (
     <nav>
-      <ul className="flex flex-col gap-3 text-center font-roboto text-base font-normal leading-[1.4] text-light-main dark:text-dark-main desktop:mr-auto desktop:text-left">
+      <ul
+        className="inline-flex flex-col gap-3 text-center font-roboto text-base font-normal leading-[1.4] text-light-main
+       dark:text-dark-main tablet:text-left"
+      >
         {menuItems.map(item => (
           <li
             key={item.id}

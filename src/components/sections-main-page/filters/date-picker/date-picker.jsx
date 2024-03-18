@@ -23,7 +23,7 @@ export const DatePicker = ({ filtersEventDates }) => {
   const locale = useLocale();
 
   useEffect(() => {
-    dateToFilter && dispatch(setFilters({ data: dateToFilter.join(',') }));
+    dateToFilter && dispatch(setFilters({ date: dateToFilter.join(',') }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateToFilter]);
 

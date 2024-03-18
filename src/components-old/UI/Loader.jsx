@@ -1,9 +1,9 @@
 import { FadeLoader } from 'react-spinners';
 
-const Loader = () => {
+const Loader = ({ text = 'Loading ...' }) => {
   return (
     <div className="m-auto flex flex-col items-center justify-center gap-[10px]">
-      <p className="text-[44px]">Loading ... </p>
+      <p className="text-[44px]">{text}</p>
       <FadeLoader
         color="#6589E3"
         height={25}
