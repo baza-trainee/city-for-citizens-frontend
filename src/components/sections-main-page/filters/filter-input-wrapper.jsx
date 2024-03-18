@@ -1,8 +1,6 @@
-'use client';
+import { useState, useRef } from 'react';
 
-import { useState } from 'react';
-
-const FilterInputWrapper = ({
+export default function FilterInputWrapper({
   inputLabel,
   children,
   inputTextDefault,
@@ -11,37 +9,45 @@ const FilterInputWrapper = ({
   iconSelect: IconSelect,
   inputIcon: InputIcon,
   type,
-}) => {
+}) {
   const [isVisible, setIsVisible] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
+  const listRef = useRef(false);
 
   const selectedInputText = [
     inputTextDefault,
     inputTextFirst,
     inputTextSecond,
   ].filter(Boolean);
+
   const formatSelectInputText =
     type === 'date'
       ? selectedInputText.join(' - ')
       : selectedInputText.join(', ');
 
-  const handleInputClick = () => {
-    if (hasFocus) {
+  function handleFocus() {
+    setIsVisible(true);
+  }
+
+  function handleLostFocus(e) {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
       setIsVisible(false);
       setHasFocus(false);
+      listRef.current = false;
+    }
+  }
+  function handleInputClick() {
+    if (hasFocus || listRef.current) {
+      setIsVisible(false);
+      setHasFocus(false);
+      listRef.current = false;
     } else {
       setHasFocus(true);
       setIsVisible(true);
     }
-  };
-
-  const handleFocus = () => {
-    setIsVisible(true);
-  };
-
-  const handleLostFocus = () => {
-    setIsVisible(false);
-    setHasFocus(false);
+  }
+  const handleListClick = () => {
+    listRef.current = true;
   };
 
   const setColor = () => {
@@ -61,13 +67,11 @@ const FilterInputWrapper = ({
   };
 
   return (
-    <div className=" relative flex w-full  flex-col">
+    <div className="relative flex w-full flex-col">
       <p className="mb-1 font-roboto text-sm text-light-main dark:text-dark-main">
         {inputLabel}
       </p>
       <div tabIndex="0" onFocus={handleFocus} onBlur={handleLostFocus}>
-        {/* All list styles */}
-
         <div
           onClick={handleInputClick}
           className="flex h-[48px]  items-center justify-between rounded-lg bg-light-secondary
@@ -77,7 +81,6 @@ const FilterInputWrapper = ({
          dark:bg-dark-secondary dark:text-dark-input-default
           dark:shadow-none "
         >
-          {/* Inner input space */}
           <div className="flex w-full cursor-pointer gap-x-2">
             <InputIcon width={24} height={24} />
             <span
@@ -100,6 +103,7 @@ const FilterInputWrapper = ({
         </div>
 
         <div
+          onClick={handleListClick}
           className={`absolute mt-[15px] rounded-lg bg-light-secondary font-roboto
           shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border 
           dark:border-dark-border  dark:bg-dark-secondary dark:shadow-none 
@@ -112,5 +116,4 @@ const FilterInputWrapper = ({
       </div>
     </div>
   );
-};
-export default FilterInputWrapper;
+}
