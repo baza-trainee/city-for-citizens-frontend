@@ -118,6 +118,13 @@ export const typesEventApi = createApi({
       },
       invalidatesTags: [{ type: 'TypesEvent', id: 'LIST' }],
     }),
+    //
+    getEventTypesStatistics: builder.query({
+      query: () => {
+        return { url: 'events/statistics/analytics', method: 'GET' };
+      },
+      transformResponse: res => res.data,
+    }),
   }),
 });
 
@@ -130,4 +137,5 @@ export const {
   useUpdateTypesEventMutation,
   useDeleteTypeEventMutation,
   useGetTypesEventByLocaleQuery,
+  useGetEventTypesStatisticsQuery,
 } = typesEventApi;

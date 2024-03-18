@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const LOCALE = {
   en: { forRequest: 'en_US', forIntl: 'en' },
   uk: { forRequest: 'uk_UA', forIntl: 'uk' },

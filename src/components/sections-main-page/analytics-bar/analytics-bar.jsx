@@ -1,21 +1,19 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-
-const analyticsBarItems = [
-  { id: 1, title: 'Концертів', amount: 10 },
-  { id: 2, title: 'Виставок', amount: 20 },
-  { id: 3, title: 'Ярмарок', amount: 30 },
-  { id: 4, title: 'Спортивних заходів', amount: 40 },
-];
-
-const analyticsBarItemsNew = [
-  ...analyticsBarItems,
-  ...analyticsBarItems,
-  ...analyticsBarItems,
-];
+import {
+  useGetTypesEventByLocaleQuery,
+  useGetEventTypesStatisticsQuery,
+} from '@/redux/api/typesEventApi';
+import { useCurrentLocale } from '@/hooks';
 
 export function AnalyticsBar() {
+  const { localeForRequest } = useCurrentLocale();
+  const { data: eventsType } = useGetTypesEventByLocaleQuery({
+    locale: localeForRequest,
+  });
+  const { data: eventTypesStatistics } = useGetEventTypesStatisticsQuery();
+
   return (
     <section className="flex h-[100px] items-center bg-yellow font-ubuntu text-dark-primary">
       <Swiper
@@ -31,13 +29,23 @@ export function AnalyticsBar() {
         loop={true}
         allowTouchMove={false}
       >
-        {analyticsBarItemsNew.map(item => {
+        {eventsType?.map(event => {
+          const eventTypeStatistics =
+            eventTypesStatistics &&
+            eventTypesStatistics.find(item => item.eventTypeId === event.id);
+
+          if (!eventTypeStatistics) {
+            return null;
+          }
+
+          const count = eventTypeStatistics ? eventTypeStatistics.count : 0;
+
           return (
-            <SwiperSlide key={item.id} style={{ width: 'auto' }}>
+            <SwiperSlide key={event.id} style={{ width: 'auto' }}>
               <div className="flex cursor-pointer items-center gap-3">
-                <span className="text-[57px] font-bold">{`${item.amount}+`}</span>
+                <span className="text-[57px] font-bold">{`${count}+`}</span>
                 <span className="pr-[120px] text-2xl font-medium">
-                  {item.title}
+                  {event.eventType}
                 </span>
               </div>
             </SwiperSlide>
