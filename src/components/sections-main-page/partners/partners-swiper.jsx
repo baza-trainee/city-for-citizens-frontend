@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export default function PartnersSwiper({ partners }) {
   return (
-    <div className="">
+    <div className="py-[20px]">
       <Swiper
         className="marquee"
         modules={[Autoplay]}
