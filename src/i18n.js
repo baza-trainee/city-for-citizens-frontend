@@ -23,6 +23,7 @@ export default getRequestConfig(async ({ locale }) => {
       ...(await import(`../messages/${locale}/ProposeEvent.json`)).default,
       ...(await import(`../messages/${locale}/Partners.json`)).default,
       ...(await import(`../messages/${locale}/InteractiveMap.json`)).default,
+      ...(await import(`../messages/${locale}/NotFound.json`)).default,
     },
   };
 });
