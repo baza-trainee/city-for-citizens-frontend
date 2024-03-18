@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useId } from 'react';
+import { useTranslations } from 'next-intl';
 
 const CHARACTER_LIMIT = 300;
 
@@ -11,6 +14,7 @@ const TextField = ({
   type = 'text',
   placeholder = '',
 }) => {
+  const t = useTranslations('ProposeEvent');
   const inputId = useId();
   const [charCount, setCharCount] = useState(0);
 
@@ -42,14 +46,14 @@ const TextField = ({
             className="bg-zinc-100 inline-flex min-h-[152px] w-full resize-none items-center 
             justify-start gap-2 rounded-lg border-light-border bg-light-secondary px-4 py-3 font-roboto 
             text-base font-normal leading-snug text-black shadow-[0_5px_12px_rgba(115,115,115,0.1)] placeholder:text-light-head 
-             placeholder:opacity-30 focus:outline-none dark:border
-             dark:border-dark-border dark:bg-dark-secondary dark:shadow-none dark:placeholder:text-dark-head"
+             placeholder:opacity-30 focus:outline-none dark:border dark:border-dark-border
+             dark:bg-dark-secondary dark:text-dark-head dark:shadow-none dark:placeholder:text-dark-head"
             onChange={handleChange}
             onReset={() => setCharCount(0)}
             maxLength={CHARACTER_LIMIT}
           />
           <p className="text-sm text-light-main">
-            {charCount}/{CHARACTER_LIMIT} символів
+            {charCount}/{CHARACTER_LIMIT} {t('characters')}
           </p>
         </>
       ) : (
@@ -65,8 +69,8 @@ const TextField = ({
           justify-start gap-2 rounded-lg border-light-border bg-light-secondary px-4 
           py-3 font-roboto text-base font-normal leading-snug text-black shadow-[0_5px_12px_rgba(115,115,115,0.1)] 
           placeholder:text-light-head  placeholder:opacity-30
-          focus:outline-none dark:border dark:border-dark-border 
-          dark:bg-dark-secondary dark:shadow-none dark:placeholder:text-dark-head"
+          focus:outline-none dark:border dark:border-dark-border dark:bg-dark-secondary
+          dark:text-dark-head dark:shadow-none dark:placeholder:text-dark-head"
         />
       )}
       {errors[name] && (

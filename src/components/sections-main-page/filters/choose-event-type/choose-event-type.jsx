@@ -2,6 +2,7 @@
 
 import IconSelectArrow from '@/assets/icons/filters/drop-down-icon.svg';
 import IconInputTypeEvent from '@/assets/icons/filters/type-event-input-icon.svg';
+import IconCheckbox from '@/assets/icons/filters/checkbox-icon.svg';
 import FilterInputWrapper from '../filter-input-wrapper';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -69,10 +70,20 @@ const ChooseEventType = ({ filtersEventTypes }) => {
                       className={`flex  h-6 w-6 select-none
                        items-center justify-center rounded border-[2px] transition-all ${
                          selectedEventTypes.includes(event)
-                           ? 'border-light-checkbox-check dark:border-dark-checkbox-check'
+                           ? 'border-light-checkbox-check bg-light-checkbox-check dark:border-dark-checkbox-check dark:bg-dark-checkbox-check'
                            : 'border-light-checkbox-non_check dark:border-dark-checkbox-non_check'
                        }`}
-                    ></div>
+                    >
+                      <IconCheckbox
+                        width={16}
+                        height={12}
+                        className={`fill-light-primary transition-all dark:fill-dark-secondary ${
+                          selectedEventTypes.includes(event)
+                            ? 'opacity-100'
+                            : 'opacity-0'
+                        }`}
+                      />
+                    </div>
                   </label>
                 </li>
               );

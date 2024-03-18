@@ -1,17 +1,22 @@
 import * as Yup from 'yup';
 
 const phoneRegExp = /^\+\d{1,12}$/;
-const telegramUsernameOrLinkRegex =
-  /^(?:(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]{5,32})|@?([a-zA-Z0-9_]{5,32}))$/;
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Мінімальна кількість символів 3')
+    .matches(/^\S.*$/, 'Не може починатися з пробілу')
+    .min(2, 'Мінімальна кількість символів 2')
     .max(55, 'Максимальна кількість символів 55')
+    .matches(/^[A-Za-zА-Яа-я\s'’-]*$/, "Ім'я може містити тільки букви")
     .required("Це поле є обов'язковим"),
 
   email: Yup.string()
+    .matches(/^\S.*$/, 'Не може починатися з пробілу')
     .email('Введіть дійсну електронну адресу')
+    .matches(
+      /^[^@]+@[^.@]+\.[^.@]+$/,
+      'Email повинен містити крапку перед доменом'
+    )
     .max(55, 'Максимальна кількість символів 55')
     .required("Це поле є обов'язковим"),
 
@@ -28,17 +33,17 @@ const validationSchema = Yup.object().shape({
           });
         if (!value.startsWith('+380'))
           return this.createError({
-            message: 'Номер телефону має починатися з +380XXXXXXXXX',
+            message: 'Номер має починатися з +380XXXXXXXXX',
             path: this.path,
           });
         if (!phoneRegExp.test(value))
           return this.createError({
-            message: 'Введіть коректний номер телефону у форматі +380XXXXXXXXX',
+            message: 'Введіть у форматі +380XXXXXXXXX',
             path: this.path,
           });
         if (value.length !== 13)
           return this.createError({
-            message: 'Введіть коректний номер телефону у форматі +380XXXXXXXXX',
+            message: 'Введіть у форматі +380XXXXXXXXX',
             path: this.path,
           });
         return true;
@@ -46,13 +51,15 @@ const validationSchema = Yup.object().shape({
     ),
 
   messenger: Yup.string()
+    .optional()
+    .matches(/^\S.*$/, 'Не може починатися з пробілу')
     .matches(
-      telegramUsernameOrLinkRegex,
+      /^(?:\s*|(?:(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/([a-zA-Z0-9_]{5,32})|@?([a-zA-Z0-9_]{5,32})))$/,
       'Некоректний нікнейм або посилання Telegram'
-    )
-    .required("Це поле є обов'язковим"),
+    ),
 
   eventDescription: Yup.string()
+    .matches(/^\S.*$/, 'Не може починатися з пробілу')
     .max(300, 'Опис події повинен містити не більше 300 символів')
     .required("Це поле є обов'язковим"),
 });
