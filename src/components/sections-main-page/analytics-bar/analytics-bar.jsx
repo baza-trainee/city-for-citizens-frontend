@@ -27,7 +27,7 @@ export function AnalyticsBar() {
         }}
         speed={6000}
         loop={true}
-        allowTouchMove={false}
+        allowTouchMove={false}>
 
         {eventsType?.map(event => {
           const eventTypeStatistics =
