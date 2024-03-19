@@ -158,7 +158,7 @@ module.exports = {
       laptop_xl: '1024px',
       desktop: '1280px',
       desktop_m: '1440px',
-      desktop_l: '1520px',
+      desktop_l: '1540px',
       desktop_xl: '1920px',
     },
 

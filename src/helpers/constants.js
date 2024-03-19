@@ -33,7 +33,7 @@ const NAVIGATION = {
 // const IMAGE_BASE_URL = 'https://city-backend-45go.onrender.com/images/events/';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL;
-const IMAGE_PARTNERS_URL = process.env.NEXT_PUBLIC_IMAGE_PARTNERS_URL;
+const IMAGE_PARTNERS_URL = process.env.NEXT_PUBLIC_PARTNERS_IMAGE_BASE_URL;
 
 export {
   LOCALE,

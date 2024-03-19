@@ -12,7 +12,7 @@ export function Filters() {
   const { data } = useGetAllFiltersByLocaleQuery({ locale: localeForRequest });
 
   return (
-    <section className="relative z-10 mt-20 flex flex-col items-center justify-center bg-light-primary dark:bg-dark-primary tablet:mt-40">
+    <section className="relative z-10 mt-20 flex max-w-full flex-col items-center justify-center bg-light-primary dark:bg-dark-primary tablet:mt-40">
       <div className="px-4 text-center font-ubuntu text-[30px] font-bold leading-[33px] dark:text-dark-accent tablet:text-[43px] tablet:leading-[47.3px]">
         {t('header')}
       </div>
