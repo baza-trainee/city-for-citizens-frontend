@@ -1,6 +1,7 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { IMAGE_PARTNERS_URL } from '@/helpers/constants';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -43,7 +44,7 @@ export default function PartnersSwiper({ partners }) {
                 className={`relative flex h-[62px] w-[100px] items-center justify-center overflow-hidden tablet:h-[100px] tablet:w-[160px]`}
               >
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_PARTNERS_IMAGE_BASE_URL}/${partner.image}`}
+                  src={`${IMAGE_PARTNERS_URL}${partner.image}`}
                   alt={partner.name}
                   fill
                   className="h-full w-auto object-cover"
