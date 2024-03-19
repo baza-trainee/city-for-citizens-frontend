@@ -12,7 +12,7 @@ import { setFilters } from '@/redux/slice/filters';
 export default function ChooseCity({ filtersEventCities }) {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
-  const [displayedCities, setDisplayedCities] = useState([]);
+  const [displayedCities, setDisplayedCities] = useState(filtersEventCities);
   const [selectedCities, setSelectedCities] = useState('');
   const [validationMessage, setValidationMessage] = useState('');
   const [inputReadOnly, setInputReadOnly] = useState(false);
@@ -31,7 +31,6 @@ export default function ChooseCity({ filtersEventCities }) {
 
   useEffect(() => {
     selectedCities && setInputValue(selectedCities.join(', '));
-    setDisplayedCities(filtersEventCities);
     selectedCities && dispatch(setFilters({ city: selectedCities.join(',') }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCities]);
@@ -52,11 +51,6 @@ export default function ChooseCity({ filtersEventCities }) {
     !inputValue && setDisplayedCities(filtersEventCities);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayedCities, inputValue, isLoadingData]);
-
-  useEffect(() => {
-    !isLoadingData && setDisplayedCities(filtersEventCities);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingData]);
 
   function handleInputChange(event) {
     const value = event.target.value.replace(/^\s/, '');
@@ -114,7 +108,6 @@ export default function ChooseCity({ filtersEventCities }) {
     } else {
       setSelectedCities(prev => [...prev, city]);
     }
-    setDisplayedCities(filtersEventCities);
   }
 
   function handleOnclick() {
@@ -125,13 +118,10 @@ export default function ChooseCity({ filtersEventCities }) {
   }
 
   function filteredCityByInputValue(value = inputValue) {
-    if (value) {
-      const valueToLowerCase = value.toLowerCase();
-      return filtersEventCities.filter(city =>
-        city.toLowerCase().startsWith(valueToLowerCase)
-      );
-    }
-    return [];
+    const valueToLowerCase = value.toLowerCase();
+    return filtersEventCities.filter(city =>
+      city.toLowerCase().startsWith(valueToLowerCase)
+    );
   }
 
   function isInputValueIncludesCityFrom(cityArr, input = inputValue) {
@@ -155,9 +145,7 @@ export default function ChooseCity({ filtersEventCities }) {
   }
 
   function handleInputLostFocus() {
-    setInputReadOnly(false);
     setHasFocusInput(false);
-
     if (!hasFocusList && !hasFocusArrow) {
       setIsListVisible(false);
     }
@@ -165,7 +153,6 @@ export default function ChooseCity({ filtersEventCities }) {
 
   function handleListLostFocus() {
     setHasFocusList(false);
-
     if (!hasFocusInput && !hasFocusArrow) {
       setIsListVisible(false);
     }
@@ -179,11 +166,9 @@ export default function ChooseCity({ filtersEventCities }) {
 
   function handleControlList() {
     setHasFocusArrow(true);
-
     if (!isListVisible) {
       setIsListVisible(true);
     }
-
     if (isListVisible) {
       resetState();
     }
@@ -230,17 +215,13 @@ export default function ChooseCity({ filtersEventCities }) {
          dark:bg-dark-secondary dark:text-dark-input-default
           dark:shadow-none "
       >
-        <div
-          tabIndex="0"
-          onBlur={handleInputLostFocus}
-          onFocus={handleInputFocus}
-          className="flex grow gap-x-2 "
-        >
+        <div className="flex grow gap-x-2 ">
           <IconInputCity width={24} height={24} />
           <input
-            id="city"
             type="text"
             name="city"
+            onFocus={handleInputFocus}
+            onBlur={handleInputLostFocus}
             placeholder={t('defaultValue')}
             value={inputValue}
             onChange={handleInputChange}
@@ -255,7 +236,7 @@ export default function ChooseCity({ filtersEventCities }) {
         <div
           tabIndex="0"
           onBlur={handleArrowLostFocus}
-          onMouseEnter={() => {
+          onMouseDown={() => {
             setHasFocusArrow(true);
           }}
           onTouchStart={() => {
@@ -270,7 +251,13 @@ export default function ChooseCity({ filtersEventCities }) {
           />
         </div>
       </div>
-      <div tabIndex="0" onBlur={handleListLostFocus} onFocus={handleListFocus}>
+
+      <div
+        tabIndex="0"
+        onBlur={handleListLostFocus}
+        onMouseDown={handleListFocus}
+        onTouchStart={handleListFocus}
+      >
         <ul
           className={`absolute top-[87px] flex w-full flex-col gap-3 rounded-lg bg-light-secondary px-4 py-3
           font-roboto shadow-[0_5px_12px_rgba(115,115,115,0.1)] transition-all dark:border
@@ -291,7 +278,9 @@ export default function ChooseCity({ filtersEventCities }) {
             displayedCities.map(city => (
               <li
                 key={city}
-                onClick={() => toggleCheck(city)}
+                onClick={() => {
+                  toggleCheck(city);
+                }}
                 className={`flex cursor-pointer list-none items-center
           justify-between px-2 py-0 ${
             selectedCities.includes(city)
@@ -302,7 +291,7 @@ export default function ChooseCity({ filtersEventCities }) {
                 {city}
                 <div
                   data-city={city}
-                  className={`flex  h-6 w-6  select-none
+                  className={`flex  h-6 w-6  
                        items-center justify-center rounded border-[2px] transition-all ${
                          selectedCities.includes(city)
                            ? 'border-light-checkbox-check bg-light-checkbox-check dark:border-dark-checkbox-check dark:bg-dark-checkbox-check'
