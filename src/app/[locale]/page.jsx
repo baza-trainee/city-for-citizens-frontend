@@ -1,5 +1,6 @@
 import { Footer, Header } from '@/components/common';
 import ModalCookies from '@/components/common/modal-cookies';
+import ScrollToTopButton from '@/components/scroll-to-top-button';
 import {
   AnalyticsBar,
   Filters,
@@ -40,6 +41,7 @@ export default async function IndexPage({ params: { locale } }) {
           <ModalCookies />
         </main>
         <Footer />
+        <ScrollToTopButton />
       </div>
     </NextThemeProvider>
   );
