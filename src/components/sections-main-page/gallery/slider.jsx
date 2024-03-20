@@ -19,7 +19,7 @@ import {
 
 import { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
-import { useGetAllEventsByLocaleQuery } from '@/redux/api/eventsApi';
+import { useGetAllEventsByLocaleForGalleryQuery } from '@/redux/api/eventsApi';
 import { useCurrentLocale } from '@/hooks';
 
 import { ModalGallery } from './modal';
@@ -28,12 +28,10 @@ import { SlideImage } from './image-slide';
 export function ImageGallery() {
   const { localeForRequest } = useCurrentLocale();
   const {
-    data = [],
+    data: events,
     // error,
     // isLoading,
-  } = useGetAllEventsByLocaleQuery({ locale: localeForRequest });
-
-  const events = data.events;
+  } = useGetAllEventsByLocaleForGalleryQuery({ locale: localeForRequest });
 
   const [firstHalf, setFirstHalf] = useState([]);
   const [secondHalf, setSecondHalf] = useState([]);
@@ -67,7 +65,7 @@ export function ImageGallery() {
     let secondHalf = [];
     const halfLength = Math.round(events?.length / 2);
 
-    if (events?.length >= 5) {
+    if (events?.length >= 6) {
       firstHalf = events?.slice(0, halfLength);
 
       if (isTablet) {
@@ -156,7 +154,6 @@ export function ImageGallery() {
         <Swiper
           slidesPerView={'auto'}
           spaceBetween={16}
-          mousewheel={true}
           keyboard={true}
           modules={[Mousewheel, Keyboard, Controller]}
           onSwiper={setFirstSwiper}
