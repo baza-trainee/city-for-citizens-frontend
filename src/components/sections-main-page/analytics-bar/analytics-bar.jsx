@@ -15,28 +15,31 @@ export function AnalyticsBar() {
   const { data: eventTypesStatistics } = useGetEventTypesStatisticsQuery();
 
   let eventsType = [];
-  switch (eventsTypeFromApi?.length) {
-    case 1:
-      eventsType = eventsTypeFromApi;
-      break;
-    case 2:
-      eventsType = [
-        eventsTypeFromApi,
-        ...eventsTypeFromApi,
-        ...eventsTypeFromApi,
-        ...eventsTypeFromApi,
-      ];
-      break;
-    case 3:
-      eventsType = [
-        eventsTypeFromApi,
-        ...eventsTypeFromApi,
-        ...eventsTypeFromApi,
-      ];
-      break;
-    default:
-      eventsType = eventsTypeFromApi;
-      break;
+
+  if (eventsTypeFromApi) {
+    switch (eventsTypeFromApi.length) {
+      case 1:
+        eventsType = eventsTypeFromApi;
+        break;
+      case 2:
+        eventsType = [
+          ...eventsTypeFromApi,
+          ...eventsTypeFromApi,
+          ...eventsTypeFromApi,
+          ...eventsTypeFromApi,
+        ];
+        break;
+      case 3:
+        eventsType = [
+          ...eventsTypeFromApi,
+          ...eventsTypeFromApi,
+          ...eventsTypeFromApi,
+        ];
+        break;
+      default:
+        eventsType = eventsTypeFromApi;
+        break;
+    }
   }
 
   return (
@@ -53,6 +56,7 @@ export function AnalyticsBar() {
         speed={6000}
         loop={true}
         allowTouchMove={false}
+        centeredSlides={true}
       >
         {eventsType?.map(event => {
           const eventTypeStatistics =
