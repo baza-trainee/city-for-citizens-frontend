@@ -1,80 +1,84 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import {
-  useGetTypesEventByLocaleQuery,
-  useGetEventTypesStatisticsQuery,
-} from '@/redux/api/typesEventApi';
+import { useGetEventTypesStatisticsQuery } from '@/redux/api/typesEventApi';
 import { useCurrentLocale } from '@/hooks';
 
 export function AnalyticsBar() {
   const { localeForRequest } = useCurrentLocale();
-  const { data: eventsTypeFromApi } = useGetTypesEventByLocaleQuery({
+  const { data: eventTypesStatistics } = useGetEventTypesStatisticsQuery({
     locale: localeForRequest,
   });
-  const { data: eventTypesStatistics } = useGetEventTypesStatisticsQuery();
 
   let eventsType = [];
 
-  if (eventsTypeFromApi) {
-    switch (eventsTypeFromApi.length) {
+  if (eventTypesStatistics) {
+    switch (eventTypesStatistics.length) {
       case 1:
-        eventsType = eventsTypeFromApi;
+        eventsType = [
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+        ];
         break;
       case 2:
         eventsType = [
-          ...eventsTypeFromApi,
-          ...eventsTypeFromApi,
-          ...eventsTypeFromApi,
-          ...eventsTypeFromApi,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
         ];
         break;
       case 3:
         eventsType = [
-          ...eventsTypeFromApi,
-          ...eventsTypeFromApi,
-          ...eventsTypeFromApi,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
         ];
         break;
+      case 4:
+        eventsType = [...eventTypesStatistics, ...eventTypesStatistics];
+        break;
+      case 5:
+        eventsType = [...eventTypesStatistics, ...eventTypesStatistics];
+        break;
       default:
-        eventsType = eventsTypeFromApi;
+        eventsType = eventTypesStatistics;
         break;
     }
   }
 
   return (
-    <section className="flex h-[100px] items-center bg-yellow font-ubuntu text-dark-primary">
+    <section className="flex h-[80px] items-center bg-yellow font-ubuntu text-dark-primary tablet:h-[100px]">
       <Swiper
         className="marquee"
         modules={[Autoplay]}
         slidesPerView={'auto'}
         autoplay={{
           delay: 0,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
-        speed={6000}
+        speed={10000}
         loop={true}
-        allowTouchMove={false}
+        allowTouchMove={true}
         centeredSlides={true}
       >
         {eventsType?.map(event => {
-          const eventTypeStatistics =
-            eventTypesStatistics &&
-            eventTypesStatistics.find(item => item.eventTypeId === event.id);
-          if (!eventTypeStatistics) {
+          if (!eventsType) {
             return null;
           }
-
-          const count = eventTypeStatistics ? eventTypeStatistics.count : 0;
 
           return (
             <SwiperSlide key={event.id} style={{ width: 'auto' }}>
               <div className="flex cursor-pointer items-center gap-3">
-                <span className=" text-2xl font-medium">
+                <span className=" text-[20px] font-medium tablet:text-[30px]">
                   {event.eventType}:
                 </span>
-                <span className="pr-[120px] text-[57px] font-bold">{`${count}`}</span>
+                <span className="pr-[120px] text-[40px] font-bold tablet:text-[57px]">{`${event.count}`}</span>
               </div>
             </SwiperSlide>
           );

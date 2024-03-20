@@ -120,8 +120,11 @@ export const typesEventApi = createApi({
     }),
     //
     getEventTypesStatistics: builder.query({
-      query: () => {
-        return { url: 'events/statistics/analytics', method: 'GET' };
+      query: ({ locale }) => {
+        const queryStr = generateQueryStr('events/statistics/analytics', {
+          locale,
+        });
+        return { url: queryStr, method: 'GET' };
       },
       transformResponse: res => res.data,
     }),
