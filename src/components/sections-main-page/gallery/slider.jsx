@@ -9,13 +9,7 @@ import IconLocation from '@/assets/icons/gallery/location.svg';
 import ArrowLeftIcon from '@/assets/icons/gallery/arrow-left.svg';
 import ArrowRightIcon from '@/assets/icons/gallery/arrow-right.svg';
 
-import {
-  Pagination,
-  Navigation,
-  Mousewheel,
-  Keyboard,
-  Controller,
-} from 'swiper/modules';
+import { Pagination, Navigation, Keyboard, Controller } from 'swiper/modules';
 
 import { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
@@ -155,7 +149,7 @@ export function ImageGallery() {
           slidesPerView={'auto'}
           spaceBetween={16}
           keyboard={true}
-          modules={[Mousewheel, Keyboard, Controller]}
+          modules={[Keyboard, Controller]}
           onSwiper={setFirstSwiper}
           controller={{ control: secondSwiper }}
           breakpoints={{
@@ -199,9 +193,8 @@ export function ImageGallery() {
         pagination={{
           clickable: true,
         }}
-        mousewheel={true}
         keyboard={true}
-        modules={[Pagination, Navigation, Mousewheel, Keyboard, Controller]}
+        modules={[Pagination, Navigation, Keyboard, Controller]}
         onSwiper={setSecondSwiper}
         controller={{ control: firstSwiper }}
         breakpoints={{
