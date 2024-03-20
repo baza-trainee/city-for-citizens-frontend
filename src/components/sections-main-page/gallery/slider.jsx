@@ -32,6 +32,7 @@ export function ImageGallery() {
     // error,
     // isLoading,
   } = useGetAllEventsByLocaleQuery({ locale: localeForRequest });
+
   const events = data.events;
 
   const [firstHalf, setFirstHalf] = useState([]);
@@ -66,12 +67,16 @@ export function ImageGallery() {
     let secondHalf = [];
     const halfLength = Math.round(events?.length / 2);
 
-    firstHalf = events?.slice(0, halfLength);
+    if (events?.length >= 5) {
+      firstHalf = events?.slice(0, halfLength);
 
-    if (isTablet) {
-      secondHalf = events?.slice(halfLength);
+      if (isTablet) {
+        secondHalf = events?.slice(halfLength);
+      } else {
+        secondHalf = events;
+      }
     } else {
-      secondHalf = events;
+      (firstHalf = null), (secondHalf = events);
     }
     setFirstHalf(firstHalf);
     setSecondHalf(secondHalf);
@@ -147,47 +152,49 @@ export function ImageGallery() {
       <div className="gallery-swiper-swiper-button-next  absolute bottom-[53%] z-10 hidden h-12 w-12 rounded-[40px] bg-light-button-default opacity-50 hover:bg-light-button-hover hover:opacity-100 active:bg-light-button-pressed dark:bg-dark-button-default dark:hover:bg-dark-button-hover  dark:hover:opacity-100 dark:active:bg-dark-button-pressed tablet:right-4 tablet:block laptop:right-10 desktop:right-[10px] ">
         <ArrowRightIcon className="absolute left-[40%] top-[40%] h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform" />
       </div>
-      <Swiper
-        slidesPerView={'auto'}
-        spaceBetween={16}
-        mousewheel={true}
-        keyboard={true}
-        modules={[Mousewheel, Keyboard, Controller]}
-        onSwiper={setFirstSwiper}
-        controller={{ control: secondSwiper }}
-        breakpoints={{
-          960: {
-            spaceBetween: 30,
-          },
-        }}
-        className="gallery-swiper-first first-row"
-      >
-        {firstHalf?.map((event, index) => (
-          <SwiperSlide
-            key={index}
-            onClick={() => handleSlideClick(event)}
-            style={{ width: getWidthByIndex(index), height: '300px' }}
-            className="gallery-swiper group relative transform cursor-pointer overflow-hidden
+      {firstHalf && (
+        <Swiper
+          slidesPerView={'auto'}
+          spaceBetween={16}
+          mousewheel={true}
+          keyboard={true}
+          modules={[Mousewheel, Keyboard, Controller]}
+          onSwiper={setFirstSwiper}
+          controller={{ control: secondSwiper }}
+          breakpoints={{
+            960: {
+              spaceBetween: 30,
+            },
+          }}
+          className="gallery-swiper-first first-row"
+        >
+          {firstHalf?.map((event, index) => (
+            <SwiperSlide
+              key={index}
+              onClick={() => handleSlideClick(event)}
+              style={{ width: getWidthByIndex(index), height: '300px' }}
+              className="gallery-swiper group relative transform cursor-pointer overflow-hidden
             rounded-lg
             transition-transform
             duration-300
             ease-in-out "
-          >
-            <SlideImage event={event} />
-            <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
-              <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
-                {event.eventTitle}
-              </p>
-              <div className="flex items-center  gap-2 text-start">
-                <IconLocation width="24px" height="24px" />
-                <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
-                  {event.eventAddress.city} {event.eventAddress.street}
+            >
+              <SlideImage event={event} />
+              <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
+                <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
+                  {event.eventTitle}
                 </p>
+                <div className="flex items-center  gap-2 text-start">
+                  <IconLocation width="24px" height="24px" />
+                  <p className="font-roboto text-sm font-normal leading-[19.6px] text-light-head dark:text-dark-head">
+                    {event.eventAddress.city} {event.eventAddress.street}
+                  </p>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
       <Swiper
         slidesPerView={'auto'}
