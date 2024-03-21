@@ -13,8 +13,9 @@ export default function ScrollToTopButton() {
     >
       <div
         className="active:opacity-100; flex  h-[48px]  w-[48px] items-center justify-center 
-      rounded-full bg-dark-button-default bg-light-button-default opacity-50  hover:bg-dark-button-hover hover:bg-light-button-hover 
-      hover:opacity-100 active:bg-dark-button-pressed active:bg-light-button-pressed"
+      rounded-full 
+      bg-light-button-default opacity-50 hover:bg-light-button-hover  hover:opacity-100 active:bg-light-button-pressed 
+      dark:bg-dark-button-default dark:hover:bg-dark-button-hover dark:active:bg-dark-button-pressed"
       >
         <ShevronIcon className="h-6 w-6 rotate-180" />
       </div>
