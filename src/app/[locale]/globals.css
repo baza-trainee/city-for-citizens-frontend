@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type='date'],
+input[type='time'] {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  background-color: transparent;
+
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+  }
+  &:focus {
+    background: rgba(0, 0, 0, 0);
+  }
+}
+
+input[type='date'] {
+  padding-left: 28px;
+}
+input[type='time'] {
+  padding-left: 45px;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  margin-bottom: 8px;
+
+  background: #f1f1f1;
+}
+
+.dark .custom-scroll::-webkit-scrollbar-track {
+  background: #121923;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #858e97;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #485058;
+}
+input[type='search']::-webkit-search-decoration:hover,
+input[type='search']::-webkit-search-cancel-button:hover {
+  cursor: pointer;
+}
+
+/* --- admin --- */
+
+/* modal */
+
+/* button */
+
+.button-common {
+  @apply min-h-[49px] min-w-[182px]  cursor-pointer rounded-md border border-admin-dark font-exo_2 text-xl font-bold disabled:cursor-not-allowed;
+}
+.button-common-header {
+  @apply cursor-pointer rounded-md border border-admin-dark  text-xl font-bold disabled:cursor-not-allowed;
+}
+.button-common-hover-dark {
+  @apply button-common-header transition duration-200 hover:border-light-button-hover hover:bg-light-button-hover hover:text-[#ffffff] active:border-admin-darkblue
+           active:bg-admin-darkblue;
+}
+.button-confirm {
+  @apply button-common bg-admin-dark  text-white disabled:border-state-disabled disabled:bg-state-disabled;
+}
+.button-confirm-hover {
+  @apply button-confirm transition duration-200 hover:border-light-button-hover hover:bg-light-button-hover hover:text-[#ffffff] active:border-admin-darkblue
+           active:bg-admin-darkblue;
+}
+.button-close {
+  @apply button-common bg-admin-light_3 text-admin-dark;
+}
+.button-close-hover {
+  @apply button-close transition duration-200  hover:bg-admin-button-hover_outlined active:bg-admin-button-active_outlined;
+}
+.input-wrapper {
+  @apply flex flex-col items-center justify-center gap-5 rounded bg-admin-light_3 px-2.5 py-5
+  shadow-sm;
+}
+
+.input-label {
+  @apply py-2.5 font-source_sans_3 text-xl font-bold leading-[27px] text-admin-dark;
+}
+
+/* custom-swiper */
+
+.custom-pagination {
+  @apply !bottom-6 left-0 flex w-full items-center justify-center gap-3;
+}
+
+.swiper-pagination.custom-pagination > .swiper-pagination-bullet {
+  @apply h-3 w-3 bg-light-secondary opacity-30;
+}
+
+.swiper-pagination.custom-pagination > .swiper-pagination-bullet-active {
+  @apply h-4 w-4 bg-dark-accent opacity-100;
+}
+
+.custom-swiper-buttons {
+  @apply hidden tablet:flex;
+}
+.custom-swiper-buttons > .swiper-button-next,
+.custom-swiper-buttons > .swiper-button-prev {
+  @apply flex h-[40px] w-[40px] items-center justify-center rounded-full bg-dark-button-default opacity-50 after:content-[('')] hover:bg-dark-button-hover hover:opacity-100 active:bg-dark-button-pressed active:opacity-100;
+}
+
+.custom-swiper-buttons > .swiper-button-prev {
+  @apply left-4 rotate-90 laptop:left-[40px];
+}
+
+.custom-swiper-buttons > .swiper-button-next {
+  @apply right-4 -rotate-90 laptop:right-[40px];
+}
+
+.custom-swiper-buttons > .swiper-button-next svg,
+.custom-swiper-buttons > .swiper-button-prev svg {
+  width: 24px;
+  height: 24px;
+}
+
+.modal-mobile {
+  width: calc(100% - 32px);
+}
+
+@media (min-width: 960px) {
+  .modal-mobile {
+    width: calc(100% - 80px);
+  }
+}
+
+/* marquee slider */
+
+.marquee {
+  width: 100%;
+}
+
+.marquee .swiper-wrapper {
+  -webkit-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
+}
+
+/* filter inputs */
+.filter {
+  @apply relative z-10
+       h-[48px] w-[342px] text-ellipsis rounded-lg
+       bg-light-secondary
+        pl-2 font-roboto text-base leading-[22.4px]
+        text-light-input-default placeholder:w-[246px] placeholder:text-light-input-placeholder 
+        focus:text-light-input-focus focus:outline-none disabled:bg-light-secondary dark:border
+        dark:border-dark-border
+         dark:bg-dark-secondary
+         dark:text-dark-input-default dark:placeholder:text-dark-input-placeholder
+        dark:focus:text-dark-input-focus dark:disabled:bg-dark-secondary;
+}

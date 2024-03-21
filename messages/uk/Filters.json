@@ -1,0 +1,22 @@
+{
+  "Filters": {
+    "header": "Оберіть локацію, час та тип події",
+    "ChooseCity": {
+      "label": "Оберіть міста",
+      "defaultValue": "Місто",
+      "textIsEmpty": "Тут порожньо...",
+      "noValid": "Введіть валідні дані ",
+      "switchLayout": "Упс... Здається, треба змінити розкладку клавіатури",
+      "loading": "Зачекайте..."
+    },
+    "DatePicker": {
+      "label": "Дату від і до",
+      "defaultValue": "Дата"
+    },
+    "ChooseEventType": {
+      "label": "Типи подій",
+      "defaultValue": "Типи подій",
+      "textIsEmpty": "Тут порожньо..."
+    }
+  }
+}
