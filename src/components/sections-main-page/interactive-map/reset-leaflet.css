@@ -28,11 +28,11 @@
   display: none !important;
 }
 
-.geo-json-city-item {
+/* .geo-json-city-item {
   transition: all 250ms ease;
   outline: none !important;
 }
 
 .geo-json-city-item:hover {
   fill: black;
-}
+} */

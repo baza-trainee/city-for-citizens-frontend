@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { selectFilters } from '@/redux/slice/filters';
 
 import borderOfUkraine from './geoBoundaries-UKR-ADM0.json';
-import bordersOfUkrainianCities from './geoBoundaries-UKR-ADM1.json';
+// import bordersOfUkrainianCities from './geoBoundaries-UKR-ADM1.json';
 import { useTranslations } from 'next-intl';
 
 function areAllFieldsEmpty(obj) {
@@ -90,13 +90,13 @@ export default function InteractiveMap() {
             weight: 4,
           }}
         />
-        {bordersOfUkrainianCities.features.map(feature => (
+        {/* {bordersOfUkrainianCities.features.map(feature => (
           <GeoJSONCityItem
             feature={feature}
             map={map}
             key={feature.properties.shapeID}
           />
-        ))}
+        ))} */}
 
         {markers &&
           !areAllFieldsEmpty(filters) &&
@@ -130,40 +130,40 @@ export default function InteractiveMap() {
   );
 }
 
-function GeoJSONCityItem({ feature, map }) {
-  const styleCity = {
-    fillColor: 'transparent',
-    weight: 1,
-    opacity: 0.5,
-    color: 'black',
-  };
+// function GeoJSONCityItem({ feature, map }) {
+//   const styleCity = {
+//     fillColor: 'transparent',
+//     weight: 1,
+//     opacity: 0.5,
+//     color: 'black',
+//   };
 
-  const zoomToFeature = useCallback(
-    ({ target }) => {
-      if (map.getZoom() > 9.5) {
-        return;
-      }
+//   const zoomToFeature = useCallback(
+//     ({ target }) => {
+//       if (map.getZoom() > 9.5) {
+//         return;
+//       }
 
-      map.flyToBounds(target.getBounds());
-    },
-    [map]
-  );
+//       map.flyToBounds(target.getBounds());
+//     },
+//     [map]
+//   );
 
-  const innerHandlers = useMemo(
-    () => ({
-      click: zoomToFeature,
-    }),
-    [zoomToFeature]
-  );
-  return (
-    <GeoJSON
-      data={feature}
-      className={'geo-json-city-item'}
-      style={styleCity}
-      eventHandlers={innerHandlers}
-    />
-  );
-}
+//   const innerHandlers = useMemo(
+//     () => ({
+//       click: zoomToFeature,
+//     }),
+//     [zoomToFeature]
+//   );
+//   return (
+//     <GeoJSON
+//       data={feature}
+//       className={'geo-json-city-item'}
+//       style={styleCity}
+//       eventHandlers={innerHandlers}
+//     />
+//   );
+// }
 
 function HandleKey({ map }) {
   const handleKeydown = useCallback(
