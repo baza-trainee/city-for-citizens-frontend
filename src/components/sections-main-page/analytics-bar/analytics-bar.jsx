@@ -1,44 +1,84 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-
-const analyticsBarItems = [
-  { id: 1, title: 'Концертів', amount: 10 },
-  { id: 2, title: 'Виставок', amount: 20 },
-  { id: 3, title: 'Ярмарок', amount: 30 },
-  { id: 4, title: 'Спортивних заходів', amount: 40 },
-];
-
-const analyticsBarItemsNew = [
-  ...analyticsBarItems,
-  ...analyticsBarItems,
-  ...analyticsBarItems,
-];
+import { useGetEventTypesStatisticsQuery } from '@/redux/api/typesEventApi';
+import { useCurrentLocale } from '@/hooks';
 
 export function AnalyticsBar() {
+  const { localeForRequest } = useCurrentLocale();
+  const { data: eventTypesStatistics } = useGetEventTypesStatisticsQuery({
+    locale: localeForRequest,
+  });
+
+  let eventsType = [];
+
+  if (eventTypesStatistics) {
+    switch (eventTypesStatistics.length) {
+      case 1:
+        eventsType = [
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+        ];
+        break;
+      case 2:
+        eventsType = [
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+        ];
+        break;
+      case 3:
+        eventsType = [
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+          ...eventTypesStatistics,
+        ];
+        break;
+      case 4:
+        eventsType = [...eventTypesStatistics, ...eventTypesStatistics];
+        break;
+      case 5:
+        eventsType = [...eventTypesStatistics, ...eventTypesStatistics];
+        break;
+      default:
+        eventsType = eventTypesStatistics;
+        break;
+    }
+  }
+
   return (
-    <section className="flex h-[100px] items-center bg-yellow font-ubuntu text-dark-primary">
+    <section className="flex h-[80px] items-center bg-yellow font-ubuntu text-dark-primary tablet:h-[100px]">
       <Swiper
         className="marquee"
         modules={[Autoplay]}
         slidesPerView={'auto'}
         autoplay={{
           delay: 0,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
-        speed={6000}
+        speed={10000}
         loop={true}
-        allowTouchMove={false}
+        allowTouchMove={true}
+        centeredSlides={true}
       >
-        {analyticsBarItemsNew.map((item, index) => {
+        {eventsType?.map(event => {
+          if (!eventsType) {
+            return null;
+          }
+
           return (
-            <SwiperSlide key={`${item.id}${index}`} style={{ width: 'auto' }}>
+            <SwiperSlide key={event.id} style={{ width: 'auto' }}>
               <div className="flex cursor-pointer items-center gap-3">
-                <span className="text-[57px] font-bold">{`${item.amount}+`}</span>
-                <span className="pr-[120px] text-2xl font-medium">
-                  {item.title}
+                <span className=" text-[20px] font-medium tablet:text-[30px]">
+                  {event.eventType}:
                 </span>
+                <span className="pr-[120px] text-[40px] font-bold tablet:text-[57px]">{`${event.count}`}</span>
               </div>
             </SwiperSlide>
           );

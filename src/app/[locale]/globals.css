@@ -136,6 +136,8 @@ input[type='search']::-webkit-search-cancel-button:hover {
   }
 }
 
+/* marquee slider */
+
 .marquee {
   width: 100%;
 }
@@ -144,6 +146,7 @@ input[type='search']::-webkit-search-cancel-button:hover {
   -webkit-transition-timing-function: linear !important;
   transition-timing-function: linear !important;
 }
+
 /* filter inputs */
 .filter {
   @apply relative z-10
