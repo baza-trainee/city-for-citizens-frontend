@@ -41,6 +41,17 @@ export const eventsApi = createApi({
       },
       // transformResponse: res => res.events,
     }),
+
+    getAllEventsByLocaleForGallery: builder.query({
+      query: locale => {
+        const queryStr = generateQueryStr('events', locale);
+
+        return { url: queryStr, method: 'GET' };
+      },
+
+      transformResponse: res => res.events,
+    }),
+
     //
     getAllEventsByPage: builder.query({
       query: page => {
@@ -152,4 +163,5 @@ export const {
   useCreateEventMutation,
   useUpdateEventMutation,
   useDeleteEventMutation,
+  useGetAllEventsByLocaleForGalleryQuery,
 } = eventsApi;

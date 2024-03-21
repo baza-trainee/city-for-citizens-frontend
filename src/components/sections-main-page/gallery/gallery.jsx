@@ -10,8 +10,8 @@ export function Gallery() {
       id="gallery"
       className="flex items-center justify-center text-center"
     >
-      <div className=" w-full bg-light-primary px-4 dark:bg-dark-primary mobile:pb-20 tablet:px-0 tablet:pb-40 desktop:w-full desktop:px-[30px] desktop_xl:max-w-[1920px]">
-        <Title text={t('gallery')} className={'mobile:mb-8 tablet:mb-[60px]'} />
+      <div className=" w-full bg-light-primary px-4 pb-20 dark:bg-dark-primary tablet:px-0 tablet:pb-40 desktop:w-full desktop:px-[30px] desktop_xl:max-w-[1920px]">
+        <Title text={t('gallery')} />
         <ImageGallery />
       </div>
     </section>
