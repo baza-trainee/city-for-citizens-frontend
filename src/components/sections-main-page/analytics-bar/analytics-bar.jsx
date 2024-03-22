@@ -49,6 +49,8 @@ export function AnalyticsBar() {
         eventsType = eventTypesStatistics;
         break;
     }
+  } else {
+    return null;
   }
 
   return (
