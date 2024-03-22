@@ -69,13 +69,16 @@ export function AnalyticsBar() {
         allowTouchMove={true}
         centeredSlides={true}
       >
-        {eventsType?.map(event => {
+        {eventsType?.map((event, index) => {
           if (!eventsType) {
             return null;
           }
 
           return (
-            <SwiperSlide key={event.id} style={{ width: 'auto' }}>
+            <SwiperSlide
+              key={`${event.eventTypeId}${index}`}
+              style={{ width: 'auto' }}
+            >
               <div className="flex cursor-pointer items-center gap-3">
                 <span className=" text-[20px] font-medium tablet:text-[30px]">
                   {event.eventType}:
