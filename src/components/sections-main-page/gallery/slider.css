@@ -79,11 +79,6 @@
   background-color: #ffd646;
 }
 
-/* .gallery-swiper .swiper-pagination-bullets.swiper-pagination-horizontal,
-.gallery-swiper-first .swiper-pagination-bullets.swiper-pagination-horizontal {
-  position: absolute;
-} */
-
 .gallery-swiper-swiper-button-next,
 .gallery-swiper-swiper-button-prev {
   cursor: pointer;
