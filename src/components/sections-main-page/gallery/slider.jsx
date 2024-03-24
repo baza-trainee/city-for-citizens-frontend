@@ -198,7 +198,7 @@ export function ImageGallery() {
             duration-300 ease-in-out laptop:mr-[30px]  "
               >
                 <SlideImage event={event} />
-                <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
+                <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
                   <p className="dark:text-li font-ubuntu text-[20px]/[22px] font-medium text-light-head dark:text-dark-head tablet:text-[24px]/[26.4px]">
                     {event.eventTitle}
                   </p>
