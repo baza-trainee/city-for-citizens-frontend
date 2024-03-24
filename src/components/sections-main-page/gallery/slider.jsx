@@ -159,7 +159,6 @@ export function ImageGallery() {
         ) : (
           <Swiper
             slidesPerView={'auto'}
-            spaceBetween={16}
             pagination={{
               clickable: true,
               el: '.gallery-pagination-wrapper',
@@ -178,7 +177,6 @@ export function ImageGallery() {
                 },
               },
               960: {
-                spaceBetween: 30,
                 navigation: {
                   prevEl: '.gallery-swiper-swiper-button-prev',
                   nextEl: '.gallery-swiper-swiper-button-next',
@@ -193,11 +191,11 @@ export function ImageGallery() {
                 key={index}
                 onClick={() => handleSlideClick(event)}
                 style={{ width: getWidthByIndex(index), height: '300px' }}
-                className="gallery-swiper group relative transform cursor-pointer
+                className="gallery-swiper group relative mr-4 transform cursor-pointer
             overflow-hidden
             rounded-lg
             transition-transform
-            duration-300 ease-in-out  "
+            duration-300 ease-in-out laptop:mr-[30px]  "
               >
                 <SlideImage event={event} />
                 <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
@@ -219,16 +217,10 @@ export function ImageGallery() {
         {secondHalf && (
           <Swiper
             slidesPerView={'auto'}
-            spaceBetween={16}
             keyboard={true}
             modules={[Keyboard, Controller]}
             onSwiper={setSecondSwiper}
             controller={{ control: firstSwiper }}
-            breakpoints={{
-              960: {
-                spaceBetween: 30,
-              },
-            }}
             className="gallery-swiper"
           >
             {secondHalf?.map((event, index) => (
@@ -239,11 +231,11 @@ export function ImageGallery() {
                   width: getWidthByIndexSecondRow(index),
                   height: '300px',
                 }}
-                className="gallery-swiper group relative transform cursor-pointer overflow-hidden
+                className="gallery-swiper group relative mr-4 transform cursor-pointer overflow-hidden
             rounded-lg
             transition-transform
             duration-300
-            ease-in-out "
+            ease-in-out laptop:mr-[30px] "
               >
                 <SlideImage event={event} />
                 <div className="absolute bottom-0 left-0 flex w-full flex-col justify-center gap-2 rounded-[5px] bg-light-secondary p-4 text-start opacity-0 shadow-gallery transition-opacity duration-500 ease-in-out focus:opacity-100 group-hover:overflow-y-auto group-hover:opacity-100 dark:bg-dark-secondary">
